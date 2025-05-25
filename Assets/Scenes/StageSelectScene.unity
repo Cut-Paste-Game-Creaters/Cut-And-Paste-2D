@@ -556,6 +556,7 @@ MonoBehaviour:
   tilemap: {fileID: 1806078382}
   frame2: {fileID: 7333870219930048861, guid: d7d2341a525b8754ab5741df97ef5168, type: 3}
   anounce: {fileID: 8044936883432795270, guid: 216ca529300f3194eb6f8bb3b0126fa8, type: 3}
+  stageMgr: {fileID: 1475439277}
 --- !u!114 &1705879694
 MonoBehaviour:
   m_ObjectHideFlags: 0

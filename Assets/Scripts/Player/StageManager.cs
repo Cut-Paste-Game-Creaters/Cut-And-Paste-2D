@@ -10,10 +10,11 @@ public class StageManager : MonoBehaviour
 
     public int score = 0;
 
-
+    public TileData tileData = new TileData(0, 0);
+    public List<ObjectData> objects = new List<ObjectData>();
 
     /////////////////////////////////////////////////
-    private struct TileData
+    public struct TileData
     {
         //現時点でw : 32, h : 18
         public int width;
@@ -31,7 +32,7 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    private struct ObjectData
+    public struct ObjectData
     {
         //カットするオブジェクトの本体
         public GameObject obj;
