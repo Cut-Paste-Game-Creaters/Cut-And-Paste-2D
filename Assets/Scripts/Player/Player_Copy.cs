@@ -9,6 +9,7 @@ public class Player_Copy : MonoBehaviour
     [SerializeField] Tilemap tilemap;
     [SerializeField] GameObject frame2;
     [SerializeField] GameObject anounce;
+    [SerializeField] StageManager stageMgr;
 
     private Vector3 startPos = Vector3.zero;
     private Vector3 endPos = Vector3.zero;
@@ -16,36 +17,6 @@ public class Player_Copy : MonoBehaviour
     private SpriteRenderer frameSR;
     private int whichMode = -1;     //0:Copy, 1:Cut
     private bool makeDecision = false;  //マウス離したらOn
-
-    //コピーするタイルのデータ
-    private struct TileData
-    {
-        //現時点でw : 32, h : 18
-        public int width;
-        public int height;
-        public int direction;   //0右上、1右下、2左下、3左上
-        public List<List<TileBase>> tiles;
-        public bool hasData;
-        public TileData(int w,int h)
-        {
-            width = w;
-            height = h;
-            tiles = new List<List<TileBase>>();
-            hasData = false;
-            direction = -1;
-        }
-    }
-    private struct ObjectData
-    {
-        //カットするオブジェクトの本体
-        public GameObject obj;
-        //カットするオブジェクトの相対位置
-        public Vector3 pos;
-    }
-
-    private TileData tileData = new TileData(0,0);
-    private List<ObjectData> objects = new List<ObjectData>();
-
 
     // Start is called before the first frame update
     void Start()
@@ -73,9 +44,9 @@ public class Player_Copy : MonoBehaviour
             Time.timeScale = 0.1f;
 
             //これまでコピーしてたものを初期化
-            InitList(tileData.tiles);
-            tileData.tiles = new List<List<TileBase>>();
-            tileData.hasData = false;
+            InitList(stageMgr.tileData.tiles);
+            stageMgr.tileData.tiles = new List<List<TileBase>>();
+            stageMgr.tileData.hasData = false;
             //最初の位置取得(小数点)
             startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -103,7 +74,7 @@ public class Player_Copy : MonoBehaviour
         }
 
 
-        if (PlayerInput.GetMouseButtonUp(0) && !tileData.hasData)
+        if (PlayerInput.GetMouseButtonUp(0) && !stageMgr.tileData.hasData)
         {
             makeDecision = true;
             whichMode = -1;
@@ -150,8 +121,8 @@ public class Player_Copy : MonoBehaviour
         Debug.Log("w:" + width + " h:" + height);
 
         //tileDataにコピーしたものを保存
-        tileData.width = width;
-        tileData.height = height;
+        stageMgr.tileData.width = width;
+        stageMgr.tileData.height = height;
 
 
         //コピーの向きを取得する
@@ -179,7 +150,7 @@ public class Player_Copy : MonoBehaviour
             }
         }
 
-        tileData.direction = direction;
+        stageMgr.tileData.direction = direction;
 
         //コピー範囲のtileをコピー
         for (int y = 0; y < height; y++)
@@ -224,7 +195,7 @@ public class Player_Copy : MonoBehaviour
                 /*if (t != null) Debug.Log(t.name);
                 else Debug.Log("null");*/
             }
-            tileData.tiles.Add(tBases);
+            stageMgr.tileData.tiles.Add(tBases);
         }
 
     }
@@ -233,7 +204,7 @@ public class Player_Copy : MonoBehaviour
     public void CopyObject(Vector3 startPos, Vector3 endPos, bool isCut = false)
     {
         Collider2D[] cols = Physics2D.OverlapAreaAll(startPos, endPos);
-        objects = new List<ObjectData>();
+        stageMgr.objects = new List<StageManager.ObjectData>();
         foreach (var col in cols)
         {
             if (col.gameObject.tag != "Tilemap"
@@ -241,7 +212,7 @@ public class Player_Copy : MonoBehaviour
                 && col.gameObject.tag != "Uncuttable")
             {
                 Debug.Log(col.gameObject.name);
-                ObjectData c = new ObjectData();
+                StageManager.ObjectData c = new StageManager.ObjectData();
                 if (!isCut)
                 {
                     c.obj = Instantiate(col.gameObject);
@@ -249,11 +220,10 @@ public class Player_Copy : MonoBehaviour
                 else
                 {
                     c.obj = col.gameObject;
-                    Debug.Log("Cut!!!!");
                 }
                 c.pos = col.gameObject.transform.position - ChangeVecToInt(startPos);
                 c.obj.SetActive(false);
-                objects.Add(c);
+                stageMgr.objects.Add(c);
             }
 
         }
@@ -269,7 +239,7 @@ public class Player_Copy : MonoBehaviour
         frame2.SetActive(false);
 
         //データ保持フラグon!
-        tileData.hasData = true;
+        stageMgr.tileData.hasData = true;
         makeDecision = false;
         anounce.SetActive(false);
     }
@@ -278,7 +248,7 @@ public class Player_Copy : MonoBehaviour
     void InitList(List<List<TileBase>> list)
     {
         list = new List<List<TileBase>>();
-        tileData.hasData = false;
+        stageMgr.tileData.hasData = false;
     }
 
     //マウスの座標をタイルの座標に変換する関数
