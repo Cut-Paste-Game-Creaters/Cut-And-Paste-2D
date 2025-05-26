@@ -64,4 +64,9 @@ public class StageManager : MonoBehaviour
     {
         
     }
+
+    private void OnDestroy()
+    {
+        Debug.Log("Destroyed");
+    }
 }
