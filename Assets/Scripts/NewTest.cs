@@ -15,4 +15,9 @@ public class NewTest : MonoBehaviour
     {
         
     }
+
+    private void OnDestroy()
+    {
+        Debug.Log("Destroyed");
+    }
 }
