@@ -8,10 +8,8 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager Instance;
 
-    public int score = 0;
-
     public TileData tileData = new TileData(0, 0);
-    public List<ObjectData> objects = new List<ObjectData>();
+    public List<ObjectData> objectData = new List<ObjectData>();
 
     /////////////////////////////////////////////////
     public struct TileData
@@ -22,6 +20,7 @@ public class StageManager : MonoBehaviour
         public int direction;   //0右上、1右下、2左下、3左上
         public List<List<TileBase>> tiles;
         public bool hasData;
+        public bool isCut;
         public TileData(int w, int h)
         {
             width = w;
@@ -29,6 +28,7 @@ public class StageManager : MonoBehaviour
             tiles = new List<List<TileBase>>();
             hasData = false;
             direction = -1;
+            isCut = false;
         }
     }
 
@@ -55,13 +55,4 @@ public class StageManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
-    {
-        
-    }
-
-    private void Update()
-    {
-        
-    }
 }

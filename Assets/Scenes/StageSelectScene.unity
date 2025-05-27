@@ -345,7 +345,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5de76dad52edeb148b8812bdf76c719b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 0
 --- !u!4 &1475439278
 Transform:
   m_ObjectHideFlags: 0
@@ -569,6 +568,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc41432d0525114eacf4b9e74f9ad04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tilemap: {fileID: 1806078382}
+  stageManager: {fileID: 1475439277}
+  frame1: {fileID: 7333870219930048861, guid: d7d2341a525b8754ab5741df97ef5168, type: 3}
 --- !u!1 &1806078378
 GameObject:
   m_ObjectHideFlags: 0
