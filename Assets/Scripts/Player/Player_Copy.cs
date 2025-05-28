@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 public class Player_Copy : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Player_Copy : MonoBehaviour
     [SerializeField] GameObject frame2;
     [SerializeField] GameObject anounce;
     [SerializeField] StageManager stageMgr;
+    [SerializeField] TileScriptableObject tileSB; //ScriptableObject
 
     private Vector3 startPos = Vector3.zero;
     private Vector3 endPos = Vector3.zero;
@@ -17,6 +19,7 @@ public class Player_Copy : MonoBehaviour
     private SpriteRenderer frameSR;
     private int whichMode = -1;     //0:Copy, 1:Cut
     private bool makeDecision = false;  //マウス離したらOn
+    //public bool all_isCut = false; //コピー関数の引数のisCutと区別するため
 
     // Start is called before the first frame update
     void Start()
@@ -95,11 +98,15 @@ public class Player_Copy : MonoBehaviour
                 case 0:     //コピーするなら
                     CopyContents(startPos, endPos);
                     CopyObject(startPos, endPos);
+                    //all_isCut = false;
+                    stageMgr.all_isCut = false;
                     InitWhichMode();
                     break;
                 case 1:     //カットするなら
                     CopyContents(startPos, endPos, true);
                     CopyObject(startPos, endPos, true);
+                    //all_isCut = true;
+                    stageMgr.all_isCut = true;
                     InitWhichMode();
                     break;
                 default:
@@ -112,6 +119,10 @@ public class Player_Copy : MonoBehaviour
     //実際にタイルをコピーをする関数
     void CopyContents(Vector3 sPos, Vector3 ePos, bool isCut = false)
     {
+        //増やすコストを初期化 コピーの時はコピーされるたびに初期化　逆にそれ以外は更新されてはいけない
+        stageMgr.write_cost = 0;
+        stageMgr.cut_erase_cost = 0;
+
         //位置をintにする
         Vector3Int _startPos = ChangeVecToInt(sPos);
         Vector3Int _endPos = ChangeVecToInt(ePos);
@@ -187,9 +198,14 @@ public class Player_Copy : MonoBehaviour
                 }
 
                 TileBase t = tilemap.GetTile(p);
+                if (tilemap.HasTile(p)) //kyosu もしそのセルがタイルを持っているなら
+                {
+                    stageMgr.write_cost += tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(p)).p_ene; // 取得したタイルがタイルパレットのどのタイルかを判別してその消費コストを＋
+                }
                 tBases.Add(t);
                 if (isCut)
                 {
+                    stageMgr.cut_erase_cost += tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(p)).ow_ene;
                     tilemap.SetTile(p, null);
                 }
                 /*if (t != null) Debug.Log(t.name);
@@ -197,14 +213,21 @@ public class Player_Copy : MonoBehaviour
             }
             stageMgr.tileData.tiles.Add(tBases);
         }
-
+        if(isCut)
+        {
+            if(stageMgr.have_ene >= stageMgr.erase_cost) //所持コストから引けるなら
+            {
+                stageMgr.have_ene -= stageMgr.cut_erase_cost; //コスト引く
+            }
+            Debug.Log("消すコスト(カット時):" + stageMgr.cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene);
+        }
     }
 
     //選択範囲のオブジェクトをコピーする関数
     public void CopyObject(Vector3 startPos, Vector3 endPos, bool isCut = false)
     {
         Collider2D[] cols = Physics2D.OverlapAreaAll(startPos, endPos);
-        stageMgr.objects = new List<StageManager.ObjectData>();
+        stageMgr.objectData = new List<StageManager.ObjectData>();
         foreach (var col in cols)
         {
             if (col.gameObject.tag != "Tilemap"
@@ -223,7 +246,7 @@ public class Player_Copy : MonoBehaviour
                 }
                 c.pos = col.gameObject.transform.position - ChangeVecToInt(startPos);
                 c.obj.SetActive(false);
-                stageMgr.objects.Add(c);
+                stageMgr.objectData.Add(c);
             }
 
         }

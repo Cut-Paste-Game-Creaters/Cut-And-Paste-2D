@@ -8,10 +8,23 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager Instance;
 
-    public int score = 0;
-
     public TileData tileData = new TileData(0, 0);
-    public List<ObjectData> objects = new List<ObjectData>();
+    public List<ObjectData> objectData = new List<ObjectData>();
+
+    /*コスト関連*/
+    [SerializeField]private float costHeal_timeOut; //costが回復する間隔
+	private float timeElapsed;
+    private int overwrite_sum_cos = 0; //kyosu
+    private int[] init_ene_array = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550}; //ステージごとの初期コスト配列
+    private int[] healAmount_array = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50}; //ステージごとの回復速度コストの配列
+    private int[] healLimit_array = {150, 200, 250, 300, 350, 400, 450, 500, 550, 600}; //ランクごとの回復上限コスト配列
+    private int stage = 0; //0=ステージ1
+    public int have_ene = 1000000; //初期コスト
+    private int all_sum_cos = 0; //ステージで消費した全てのコスト
+    public int erase_cost = 0; //貼り付け箇所の消すコスト
+    public int write_cost = 0; //取得箇所の増やすコスト
+    public int cut_erase_cost = 0; //カットの時のみの取得箇所の消すコスト
+    public bool all_isCut = false; //copyかcutかを判別する変数
 
     /////////////////////////////////////////////////
     public struct TileData
@@ -22,6 +35,7 @@ public class StageManager : MonoBehaviour
         public int direction;   //0右上、1右下、2左下、3左上
         public List<List<TileBase>> tiles;
         public bool hasData;
+        public bool isCut;
         public TileData(int w, int h)
         {
             width = w;
@@ -29,6 +43,7 @@ public class StageManager : MonoBehaviour
             tiles = new List<List<TileBase>>();
             hasData = false;
             direction = -1;
+            isCut = false;
         }
     }
 
@@ -55,13 +70,4 @@ public class StageManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
-    {
-        
-    }
-
-    private void Update()
-    {
-        
-    }
 }
