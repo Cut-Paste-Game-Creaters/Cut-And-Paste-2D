@@ -12,6 +12,7 @@ public class Player_Paste : MonoBehaviour
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
 
     private SpriteRenderer sr;
+    private Vector3 frameData = Vector3.zero;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,44 +36,53 @@ public class Player_Paste : MonoBehaviour
 
         //現在のマウス位置をもらい、原点とする
         Vector3Int mPos = ChangeVecToInt(mousePos);
+
+        //右クリックを押してる間枠表示
+        if (PlayerInput.GetMouseButton(1))
+        {
+            sr.enabled = true;
+            frameData = stageManager.GetInfo();
+            sr.size = frameData;
+            Vector3 framePos = mPos;
+
+            switch (frameData.z)
+            {
+                //最初の位置は真ん中の右上なので個別に調節する必要がある
+                case 0:     //右上
+                    framePos.x += frameData.x / 2;
+                    framePos.y += frameData.y / 2;
+                    break;
+                case 1:     //右下
+                    framePos.x += frameData.x / 2;
+                    framePos.y -= frameData.y / 2;
+                    framePos.y++;
+                    break;
+                case 2:     //左下
+                    framePos.x -= frameData.x / 2;
+                    framePos.y -= frameData.y / 2;
+                    framePos.x++;
+                    framePos.y++;
+                    break;
+                case 3:     //左上
+                    framePos.x -= frameData.x / 2;
+                    framePos.y += frameData.y / 2;
+                    framePos.x++;
+                    break;
+                default: break;
+            }
+
+
+            frame1.transform.position = framePos;
+        }
         //右クリックで貼り付け
         if (PlayerInput.GetMouseButtonUp(1))
         {
+            sr.enabled = false;
             //オブジェクトをペースト
             PasteObject();
 
 
             //タイルをペースト
-            /*for (int y = 0; y < stageManager.tileData.height; y++)
-            {
-                for (int x = 0; x < stageManager.tileData.width; x++)
-                {
-                    //コピーしたときの方向によって原点が異なる
-                    Vector3Int _p = Vector3Int.zero;
-                    switch (stageManager.tileData.direction)
-                    {
-                        case 0:
-                            _p = new Vector3Int(mPos.x + x, mPos.y + y, 0);
-                            break;
-                        case 1:
-                            _p = new Vector3Int(mPos.x + x, mPos.y - y, 0);
-                            break;
-                        case 2:
-                            _p = new Vector3Int(mPos.x - x, mPos.y - y, 0);
-                            break;
-                        case 3:
-                            _p = new Vector3Int(mPos.x - x, mPos.y + y, 0);
-                            break;
-                        default: break;
-                    }
-
-                    if (tilemap.HasTile(_p)) //kyosu もしそのセルがタイルを持っているなら
-                    {
-                        stageManager.erase_cost += tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(_p)).ow_ene; // 取得したタイルがタイルパレットのどのタイルかを判別してその消費コストを＋
-                    }
-                    tilemap.SetTile(_p, stageManager.tileData.tiles[y][x]);
-                }
-            }*/
             CheckCost(false, mPos); //タイルセットしないで計算
 
             int divide = 1;
@@ -89,7 +99,7 @@ public class Player_Paste : MonoBehaviour
             }
             Debug.Log("isCut == " + stageManager.all_isCut);
 
-            if (stageManager.tileData.isCut) //1回のみペーストにする処理
+            if (stageManager.all_isCut) //1回のみペーストにする処理
             {
                 InitTileData();
             }
@@ -133,7 +143,7 @@ public class Player_Paste : MonoBehaviour
     {
         stageManager.tileData.tiles = new List<List<TileBase>>();
         stageManager.tileData.width = 0;
-        stageManager.tileData.height = 0;
+        stageManager.tileData.height = 0;   
         stageManager.tileData.hasData = false;
 
         stageManager.objectData = new List<StageManager.ObjectData>();
