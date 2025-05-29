@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 public class Player_Paste : MonoBehaviour
 {
     [SerializeField] Tilemap tilemap;
     [SerializeField] StageManager stageManager;
     [SerializeField] GameObject frame1;
+    [SerializeField] TileScriptableObject tileSB; //ScriptableObject
 
     private SpriteRenderer sr;
     // Start is called before the first frame update
@@ -29,6 +31,8 @@ public class Player_Paste : MonoBehaviour
 
     void PasteTiles(Vector3 mousePos)
     {
+        stageManager.erase_cost = 0; //最初に貼り付け箇所のコストを初期化
+
         //現在のマウス位置をもらい、原点とする
         Vector3Int mPos = ChangeVecToInt(mousePos);
         //右クリックで貼り付け
@@ -62,11 +66,32 @@ public class Player_Paste : MonoBehaviour
                         default: break;
                     }
 
+                    if (tilemap.HasTile(_p)) //kyosu もしそのセルがタイルを持っているなら
+                    {
+                        stageManager.erase_cost += tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(_p)).ow_ene; // 取得したタイルがタイルパレットのどのタイルかを判別してその消費コストを＋
+                    }
                     tilemap.SetTile(_p, stageManager.tileData.tiles[y][x]);
                 }
             }
+            if(stageManager.all_isCut == false)
+            {
+                if(stageManager.have_ene >= (stageManager.erase_cost + stageManager.write_cost)) //所持コストから引けるなら
+                {
+                    stageManager.have_ene -= (stageManager.erase_cost + stageManager.write_cost); //コスト引く
+                    Debug.Log("消えるコスト：" + stageManager.erase_cost + "," + "増やすコスト：" + stageManager.write_cost + ", " + "所持コスト：" + stageManager.have_ene);
+                }
+            }
+            else
+            {
+                if(stageManager.have_ene >= (stageManager.erase_cost + stageManager.write_cost)) //所持コストから引けるなら
+                {
+                    stageManager.have_ene -= (stageManager.erase_cost + (stageManager.write_cost / 2)); //コスト引く
+                    Debug.Log("消えるコスト：" + stageManager.erase_cost + "," + "増やすコスト：" + (stageManager.write_cost / 2) + ", " + "所持コスト：" + stageManager.have_ene);
+                }
+            }
+            Debug.Log("isCut == " + stageManager.all_isCut);
 
-            if (stageManager.tileData.isCut)
+            if (stageManager.tileData.isCut) //1回のみペーストにする処理
             {
                 InitTileData();
             }
@@ -116,3 +141,4 @@ public class Player_Paste : MonoBehaviour
         stageManager.objectData = new List<StageManager.ObjectData>();
     }
 }
+
