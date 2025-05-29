@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 public class Player_Copy : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Player_Copy : MonoBehaviour
     [SerializeField] GameObject frame2;
     [SerializeField] GameObject anounce;
     [SerializeField] StageManager stageMgr;
+    [SerializeField] TileScriptableObject tileSB; //ScriptableObject
 
     private Vector3 startPos = Vector3.zero;
     private Vector3 endPos = Vector3.zero;
@@ -17,6 +19,7 @@ public class Player_Copy : MonoBehaviour
     private SpriteRenderer frameSR;
     private int whichMode = -1;     //0:Copy, 1:Cut
     private bool makeDecision = false;  //マウス離したらOn
+    //public bool all_isCut = false; //コピー関数の引数のisCutと区別するため
 
     // Start is called before the first frame update
     void Start()
@@ -36,53 +39,49 @@ public class Player_Copy : MonoBehaviour
     //コピーする範囲を決定する
     void CopyTiles()
     {
-        if(!makeDecision)
+        //マウスを右クリックして、移動して離す
+        //最初と最後の座標だけとれば範囲が指定できる
+        if (PlayerInput.GetMouseButtonDown(0) && !makeDecision)
         {
-            //マウスを右クリックして、移動して離す
-            //最初と最後の座標だけとれば範囲が指定できる
-            if (PlayerInput.GetMouseButtonDown(0))
+            //範囲選択時時間を停止する(またはスローモー)
+            Time.timeScale = 0.1f;
+
+            //これまでコピーしてたものを初期化
+            InitList(stageMgr.tileData.tiles);
+            stageMgr.tileData.tiles = new List<List<TileBase>>();
+            stageMgr.tileData.hasData = false;
+            //最初の位置取得(小数点)
+            startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+
+            //四角を描く
+            frame2.SetActive(true);
+            if (frameSR == null)
             {
-                //範囲選択時時間を停止する(またはスローモー)
-                Time.timeScale = 0.1f;
-
-                //これまでコピーしてたものを初期化
-                InitList(stageMgr.tileData.tiles);
-                stageMgr.tileData.tiles = new List<List<TileBase>>();
-                stageMgr.tileData.hasData = false;
-                //最初の位置取得(小数点)
-                startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-
-                //四角を描く
-                frame2.SetActive(true);
-                if (frameSR == null)
-                {
-                    frameSR = frame2.GetComponent<SpriteRenderer>();
-                }
-                frame2.transform.localPosition = startPos;
-                frame2.transform.localScale = Vector3.one;
-                isDrawing = true;
+                frameSR = frame2.GetComponent<SpriteRenderer>();
             }
+            frame2.transform.localPosition = startPos;
+            frame2.transform.localScale = Vector3.one;
+            isDrawing = true;
+        }
 
-            if (isDrawing && PlayerInput.GetMouseButton(0))
-            {
-                //四角のサイズを変える
-                Vector3 currentPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector3 size = currentPos - startPos;
-                frameSR.size = new Vector2(Mathf.Abs(size.x), Mathf.Abs(size.y));
-                Vector3 nowpos = (currentPos + startPos) / 2;
-                nowpos.z = 0;
-                frame2.transform.localPosition = nowpos;
-            }
+        if (isDrawing && PlayerInput.GetMouseButton(0))
+        {
+            //四角のサイズを変える
+            Vector3 currentPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 size = currentPos - startPos;
+            frameSR.size = new Vector2(Mathf.Abs(size.x), Mathf.Abs(size.y));
+            Vector3 nowpos = (currentPos + startPos) / 2;
+            nowpos.z = 0;
+            frame2.transform.localPosition = nowpos;
+        }
 
 
-            if (PlayerInput.GetMouseButtonUp(0) && !stageMgr.tileData.hasData)
-            {
-                makeDecision = true;
-                whichMode = -1;
-                endPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                return;
-            }
+        if (PlayerInput.GetMouseButtonUp(0) && !stageMgr.tileData.hasData)
+        {
+            makeDecision = true;
+            whichMode = -1;
+            endPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
 
         //どちらかを選ぶフェーズ
@@ -92,18 +91,22 @@ public class Player_Copy : MonoBehaviour
             {
                 case -1:    //コピーかカットか選ぶ
                     anounce.SetActive(true);
-                    if (PlayerInput.GetMouseButtonUp(0)) whichMode = 0;//copy
-                    else if (PlayerInput.GetMouseButtonUp(1)) whichMode = 1;//cut
+                    if (PlayerInput.GetMouseButtonDown(0)) whichMode = 0;//copy
+                    else if (PlayerInput.GetMouseButtonDown(1)) whichMode = 1;//cut
                     else if (PlayerInput.GetKeyDown(KeyCode.Escape)) whichMode = 2;//nothing
                     break;
                 case 0:     //コピーするなら
                     CopyContents(startPos, endPos);
                     CopyObject(startPos, endPos);
+                    //all_isCut = false;
+                    stageMgr.all_isCut = false;
                     InitWhichMode();
                     break;
                 case 1:     //カットするなら
                     CopyContents(startPos, endPos, true);
                     CopyObject(startPos, endPos, true);
+                    //all_isCut = true;
+                    stageMgr.all_isCut = true;
                     InitWhichMode();
                     break;
                 default:
@@ -116,6 +119,12 @@ public class Player_Copy : MonoBehaviour
     //実際にタイルをコピーをする関数
     void CopyContents(Vector3 sPos, Vector3 ePos, bool isCut = false)
     {
+        //増やすコストを初期化 コピーの時はコピーされるたびに初期化　逆にそれ以外は更新されてはいけない
+        stageMgr.write_cost = 0;
+
+        //カットの時のみ使う変数
+        int cut_erase_cost = 0;
+
         //位置をintにする
         Vector3Int _startPos = ChangeVecToInt(sPos);
         Vector3Int _endPos = ChangeVecToInt(ePos);
@@ -191,9 +200,14 @@ public class Player_Copy : MonoBehaviour
                 }
 
                 TileBase t = tilemap.GetTile(p);
+                if (tilemap.HasTile(p)) //kyosu もしそのセルがタイルを持っているなら
+                {
+                    stageMgr.write_cost += tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(p)).p_ene; // 取得したタイルがタイルパレットのどのタイルかを判別してその消費コストを＋
+                }
                 tBases.Add(t);
                 if (isCut)
                 {
+                    cut_erase_cost += tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(p)).ow_ene;
                     tilemap.SetTile(p, null);
                 }
                 /*if (t != null) Debug.Log(t.name);
@@ -201,7 +215,14 @@ public class Player_Copy : MonoBehaviour
             }
             stageMgr.tileData.tiles.Add(tBases);
         }
-
+        if(isCut)
+        {
+            if(stageMgr.have_ene >= cut_erase_cost) //所持コストから引けるなら
+            {
+                stageMgr.have_ene -= cut_erase_cost; //コスト引く
+            }
+            Debug.Log("消すコスト(カット時):" + cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene);
+        }
     }
 
     //選択範囲のオブジェクトをコピーする関数
@@ -225,7 +246,6 @@ public class Player_Copy : MonoBehaviour
                 {
                     c.obj = col.gameObject;
                 }
-                stageMgr.tileData.isCut = isCut;
                 c.pos = col.gameObject.transform.position - ChangeVecToInt(startPos);
                 c.obj.SetActive(false);
                 stageMgr.objectData.Add(c);

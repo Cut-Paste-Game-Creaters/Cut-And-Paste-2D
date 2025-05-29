@@ -43,7 +43,7 @@ public class Player_Paste : MonoBehaviour
 
 
             //タイルをペースト
-            for (int y = 0; y < stageManager.tileData.height; y++)
+            /*for (int y = 0; y < stageManager.tileData.height; y++)
             {
                 for (int x = 0; x < stageManager.tileData.width; x++)
                 {
@@ -72,22 +72,20 @@ public class Player_Paste : MonoBehaviour
                     }
                     tilemap.SetTile(_p, stageManager.tileData.tiles[y][x]);
                 }
-            }
-            if(stageManager.all_isCut == false)
+            }*/
+            CheckCost(false, mPos); //タイルセットしないで計算
+
+            int divide = 1;
+            if(stageManager.all_isCut)
             {
-                if(stageManager.have_ene >= (stageManager.erase_cost + stageManager.write_cost)) //所持コストから引けるなら
-                {
-                    stageManager.have_ene -= (stageManager.erase_cost + stageManager.write_cost); //コスト引く
-                    Debug.Log("消えるコスト：" + stageManager.erase_cost + "," + "増やすコスト：" + stageManager.write_cost + ", " + "所持コスト：" + stageManager.have_ene);
-                }
+                divide = 2;
             }
-            else
+
+            if(stageManager.have_ene >= (stageManager.erase_cost + stageManager.write_cost)) //所持コストから引けるなら
             {
-                if(stageManager.have_ene >= (stageManager.erase_cost + stageManager.write_cost)) //所持コストから引けるなら
-                {
-                    stageManager.have_ene -= (stageManager.erase_cost + (stageManager.write_cost / 2)); //コスト引く
-                    Debug.Log("消えるコスト：" + stageManager.erase_cost + "," + "増やすコスト：" + (stageManager.write_cost / 2) + ", " + "所持コスト：" + stageManager.have_ene);
-                }
+                stageManager.have_ene -= (stageManager.erase_cost + stageManager.write_cost / divide); //コスト引く
+                CheckCost(true, mPos);
+                Debug.Log("消えるコスト：" + stageManager.erase_cost + "," + "増やすコスト：" + stageManager.write_cost + ", " + "所持コスト：" + stageManager.have_ene);
             }
             Debug.Log("isCut == " + stageManager.all_isCut);
 
@@ -139,6 +137,47 @@ public class Player_Paste : MonoBehaviour
         stageManager.tileData.hasData = false;
 
         stageManager.objectData = new List<StageManager.ObjectData>();
+    }
+
+    public void CheckCost(bool isSetTile, Vector3Int mPos)
+    {
+        //タイルをペースト
+            for (int y = 0; y < stageManager.tileData.height; y++)
+            {
+                for (int x = 0; x < stageManager.tileData.width; x++)
+                {
+                    //コピーしたときの方向によって原点が異なる
+                    Vector3Int _p = Vector3Int.zero;
+                    switch (stageManager.tileData.direction)
+                    {
+                        case 0:
+                            _p = new Vector3Int(mPos.x + x, mPos.y + y, 0);
+                            break;
+                        case 1:
+                            _p = new Vector3Int(mPos.x + x, mPos.y - y, 0);
+                            break;
+                        case 2:
+                            _p = new Vector3Int(mPos.x - x, mPos.y - y, 0);
+                            break;
+                        case 3:
+                            _p = new Vector3Int(mPos.x - x, mPos.y + y, 0);
+                            break;
+                        default: break;
+                    }
+
+                    if(isSetTile)
+                    {
+                        tilemap.SetTile(_p, stageManager.tileData.tiles[y][x]);
+                    }
+                    else
+                    {
+                        if (tilemap.HasTile(_p)) //kyosu もしそのセルがタイルを持っているなら
+                        {
+                            stageManager.erase_cost += tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(_p)).ow_ene; // 取得したタイルがタイルパレットのどのタイルかを判別してその消費コストを＋
+                        }
+                    }
+                }
+            }
     }
 }
 
