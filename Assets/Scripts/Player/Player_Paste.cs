@@ -112,16 +112,18 @@ public class Player_Paste : MonoBehaviour
         {
             Vector3 mousePos = Input.mousePosition;
             mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-            foreach (StageManager.ObjectData c in stageManager.objectData)
+            foreach (var c in stageManager.objectData)
             {
-                if (stageManager.tileData.isCut)
+                if (stageManager.all_isCut)
                 {
                     c.obj.SetActive(true);
                     c.obj.transform.position = c.pos + ChangeVecToInt(mousePos);
                 }
                 else
                 {
-
+                    GameObject b = Instantiate(c.obj);
+                    b.SetActive(true);
+                    b.transform.position = c.pos + ChangeVecToInt(mousePos);
                 }
                     
             }
