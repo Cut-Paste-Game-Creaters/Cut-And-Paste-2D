@@ -345,6 +345,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5de76dad52edeb148b8812bdf76c719b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  costHeal_timeOut: 0
+  have_ene: 10000
+  erase_cost: 0
+  write_cost: 0
+  cut_erase_cost: 0
+  all_isCut: 0
 --- !u!4 &1475439278
 Transform:
   m_ObjectHideFlags: 0
@@ -556,6 +562,7 @@ MonoBehaviour:
   frame2: {fileID: 7333870219930048861, guid: d7d2341a525b8754ab5741df97ef5168, type: 3}
   anounce: {fileID: 8044936883432795270, guid: 216ca529300f3194eb6f8bb3b0126fa8, type: 3}
   stageMgr: {fileID: 1475439277}
+  tileSB: {fileID: 11400000, guid: b58413ee8aa87174e8571d021e40d761, type: 2}
 --- !u!114 &1705879694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,6 +578,7 @@ MonoBehaviour:
   tilemap: {fileID: 1806078382}
   stageManager: {fileID: 1475439277}
   frame1: {fileID: 7333870219930048861, guid: d7d2341a525b8754ab5741df97ef5168, type: 3}
+  tileSB: {fileID: 11400000, guid: b58413ee8aa87174e8571d021e40d761, type: 2}
 --- !u!1 &1806078378
 GameObject:
   m_ObjectHideFlags: 0

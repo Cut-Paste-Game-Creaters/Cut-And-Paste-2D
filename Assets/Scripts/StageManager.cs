@@ -18,7 +18,7 @@ public class StageManager : MonoBehaviour
     private int[] init_ene_array = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550}; //ステージごとの初期コスト配列
     private int[] healAmount_array = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50}; //ステージごとの回復速度コストの配列
     private int stage = 0; //0=ステージ1
-    public int have_ene = 1000000; //初期コスト
+    public int have_ene = 10000; //初期コスト
     private int all_sum_cos = 0; //ステージで消費した全てのコスト
     public int erase_cost = 0; //貼り付け箇所の消すコスト
     public int write_cost = 0; //取得箇所の増やすコスト
