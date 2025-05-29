@@ -54,6 +54,19 @@ public class StageManager : MonoBehaviour
         public Vector3 pos;
     }
 
+    public Vector3 GetInfo()
+    {
+        Vector3 v = Vector3.zero;
+        if (tileData.hasData)
+        {
+            v.x = tileData.width;
+            v.y = tileData.height;
+            v.z = tileData.direction;
+        }
+
+        return v;
+    }
+
     //////////////////////////////////////////////////////////
     void Awake()
     {
