@@ -8,11 +8,13 @@ public static class PlayerInput
 
     public static float GetDeltaTime()
     {
+        if (isPausing) return 0.0f;
         return Time.deltaTime;
     }
 
     public static float GetFixedDeltaTime()
     {
+        if (isPausing) return 0.0f;
         return Time.fixedDeltaTime;
     }
     public static bool GetKeyDown(KeyCode key)
