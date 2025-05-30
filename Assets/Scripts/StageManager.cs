@@ -82,4 +82,22 @@ public class StageManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (PlayerInput.isPausing)
+            {
+                PlayerInput.isPausing = false;
+                Time.timeScale = 1.0f;
+            }
+            else
+            {
+                PlayerInput.isPausing = true;
+                Time.timeScale = 0;
+            }
+        }
+        Debug.Log(PlayerInput.isPausing);
+    }
+
 }

@@ -46,7 +46,7 @@ public class Player_Copy : MonoBehaviour
             if (PlayerInput.GetMouseButtonDown(0))
             {
                 //範囲選択時時間を停止する(またはスローモー)
-                Time.timeScale = 0.1f;
+                Time.timeScale = 0f;
 
                 //これまでコピーしてたものを初期化
                 InitList(stageMgr.tileData.tiles);
