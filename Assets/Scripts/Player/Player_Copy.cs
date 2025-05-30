@@ -180,56 +180,6 @@ public class Player_Copy : MonoBehaviour
             }
         }
 
-        /*//コピー範囲のtileをコピー
-        for (int y = 0; y < height; y++)
-        {
-            //1列ごとのList
-            List<TileBase> tBases = new List<TileBase>();
-            for (int x = 0; x < width; x++)
-            {
-                Vector3Int p = Vector3Int.zero;
-                //向きによって取得する
-                switch (direction)
-                {
-                    case 0:
-                        p = new Vector3Int(
-                        _startPos.x + x,
-                        _startPos.y + y, 0);
-                        break;
-                    case 1:
-                        p = new Vector3Int(
-                        _startPos.x + x,
-                        _startPos.y - y, 0);
-                        break;
-                    case 2:
-                        p = new Vector3Int(
-                        _startPos.x - x,
-                        _startPos.y - y, 0);
-                        break;
-                    case 3:
-                        p = new Vector3Int(
-                        _startPos.x - x,
-                        _startPos.y + y, 0);
-                        break;
-                    default: break;
-                }
-
-                TileBase t = tilemap.GetTile(p);
-                if (tilemap.HasTile(p)) //kyosu もしそのセルがタイルを持っているなら
-                {
-                    stageMgr.write_cost += tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(p)).p_ene; // 取得したタイルがタイルパレットのどのタイルかを判別してその消費コストを＋
-                    if (isCut)
-                    {
-                        cut_erase_cost += tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(p)).ow_ene;
-                        tilemap.SetTile(p, null);
-                    }
-                }
-                tBases.Add(t);
-                if (t != null) Debug.Log(t.name);
-                else Debug.Log("null");
-            }
-            stageMgr.tileData.tiles.Add(tBases);
-        }*/
     }
 
     //選択範囲のオブジェクトをコピーする関数

@@ -26,7 +26,7 @@ public class CameraMove : MonoBehaviour
         {
             this.transform.position = new Vector3(player.transform.position.x, 0, -10);
         }
-        Debug.Log("t:"+tilemap.cellBounds.min.x);
-        Debug.Log("p:"+player.transform.position.x);
+        //Debug.Log("t:"+tilemap.cellBounds.min.x);
+        //Debug.Log("p:"+player.transform.position.x);
     }
 }
