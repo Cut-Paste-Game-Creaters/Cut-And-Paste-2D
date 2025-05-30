@@ -100,17 +100,17 @@ public class Player_Copy : MonoBehaviour
                     else if (PlayerInput.GetKeyDown(KeyCode.Escape)) whichMode = 2;//nothing
                     break;
                 case 0:     //コピーするなら
+                    stageMgr.all_isCut = false;
                     CopyContents(startPos, endPos);
                     CopyObject(startPos, endPos);
                     //all_isCut = false;
-                    stageMgr.all_isCut = false;
                     InitWhichMode();
                     break;
                 case 1:     //カットするなら
+                    stageMgr.all_isCut = true;
                     CopyContents(startPos, endPos, true);
                     CopyObject(startPos, endPos, true);
                     //all_isCut = true;
-                    stageMgr.all_isCut = true;
                     InitWhichMode();
                     break;
                 default:
@@ -127,7 +127,7 @@ public class Player_Copy : MonoBehaviour
         stageMgr.write_cost = 0;
 
         //カットの時のみ使う変数
-        int cut_erase_cost = 0;
+        stageMgr.cut_erase_cost = 0;
 
         //位置をintにする
         Vector3Int _startPos = ChangeVecToInt(sPos);
@@ -144,9 +144,9 @@ public class Player_Copy : MonoBehaviour
 
         //コピーの向きを取得する
         int direction = 0;
-        if (endPos.x - startPos.x >= 0)//右向き
+        if (_endPos.x - _startPos.x >= 0)//右向き
         {
-            if (endPos.y - startPos.y >= 0) //上向き
+            if (_endPos.y - _startPos.y >= 0) //上向き
             {
                 direction = 0;
             }
@@ -157,7 +157,7 @@ public class Player_Copy : MonoBehaviour
         }
         else  //左向き
         {
-            if (endPos.y - startPos.y >= 0) //上向き
+            if (_endPos.y - _startPos.y >= 0) //上向き
             {
                 direction = 3;
             }
@@ -169,7 +169,18 @@ public class Player_Copy : MonoBehaviour
 
         stageMgr.tileData.direction = direction;
 
-        //コピー範囲のtileをコピー
+        CutInCopy(_startPos, _endPos, true);
+        if(stageMgr.all_isCut)
+        {
+            if(stageMgr.cut_erase_cost <= stageMgr.have_ene)
+            {
+                stageMgr.have_ene -= stageMgr.cut_erase_cost; //コスト引く
+                Debug.Log("消すコスト(カット時):" + stageMgr.cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene);
+                CutInCopy(_startPos, _endPos, false);
+            }
+        }
+
+        /*//コピー範囲のtileをコピー
         for (int y = 0; y < height; y++)
         {
             //1列ごとのList
@@ -214,20 +225,11 @@ public class Player_Copy : MonoBehaviour
                     }
                 }
                 tBases.Add(t);
-                
-                /*if (t != null) Debug.Log(t.name);
-                else Debug.Log("null");*/
+                if (t != null) Debug.Log(t.name);
+                else Debug.Log("null");
             }
             stageMgr.tileData.tiles.Add(tBases);
-        }
-        if(isCut)
-        {
-            if(stageMgr.have_ene >= cut_erase_cost) //所持コストから引けるなら
-            {
-                stageMgr.have_ene -= cut_erase_cost; //コスト引く
-            }
-            Debug.Log("消すコスト(カット時):" + cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene);
-        }
+        }*/
     }
 
     //選択範囲のオブジェクトをコピーする関数
@@ -256,6 +258,71 @@ public class Player_Copy : MonoBehaviour
                 stageMgr.objectData.Add(c);
             }
 
+        }
+    }
+
+    public void CutInCopy(Vector3Int _startPos, Vector3 _endPos, bool Count)
+    {
+        //コピー範囲のtileをコピー
+        for (int y = 0; y < stageMgr.tileData.height; y++)
+        {
+            //1列ごとのList
+            List<TileBase> tBases = new List<TileBase>();
+            for (int x = 0; x < stageMgr.tileData.width; x++)
+            {
+                Vector3Int p = Vector3Int.zero;
+                //向きによって取得する
+                switch (stageMgr.tileData.direction)
+                {
+                    case 0:
+                        p = new Vector3Int(
+                        _startPos.x + x,
+                        _startPos.y + y, 0);
+                        break;
+                    case 1:
+                        p = new Vector3Int(
+                        _startPos.x + x,
+                        _startPos.y - y, 0);
+                        break;
+                    case 2:
+                        p = new Vector3Int(
+                        _startPos.x - x,
+                        _startPos.y - y, 0);
+                        break;
+                    case 3:
+                        p = new Vector3Int(
+                        _startPos.x - x,
+                        _startPos.y + y, 0);
+                        break;
+                    default: break;
+                }
+
+                TileBase t = tilemap.GetTile(p);
+                if (tilemap.HasTile(p)) //kyosu もしそのセルがタイルを持っているなら
+                {
+                    if(Count)
+                    {
+                        stageMgr.write_cost += tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(p)).p_ene; // 取得したタイルがタイルパレットのどのタイルかを判別してその消費コストを＋
+                        if (stageMgr.all_isCut)
+                        {
+                            stageMgr.cut_erase_cost += tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(p)).ow_ene;
+                            Debug.Log("消えるコスト" + stageMgr.cut_erase_cost);
+                            //tilemap.SetTile(p, null);
+                        }
+                    }
+                    else
+                    {
+                        if (stageMgr.all_isCut)
+                        {
+                            tilemap.SetTile(p, null);
+                        }
+                    }
+                }
+                tBases.Add(t);
+                /*if (t != null) Debug.Log(t.name);
+                else Debug.Log("null");*/
+            }
+            stageMgr.tileData.tiles.Add(tBases);
         }
     }
 

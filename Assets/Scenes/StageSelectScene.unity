@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   costHeal_timeOut: 0
-  have_ene: 100000000
+  have_ene: 10000
   erase_cost: 0
   write_cost: 0
   cut_erase_cost: 0
