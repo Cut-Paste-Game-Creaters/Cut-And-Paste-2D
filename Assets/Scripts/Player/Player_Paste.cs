@@ -95,14 +95,15 @@ public class Player_Paste : MonoBehaviour
             {
                 stageManager.have_ene -= (stageManager.erase_cost + stageManager.write_cost / divide); //コスト引く
                 CheckCost(true, mPos);
+
+                if (stageManager.all_isCut) //1回のみペーストにする処理
+                {
+                    InitTileData();
+                }
                 Debug.Log("消えるコスト：" + stageManager.erase_cost + "," + "増やすコスト：" + stageManager.write_cost + ", " + "所持コスト：" + stageManager.have_ene);
             }
             Debug.Log("isCut == " + stageManager.all_isCut);
 
-            if (stageManager.all_isCut) //1回のみペーストにする処理
-            {
-                InitTileData();
-            }
         }
     }
 
