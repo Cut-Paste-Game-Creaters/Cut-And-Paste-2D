@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df0fb54223d7f2243845f347edee0df4, type: 3}
+  m_Name: Object Scriptable Object
+  m_EditorClassIdentifier: 
+  tileDataList:
+  - name: switch
+    obj: {fileID: 7654152235285816079, guid: 9053663e2ac49a9448a4ab464c0866f0, type: 3}
+    p_ene: 10
+    ow_ene: 1000
+  - name: bullet
+    obj: {fileID: 8442285199812646893, guid: 5f7cb3d0780f1cc4cb89ab2bffe946b1, type: 3}
+    p_ene: 20
+    ow_ene: 2000
+  - name: cannon
+    obj: {fileID: 1250828036113984986, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
+    p_ene: 30
+    ow_ene: 3000
