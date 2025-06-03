@@ -847,7 +847,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   costHeal_timeOut: 0
-  have_ene: 10000
+  have_ene: 10000000
   erase_cost: 0
   write_cost: 0
   cut_erase_cost: 0
@@ -1215,6 +1215,7 @@ MonoBehaviour:
   stageManager: {fileID: 1475439277}
   frame1: {fileID: 7333870219930048861, guid: d7d2341a525b8754ab5741df97ef5168, type: 3}
   tileSB: {fileID: 11400000, guid: b58413ee8aa87174e8571d021e40d761, type: 2}
+  objSB: {fileID: 11400000, guid: 40ef67a603b5fac418e9ffb6109bef98, type: 2}
 --- !u!1 &1806078378
 GameObject:
   m_ObjectHideFlags: 0

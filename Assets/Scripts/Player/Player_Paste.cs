@@ -10,15 +10,19 @@ public class Player_Paste : MonoBehaviour
     [SerializeField] StageManager stageManager;
     [SerializeField] GameObject frame1;
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
+    [SerializeField] ObjectScriptableObject objSB; //ScriptableObject
+    [SerializeField] GameObject rectPrefab;
 
     private SpriteRenderer sr;
     private Vector3 frameData = Vector3.zero;
+    private GameObject rect;
     // Start is called before the first frame update
     void Start()
     {
         frame1 = Instantiate(frame1);
         sr = frame1.GetComponent<SpriteRenderer>();
         sr.enabled = false;
+        rect = Instantiate(rectPrefab);
     }
 
     // Update is called once per frame
@@ -71,19 +75,22 @@ public class Player_Paste : MonoBehaviour
                 default: break;
             }
 
+            //貼り付け時の消すコストを計算する
+            CheckCost(false, mPos); //タイルセットしないで計算
+            CheckObjectCost(false);      //オブジェクトの消すコストを計算する
+            Debug.Log("erase:"+stageManager.erase_cost);
 
             frame1.transform.position = framePos;
         }
         //右クリックで貼り付け
         if (PlayerInput.GetMouseButtonUp(1))
         {
-            sr.enabled = false;
-            //オブジェクトをペースト
-            PasteObject();
+            sr.enabled = false;     //枠を非表示にする
 
-
-            //タイルをペースト
+            //貼り付け時の消すコストを計算する
             CheckCost(false, mPos); //タイルセットしないで計算
+            CheckObjectCost(false);      //オブジェクトの消すコストを計算する
+            Debug.Log("erase:" + stageManager.erase_cost);
 
             int divide = 1;
             if(stageManager.all_isCut)
@@ -93,16 +100,20 @@ public class Player_Paste : MonoBehaviour
 
             if(stageManager.have_ene >= (stageManager.erase_cost + stageManager.write_cost)) //所持コストから引けるなら
             {
+                Debug.Log("消えるコスト：" + stageManager.erase_cost + "," + "増やすコスト：" + stageManager.write_cost + ", " + "所持コスト：" + stageManager.have_ene);
+
                 stageManager.have_ene -= (stageManager.erase_cost + stageManager.write_cost / divide); //コスト引く
                 CheckCost(true, mPos);
+                CheckObjectCost(true);
+                //オブジェクトをペースト
+                PasteObject();
 
                 if (stageManager.all_isCut) //1回のみペーストにする処理
                 {
                     InitTileData();
                 }
-                Debug.Log("消えるコスト：" + stageManager.erase_cost + "," + "増やすコスト：" + stageManager.write_cost + ", " + "所持コスト：" + stageManager.have_ene);
             }
-            Debug.Log("isCut == " + stageManager.all_isCut);
+            //Debug.Log("isCut == " + stageManager.all_isCut);
 
         }
     }
@@ -132,6 +143,98 @@ public class Player_Paste : MonoBehaviour
 
     }
 
+    public void CheckCost(bool isSetTile, Vector3Int mPos)
+    {
+        //if(!isSetTile)stageManager.erase_cost = 0;
+        //タイルをペースト
+        for (int y = 0; y < stageManager.tileData.height; y++)
+        {
+            for (int x = 0; x < stageManager.tileData.width; x++)
+            {
+                //コピーしたときの方向によって原点が異なる
+                Vector3Int _p = Vector3Int.zero;
+                switch (stageManager.tileData.direction)
+                {
+                    case 0:
+                        _p = new Vector3Int(mPos.x + x, mPos.y + y, 0);
+                        break;
+                    case 1:
+                        _p = new Vector3Int(mPos.x + x, mPos.y - y, 0);
+                        break;
+                    case 2:
+                        _p = new Vector3Int(mPos.x - x, mPos.y - y, 0);
+                        break;
+                    case 3:
+                        _p = new Vector3Int(mPos.x - x, mPos.y + y, 0);
+                        break;
+                    default: break;
+                }
+
+                if (isSetTile)
+                {
+                    tilemap.SetTile(_p, stageManager.tileData.tiles[y][x]);
+                }
+                else
+                {
+                    if (tilemap.HasTile(_p)) //kyosu もしそのセルがタイルを持っているなら
+                    {
+                        stageManager.erase_cost += tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(_p)).ow_ene; // 取得したタイルがタイルパレットのどのタイルかを判別してその消費コストを＋
+                        
+                    }
+                }
+            }
+        }
+    }
+
+    public void CheckObjectCost(bool isErase)
+    {
+        Vector3Int _p = Vector3Int.zero;
+        Vector3Int mPos = ChangeVecToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        int w = stageManager.tileData.width;
+        int h = stageManager.tileData.height + 1;
+
+        
+        //範囲を計算する
+        switch (stageManager.tileData.direction)
+        {
+            case 0:
+                _p = new Vector3Int(mPos.x + w, mPos.y + h, 0);
+                break;
+            case 1:
+                _p = new Vector3Int(mPos.x + w, mPos.y - h, 0);
+                break;
+            case 2:
+                _p = new Vector3Int(mPos.x - w, mPos.y - h, 0);
+                break;
+            case 3:
+                _p = new Vector3Int(mPos.x - w, mPos.y + h, 0);
+                break;
+            default: break;
+        }
+
+        //デバッグ用　多分選択範囲を示している
+        rect.transform.position = (mPos + _p) / 2;
+        rect.transform.localScale = new Vector3(Mathf.Abs(_p.x - mPos.x), Mathf.Abs(_p.y - mPos.y), 1);
+
+
+        Collider2D[] cols = Physics2D.OverlapAreaAll(
+            new Vector2(mPos.x,mPos.y), new Vector2(_p.x,_p.y)
+            );
+        //上書き範囲内のコライダーの消すコストを計算する
+        foreach(var col in cols)
+        {
+            if (col.gameObject.tag != "Tilemap"
+                && col.gameObject.tag != "Player"
+                && col.gameObject.tag != "Uncuttable")
+            {
+                Debug.Log("erase:" + col.gameObject.name);
+                if (!isErase) stageManager.erase_cost += objSB.objectList.Single(t => t.obj.tag == col.gameObject.tag).ow_ene;
+                else Destroy(col.gameObject);       //上書きするオブジェクトを消す
+            }
+                
+        }
+    }
+
     public Vector3Int ChangeVecToInt(Vector3 v)
     {
         Vector3Int pos = Vector3Int.zero;
@@ -146,51 +249,10 @@ public class Player_Paste : MonoBehaviour
     {
         stageManager.tileData.tiles = new List<List<TileBase>>();
         stageManager.tileData.width = 0;
-        stageManager.tileData.height = 0;   
+        stageManager.tileData.height = 0;
         stageManager.tileData.hasData = false;
 
         stageManager.objectData = new List<StageManager.ObjectData>();
-    }
-
-    public void CheckCost(bool isSetTile, Vector3Int mPos)
-    {
-        //タイルをペースト
-            for (int y = 0; y < stageManager.tileData.height; y++)
-            {
-                for (int x = 0; x < stageManager.tileData.width; x++)
-                {
-                    //コピーしたときの方向によって原点が異なる
-                    Vector3Int _p = Vector3Int.zero;
-                    switch (stageManager.tileData.direction)
-                    {
-                        case 0:
-                            _p = new Vector3Int(mPos.x + x, mPos.y + y, 0);
-                            break;
-                        case 1:
-                            _p = new Vector3Int(mPos.x + x, mPos.y - y, 0);
-                            break;
-                        case 2:
-                            _p = new Vector3Int(mPos.x - x, mPos.y - y, 0);
-                            break;
-                        case 3:
-                            _p = new Vector3Int(mPos.x - x, mPos.y + y, 0);
-                            break;
-                        default: break;
-                    }
-
-                    if(isSetTile)
-                    {
-                        tilemap.SetTile(_p, stageManager.tileData.tiles[y][x]);
-                    }
-                    else
-                    {
-                        if (tilemap.HasTile(_p)) //kyosu もしそのセルがタイルを持っているなら
-                        {
-                            stageManager.erase_cost += tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(_p)).ow_ene; // 取得したタイルがタイルパレットのどのタイルかを判別してその消費コストを＋
-                        }
-                    }
-                }
-            }
     }
 }
 

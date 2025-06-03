@@ -29,7 +29,7 @@ public class StageManager : MonoBehaviour
     public struct TileData
     {
         //現時点でw : 32, h : 18
-        public int width;
+        public int width;       //幅、高さはマスの個数
         public int height;
         public int direction;   //0右上、1右下、2左下、3左上
         public List<List<TileBase>> tiles;
