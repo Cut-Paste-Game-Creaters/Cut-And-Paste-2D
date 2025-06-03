@@ -178,6 +178,11 @@ public class Player_Copy : MonoBehaviour
                 Debug.Log("消すコスト(カット時):" + stageMgr.cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene);
                 CutInCopy(_startPos, _endPos, false);
             }
+            else
+            {
+                InitTileData();
+                Debug.Log("カットできません！");
+            }
         }
 
     }
@@ -296,6 +301,16 @@ public class Player_Copy : MonoBehaviour
     {
         list = new List<List<TileBase>>();
         stageMgr.tileData.hasData = false;
+    }
+
+    void InitTileData()
+    {
+        stageMgr.tileData.tiles = new List<List<TileBase>>();
+        stageMgr.tileData.width = 0;
+        stageMgr.tileData.height = 0;
+        stageMgr.tileData.hasData = false;
+
+        stageMgr.objectData = new List<StageManager.ObjectData>();
     }
 
     //マウスの座標をタイルの座標に変換する関数
