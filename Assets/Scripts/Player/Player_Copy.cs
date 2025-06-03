@@ -12,6 +12,7 @@ public class Player_Copy : MonoBehaviour
     [SerializeField] GameObject anounce;
     [SerializeField] StageManager stageMgr;
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
+    [SerializeField] ObjectScriptableObject objSB;
 
     private Vector3 startPos = Vector3.zero;
     private Vector3 endPos = Vector3.zero;
@@ -166,17 +167,26 @@ public class Player_Copy : MonoBehaviour
                 direction = 2;
             }
         }
-
         stageMgr.tileData.direction = direction;
 
+        //タイルのコストを計算する
         CutInCopy(_startPos, _endPos, true);
-        if(stageMgr.all_isCut)
+
+        //オブジェクトのコスト計算をする
+        Collider2D[] cols = Physics2D.OverlapAreaAll(startPos, endPos);
+        stageMgr.objectData = new List<StageManager.ObjectData>();
+        CutInCopyObject(cols, true);
+
+        //カットであるかそうでないかで分ける
+        if (stageMgr.all_isCut)
         {
+            //消すコストが所持コストより小さいなら
             if(stageMgr.cut_erase_cost <= stageMgr.have_ene)
             {
                 stageMgr.have_ene -= stageMgr.cut_erase_cost; //コスト引く
                 Debug.Log("消すコスト(カット時):" + stageMgr.cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene);
                 CutInCopy(_startPos, _endPos, false);
+                CutInCopyObject(cols, false);
             }
             else
             {
@@ -184,33 +194,49 @@ public class Player_Copy : MonoBehaviour
                 Debug.Log("カットできません！");
             }
         }
+        else
+        {
+            CutInCopyObject(cols, false);
+        }
 
     }
 
     //選択範囲のオブジェクトをコピーする関数
     public void CopyObject(Vector3 startPos, Vector3 endPos, bool isCut = false)
     {
-        Collider2D[] cols = Physics2D.OverlapAreaAll(startPos, endPos);
-        stageMgr.objectData = new List<StageManager.ObjectData>();
+        
+    }
+
+    public void CutInCopyObject(Collider2D[] cols,bool isFirst)
+    {
         foreach (var col in cols)
         {
             if (col.gameObject.tag != "Tilemap"
                 && col.gameObject.tag != "Player"
                 && col.gameObject.tag != "Uncuttable")
             {
-                Debug.Log(col.gameObject.name);
-                StageManager.ObjectData c = new StageManager.ObjectData();
-                if (!isCut)
+                if (isFirst)    //一週目
                 {
-                    c.obj = Instantiate(col.gameObject);
+                    //tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(p)).p_ene;
+                    stageMgr.write_cost += objSB.objectList.Single(t => t.obj.tag == col.gameObject.tag).p_ene;
+                    if (stageMgr.all_isCut) stageMgr.cut_erase_cost += objSB.objectList.Single(t => t.obj.tag == col.gameObject.tag).ow_ene;
                 }
-                else
+                else            //二週目
                 {
-                    c.obj = col.gameObject;
+                    //Debug.Log(col.gameObject.name);
+                    StageManager.ObjectData c = new StageManager.ObjectData();
+                    if (!stageMgr.all_isCut)
+                    {
+                        c.obj = Instantiate(col.gameObject);
+                    }
+                    else
+                    {
+                        c.obj = col.gameObject;
+                    }
+                    c.pos = col.gameObject.transform.position - ChangeVecToInt(startPos);
+                    c.obj.SetActive(false);
+                    stageMgr.objectData.Add(c);
                 }
-                c.pos = col.gameObject.transform.position - ChangeVecToInt(startPos);
-                c.obj.SetActive(false);
-                stageMgr.objectData.Add(c);
             }
 
         }
