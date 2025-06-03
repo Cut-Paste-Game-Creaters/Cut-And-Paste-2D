@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu(menuName = "OSO")]
 public class ObjectScriptableObject : ScriptableObject
 {
-    public List<ObjectStore> tileDataList = new List<ObjectStore>();
+    public List<ObjectStore> objectList = new List<ObjectStore>();
 }
 [Serializable]
 public class ObjectStore

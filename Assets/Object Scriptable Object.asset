@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0fb54223d7f2243845f347edee0df4, type: 3}
   m_Name: Object Scriptable Object
   m_EditorClassIdentifier: 
-  tileDataList:
+  objectList:
   - name: switch
     obj: {fileID: 7654152235285816079, guid: 9053663e2ac49a9448a4ab464c0866f0, type: 3}
     p_ene: 10
