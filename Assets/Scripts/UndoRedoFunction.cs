@@ -12,7 +12,7 @@ public class UndoRedoFunc : MonoBehaviour
     Stack<AllStageInfoList> undoStack = new Stack<AllStageInfoList>();
     Stack<AllStageInfoList> redoStack = new Stack<AllStageInfoList>();
 
-    BoundsInt b; //ステージの全タイルの大きさ情報
+    //BoundsInt b; //ステージの全タイルの大きさ情報
 
     void Awake()
     {
@@ -46,9 +46,9 @@ public class UndoRedoFunc : MonoBehaviour
 
         allStageInfo.stageTileData = RecordStageHistory(); //一枚分の全情報のクラスのタイルデータ部分に保存
         allStageInfo.have_ene = stageMgr.have_ene;
-        //allStageInfo.stageObjState = RecordObjectState();
+        allStageInfo.stageObjState = RecordObjectState();
         undoStack.Push(allStageInfo);
-        //Debug.Log(undoStack.Count);
+        Debug.Log(undoStack.Count);
     }
 
     public AllStageTileData RecordStageHistory()
@@ -84,27 +84,26 @@ public class UndoRedoFunc : MonoBehaviour
         var b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
 
         Collider2D[] cols = Physics2D.OverlapAreaAll(new Vector2(-((32 / 2) + 1), -((18 / 2) + 1)), new Vector2(b.size.x, b.size.y));
-        foreach (var col in cols)
+        foreach(var col in cols)
         {
-            if (col.gameObject.tag != "Tilemap"
+            if(col.gameObject.tag != "Tilemap"
                 && col.gameObject.tag != "Player"
                 && col.gameObject.tag != "Uncuttable")
-                {
-
+            {
                 StageOblectState stageObjState = new StageOblectState();
 
+                /*
+                Prefabの名前は同じ種類なら同じ名前にする　switch(1)などはまだ対応できてない
+                */
+                stageObjState.prefabName = col.name.Replace("(Clone)", "").Trim(); //prefabの名前を保存 (Clone)が付いていたらそれを削除
+                Debug.Log(stageObjState.prefabName);
                 stageObjState.objPosition = col.gameObject.transform.position;
-
-                /*if(col.GameObject.tag == switch)
-                {
-                    
-                }*/
+                stageObjState.objRotation = col.gameObject.transform.rotation;
 
                 //全部情報入れたら最後にAdd
                 stageObjStateList.Add(stageObjState);
-                }
+            }
         }
-
         return stageObjStateList;
     }
 
@@ -115,7 +114,7 @@ public class UndoRedoFunc : MonoBehaviour
             redoStack.Push(undoStack.Pop());
             UndoTileData();
             UndoCost();
-            //UndoObjState();
+            UndoObjState();
         }
     }
 
@@ -125,25 +124,34 @@ public class UndoRedoFunc : MonoBehaviour
 
         tilemap.CompressBounds(); //タイルを最小まで圧縮
         var b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
-        
+
+        /*画面上オブジェクト削除*/
         Collider2D[] cols = Physics2D.OverlapAreaAll(new Vector2(-((32 / 2) + 1), -((18 / 2) + 1)), new Vector2(b.size.x, b.size.y));
         foreach (var col in cols)
         {
             //ここでどのオブジェクトに流し込むのか判定が必要
-            foreach(var objects in pre_objList)
-            {
-                //if(col.id == objects.id)
-                if (col.gameObject.tag != "Tilemap"
+            if(col.gameObject.tag != "Tilemap"
                 && col.gameObject.tag != "Player"
                 && col.gameObject.tag != "Uncuttable")
-                {
-                    col.gameObject.transform.position = objects.objPosition; //positionを入れる
-                }
-
-            /*if(col.GameObject.tag == switch)
             {
-                
-            }*/
+                Destroy(col.gameObject);
+                Debug.Log(col.gameObject.name + "を削除しました.");
+            }
+        }
+
+        /*画面上オブジェクト生成*/
+        foreach (var obj in pre_objList)
+        {
+            GameObject prefab = Resources.Load<GameObject>("Prefabs/" + obj.prefabName); //Resources/Prefabsフォルダから名前が同じのprefabを探す
+            Debug.Log(obj.prefabName);
+
+            if(prefab != null)
+            {
+                GameObject g_prefab;
+                g_prefab = Instantiate(prefab, obj.objPosition, obj.objRotation);
+                g_prefab.name = obj.prefabName;
+                Debug.Log(prefab.name + "を生成しました.");
+                //g_prefab.hp = 100;
             }
         }
     }
@@ -184,9 +192,9 @@ public class UndoRedoFunc : MonoBehaviour
     public class StageOblectState
     {
         //共通情報
-        public string id; //保存した情報をどれに入れるのか一致させるために必要
+        public string prefabName; //保存した情報をどれに入れるのか一致させるために必要
         public Vector3 objPosition;
-        public Quaternion rotation;
+        public Quaternion objRotation;
 
         //プレイヤー
         public int hp;
