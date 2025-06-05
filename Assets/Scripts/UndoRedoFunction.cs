@@ -1,0 +1,202 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Tilemaps;
+
+public class UndoRedoFunc : MonoBehaviour
+{
+    [SerializeField] Tilemap tilemap; //保存したいtilemap
+    [SerializeField] TileScriptableObject tileSB; //ScriptableObject
+    [SerializeField] StageManager stageMgr;
+
+    Stack<AllStageInfoList> undoStack = new Stack<AllStageInfoList>();
+    Stack<AllStageInfoList> redoStack = new Stack<AllStageInfoList>();
+
+    BoundsInt b; //ステージの全タイルの大きさ情報
+
+    void Awake()
+    {
+        InfoPushToStack(); //Awake()でやってるけど本当は「ステージシーンが読み込まれたとき」に1回呼び出す
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        //tilemap.CompressBounds(); //タイルを最小まで圧縮
+        //b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(PlayerInput.GetKeyDown(KeyCode.Alpha1)) //1ボタンが押されたら保存
+        {
+            InfoPushToStack();
+        }
+        if(PlayerInput.GetKey(KeyCode.Z) && PlayerInput.GetKeyDown(KeyCode.LeftShift) ||
+                PlayerInput.GetKeyDown(KeyCode.Z) && PlayerInput.GetKey(KeyCode.LeftShift)) //Shift+Zボタンが押されたらUndo
+        {
+            Undo();
+        }
+    }
+
+    public void InfoPushToStack()
+    {
+        AllStageInfoList allStageInfo = new AllStageInfoList(); //一枚分のステージ, オブジェクトなど全情報
+
+        allStageInfo.stageTileData = RecordStageHistory(); //一枚分の全情報のクラスのタイルデータ部分に保存
+        allStageInfo.have_ene = stageMgr.have_ene;
+        //allStageInfo.stageObjState = RecordObjectState();
+        undoStack.Push(allStageInfo);
+        //Debug.Log(undoStack.Count);
+    }
+
+    public AllStageTileData RecordStageHistory()
+    {
+        AllStageTileData allTileData = new AllStageTileData(); //1枚分のステージデータ
+
+        tilemap.CompressBounds(); //タイルを最小まで圧縮
+        var b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
+        allTileData.width = b.size.x;
+        allTileData.height = b.size.y;
+        Debug.Log(b.size.x +  "," + b.size.y);
+
+        for(int i = 0; i < b.size.y; i++)
+        {
+            List<TileBase> tBases = new List<TileBase>();
+            for(int j = 0; j < b.size.x; j++)
+            {
+                // オフセット付きのローカル座標から絶対タイル座標を計算
+                Vector3Int tilePos = new Vector3Int(b.x + j, b.y + i, 0);
+                TileBase t = tilemap.GetTile(tilePos);
+                tBases.Add(t);
+            }
+            allTileData.tiles.Add(tBases);
+        }
+        return allTileData;
+    }
+
+    public List<StageOblectState> RecordObjectState()
+    {
+        List<StageOblectState> stageObjStateList = new List<StageOblectState>();
+
+        tilemap.CompressBounds(); //タイルを最小まで圧縮
+        var b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
+
+        Collider2D[] cols = Physics2D.OverlapAreaAll(new Vector2(-((32 / 2) + 1), -((18 / 2) + 1)), new Vector2(b.size.x, b.size.y));
+        foreach (var col in cols)
+        {
+            if (col.gameObject.tag != "Tilemap"
+                && col.gameObject.tag != "Player"
+                && col.gameObject.tag != "Uncuttable")
+                {
+
+                StageOblectState stageObjState = new StageOblectState();
+
+                stageObjState.objPosition = col.gameObject.transform.position;
+
+                /*if(col.GameObject.tag == switch)
+                {
+                    
+                }*/
+
+                //全部情報入れたら最後にAdd
+                stageObjStateList.Add(stageObjState);
+                }
+        }
+
+        return stageObjStateList;
+    }
+
+    public void Undo()
+    {
+        if(undoStack.Count > 1)
+        {
+            redoStack.Push(undoStack.Pop());
+            UndoTileData();
+            UndoCost();
+            //UndoObjState();
+        }
+    }
+
+    public void UndoObjState()
+    {
+        List<StageOblectState> pre_objList = undoStack.Peek().stageObjState;
+
+        tilemap.CompressBounds(); //タイルを最小まで圧縮
+        var b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
+        
+        Collider2D[] cols = Physics2D.OverlapAreaAll(new Vector2(-((32 / 2) + 1), -((18 / 2) + 1)), new Vector2(b.size.x, b.size.y));
+        foreach (var col in cols)
+        {
+            //ここでどのオブジェクトに流し込むのか判定が必要
+            foreach(var objects in pre_objList)
+            {
+                //if(col.id == objects.id)
+                if (col.gameObject.tag != "Tilemap"
+                && col.gameObject.tag != "Player"
+                && col.gameObject.tag != "Uncuttable")
+                {
+                    col.gameObject.transform.position = objects.objPosition; //positionを入れる
+                }
+
+            /*if(col.GameObject.tag == switch)
+            {
+                
+            }*/
+            }
+        }
+    }
+
+    public void UndoCost()
+    {
+        int pre_cost = undoStack.Peek().have_ene;
+        stageMgr.have_ene = pre_cost;
+        Debug.Log("所持コスト：" + stageMgr.have_ene + "に戻りました.");
+    }
+
+    public void UndoTileData()
+    {
+        
+            //redoStack.Push(undoStack.Pop());
+            tilemap.ClearAllTiles();
+
+            AllStageTileData stageTileData = undoStack.Peek().stageTileData;
+
+            for(int i = 0; i < stageTileData.height; i++)
+            {
+                for(int j = 0; j < stageTileData.width; j++)
+                {
+                    tilemap.SetTile(new Vector3Int(j - ((32 / 2) + 1), i - ((18 / 2) + 1)), stageTileData.tiles[i][j]); //カメラの高さor幅 / 2　+ 1
+                }
+            }
+            Debug.Log("1つ前に戻りました");
+    }
+
+    //ステージ全体のタイルを格納するクラス
+    public class AllStageTileData
+    {
+        //現時点でw : 32, h : 18
+        public int width;
+        public int height;
+        public List<List<TileBase>> tiles = new List<List<TileBase>>();
+    }
+    public class StageOblectState
+    {
+        //共通情報
+        public string id; //保存した情報をどれに入れるのか一致させるために必要
+        public Vector3 objPosition;
+        public Quaternion rotation;
+
+        //プレイヤー
+        public int hp;
+
+        //これ以降必要な情報追加する
+    }
+    public class AllStageInfoList
+    {
+        public AllStageTileData stageTileData = new AllStageTileData();
+        public int have_ene = 0;
+        public List<StageOblectState> stageObjState = new List<StageOblectState>();
+    }
+}
