@@ -631,7 +631,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 495081184}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -847,7 +847,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   costHeal_timeOut: 0
-  have_ene: 10000
+  have_ene: 10000000
   erase_cost: 0
   write_cost: 0
   cut_erase_cost: 0
@@ -1084,7 +1084,7 @@ Transform:
   m_GameObject: {fileID: 1705879687}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.3, y: -4.74, z: 0}
+  m_LocalPosition: {x: -12.49, y: -4.74, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1215,6 +1215,8 @@ MonoBehaviour:
   stageManager: {fileID: 1475439277}
   frame1: {fileID: 7333870219930048861, guid: d7d2341a525b8754ab5741df97ef5168, type: 3}
   tileSB: {fileID: 11400000, guid: b58413ee8aa87174e8571d021e40d761, type: 2}
+  objSB: {fileID: 11400000, guid: 40ef67a603b5fac418e9ffb6109bef98, type: 2}
+  rectPrefab: {fileID: 2321798754859510182, guid: 84927f04a2f8a8c429d35fc633aa17a6, type: 3}
 --- !u!1 &1806078378
 GameObject:
   m_ObjectHideFlags: 0
@@ -5142,7 +5144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1911704669
 Transform:
   m_ObjectHideFlags: 0
