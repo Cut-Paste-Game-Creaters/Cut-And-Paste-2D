@@ -90,8 +90,15 @@ public class Player_Move : MonoBehaviour
 
     bool IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.down, groundCheckDistance, groundLayer);
-        Debug.DrawRay(this.transform.position, Vector2.down * groundCheckDistance, Color.red);
-        return hit.collider != null;
+        Vector3 pos = this.transform.position;
+        Vector3 dif = new Vector3(0.5f, 0, 0);
+        RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.down, groundCheckDistance, groundLayer);
+        RaycastHit2D hitR = Physics2D.Raycast(pos+dif, Vector2.down, groundCheckDistance, groundLayer);
+        RaycastHit2D hitL = Physics2D.Raycast(pos-dif, Vector2.down, groundCheckDistance, groundLayer);
+        Debug.DrawRay(pos, Vector2.down * groundCheckDistance, Color.red);
+        Debug.DrawRay(pos+dif, Vector2.down * groundCheckDistance, Color.red);
+        Debug.DrawRay(pos-dif, Vector2.down * groundCheckDistance, Color.red);
+        Debug.Log("hit" + hit.collider);
+        return hit.collider != null || hitR.collider != null || hitL.collider != null;
     }
 }
