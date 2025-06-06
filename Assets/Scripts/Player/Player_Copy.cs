@@ -197,6 +197,7 @@ public class Player_Copy : MonoBehaviour
         else
         {
             CutInCopyObject(cols, false);
+            Debug.Log("消すコスト(カット時):" + stageMgr.cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene);
         }
 
     }
