@@ -102,9 +102,10 @@ public class Player_Paste : MonoBehaviour
 
             if(stageManager.have_ene >= (stageManager.erase_cost + stageManager.write_cost)) //所持コストから引けるなら
             {
-                Debug.Log("消えるコスト：" + stageManager.erase_cost + "," + "増やすコスト：" + stageManager.write_cost + ", " + "所持コスト：" + stageManager.have_ene);
-
                 stageManager.have_ene -= (stageManager.erase_cost + stageManager.write_cost / divide); //コスト引く
+                stageManager.all_sum_cos += (stageManager.erase_cost + stageManager.write_cost / divide); //総消費コストに加算
+                Debug.Log("消えるコスト：" + stageManager.erase_cost + "," + "増やすコスト：" + stageManager.write_cost / divide + ", " + "所持コスト：" + stageManager.have_ene);
+                Debug.Log("総消費コスト：" + stageManager.all_sum_cos);
                 CheckCost(true, mPos);
                 CheckObjectCost(true);
                 //オブジェクトをペースト
