@@ -7,13 +7,13 @@ using System.Linq;
 
 public class Player_Copy : MonoBehaviour
 {
-    [SerializeField] Tilemap tilemap;
     [SerializeField] GameObject frame2;
     [SerializeField] GameObject anounce;
-    [SerializeField] StageManager stageMgr;
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
     [SerializeField] ObjectScriptableObject objSB;
 
+    private Tilemap tilemap;
+    private StageManager stageMgr;
     private Vector3 startPos = Vector3.zero;
     private Vector3 endPos = Vector3.zero;
     private bool isDrawing = false;
@@ -29,6 +29,8 @@ public class Player_Copy : MonoBehaviour
         frame2.SetActive(false);
         anounce = Instantiate(anounce);
         anounce.SetActive(false);
+        tilemap = FindObjectOfType<Tilemap>();
+        stageMgr = FindObjectOfType<StageManager>();
     }
 
     // Update is called once per frame

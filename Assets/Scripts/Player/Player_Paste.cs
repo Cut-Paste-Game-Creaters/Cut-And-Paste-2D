@@ -6,23 +6,25 @@ using System.Linq;
 
 public class Player_Paste : MonoBehaviour
 {
-    [SerializeField] Tilemap tilemap;
-    [SerializeField] StageManager stageManager;
     [SerializeField] GameObject frame1;
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
     [SerializeField] ObjectScriptableObject objSB; //ScriptableObject
-    [SerializeField] GameObject rectPrefab;
+    //[SerializeField] GameObject rectPrefab;
 
+    private Tilemap tilemap;
+    private StageManager stageManager;
     private SpriteRenderer sr;
     private Vector3 frameData = Vector3.zero;
-    private GameObject rect;
+    //private GameObject rect;
     // Start is called before the first frame update
     void Start()
     {
         frame1 = Instantiate(frame1);
         sr = frame1.GetComponent<SpriteRenderer>();
         sr.enabled = false;
-        rect = Instantiate(rectPrefab);
+        //rect = Instantiate(rectPrefab);
+        tilemap = FindObjectOfType<Tilemap>();
+        stageManager = FindObjectOfType<StageManager>();
     }
 
     // Update is called once per frame
@@ -189,9 +191,10 @@ public class Player_Paste : MonoBehaviour
     public void CheckObjectCost(bool isErase)
     {
         Vector3Int _p = Vector3Int.zero;
-        Vector3Int mPos = ChangeVecToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        Vector3Int mPos = ChangeVecToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition)
+            ,stageManager.tileData.direction);
         int w = stageManager.tileData.width;
-        int h = stageManager.tileData.height + 1;
+        int h = stageManager.tileData.height;
 
         
         //範囲を計算する
@@ -213,8 +216,8 @@ public class Player_Paste : MonoBehaviour
         }
 
         //デバッグ用　多分選択範囲を示している
-        rect.transform.position = (mPos + _p) / 2;
-        rect.transform.localScale = new Vector3(Mathf.Abs(_p.x - mPos.x), Mathf.Abs(_p.y - mPos.y), 1);
+        //rect.transform.position = (mPos + _p) / 2;
+        //rect.transform.localScale = new Vector3(Mathf.Abs(_p.x - mPos.x), Mathf.Abs(_p.y - mPos.y), 1);
 
 
         Collider2D[] cols = Physics2D.OverlapAreaAll(
@@ -241,6 +244,29 @@ public class Player_Paste : MonoBehaviour
         pos.x = (int)Mathf.Floor(v.x);
         pos.y = (int)Mathf.Floor(v.y);
         //pos.z = (int)Mathf.Floor(v.z);
+
+        return pos;
+    }
+
+    public Vector3Int ChangeVecToInt(Vector3 v,int dir)
+    {
+        Vector3Int pos = Vector3Int.zero;
+        switch (dir)
+        {
+            case 0:     //右上にコピー　つまり左下にキャスト
+                pos = new Vector3Int((int)Mathf.Floor(v.x),(int)Mathf.Floor(v.y),0);
+                break;
+            case 1:     //右下にコピー　つまり左上にキャスト
+                pos = new Vector3Int((int)Mathf.Floor(v.x), (int)Mathf.Ceil(v.y),0);
+                break;
+            case 2:     //左下にコピー　つまり右上にキャスト
+                pos = new Vector3Int((int)Mathf.Ceil(v.x), (int)Mathf.Ceil(v.y), 0);
+                break;
+            case 3:     //左上にコピー　つまり右下にキャスト
+                pos = new Vector3Int((int)Mathf.Ceil(v.x), (int)Mathf.Floor(v.y), 0);
+                break;
+            default:break;
+        }
 
         return pos;
     }

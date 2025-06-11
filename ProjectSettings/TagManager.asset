@@ -8,6 +8,8 @@ TagManager:
   - Switch
   - Cannon
   - Bullet
+  - Door
+  - WarpDoor
   layers:
   - Default
   - TransparentFX
