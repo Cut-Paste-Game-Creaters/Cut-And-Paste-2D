@@ -5,14 +5,13 @@ using UnityEngine.Tilemaps;
 
 public class CameraMove : MonoBehaviour
 {
-    [SerializeField]
-    GameObject player;
-    [SerializeField]
-    Tilemap tilemap;
+    private GameObject player;
+    private Tilemap tilemap;
     // Start is called before the first frame update
     void Start()
     {
-        
+        tilemap = FindObjectOfType<Tilemap>();
+        player = GameObject.FindWithTag("Player");
     }
 
     // Update is called once per frame
