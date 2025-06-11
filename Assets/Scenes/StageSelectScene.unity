@@ -1264,6 +1264,50 @@ MonoBehaviour:
   tileSB: {fileID: 11400000, guid: b58413ee8aa87174e8571d021e40d761, type: 2}
   objSB: {fileID: 11400000, guid: 40ef67a603b5fac418e9ffb6109bef98, type: 2}
   rectPrefab: {fileID: 2321798754859510182, guid: 84927f04a2f8a8c429d35fc633aa17a6, type: 3}
+--- !u!1 &1797444964
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1797444966}
+  - component: {fileID: 1797444965}
+  m_Layer: 0
+  m_Name: JudgeAndUpdateFunction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1797444965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797444964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48d9c689d99cd41409fe790a6f0fb01a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1797444966
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797444964}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.0211726, y: 0.40137196, z: 0.0042230426}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1806078378
 GameObject:
   m_ObjectHideFlags: 0
@@ -5325,3 +5369,4 @@ SceneRoots:
   - {fileID: 1406785026}
   - {fileID: 2120387311}
   - {fileID: 794371244}
+  - {fileID: 1797444966}
