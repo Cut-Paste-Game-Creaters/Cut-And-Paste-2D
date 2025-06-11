@@ -98,7 +98,7 @@ public class Player_Move : MonoBehaviour
         Debug.DrawRay(pos, Vector2.down * groundCheckDistance, Color.red);
         Debug.DrawRay(pos+dif, Vector2.down * groundCheckDistance, Color.red);
         Debug.DrawRay(pos-dif, Vector2.down * groundCheckDistance, Color.red);
-        Debug.Log("hit" + hit.collider);
+        //Debug.Log("hit" + hit.collider);
         return hit.collider != null || hitR.collider != null || hitL.collider != null;
     }
 }

@@ -11,6 +11,9 @@ public class StageManager : MonoBehaviour
     public TileData tileData = new TileData(0, 0);
     public List<ObjectData> objectData = new List<ObjectData>();
 
+    /*プレイヤー関連*/
+    public int player_HP = 100;
+
     /*コスト関連*/
     [SerializeField]private float costHeal_timeOut; //costが回復する間隔
 	private float timeElapsed;
