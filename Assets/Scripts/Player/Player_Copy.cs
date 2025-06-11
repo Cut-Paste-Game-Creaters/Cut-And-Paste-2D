@@ -186,7 +186,8 @@ public class Player_Copy : MonoBehaviour
             if(stageMgr.cut_erase_cost <= stageMgr.have_ene)
             {
                 stageMgr.have_ene -= stageMgr.cut_erase_cost; //コスト引く
-                Debug.Log("消すコスト(カット時):" + stageMgr.cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene);
+                stageMgr.all_sum_cos += stageMgr.cut_erase_cost; //総消費コストに加算
+                Debug.Log("消すコスト(カット時):" + stageMgr.cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene + ", " + "総消費コスト：" + stageMgr.all_sum_cos);
                 CutInCopy(_startPos, _endPos, false);
                 CutInCopyObject(cols, false);
             }

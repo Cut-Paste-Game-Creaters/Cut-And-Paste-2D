@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class RankJudgeAndUpdateFunction : MonoBehaviour
 {
-    private int allCost = 24; //テスト用変数（総消費コスト
+    private StageManager stageMgr;
+    //private int allCost = 24; //テスト用変数（総消費コスト
     private int[,] stageRank = {{25, 50, 75, 100}, //stage1のランク基準数値
                                 {30, 60, 90, 120}, //stage2のランク基準数値
                                 {25, 50, 75, 100}, //stage3のランク基準数値
@@ -38,7 +39,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        stageMgr = FindObjectOfType<StageManager>();
     }
 
     // Update is called once per frame
@@ -47,7 +48,8 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         //ゴールしたら
         if(PlayerInput.GetKeyDown(KeyCode.Alpha2))
         {
-            JudgeAndUpdateRank(allCost);
+            JudgeAndUpdateRank(stageMgr.all_sum_cos);
+            stageMgr.all_sum_cos = 0;
         }
     }
 
