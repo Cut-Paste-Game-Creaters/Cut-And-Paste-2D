@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using UnityEngine.Tilemaps;
 using System.Linq;
@@ -11,7 +13,7 @@ public class Player_Copy : MonoBehaviour
     [SerializeField] GameObject anounce;
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
     [SerializeField] ObjectScriptableObject objSB;
-
+        
     private Tilemap tilemap;
     private StageManager stageMgr;
     private Vector3 startPos = Vector3.zero;
@@ -27,10 +29,12 @@ public class Player_Copy : MonoBehaviour
     {
         frame2 = Instantiate(frame2);
         frame2.SetActive(false);
-        anounce = Instantiate(anounce);
-        anounce.SetActive(false);
+        //anounce = Instantiate(anounce);
+        //anounce.SetActive(false);
         tilemap = FindObjectOfType<Tilemap>();
         stageMgr = FindObjectOfType<StageManager>();
+
+        anounce.SetActive(false);
     }
 
     // Update is called once per frame
