@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseFunction : MonoBehaviour
+public class PauseInStage : MonoBehaviour
 {
-    [SerializeField] GameObject backScreen;
     [SerializeField] Canvas canvas;
     // Start is called before the first frame update
     void Start()
     {
-        backScreen.SetActive(false);
         canvas.enabled = false;
     }
 
@@ -21,7 +19,6 @@ public class PauseFunction : MonoBehaviour
             new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + 1);
         if (PlayerInput.GetKeyDown(KeyCode.Escape))
         {
-            backScreen.SetActive(true);
             canvas.enabled = true;
             PlayerInput.isPausing = true;
             Time.timeScale = 0f;
@@ -30,7 +27,6 @@ public class PauseFunction : MonoBehaviour
 
     public void PauseOff()
     {
-        backScreen.SetActive(false);
         canvas.enabled = false;
         PlayerInput.isPausing = false;
         Time.timeScale = 1.0f;
