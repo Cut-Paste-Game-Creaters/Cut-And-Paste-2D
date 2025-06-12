@@ -236,10 +236,12 @@ public class Player_Copy : MonoBehaviour
                     if (!stageMgr.all_isCut)
                     {
                         c.obj = Instantiate(col.gameObject);
+                        c.obj.transform.parent = stageMgr.transform;
                     }
                     else
                     {
                         c.obj = col.gameObject;
+                        col.gameObject.transform.parent = stageMgr.transform;
                     }
                     c.pos = col.gameObject.transform.position - ChangeVecToInt(startPos);
                     c.obj.SetActive(false);

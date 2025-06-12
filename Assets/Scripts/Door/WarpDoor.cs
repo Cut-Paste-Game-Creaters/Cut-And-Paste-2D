@@ -6,12 +6,19 @@ using UnityEngine.SceneManagement;
 public class WarpDoor : MonoBehaviour
 {
     [SerializeField] string stageName;
+    [SerializeField] StageManager stageMgr;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("hithit!");
+
+            //ƒV[ƒ“‘JˆÚ‚µ‚½‚Æ‚«‚É‚à‚µDontDestroyOnLoad‚É‰½‚©c‚Á‚Ä‚½‚çíœ
+            foreach (var obj in stageMgr.EraseObjects)
+            {
+                Destroy(obj);
+            }
+            stageMgr.EraseObjects = new List<GameObject>();
             SceneManager.LoadScene(stageName);
         }
     }
