@@ -133,14 +133,19 @@ public class Player_Paste : MonoBehaviour
                 {
                     c.obj.SetActive(true);
                     c.obj.transform.position = c.pos + ChangeVecToInt(mousePos);
+                    c.obj.transform.parent = null;
                 }
                 else
                 {
+                    if(c.obj.transform.parent != null)
+                    {
+                        c.obj.transform.parent = null;
+                    }
                     GameObject b = Instantiate(c.obj);
                     b.SetActive(true);
                     b.transform.position = c.pos + ChangeVecToInt(mousePos);
                 }
-                    
+                stageManager.EraseObjects.Add(c.obj);
             }
         }
 

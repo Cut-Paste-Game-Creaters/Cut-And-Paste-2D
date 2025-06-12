@@ -28,6 +28,9 @@ public class StageManager : MonoBehaviour
     public int cut_erase_cost = 0; //カットの時のみの取得箇所の消すコスト
     public bool all_isCut = false; //copyかcutかを判別する変数
 
+    //オブジェクトを別シーンに持ってく関連
+    public List<GameObject> EraseObjects = new List<GameObject>();
+
     /////////////////////////////////////////////////
     public struct TileData
     {
@@ -80,10 +83,14 @@ public class StageManager : MonoBehaviour
             return;
         }
 
+
         // このインスタンスを保持してシーン遷移でも破棄されないようにする
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
+    public void SaveObjects()
+    {
 
+    }
 }
