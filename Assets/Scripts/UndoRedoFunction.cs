@@ -8,6 +8,7 @@ public class UndoRedoFunc : MonoBehaviour
     [SerializeField] Tilemap tilemap; //保存したいtilemap
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
     [SerializeField] StageManager stageMgr;
+    private GameObject player;
 
     Stack<AllStageInfoList> undoStack = new Stack<AllStageInfoList>();
     Stack<AllStageInfoList> redoStack = new Stack<AllStageInfoList>();
@@ -16,12 +17,14 @@ public class UndoRedoFunc : MonoBehaviour
 
     void Awake()
     {
-        InfoPushToStack(); //Awake()でやってるけど本当は「ステージシーンが読み込まれたとき」に1回呼び出す
+        //InfoPushToStack(); //Awake()でやってるけど本当は「ステージシーンが読み込まれたとき」に1回呼び出す
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindWithTag("Player");
+        InfoPushToStack();
         //tilemap.CompressBounds(); //タイルを最小まで圧縮
         //b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
     }
@@ -47,6 +50,7 @@ public class UndoRedoFunc : MonoBehaviour
         allStageInfo.stageTileData = RecordStageHistory(); //一枚分の全情報のクラスのタイルデータ部分に保存
         allStageInfo.have_ene = stageMgr.have_ene;
         allStageInfo.stageObjState = RecordObjectState();
+        allStageInfo.playerState = RecordPlayerInfo();
         undoStack.Push(allStageInfo);
         Debug.Log(undoStack.Count);
     }
@@ -107,6 +111,17 @@ public class UndoRedoFunc : MonoBehaviour
         return stageObjStateList;
     }
 
+    public PlayerState RecordPlayerInfo()
+    {
+        PlayerState playerState = new PlayerState();
+
+        playerState.objPosition = player.transform.position;
+        //(プレイヤーの座標　+or- カメラの幅/2)が左端か右端に入っていたらカメラの座標も変えてあげる
+        playerState.objRotation = player.transform.rotation;
+
+        return playerState;
+    }
+
     public void Undo()
     {
         if(undoStack.Count > 1)
@@ -115,6 +130,7 @@ public class UndoRedoFunc : MonoBehaviour
             UndoTileData();
             UndoCost();
             UndoObjState();
+            UndoPlayerState();
         }
     }
 
@@ -181,6 +197,15 @@ public class UndoRedoFunc : MonoBehaviour
             Debug.Log("1つ前に戻りました");
     }
 
+    void UndoPlayerState()
+    {
+        PlayerState pre_playerState = undoStack.Peek().playerState;
+
+        //情報流し込み
+        player.transform.position = pre_playerState.objPosition;
+        player.transform.rotation = pre_playerState.objRotation;
+    }
+
     //ステージ全体のタイルを格納するクラス
     public class AllStageTileData
     {
@@ -201,10 +226,16 @@ public class UndoRedoFunc : MonoBehaviour
 
         //これ以降必要な情報追加する
     }
+    public class PlayerState
+    {
+        public Vector3 objPosition;
+        public Quaternion objRotation;
+    }
     public class AllStageInfoList
     {
         public AllStageTileData stageTileData = new AllStageTileData();
         public int have_ene = 0;
         public List<StageOblectState> stageObjState = new List<StageOblectState>();
+        public PlayerState playerState = new PlayerState();
     }
 }
