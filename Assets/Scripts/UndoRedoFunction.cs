@@ -8,6 +8,7 @@ public class UndoRedoFunc : MonoBehaviour
     [SerializeField] Tilemap tilemap; //保存したいtilemap
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
     [SerializeField] StageManager stageMgr;
+    [SerializeField] GameObject playerCam;
     private GameObject player;
 
     Stack<AllStageInfoList> undoStack = new Stack<AllStageInfoList>();
@@ -117,6 +118,16 @@ public class UndoRedoFunc : MonoBehaviour
 
         playerState.objPosition = player.transform.position;
         //(プレイヤーの座標　+or- カメラの幅/2)が左端か右端に入っていたらカメラの座標も変えてあげる
+        if((playerState.objPosition.x - (32 / 2)) < tilemap.cellBounds.min.x+1)
+        {
+            playerState.area = 1; //左端に固定
+            Debug.Log("area=" + playerState.area);
+        }
+        else if((playerState.objPosition.x + (32 / 2)) > tilemap.cellBounds.max.x-1)
+        {
+            playerState.area = 3; //右端に固定
+            Debug.Log("area=" + playerState.area);
+        }
         playerState.objRotation = player.transform.rotation;
 
         return playerState;
@@ -202,7 +213,21 @@ public class UndoRedoFunc : MonoBehaviour
         PlayerState pre_playerState = undoStack.Peek().playerState;
 
         //情報流し込み
+        //座標指定
         player.transform.position = pre_playerState.objPosition;
+        //area = 左端なら左端にカメラ移動, 右端なら右端にカメラ移動
+        int camPosX = 0;
+        //座標指定
+        if(pre_playerState.area == 1)
+        {
+            camPosX = (tilemap.cellBounds.min.x+1 + (32 / 2));
+        }
+        else if(pre_playerState.area == 3)
+        {
+            camPosX = (tilemap.cellBounds.max.x-1 - (32 / 2));
+        }
+        playerCam.transform.position = new Vector3(camPosX, 0, -10); //カメラ移動
+        //回転指定
         player.transform.rotation = pre_playerState.objRotation;
     }
 
@@ -230,6 +255,7 @@ public class UndoRedoFunc : MonoBehaviour
     {
         public Vector3 objPosition;
         public Quaternion objRotation;
+        public int area; //1 = 左端, 2 = カメラはステージの端っこにいない, 3 = 右端
     }
     public class AllStageInfoList
     {
