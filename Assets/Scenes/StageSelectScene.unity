@@ -1266,6 +1266,7 @@ MonoBehaviour:
   tilemap: {fileID: 1806078382}
   tileSB: {fileID: 11400000, guid: b58413ee8aa87174e8571d021e40d761, type: 2}
   stageMgr: {fileID: 1475439277}
+  player: {fileID: 2602327985525169770}
 --- !u!4 &794371244
 Transform:
   m_ObjectHideFlags: 0
