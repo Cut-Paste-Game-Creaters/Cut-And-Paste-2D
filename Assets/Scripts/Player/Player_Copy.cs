@@ -237,6 +237,13 @@ public class Player_Copy : MonoBehaviour
                     {
                         c.obj = Instantiate(col.gameObject);
                         c.obj.transform.parent = stageMgr.transform;
+                        //ìäÇ∞ÇÁÇÍÇÈÇ‡ÇÃÇ»ÇÁÉfÅ[É^ÇÃà¯Ç´åpÇ¨
+                        ThrowObjectController toc = col.gameObject.GetComponent<ThrowObjectController>();
+                        if (toc != null)
+                        {
+                            Vector3 dir = toc.GetDir();
+                            c.obj.GetComponent<ThrowObjectController>().SetDir(dir);
+                        }
                     }
                     else
                     {

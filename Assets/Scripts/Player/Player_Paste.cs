@@ -80,7 +80,7 @@ public class Player_Paste : MonoBehaviour
             //貼り付け時の消すコストを計算する
             CheckCost(false, mPos); //タイルセットしないで計算
             CheckObjectCost(false);      //オブジェクトの消すコストを計算する
-            Debug.Log("erase:"+stageManager.erase_cost);
+            //Debug.Log("erase:"+stageManager.erase_cost);
 
             frame1.transform.position = framePos;
         }
@@ -141,7 +141,15 @@ public class Player_Paste : MonoBehaviour
                     {
                         c.obj.transform.parent = null;
                     }
+                    //コピーしたものを複製する
                     GameObject b = Instantiate(c.obj);
+                    //もし投げられるオブジェクトならデータの引き継ぎ
+                    ThrowObjectController toc = c.obj.GetComponent<ThrowObjectController>();
+                    if (toc != null)
+                    {
+                        Vector3 dir = toc.GetDir();
+                        b.GetComponent<ThrowObjectController>().SetDir(dir);
+                    }
                     b.SetActive(true);
                     b.transform.position = c.pos + ChangeVecToInt(mousePos);
                 }
