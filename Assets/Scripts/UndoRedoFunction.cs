@@ -53,6 +53,7 @@ public class UndoRedoFunc : MonoBehaviour
         allStageInfo.stageObjState = RecordObjectState();
         allStageInfo.playerState = RecordPlayerInfo();
         allStageInfo.copyTileData = RecordCopyTileData();
+        allStageInfo.copyObjectData = RecordCopyObjectData();
         undoStack.Push(allStageInfo);
         Debug.Log(undoStack.Count);
     }
@@ -106,6 +107,13 @@ public class UndoRedoFunc : MonoBehaviour
                 stageObjState.objPosition = col.gameObject.transform.position;
                 stageObjState.objRotation = col.gameObject.transform.rotation;
 
+                var throwobj = col.gameObject.GetComponent<ThrowObjectController>();
+                if(throwobj != null)
+                {
+                    stageObjState.moveDir = throwobj.GetDir();
+                    stageObjState.nowTime = throwobj.nowTime;
+                }
+
                 //全部情報入れたら最後にAdd
                 stageObjStateList.Add(stageObjState);
             }
@@ -143,6 +151,15 @@ public class UndoRedoFunc : MonoBehaviour
         return copyTileData;
     }
 
+    public List<StageManager.ObjectData> RecordCopyObjectData()
+    {
+        List<StageManager.ObjectData> copyObjectData = new List<StageManager.ObjectData>();
+
+        copyObjectData = stageMgr.objectData;
+
+        return copyObjectData;
+    }
+
     public void Undo()
     {
         if(undoStack.Count > 1)
@@ -153,6 +170,7 @@ public class UndoRedoFunc : MonoBehaviour
             UndoObjState();
             UndoPlayerState();
             UndoCopyTileData();
+            UndoCopyObjectData();
         }
     }
 
@@ -188,6 +206,12 @@ public class UndoRedoFunc : MonoBehaviour
                 GameObject g_prefab;
                 g_prefab = Instantiate(prefab, obj.objPosition, obj.objRotation);
                 g_prefab.name = obj.prefabName;
+                var throwobj = g_prefab.GetComponent<ThrowObjectController>();
+                if(throwobj != null)
+                {
+                    throwobj.SetDir(obj.moveDir);
+                    throwobj.nowTime = obj.nowTime;
+                }
                 Debug.Log(prefab.name + "を生成しました.");
                 //g_prefab.hp = 100;
             }
@@ -249,6 +273,13 @@ public class UndoRedoFunc : MonoBehaviour
         stageMgr.tileData = pre_copyTileData;
     }
 
+    void UndoCopyObjectData()
+    {
+        List<StageManager.ObjectData> pre_copyObjectData = undoStack.Peek().copyObjectData;
+
+        stageMgr.objectData = pre_copyObjectData;
+    }
+
     //ステージ全体のタイルを格納するクラス
     public class AllStageTileData
     {
@@ -264,8 +295,9 @@ public class UndoRedoFunc : MonoBehaviour
         public Vector3 objPosition;
         public Quaternion objRotation;
 
-        //プレイヤー
-        public int hp;
+        //ThrowObject関連
+        public Vector3 moveDir;
+        public float nowTime;
 
         //これ以降必要な情報追加する
     }
@@ -275,22 +307,6 @@ public class UndoRedoFunc : MonoBehaviour
         public Quaternion objRotation;
         public int area; //1 = 左端, 2 = カメラはステージの端っこにいない, 3 = 右端
     }
-    /*public class CopyTileAndObjectState
-    {
-        //Tile関連
-        public int width;       //幅、高さはマスの個数
-        public int height;
-        public int direction;   //0右上、1右下、2左下、3左上
-        public List<List<TileBase>> tiles;
-        public bool hasData;
-        public bool isCut;
-
-        //Object関連
-        //カットするオブジェクトの本体
-        public GameObject obj;
-        //カットするオブジェクトの相対位置
-        public Vector3 pos;
-    }*/
     public class AllStageInfoList
     {
         public AllStageTileData stageTileData = new AllStageTileData();
@@ -298,5 +314,6 @@ public class UndoRedoFunc : MonoBehaviour
         public List<StageOblectState> stageObjState = new List<StageOblectState>();
         public PlayerState playerState = new PlayerState();
         public StageManager.TileData copyTileData = new StageManager.TileData();
+        public List<StageManager.ObjectData> copyObjectData = new List<StageManager.ObjectData>();
     }
 }

@@ -7,7 +7,7 @@ public class ThrowObjectController : MonoBehaviour
     public float destroyTime = 5.0f;
 
     private Vector3 moveDir = Vector3.zero;
-    private float nowTime = 0.0f;
+    public float nowTime = 0.0f;
 
     public void SetDir(Vector3 dir)
     {
@@ -29,7 +29,7 @@ public class ThrowObjectController : MonoBehaviour
         //ˆÚ“®
         this.transform.position += moveDir * PlayerInput.GetDeltaTime();
 
-        //ŽžŠÔŒo‰ß‚ÅÁ–Å
+        //ŽžŠÔŒo‰ß‚ÅÁ–Å
         nowTime += PlayerInput.GetDeltaTime();
         if(nowTime > destroyTime)
         {
