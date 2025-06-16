@@ -31,4 +31,9 @@ public class PauseInStage : MonoBehaviour
         PlayerInput.isPausing = false;
         Time.timeScale = 1.0f;
     }
+
+    public void Retry()
+    {
+
+    }
 }

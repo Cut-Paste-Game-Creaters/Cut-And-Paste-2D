@@ -6,6 +6,7 @@ public class Player_Function : MonoBehaviour
 {
     [SerializeField] private int hp; //プレイヤーのHP
     private GameOverFunction gameOverFunc;
+    private ClearFunction clearFunc;
 
     private float fallingLine_y = -10.0f;
     //private RigidBody rb;
@@ -15,6 +16,7 @@ public class Player_Function : MonoBehaviour
     {
         //rb = GetComponent<RigidBody>();
         gameOverFunc = FindObjectOfType<GameOverFunction>();
+        clearFunc = FindObjectOfType<ClearFunction>();
     }
 
     // Update is called once per frame
@@ -45,5 +47,13 @@ public class Player_Function : MonoBehaviour
     {
         //ゲームオーバーファンクション呼び出し
         gameOverFunc.GameOver();
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.tag == "Goal")
+        {
+            clearFunc.GameClear();
+        }
     }
 }

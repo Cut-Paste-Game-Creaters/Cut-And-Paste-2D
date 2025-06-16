@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class GameOverFunction : MonoBehaviour
 {
-    [SerializeField] Canvas canvas;
+    private Canvas canvas;
     // Start is called before the first frame update
     void Start()
     {
+        canvas = GetComponent<Canvas>();
         canvas.enabled = false;
     }
 
