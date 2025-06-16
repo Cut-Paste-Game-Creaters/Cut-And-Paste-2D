@@ -5,19 +5,23 @@ using UnityEngine;
 public class Player_Function : MonoBehaviour
 {
     [SerializeField] private int hp; //プレイヤーのHP
-    [SerializeField] GameOverFunction gameOverFunc;
+    private GameOverFunction gameOverFunc;
+
+    private float fallingLine_y = -10.0f;
+    //private RigidBody rb;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        //rb = GetComponent<RigidBody>();
+        gameOverFunc = FindObjectOfType<GameOverFunction>();
     }
 
     // Update is called once per frame
     void Update()
     {
         /*テスト用に4ボタン押すと死んだことになる 本来はhpが0 もしくは　ステージから落ちたら*/
-        if(PlayerInput.GetKeyDown(KeyCode.Alpha4) || hp <= 0)
+        if(this.gameObject.transform.position.y < fallingLine_y || hp <= 0)
         {
             Die();
         }
