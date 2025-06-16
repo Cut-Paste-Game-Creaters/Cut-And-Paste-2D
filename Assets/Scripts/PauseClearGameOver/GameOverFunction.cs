@@ -6,10 +6,14 @@ using UnityEngine.UI;
 public class GameOverFunction : MonoBehaviour
 {
     private Canvas canvas;
+    private GameObject player;
+    private Vector3 initPlayerPos;
     // Start is called before the first frame update
     void Start()
     {
         canvas = GetComponent<Canvas>();
+        player = GameObject.FindWithTag("Player");
+        initPlayerPos = player.transform.position;
         canvas.enabled = false;
     }
 
@@ -29,6 +33,7 @@ public class GameOverFunction : MonoBehaviour
 
     public void PauseOff()
     {
+        player.transform.position = initPlayerPos;
         canvas.enabled = false;
         PlayerInput.isPausing = false;
         Time.timeScale = 1.0f;
