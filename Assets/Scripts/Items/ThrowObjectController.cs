@@ -6,13 +6,16 @@ public class ThrowObjectController : MonoBehaviour
 {
     public float destroyTime = 5.0f;
 
-    private int i = 0;
     private Vector3 moveDir = Vector3.zero;
     private float nowTime = 0.0f;
 
     public void SetDir(Vector3 dir)
     {
         moveDir = dir;
+    }
+    public Vector3 GetDir()
+    {
+        return moveDir;
     }
     // Start is called before the first frame update
     void Start()
