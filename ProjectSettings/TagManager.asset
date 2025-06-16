@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - Door
   - WarpDoor
+  - Goal
   layers:
   - Default
   - TransparentFX
