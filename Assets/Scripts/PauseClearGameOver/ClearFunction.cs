@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ClearFunction : MonoBehaviour
 {
@@ -32,5 +33,11 @@ public class ClearFunction : MonoBehaviour
         canvas.enabled = false;
         PlayerInput.isPausing = false;
         Time.timeScale = 1.0f;
+    }
+
+    public void LoadStageSelect()
+    {
+        PauseOff();
+        SceneManager.LoadScene("StageSelectScene");
     }
 }
