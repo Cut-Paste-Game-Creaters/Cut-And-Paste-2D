@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7208446286499985901}
   - component: {fileID: 2660686992821530170}
   - component: {fileID: 3593118860794272406}
+  - component: {fileID: 6475246061550806216}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -192,10 +193,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2875f83744a5f840a4cc10eaa72863c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap: {fileID: 0}
   frame2: {fileID: 7333870219930048861, guid: d7d2341a525b8754ab5741df97ef5168, type: 3}
   anounce: {fileID: 8044936883432795270, guid: 216ca529300f3194eb6f8bb3b0126fa8, type: 3}
-  stageMgr: {fileID: 0}
   tileSB: {fileID: 11400000, guid: b58413ee8aa87174e8571d021e40d761, type: 2}
   objSB: {fileID: 11400000, guid: 40ef67a603b5fac418e9ffb6109bef98, type: 2}
 --- !u!114 &3593118860794272406
@@ -210,9 +209,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc41432d0525114eacf4b9e74f9ad04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap: {fileID: 0}
-  stageManager: {fileID: 0}
   frame1: {fileID: 7333870219930048861, guid: d7d2341a525b8754ab5741df97ef5168, type: 3}
   tileSB: {fileID: 11400000, guid: b58413ee8aa87174e8571d021e40d761, type: 2}
   objSB: {fileID: 11400000, guid: 40ef67a603b5fac418e9ffb6109bef98, type: 2}
-  rectPrefab: {fileID: 2321798754859510182, guid: 84927f04a2f8a8c429d35fc633aa17a6, type: 3}
+--- !u!114 &6475246061550806216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3807169329540211649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24193cabb713d834c920a2372cc1e6d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 1000
