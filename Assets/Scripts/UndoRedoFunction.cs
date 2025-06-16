@@ -52,6 +52,7 @@ public class UndoRedoFunc : MonoBehaviour
         allStageInfo.have_ene = stageMgr.have_ene;
         allStageInfo.stageObjState = RecordObjectState();
         allStageInfo.playerState = RecordPlayerInfo();
+        allStageInfo.copyTileData = RecordCopyTileData();
         undoStack.Push(allStageInfo);
         Debug.Log(undoStack.Count);
     }
@@ -133,6 +134,15 @@ public class UndoRedoFunc : MonoBehaviour
         return playerState;
     }
 
+    public StageManager.TileData RecordCopyTileData()
+    {
+        StageManager.TileData copyTileData = new StageManager.TileData();
+
+        copyTileData = stageMgr.tileData;
+
+        return copyTileData;
+    }
+
     public void Undo()
     {
         if(undoStack.Count > 1)
@@ -142,6 +152,7 @@ public class UndoRedoFunc : MonoBehaviour
             UndoCost();
             UndoObjState();
             UndoPlayerState();
+            UndoCopyTileData();
         }
     }
 
@@ -231,6 +242,13 @@ public class UndoRedoFunc : MonoBehaviour
         player.transform.rotation = pre_playerState.objRotation;
     }
 
+    void UndoCopyTileData()
+    {
+        StageManager.TileData pre_copyTileData = undoStack.Peek().copyTileData;
+
+        stageMgr.tileData = pre_copyTileData;
+    }
+
     //ステージ全体のタイルを格納するクラス
     public class AllStageTileData
     {
@@ -257,11 +275,28 @@ public class UndoRedoFunc : MonoBehaviour
         public Quaternion objRotation;
         public int area; //1 = 左端, 2 = カメラはステージの端っこにいない, 3 = 右端
     }
+    /*public class CopyTileAndObjectState
+    {
+        //Tile関連
+        public int width;       //幅、高さはマスの個数
+        public int height;
+        public int direction;   //0右上、1右下、2左下、3左上
+        public List<List<TileBase>> tiles;
+        public bool hasData;
+        public bool isCut;
+
+        //Object関連
+        //カットするオブジェクトの本体
+        public GameObject obj;
+        //カットするオブジェクトの相対位置
+        public Vector3 pos;
+    }*/
     public class AllStageInfoList
     {
         public AllStageTileData stageTileData = new AllStageTileData();
         public int have_ene = 0;
         public List<StageOblectState> stageObjState = new List<StageOblectState>();
         public PlayerState playerState = new PlayerState();
+        public StageManager.TileData copyTileData = new StageManager.TileData();
     }
 }
