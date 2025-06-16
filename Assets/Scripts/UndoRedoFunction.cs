@@ -280,6 +280,17 @@ public class UndoRedoFunc : MonoBehaviour
         stageMgr.objectData = pre_copyObjectData;
     }
 
+    //リトライ
+    public void Retry()
+    {
+        while(undoStack.Count > 2)
+        {
+            undoStack.Pop();
+        }
+
+        Undo();
+    }
+
     //ステージ全体のタイルを格納するクラス
     public class AllStageTileData
     {
