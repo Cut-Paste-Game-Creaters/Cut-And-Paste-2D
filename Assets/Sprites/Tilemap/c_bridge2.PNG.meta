@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1e80d8bbc8b088e42a756fdd26ddc803
+guid: 0f7c22dcd7b54b245b1233aeb94d4139
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,12 +43,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 200
+  spritePixelsToUnits: 128
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -108,7 +108,32 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: c_bridge2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 83
+        width: 128
+        height: 45
+      alignment: 9
+      pivot: {x: 0.5, y: -0.4}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -64, y: -10}
+        - {x: -64, y: 33}
+        - {x: 64, y: 33}
+        - {x: 64, y: -11}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bdc26375513dd34dbd8174aa8b7d4b0
+      internalID: -1816923122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -119,7 +144,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      c_bridge2_0: -1816923122
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
