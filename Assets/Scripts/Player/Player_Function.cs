@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player_Function : MonoBehaviour
 {
-    [SerializeField] private int hp; //プレイヤーのHP
+    public int hp; //プレイヤーのHP
     private GameOverFunction gameOverFunc;
     private ClearFunction clearFunc;
 

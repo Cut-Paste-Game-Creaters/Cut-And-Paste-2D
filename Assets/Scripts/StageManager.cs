@@ -12,7 +12,8 @@ public class StageManager : MonoBehaviour
     public List<ObjectData> objectData = new List<ObjectData>();
 
     /*プレイヤー関連*/
-    public int player_HP = 100;
+    Player_Function playerFunc;
+    //public int player_HP = 100;
 
     /*コスト関連*/
     [SerializeField]private float costHeal_timeOut; //costが回復する間隔
@@ -30,6 +31,11 @@ public class StageManager : MonoBehaviour
 
     //オブジェクトを別シーンに持ってく関連
     public List<GameObject> EraseObjects = new List<GameObject>();
+
+    void Start()
+    {
+        playerFunc = FindObjectOfType<Player_Function>();
+    }
 
     /////////////////////////////////////////////////
     public struct TileData
@@ -58,6 +64,11 @@ public class StageManager : MonoBehaviour
         public GameObject obj;
         //カットするオブジェクトの相対位置
         public Vector3 pos;
+    }
+
+    public void DamageToPlayer(int damage) //引数文HPから減らす処理
+    {
+        playerFunc.hp -= damage;
     }
 
     public Vector3 GetInfo()
