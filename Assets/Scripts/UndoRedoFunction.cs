@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class UndoRedoFunc : MonoBehaviour
 {
     [SerializeField] Tilemap tilemap; //保存したいtilemap
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
-    [SerializeField] StageManager stageMgr;
-    [SerializeField] GameObject playerCam;
+    GameObject playerCam;
     private GameObject player;
+    StageManager stageMgr;
 
     Stack<AllStageInfoList> undoStack = new Stack<AllStageInfoList>();
     Stack<AllStageInfoList> redoStack = new Stack<AllStageInfoList>();
@@ -25,6 +26,8 @@ public class UndoRedoFunc : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player");
+        stageMgr = FindObjectOfType<StageManager>();
+        playerCam = Camera.main.gameObject;
         InfoPushToStack();
         //tilemap.CompressBounds(); //タイルを最小まで圧縮
         //b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
@@ -289,6 +292,7 @@ public class UndoRedoFunc : MonoBehaviour
         }
 
         Undo();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     //ステージ全体のタイルを格納するクラス
