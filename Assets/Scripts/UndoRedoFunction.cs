@@ -36,10 +36,10 @@ public class UndoRedoFunc : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(PlayerInput.GetKeyDown(KeyCode.Alpha1)) //1ボタンが押されたら保存
+        /*if(PlayerInput.GetKeyDown(KeyCode.Alpha1)) //1ボタンが押されたら保存
         {
             InfoPushToStack();
-        }
+        }*/
         if(PlayerInput.GetKey(KeyCode.Z) && PlayerInput.GetKeyDown(KeyCode.LeftShift) ||
                 PlayerInput.GetKeyDown(KeyCode.Z) && PlayerInput.GetKey(KeyCode.LeftShift)) //Shift+Zボタンが押されたらUndo
         {
