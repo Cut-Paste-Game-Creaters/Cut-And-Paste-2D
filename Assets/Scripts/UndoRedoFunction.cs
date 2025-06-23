@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
 
-public class UndoRedoFunc : MonoBehaviour
+public class UndoRedoFunction : MonoBehaviour
 {
     [SerializeField] Tilemap tilemap; //保存したいtilemap
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject

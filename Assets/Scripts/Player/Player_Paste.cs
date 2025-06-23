@@ -15,6 +15,7 @@ public class Player_Paste : MonoBehaviour
     private StageManager stageManager;
     private SpriteRenderer sr;
     private Vector3 frameData = Vector3.zero;
+    UndoRedoFunction urFunc;
     //private GameObject rect;
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,7 @@ public class Player_Paste : MonoBehaviour
         //rect = Instantiate(rectPrefab);
         tilemap = FindObjectOfType<Tilemap>();
         stageManager = FindObjectOfType<StageManager>();
+        urFunc = FindObjectOfType<UndoRedoFunction>();
     }
 
     // Update is called once per frame
@@ -115,6 +117,8 @@ public class Player_Paste : MonoBehaviour
                 {
                     InitTileData();
                 }
+
+                urFunc.InfoPushToStack();
             }
             //Debug.Log("isCut == " + stageManager.all_isCut);
 
