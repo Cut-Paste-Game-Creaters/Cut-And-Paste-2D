@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class WarpDoor : MonoBehaviour
 {
-    [SerializeField] string stageName;
-    [SerializeField] StageManager stageMgr;
+    public string stageName;
+    public StageManager stageMgr;
 
     private void OnTriggerEnter2D(Collider2D other)
     {

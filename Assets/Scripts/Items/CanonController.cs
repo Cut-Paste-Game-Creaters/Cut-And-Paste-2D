@@ -11,9 +11,9 @@ public class CanonController : MonoBehaviour
 
     public GameObject canon_body;   //‘å–C‚ÌŠp“x‚ğ•Ï‚¦‚é‚½‚ß
     private bool isRigid = false;   //gameObject‚Érigidoby2D‚ª‚ ‚é‚©‚Ç‚¤‚©
-    [SerializeField] float angle = 0;            //-90 ` 0 `@90
-    [SerializeField] float firePower = 1.0f;     //‘Å‚¿o‚·—Í
-    [SerializeField] float fireTime = 3.0f;
+    public float angle = 0;            //-90 ` 0 `@90
+    public float firePower = 1.0f;     //‘Å‚¿o‚·—Í
+    public float fireTime = 3.0f;
 
     private float wholeTime = 0.0f;
     private Rigidbody2D rb;
