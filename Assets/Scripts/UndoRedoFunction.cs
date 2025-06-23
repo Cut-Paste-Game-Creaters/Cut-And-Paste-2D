@@ -12,6 +12,7 @@ public class UndoRedoFunction : MonoBehaviour
     GameObject playerCam;
     private GameObject player;
     StageManager stageMgr;
+    CameraMove camMove;
 
     Stack<AllStageInfoList> undoStack = new Stack<AllStageInfoList>();
     Stack<AllStageInfoList> redoStack = new Stack<AllStageInfoList>();
@@ -29,6 +30,7 @@ public class UndoRedoFunction : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         stageMgr = FindObjectOfType<StageManager>();
         playerCam = Camera.main.gameObject;
+        camMove = FindObjectOfType<CameraMove>();
         InfoPushToStack();
         //tilemap.CompressBounds(); //タイルを最小まで圧縮
         //b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
@@ -154,7 +156,7 @@ public class UndoRedoFunction : MonoBehaviour
 
         playerState.objPosition = player.transform.position;
         //(プレイヤーの座標　+or- カメラの幅/2)が左端か右端に入っていたらカメラの座標も変えてあげる
-        if((playerState.objPosition.x - (32 / 2)) < tilemap.cellBounds.min.x+1)
+        if((playerState.objPosition.x - camMove.Screen_Left) < tilemap.cellBounds.min.x+1)
         {
             playerState.area = 1; //左端に固定
             Debug.Log("area=" + playerState.area);
@@ -302,11 +304,11 @@ public class UndoRedoFunction : MonoBehaviour
         //座標指定
         player.transform.position = pre_playerState.objPosition;
         //area = 左端なら左端にカメラ移動, 右端なら右端にカメラ移動
-        int camPosX = 0;
+        float camPosX = 0;
         //座標指定
         if(pre_playerState.area == 1)
         {
-            camPosX = (tilemap.cellBounds.min.x+1 + (32 / 2));
+            camPosX = (tilemap.cellBounds.min.x+1 + camMove.Screen_Left);
         }
         else if(pre_playerState.area == 3)
         {
