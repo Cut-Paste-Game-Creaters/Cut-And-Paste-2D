@@ -108,7 +108,7 @@ MonoBehaviour:
   - head: block_wood
     tile: {fileID: 11400000, guid: 5852ae5fcc1db4b49bde8046316fce9f, type: 2}
     p_ene: 60
-    ow_ene: 6000
+    ow_ene: 30
   - head: block_ice
     tile: {fileID: 11400000, guid: e5ee325205466fb46be682731ff7767c, type: 2}
     p_ene: 60
