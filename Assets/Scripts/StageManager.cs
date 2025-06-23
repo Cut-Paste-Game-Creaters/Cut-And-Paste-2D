@@ -13,7 +13,7 @@ public class StageManager : MonoBehaviour
 
     /*プレイヤー関連*/
     Player_Function playerFunc;
-    //public int player_HP = 100;
+    public int player_HP = 100;
 
     /*コスト関連*/
     [SerializeField]private float costHeal_timeOut; //costが回復する間隔
@@ -66,9 +66,9 @@ public class StageManager : MonoBehaviour
         public Vector3 pos;
     }
 
-    public void DamageToPlayer(int damage) //引数文HPから減らす処理
+    public void DamageToPlayer(int damage) //引数分HPから減らす処理
     {
-        playerFunc.hp -= damage;
+        player_HP -= damage;
     }
 
     public Vector3 GetInfo()
