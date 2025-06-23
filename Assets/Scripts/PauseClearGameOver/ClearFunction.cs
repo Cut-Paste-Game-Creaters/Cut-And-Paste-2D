@@ -7,11 +7,15 @@ using UnityEngine.SceneManagement;
 public class ClearFunction : MonoBehaviour
 {
     private Canvas canvas;
+    private bool isClear = false;
+    private RankDisplay rankDisplay;
     // Start is called before the first frame update
     void Start()
     {
         canvas = GetComponent<Canvas>();
         canvas.enabled = false;
+        isClear = false;
+        rankDisplay = FindObjectOfType<RankDisplay>();
     }
 
     // Update is called once per frame
@@ -19,13 +23,20 @@ public class ClearFunction : MonoBehaviour
     {
         this.transform.position =
             new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + 1);
+        if(isClear)
+        {
+            rankDisplay.AnimateText();
+        }
     }
 
     public void GameClear()
     {
         canvas.enabled = true;
         PlayerInput.isPausing = true;
+        isClear = true;
         Time.timeScale = 0f;
+        //総消費コストを計算したら、そのスコアをもとにランクを決定する
+        rankDisplay.SetText("S");
     }
 
     public void PauseOff()
