@@ -13,11 +13,13 @@ public class StageManager : MonoBehaviour
 
     /*プレイヤー関連*/
     Player_Function playerFunc;
+    RankJudgeAndUpdateFunction rankFunc;
     public int player_HP = 100;
 
     /*コスト関連*/
     [SerializeField]private float costHeal_timeOut; //costが回復する間隔
 	private float timeElapsed;
+    public int stageNum = -1;
     private int[] init_ene_array = {100, 150, 200, 250, 300, 350, 400, 450, 500, 550}; //ステージごとの初期コスト配列
     private int[] healAmount_array = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50}; //ステージごとの回復速度コストの配列
     public int have_ene = 10000; //初期コスト
@@ -33,6 +35,15 @@ public class StageManager : MonoBehaviour
     void Start()
     {
         playerFunc = FindObjectOfType<Player_Function>();
+        rankFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
+    }
+    
+    void Update()
+    {
+        if(stageNum != -1)
+        {
+            HealCost(stageNum);
+        }
     }
 
     /////////////////////////////////////////////////
@@ -79,6 +90,27 @@ public class StageManager : MonoBehaviour
     {
         have_ene = init_ene_array[stageNum];
         Debug.Log("初期コストを" + stageNum + "ステージの" + have_ene + "に初期化しました." );
+    }
+
+    public void StageSelectInitHaveCost()
+    {
+        //各ステージのランクに応じて設定
+    }
+
+    public void HealCost(int stageNum)
+    {
+          /*一定時間（costHeal_timeOut）ごとに所持コストを回復*/
+        timeElapsed += Time.deltaTime;
+        if(timeElapsed >= costHeal_timeOut)
+        {
+            have_ene += healAmount_array[stageNum];
+            if(have_ene > init_ene_array[stageNum]) //回復コスト上限を超えて回復しようとする場合は回復コスト上限で書き換える
+            {
+                have_ene = init_ene_array[stageNum];
+            }
+            Debug.Log("所持コスト:" + have_ene);
+            timeElapsed = 0.0f;
+        }
     }
 
     public Vector3 GetInfo()
