@@ -13,7 +13,7 @@ public class Player_Copy : MonoBehaviour
     [SerializeField] GameObject anounce;
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
     [SerializeField] ObjectScriptableObject objSB;
-        
+
     private Tilemap tilemap;
     private StageManager stageMgr;
     private Vector3 startPos = Vector3.zero;
@@ -22,6 +22,7 @@ public class Player_Copy : MonoBehaviour
     private SpriteRenderer frameSR;
     private int whichMode = -1;     //0:Copy, 1:Cut
     private bool makeDecision = false;  //マウス離したらOn
+    UndoRedoFunction urFunc;
     //public bool all_isCut = false; //コピー関数の引数のisCutと区別するため
 
     // Start is called before the first frame update
@@ -33,6 +34,7 @@ public class Player_Copy : MonoBehaviour
         //anounce.SetActive(false);
         tilemap = FindObjectOfType<Tilemap>();
         stageMgr = FindObjectOfType<StageManager>();
+        urFunc = FindObjectOfType<UndoRedoFunction>();
 
         anounce.SetActive(false);
     }
@@ -194,6 +196,7 @@ public class Player_Copy : MonoBehaviour
                 Debug.Log("消すコスト(カット時):" + stageMgr.cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene + ", " + "総消費コスト：" + stageMgr.all_sum_cos);
                 CutInCopy(_startPos, _endPos, false);
                 CutInCopyObject(cols, false);
+                urFunc.InfoPushToStack();
             }
             else
             {
