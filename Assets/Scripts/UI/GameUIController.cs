@@ -18,5 +18,11 @@ public class GameUIController : MonoBehaviour
         text_HP.text = "PlayerHP\n:" + stageManager.player_HP;
         text_nowCost.text = "nowCost\n:" + stageManager.have_ene;
         text_allCost.text = "allCost\n:" + stageManager.all_sum_cos;
+
+        /*
+         現在コピーしているデータをUIに表示したい。どうやる？
+        まず、コピーしているタイルデータをもとに新しいtilemapを作成する。
+        作成したtilemapのサイズを、幅から計算してUIのところに収まるようにする。
+         */
     }
 }
