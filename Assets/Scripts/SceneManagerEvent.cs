@@ -35,10 +35,13 @@ public class SceneManagerEvent : MonoBehaviour
             if(Regex.IsMatch(input, @"^Stage\d+$")) //シーン名がStageなんとかなら
             {
                 stageMgr.InitHaveCost(rankFunc.stageNumber[SceneManager.GetActiveScene().name]); //所持コストを初期コストに初期化
+                stageMgr.stageNum = rankFunc.stageNumber[SceneManager.GetActiveScene().name];
             }
             else
             {
                 stageMgr.InitHaveCost(0); //そうじゃないならStage1の初期コストに常に設定
+                stageMgr.stageNum = -1;
+                //セレクト画面に遷移したときは各ステージのランクに応じて初期コストを設定
             }
         }
     }

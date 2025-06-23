@@ -54,7 +54,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         //ゴールしたら
         if(clearFunc != null)
         {
-            if(clearFunc.GetisClear()  && !hasJudged || PlayerInput.GetKeyDown(KeyCode.Alpha2))
+            if(clearFunc.GetisClear()  && !hasJudged || PlayerInput.GetKeyDown(KeyCode.Alpha2) && !hasJudged)
             {
                 JudgeAndUpdateRank(stageMgr.all_sum_cos);
                 //stageMgr.all_sum_cos = 0;
@@ -82,27 +82,22 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
             if(num <= stageRank[stage_num, 0])
             {
                 rankText = "S";
-                Debug.Log("ランク:S");
             }
             else if(num <= stageRank[stage_num, 1])
             {
                 rankText = "A";
-                Debug.Log("ランク:A");
             }
             else if(num <= stageRank[stage_num, 2])
             {
                 rankText = "B";
-                Debug.Log("ランク:B");
             }
             else if(num <= stageRank[stage_num, 3])
             {
                 rankText = "C";
-                Debug.Log("ランク:C");
             }
             else if(num > stageRank[stage_num, 3])
             {
                 rankText = "F";
-                Debug.Log("ランク:F");
             }
 
             //まだ書き換えされていない(minConsumpCost[stage_num] == -1) または 今までの最低消費コストより小さければ
