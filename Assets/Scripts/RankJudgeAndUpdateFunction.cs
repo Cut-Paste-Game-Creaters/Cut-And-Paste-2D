@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Text.RegularExpressions;
 
 public class RankJudgeAndUpdateFunction : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
 
     private int[] minConsumpCost = {-1, -1, -1, -1, -1,-1, -1, -1, -1, -1}; //ステージ最低消費コスト配列
 
-    private Dictionary<string, int> stageNumber = new Dictionary<string, int>() // Dictionaryクラスの宣言と初期値の設定
+    public Dictionary<string, int> stageNumber = new Dictionary<string, int>() // Dictionaryクラスの宣言と初期値の設定
     {
         {"Stage1", 0},
         {"Stage2", 1},
@@ -66,33 +67,41 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     /*総消費コストのランク判定と最低消費コストの書き換えをおこなう関数*/
     public void JudgeAndUpdateRank(int num) //num == 総消費コスト
     {
-        int stage_num = stageNumber[SceneManager.GetActiveScene().name];
-        if(num <= stageRank[stage_num, 0])
+        string input = SceneManager.GetActiveScene().name;
+        if(Regex.IsMatch(input, @"^Stage\d+$")) //シーン名がStageなんとかなら
         {
-            Debug.Log("ランク:S");
-        }
-        else if(num <= stageRank[stage_num, 1])
-        {
-            Debug.Log("ランク:A");
-        }
-        else if(num <= stageRank[stage_num, 2])
-        {
-            Debug.Log("ランク:B");
-        }
-        else if(num <= stageRank[stage_num, 3])
-        {
-            Debug.Log("ランク:C");
-        }
-        else if(num > stageRank[stage_num, 3])
-        {
-            Debug.Log("ランク:F");
-        }
+            int stage_num = stageNumber[SceneManager.GetActiveScene().name];
+            if(num <= stageRank[stage_num, 0])
+            {
+                Debug.Log("ランク:S");
+            }
+            else if(num <= stageRank[stage_num, 1])
+            {
+                Debug.Log("ランク:A");
+            }
+            else if(num <= stageRank[stage_num, 2])
+            {
+                Debug.Log("ランク:B");
+            }
+            else if(num <= stageRank[stage_num, 3])
+            {
+                Debug.Log("ランク:C");
+            }
+            else if(num > stageRank[stage_num, 3])
+            {
+                Debug.Log("ランク:F");
+            }
 
-        //まだ書き換えされていない(minConsumpCost[stage_num] == -1) または 今までの最低消費コストより小さければ
-        if(minConsumpCost[stage_num] == -1|| num < minConsumpCost[stage_num])
+            //まだ書き換えされていない(minConsumpCost[stage_num] == -1) または 今までの最低消費コストより小さければ
+            if(minConsumpCost[stage_num] == -1|| num < minConsumpCost[stage_num])
+            {
+                minConsumpCost[stage_num] = num; //最低消費コストを書き換え
+                Debug.Log("ステージ" + (stage_num + 1) + "の最低消費コストが" + num + "に更新されました");
+            }
+        }
+        else
         {
-            minConsumpCost[stage_num] = num; //最低消費コストを書き換え
-            Debug.Log("ステージ" + (stage_num + 1) + "の最低消費コストが" + num + "に更新されました");
+            Debug.Log("ステージでないため判定できません.");
         }
     }
 }
