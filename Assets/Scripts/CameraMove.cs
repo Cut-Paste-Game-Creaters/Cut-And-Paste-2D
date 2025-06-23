@@ -7,7 +7,7 @@ public class CameraMove : MonoBehaviour
 {
     private GameObject player;
     private Tilemap tilemap;
-    [SerializeField] float Screen_Left = 60.0f;
+    [SerializeField] float Screen_Left = 9.3f;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +20,7 @@ public class CameraMove : MonoBehaviour
     {
         //もし画面端でないなら
         //プレイヤーのX - (画面幅/2) = 左端のXだったら止める
-        if (player.transform.position.x -9.3 > tilemap.cellBounds.min.x+1//←側のブロック分引く
+        if (player.transform.position.x - Screen_Left > tilemap.cellBounds.min.x+1//←側のブロック分引く
             &&
             player.transform.position.x + 16 < tilemap.cellBounds.max.x-1)
         {
