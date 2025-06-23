@@ -49,10 +49,6 @@ MonoBehaviour:
     tile: {fileID: 11400000, guid: 0407b0181fd910648a28bb4ed8627220, type: 2}
     p_ene: 60
     ow_ene: 6000
-  - head: soil_slope
-    tile: {fileID: 11400000, guid: a1098d6d0d438b24a98f40f4b10976a0, type: 2}
-    p_ene: 60
-    ow_ene: 6000
   - head: soil_float
     tile: {fileID: 11400000, guid: 7f0b9321867d0cc4eb5a6ee82ac6671b, type: 2}
     p_ene: 60
@@ -109,15 +105,75 @@ MonoBehaviour:
     tile: {fileID: 11400000, guid: 1ab8bb2f2ccdd7047ad089d71091a6d6, type: 2}
     p_ene: 60
     ow_ene: 6000
-  - head: c_Slope
-    tile: {fileID: 11400000, guid: 24641c4b865064744aceb03027f0ce87, type: 2}
-    p_ene: 60
-    ow_ene: 6000
   - head: block_wood
     tile: {fileID: 11400000, guid: 5852ae5fcc1db4b49bde8046316fce9f, type: 2}
     p_ene: 60
     ow_ene: 6000
   - head: block_ice
     tile: {fileID: 11400000, guid: e5ee325205466fb46be682731ff7767c, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: soil_slo1
+    tile: {fileID: 11400000, guid: cfc03de34b8f53844864ea9ed330b53f, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: soil_slo2
+    tile: {fileID: 11400000, guid: ef97a6e0155b50240b118cf6c02ff268, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: soil_slo3
+    tile: {fileID: 11400000, guid: a7f200f2238b7d643bf6e3a73cc18b20, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: soil_slo4
+    tile: {fileID: 11400000, guid: 5bab58072571ecc4fb6f17058e31fe18, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: soil_slope1
+    tile: {fileID: 11400000, guid: c65e4e487f306de4db7d3940b08e9f37, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: soil_slope2
+    tile: {fileID: 11400000, guid: 53b97cbde6bd07f48b6cd8c377ab18b3, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: soil_slope3
+    tile: {fileID: 11400000, guid: 66e91d9e4f070fe4c851ade4a4144c65, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: soil_slope4
+    tile: {fileID: 11400000, guid: 831f74581e194d749afac2a130a76178, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_slo1
+    tile: {fileID: 11400000, guid: 69c97cbdb1523064ab14a982e1fd937f, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_slo2
+    tile: {fileID: 11400000, guid: 1fb6a5dd191545e4b8b5fe819356cf5a, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_slo3
+    tile: {fileID: 11400000, guid: bea03d1c0b8948543968255cbc78af4b, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_slo4
+    tile: {fileID: 11400000, guid: 7fa18d71d6bd19d4d950dc8b7e8a953c, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_slope1
+    tile: {fileID: 11400000, guid: 5f6cc9374f266574f8d7aafdd1b0b941, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_slope2
+    tile: {fileID: 11400000, guid: dc644ab338203774b8b7b7efb1ff42ef, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_slope3
+    tile: {fileID: 11400000, guid: 91b710d1c936f5e47bbb208d4bd00d50, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_slope4
+    tile: {fileID: 11400000, guid: 003df84652163eb4fbf25b61a3812d44, type: 2}
     p_ene: 60
     ow_ene: 6000

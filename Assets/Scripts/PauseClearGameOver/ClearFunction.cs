@@ -9,6 +9,7 @@ public class ClearFunction : MonoBehaviour
     private Canvas canvas;
     private bool isClear = false;
     private RankDisplay rankDisplay;
+    RankJudgeAndUpdateFunction rankJudge;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +17,7 @@ public class ClearFunction : MonoBehaviour
         canvas.enabled = false;
         isClear = false;
         rankDisplay = FindObjectOfType<RankDisplay>();
+        rankJudge = FindObjectOfType<RankJudgeAndUpdateFunction>();
     }
 
     // Update is called once per frame
@@ -29,6 +31,11 @@ public class ClearFunction : MonoBehaviour
         }
     }
 
+    public bool GetisClear()
+    {
+        return isClear;
+    }
+
     public void GameClear()
     {
         canvas.enabled = true;
@@ -36,7 +43,7 @@ public class ClearFunction : MonoBehaviour
         isClear = true;
         Time.timeScale = 0f;
         //総消費コストを計算したら、そのスコアをもとにランクを決定する
-        rankDisplay.SetText("S");
+        rankDisplay.SetText(rankJudge.rankText);
     }
 
     public void PauseOff()
