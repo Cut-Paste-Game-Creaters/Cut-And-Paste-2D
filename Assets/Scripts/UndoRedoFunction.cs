@@ -107,14 +107,37 @@ public class UndoRedoFunction : MonoBehaviour
                 */
                 stageObjState.prefabName = col.name.Replace("(Clone)", "").Trim(); //prefabの名前を保存 (Clone)が付いていたらそれを削除
                 Debug.Log(stageObjState.prefabName);
+
                 stageObjState.objPosition = col.gameObject.transform.position;
                 stageObjState.objRotation = col.gameObject.transform.rotation;
 
+                var switchobj = col.gameObject.GetComponent<SwitchController>();
+                var canonobj = col.gameObject.GetComponent<CanonController>();
                 var throwobj = col.gameObject.GetComponent<ThrowObjectController>();
-                if(throwobj != null)
+                var wpdobj = col.gameObject.GetComponent<WarpDoor>();
+
+                if(switchobj != null)
+                {
+                    stageObjState.mode = switchobj.mode;
+                    stageObjState.waitTime = switchobj.waitTime;
+                    stageObjState.nowPressState = switchobj.nowPressState;     //今のスイッチの状態
+                    stageObjState.hitState = switchobj.hitState;
+                }
+                else if(canonobj != null)
+                {
+                    stageObjState.angle = canonobj.angle;            //-90 ～ 0 ～　90
+                    stageObjState.firePower = canonobj.firePower;     //打ち出す力
+                    stageObjState.fireTime = canonobj.fireTime;
+                }
+                else if(throwobj != null)
                 {
                     stageObjState.moveDir = throwobj.GetDir();
                     stageObjState.nowTime = throwobj.nowTime;
+                }
+                else if(wpdobj != null)
+                {
+                    stageObjState.stageName = wpdobj.stageName;
+                    stageObjState.stageMgr = wpdobj.stageMgr;
                 }
 
                 //全部情報入れたら最後にAdd
@@ -209,11 +232,34 @@ public class UndoRedoFunction : MonoBehaviour
                 GameObject g_prefab;
                 g_prefab = Instantiate(prefab, obj.objPosition, obj.objRotation);
                 g_prefab.name = obj.prefabName;
-                var throwobj = g_prefab.GetComponent<ThrowObjectController>();
-                if(throwobj != null)
+
+                var switchobj = g_prefab.gameObject.GetComponent<SwitchController>();
+                var canonobj = g_prefab.gameObject.GetComponent<CanonController>();
+                var throwobj = g_prefab.gameObject.GetComponent<ThrowObjectController>();
+                var wpdobj = g_prefab.gameObject.GetComponent<WarpDoor>();
+
+                if(switchobj != null)
+                {
+                    switchobj.mode = obj.mode;
+                    switchobj.waitTime = obj.waitTime;
+                    switchobj.nowPressState = obj.nowPressState;     //今のスイッチの状態
+                    switchobj.hitState = obj.hitState;
+                }
+                else if(canonobj != null)
+                {
+                    canonobj.angle = obj.angle;            //-90 ～ 0 ～　90
+                    canonobj.firePower = obj.firePower;     //打ち出す力
+                    canonobj.fireTime = obj.fireTime;
+                }
+                else if(throwobj != null)
                 {
                     throwobj.SetDir(obj.moveDir);
                     throwobj.nowTime = obj.nowTime;
+                }
+                else if(wpdobj != null)
+                {
+                    wpdobj.stageName = obj.stageName;
+                    wpdobj.stageMgr = obj.stageMgr;
                 }
                 Debug.Log(prefab.name + "を生成しました.");
                 //g_prefab.hp = 100;
@@ -310,11 +356,30 @@ public class UndoRedoFunction : MonoBehaviour
         public Vector3 objPosition;
         public Quaternion objRotation;
 
+        //switch情報
+        public SwitchController.SwitchMode mode;
+        public float waitTime;
+        public bool nowPressState;     //今のスイッチの状態
+        public int hitState;
+
+        //canon情報
+        public float angle;            //-90 ～ 0 ～　90
+        public float firePower;     //打ち出す力
+        public float fireTime;
+
         //ThrowObject関連
         public Vector3 moveDir;
         public float nowTime;
 
+        //WArpDoor関連
+        public string stageName;
+        public StageManager stageMgr;
+
         //これ以降必要な情報追加する
+        /*public SwitchController swCon;
+        public CanonController canonCon;
+        public ThrowObjectController toCon;
+        public WarpDoor wpdCon;*/
     }
     public class PlayerState
     {
