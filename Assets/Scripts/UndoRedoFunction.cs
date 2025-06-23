@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
+using System.Text.RegularExpressions;
 
 public class UndoRedoFunction : MonoBehaviour
 {
@@ -105,7 +106,7 @@ public class UndoRedoFunction : MonoBehaviour
                 /*
                 Prefabの名前は同じ種類なら同じ名前にする　switch(1)などはまだ対応できてない
                 */
-                stageObjState.prefabName = col.name.Replace("(Clone)", "").Trim(); //prefabの名前を保存 (Clone)が付いていたらそれを削除
+                stageObjState.prefabName = col.name; //prefabの名前を保存 (Clone)が付いていたらそれを削除
                 Debug.Log(stageObjState.prefabName);
 
                 stageObjState.objPosition = col.gameObject.transform.position;
@@ -224,7 +225,8 @@ public class UndoRedoFunction : MonoBehaviour
         /*画面上オブジェクト生成*/
         foreach (var obj in pre_objList)
         {
-            GameObject prefab = Resources.Load<GameObject>("Prefabs/" + obj.prefabName); //Resources/Prefabsフォルダから名前が同じのprefabを探す
+            string trimName = Regex.Replace(obj.prefabName, @"\([^)]*\)", "").Trim();
+            GameObject prefab = Resources.Load<GameObject>("Prefabs/" + trimName); //Resources/Prefabsフォルダから名前が同じのprefabを探す
             Debug.Log(obj.prefabName);
 
             if(prefab != null)
