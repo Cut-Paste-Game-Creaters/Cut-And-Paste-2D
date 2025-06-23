@@ -4966,6 +4966,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canon
       objectReference: {fileID: 0}
+    - target: {fileID: 1535793234407478786, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
+      propertyPath: angle
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 6261157874143053311, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 31.52
@@ -4980,19 +4984,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6261157874143053311, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.707438
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6261157874143053311, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6261157874143053311, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6261157874143053311, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.7067755
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6261157874143053311, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5004,7 +5008,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6261157874143053311, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -89.946
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
