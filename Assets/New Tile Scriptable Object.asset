@@ -37,3 +37,87 @@ MonoBehaviour:
     tile: {fileID: 11400000, guid: 9ebb831c002e2af48a23caf10f7f5759, type: 2}
     p_ene: 60
     ow_ene: 6000
+  - head: soil_1
+    tile: {fileID: 11400000, guid: 0bb3745176e035b4a8e522fe0bed9523, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: soil_2
+    tile: {fileID: 11400000, guid: 8ee13bcf6c03abe48993a9dd105ab82a, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: soil_3
+    tile: {fileID: 11400000, guid: 0407b0181fd910648a28bb4ed8627220, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: soil_slope
+    tile: {fileID: 11400000, guid: a1098d6d0d438b24a98f40f4b10976a0, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: soil_float
+    tile: {fileID: 11400000, guid: 7f0b9321867d0cc4eb5a6ee82ac6671b, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: soil_float_l
+    tile: {fileID: 11400000, guid: e67fca4636b9e9140affd6c23c736dd8, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: soil_float_r
+    tile: {fileID: 11400000, guid: 854ac71647901b84ca931d359ce65a84, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: block_uncut
+    tile: {fileID: 11400000, guid: 40c61ee276fa32649954cc2255034b0b, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_Pillar1
+    tile: {fileID: 11400000, guid: 5ba226e3885d3594680a2d5222c5ef86, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_Pillar2
+    tile: {fileID: 11400000, guid: ee49360872dd479458f75a9a08908d75, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_Pillar3
+    tile: {fileID: 11400000, guid: d9961e6f78f234f47b9f871929268115, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_1
+    tile: {fileID: 11400000, guid: 0f3c175e7589341488aaecdd3cef0793, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_2
+    tile: {fileID: 11400000, guid: d1272320b50806c45842e1feb7d2fd5f, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_bridge1
+    tile: {fileID: 11400000, guid: da21be185cf9b5d41ae1afe790165691, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_bridge2
+    tile: {fileID: 11400000, guid: 717acb6fbdfa81747a8929bd10cb0c61, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_bridgeend1
+    tile: {fileID: 11400000, guid: 0784f69a9d16183439958fcda5d8f41a, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_bridgeend2
+    tile: {fileID: 11400000, guid: 1ab8bb2f2ccdd7047ad089d71091a6d6, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_bridgeend2
+    tile: {fileID: 11400000, guid: 1ab8bb2f2ccdd7047ad089d71091a6d6, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: c_Slope
+    tile: {fileID: 11400000, guid: 24641c4b865064744aceb03027f0ce87, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: block_wood
+    tile: {fileID: 11400000, guid: 5852ae5fcc1db4b49bde8046316fce9f, type: 2}
+    p_ene: 60
+    ow_ene: 6000
+  - head: block_ice
+    tile: {fileID: 11400000, guid: e5ee325205466fb46be682731ff7767c, type: 2}
+    p_ene: 60
+    ow_ene: 6000
