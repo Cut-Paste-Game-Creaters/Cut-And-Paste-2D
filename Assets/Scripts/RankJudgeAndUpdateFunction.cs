@@ -7,6 +7,10 @@ using System.Text.RegularExpressions;
 public class RankJudgeAndUpdateFunction : MonoBehaviour
 {
     private StageManager stageMgr;
+    ClearFunction clearFunc;
+    public string rankText = "F";
+    bool hasJudged = false;
+
     //private int allCost = 24; //テスト用変数（総消費コスト
     private int[,] stageRank = {{25, 50, 75, 100}, //stage1のランク基準数値
                                 {30, 60, 90, 120}, //stage2のランク基準数値
@@ -41,16 +45,20 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     void Start()
     {
         stageMgr = FindObjectOfType<StageManager>();
+        clearFunc = FindObjectOfType<ClearFunction>();
     }
 
     // Update is called once per frame
     void Update()
     {
         //ゴールしたら
-        if(PlayerInput.GetKeyDown(KeyCode.Alpha2))
+        if(clearFunc != null)
         {
-            JudgeAndUpdateRank(stageMgr.all_sum_cos);
-            stageMgr.all_sum_cos = 0;
+            if(clearFunc.GetisClear()  && !hasJudged || PlayerInput.GetKeyDown(KeyCode.Alpha2))
+            {
+                JudgeAndUpdateRank(stageMgr.all_sum_cos);
+                //stageMgr.all_sum_cos = 0;
+            }
         }
     }
 
@@ -73,22 +81,27 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
             int stage_num = stageNumber[SceneManager.GetActiveScene().name];
             if(num <= stageRank[stage_num, 0])
             {
+                rankText = "S";
                 Debug.Log("ランク:S");
             }
             else if(num <= stageRank[stage_num, 1])
             {
+                rankText = "A";
                 Debug.Log("ランク:A");
             }
             else if(num <= stageRank[stage_num, 2])
             {
+                rankText = "B";
                 Debug.Log("ランク:B");
             }
             else if(num <= stageRank[stage_num, 3])
             {
+                rankText = "C";
                 Debug.Log("ランク:C");
             }
             else if(num > stageRank[stage_num, 3])
             {
+                rankText = "F";
                 Debug.Log("ランク:F");
             }
 
@@ -103,5 +116,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         {
             Debug.Log("ステージでないため判定できません.");
         }
+
+        hasJudged = true;
     }
 }
