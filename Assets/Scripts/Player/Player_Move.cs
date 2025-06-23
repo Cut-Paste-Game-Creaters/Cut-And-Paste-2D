@@ -91,7 +91,7 @@ public class Player_Move : MonoBehaviour
     bool IsGrounded()
     {
         Vector3 pos = this.transform.position;
-        Vector3 dif = new Vector3(0.5f, 0, 0);
+        Vector3 dif = new Vector3(0.45f, 0, 0);
         RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.down, groundCheckDistance, groundLayer);
         RaycastHit2D hitR = Physics2D.Raycast(pos+dif, Vector2.down, groundCheckDistance, groundLayer);
         RaycastHit2D hitL = Physics2D.Raycast(pos-dif, Vector2.down, groundCheckDistance, groundLayer);
