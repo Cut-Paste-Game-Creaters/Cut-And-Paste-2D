@@ -7,7 +7,7 @@ public class CameraMove : MonoBehaviour
 {
     private GameObject player;
     private Tilemap tilemap;
-    [SerializeField] float Screen_Left = 9.3f;
+    public float Screen_Left = 9.3f;
     // Start is called before the first frame update
     void Start()
     {
