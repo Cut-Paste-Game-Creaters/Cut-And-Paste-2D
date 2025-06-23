@@ -4073,7 +4073,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 3d9f4fcd0756d424c9c60a34a0a2fea8, type: 3}
     - target: {fileID: 3588919106790919407, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.28
+      value: -5.44
       objectReference: {fileID: 0}
     - target: {fileID: 3588919106790919407, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5195,6 +5195,34 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1313986927902004717, guid: ea249e1368c9d2e42adf2ea69b249126, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1313986927902004717, guid: ea249e1368c9d2e42adf2ea69b249126, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1313986927902004717, guid: ea249e1368c9d2e42adf2ea69b249126, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1025842521}
+    - target: {fileID: 1313986927902004717, guid: ea249e1368c9d2e42adf2ea69b249126, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1313986927902004717, guid: ea249e1368c9d2e42adf2ea69b249126, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadStageSelect
+      objectReference: {fileID: 0}
+    - target: {fileID: 1313986927902004717, guid: ea249e1368c9d2e42adf2ea69b249126, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameOverFunction, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1313986927902004717, guid: ea249e1368c9d2e42adf2ea69b249126, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1351771460361327476, guid: ea249e1368c9d2e42adf2ea69b249126, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -5572,7 +5600,7 @@ Transform:
   m_GameObject: {fileID: 1199248975}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0.4, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5590,6 +5618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17c8dfaa8ec2e96459869189546539ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Screen_Left: 9.3
 --- !u!1 &1666697116
 GameObject:
   m_ObjectHideFlags: 0
@@ -6760,7 +6789,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7763088304703196619}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5137821555277081919}
+        m_TargetAssemblyTypeName: ClearFunction, Assembly-CSharp
+        m_MethodName: PauseOff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 444857391}
+        m_TargetAssemblyTypeName: UndoRedoFunction, Assembly-CSharp
+        m_MethodName: Retry
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2839901026633421550
 MonoBehaviour:
   m_ObjectHideFlags: 0
