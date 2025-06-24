@@ -88,7 +88,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     public void JudgeAndUpdateRank(int num) //num == 総消費コスト
     {
         string input = SceneManager.GetActiveScene().name;
-        if(Regex.IsMatch(input, @"^Stage\d+$")||input == "StageTemplate") //シーン名がStageなんとかなら
+        if(Regex.IsMatch(input, @"^Stage\d+$")) //シーン名がStageなんとかなら
         {
             int stage_num = stageNumber[SceneManager.GetActiveScene().name];
             if(num <= stageRank[stage_num, 0])
@@ -97,7 +97,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
             }
             else if(num <= stageRank[stage_num, 1])
             {
-                rankText = "O";
+                rankText = "A";
             }
             else if(num <= stageRank[stage_num, 2])
             {

@@ -29,3 +29,7 @@ MonoBehaviour:
     obj: {fileID: 1057402034990213959, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
     p_ene: 30
     ow_ene: 3000
+  - name: VanishFloor
+    obj: {fileID: 2234991536343953260, guid: 92880a01147ef614ca9fa94687c11418, type: 3}
+    p_ene: 30
+    ow_ene: 3000
