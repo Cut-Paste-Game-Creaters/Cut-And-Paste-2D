@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseInStage : MonoBehaviour
@@ -32,8 +33,9 @@ public class PauseInStage : MonoBehaviour
         Time.timeScale = 1.0f;
     }
 
-    public void Retry()
+    public void LoadStageSelect()
     {
-
+        PauseOff();
+        SceneManager.LoadScene("StageSelectScene");
     }
 }
