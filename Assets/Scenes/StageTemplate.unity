@@ -4008,7 +4008,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 131269887}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1741565794}
+        m_TargetAssemblyTypeName: PauseInStage, Assembly-CSharp
+        m_MethodName: LoadStageSelect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &131269887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5371,6 +5383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player_HP: 100
   costHeal_timeOut: 0
+  stageNum: -1
   have_ene: 10000
   all_sum_cos: 0
   erase_cost: 0
@@ -6148,7 +6161,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1743224801}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1741565794}
+        m_TargetAssemblyTypeName: PauseInStage, Assembly-CSharp
+        m_MethodName: PauseOff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 444857391}
+        m_TargetAssemblyTypeName: UndoRedoFunction, Assembly-CSharp
+        m_MethodName: Retry
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1743224801
 MonoBehaviour:
   m_ObjectHideFlags: 0
