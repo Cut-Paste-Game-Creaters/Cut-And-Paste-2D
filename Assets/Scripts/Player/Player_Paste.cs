@@ -24,7 +24,15 @@ public class Player_Paste : MonoBehaviour
         sr = frame1.GetComponent<SpriteRenderer>();
         sr.enabled = false;
         //rect = Instantiate(rectPrefab);
-        tilemap = FindObjectOfType<Tilemap>();
+        Tilemap[] maps = FindObjectsOfType<Tilemap>();
+        foreach (var map in maps)
+        {
+            if (map.gameObject.tag == "Tilemap")
+            {
+                tilemap = map;
+                break;
+            }
+        }
         stageManager = FindObjectOfType<StageManager>();
         urFunc = FindObjectOfType<UndoRedoFunction>();
     }

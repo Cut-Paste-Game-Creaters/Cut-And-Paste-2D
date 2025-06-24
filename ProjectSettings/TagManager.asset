@@ -11,6 +11,7 @@ TagManager:
   - Door
   - WarpDoor
   - Goal
+  - Copy_Tilemap
   layers:
   - Default
   - TransparentFX
