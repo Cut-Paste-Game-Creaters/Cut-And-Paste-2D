@@ -8,6 +8,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
 {
     private StageManager stageMgr;
     ClearFunction clearFunc;
+    private RankDisplay rankDisplay;
     public string rankText = "F";
     bool hasJudged = false;
 
@@ -22,9 +23,11 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
                                 {25, 50, 75, 100}, //stage8のランク基準数値
                                 {25, 50, 75, 100}, //stage9のランク基準数値
                                 {25, 50, 75, 100}, //stage10のランク基準数値
+                                {25, 50, 75, 100}, //stage10のランク基準数値
+
                                 }; //S~Fの判定基準
 
-    private int[] minConsumpCost = {-1, -1, -1, -1, -1,-1, -1, -1, -1, -1}; //ステージ最低消費コスト配列
+    private int[] minConsumpCost = {-1, -1, -1, -1, -1,-1, -1, -1, -1, -1,-1}; //ステージ最低消費コスト配列
 
     public Dictionary<string, int> stageNumber = new Dictionary<string, int>() // Dictionaryクラスの宣言と初期値の設定
     {
@@ -37,7 +40,8 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         {"Stage7", 6},
         {"Stage8", 7},
         {"Stage9", 8},
-        {"Stage10", 9}
+        {"Stage10", 9},
+        {"StageTemplate",10 }
     };
 
 
@@ -46,18 +50,26 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     {
         stageMgr = FindObjectOfType<StageManager>();
         clearFunc = FindObjectOfType<ClearFunction>();
+        rankDisplay = FindObjectOfType<RankDisplay>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("hasJudged:" + hasJudged);
         //ゴールしたら
         if(clearFunc != null)
         {
-            if(clearFunc.GetisClear()  && !hasJudged || PlayerInput.GetKeyDown(KeyCode.Alpha2) && !hasJudged)
+            if((clearFunc.GetisClear()  && !hasJudged))
             {
                 JudgeAndUpdateRank(stageMgr.all_sum_cos);
                 //stageMgr.all_sum_cos = 0;
+                rankDisplay.SetText(rankText);
+                rankDisplay.InitTextSize();
+            }
+            if(clearFunc.GetisClear() && hasJudged)
+            {
+                rankDisplay.AnimateText();
             }
         }
     }
@@ -76,7 +88,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     public void JudgeAndUpdateRank(int num) //num == 総消費コスト
     {
         string input = SceneManager.GetActiveScene().name;
-        if(Regex.IsMatch(input, @"^Stage\d+$")) //シーン名がStageなんとかなら
+        if(Regex.IsMatch(input, @"^Stage\d+$")||input == "StageTemplate") //シーン名がStageなんとかなら
         {
             int stage_num = stageNumber[SceneManager.GetActiveScene().name];
             if(num <= stageRank[stage_num, 0])
@@ -85,7 +97,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
             }
             else if(num <= stageRank[stage_num, 1])
             {
-                rankText = "A";
+                rankText = "O";
             }
             else if(num <= stageRank[stage_num, 2])
             {

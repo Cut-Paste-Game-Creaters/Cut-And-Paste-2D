@@ -7,17 +7,21 @@ public class RankDisplay : MonoBehaviour
     private TMPro.TextMeshProUGUI rankText;
     [SerializeField] float maxFontSize=200;
     [SerializeField] float addFontSize=10;
-    [SerializeField] float accel = 1.0f;
+    [SerializeField] float accel = 0f;
     // Start is called before the first frame update
     void Start()
     {
         rankText = GetComponent<TMPro.TextMeshProUGUI>();
     }
 
+    public void InitTextSize()
+    {
+        rankText.fontSize = 10;
+    }
+
     public void SetText(string Rank)
     {
         rankText.text = Rank;
-        rankText.fontSize = 10;
         switch (Rank)
         {
             case "S":
