@@ -4008,7 +4008,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 131269887}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1741565794}
+        m_TargetAssemblyTypeName: PauseInStage, Assembly-CSharp
+        m_MethodName: LoadStageSelect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &131269887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5371,6 +5383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player_HP: 100
   costHeal_timeOut: 0
+  stageNum: -1
   have_ene: 10000
   all_sum_cos: 0
   erase_cost: 0
@@ -6148,7 +6161,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1743224801}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1741565794}
+        m_TargetAssemblyTypeName: PauseInStage, Assembly-CSharp
+        m_MethodName: PauseOff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 444857391}
+        m_TargetAssemblyTypeName: UndoRedoFunction, Assembly-CSharp
+        m_MethodName: Retry
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1743224801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7044,6 +7081,63 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 0, y: 0}
+--- !u!1001 &5344157172979048026
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2234991536343953260, guid: 92880a01147ef614ca9fa94687c11418, type: 3}
+      propertyPath: m_Name
+      value: VanishFloor
+      objectReference: {fileID: 0}
+    - target: {fileID: 8065485574148634764, guid: 92880a01147ef614ca9fa94687c11418, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.4353514
+      objectReference: {fileID: 0}
+    - target: {fileID: 8065485574148634764, guid: 92880a01147ef614ca9fa94687c11418, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 8065485574148634764, guid: 92880a01147ef614ca9fa94687c11418, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8065485574148634764, guid: 92880a01147ef614ca9fa94687c11418, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8065485574148634764, guid: 92880a01147ef614ca9fa94687c11418, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8065485574148634764, guid: 92880a01147ef614ca9fa94687c11418, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8065485574148634764, guid: 92880a01147ef614ca9fa94687c11418, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8065485574148634764, guid: 92880a01147ef614ca9fa94687c11418, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8065485574148634764, guid: 92880a01147ef614ca9fa94687c11418, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8065485574148634764, guid: 92880a01147ef614ca9fa94687c11418, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 92880a01147ef614ca9fa94687c11418, type: 3}
 --- !u!224 &5380579452342900807
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7278,3 +7372,4 @@ SceneRoots:
   - {fileID: 860119821}
   - {fileID: 1671879767}
   - {fileID: 444857392}
+  - {fileID: 5344157172979048026}
