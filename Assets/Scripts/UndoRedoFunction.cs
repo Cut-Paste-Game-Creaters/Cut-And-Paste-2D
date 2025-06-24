@@ -57,6 +57,7 @@ public class UndoRedoFunction : MonoBehaviour
         allStageInfo.stageTileData = RecordStageHistory(); //一枚分の全情報のクラスのタイルデータ部分に保存
         allStageInfo.have_ene = stageMgr.have_ene;
         allStageInfo.all_sum_cos = stageMgr.all_sum_cos;
+        allStageInfo.all_isCut = stageMgr.all_isCut;
         allStageInfo.stageObjState = RecordObjectState();
         allStageInfo.playerState = RecordPlayerInfo();
         allStageInfo.copyTileData = RecordCopyTileData();
@@ -198,6 +199,7 @@ public class UndoRedoFunction : MonoBehaviour
             UndoTileData();
             UndoCost();
             UndoAllSumCost();
+            UndoAllIsCut();
             UndoObjState();
             UndoPlayerState();
             UndoCopyTileData();
@@ -285,6 +287,13 @@ public class UndoRedoFunction : MonoBehaviour
         int pre_all_sum_cost = undoStack.Peek().all_sum_cos;
         stageMgr.all_sum_cos = pre_all_sum_cost;
         Debug.Log("所持コスト：" + stageMgr.all_sum_cos + "に戻りました.");
+    }
+
+    public void UndoAllIsCut()
+    {
+        bool pre_all_isCut = undoStack.Peek().all_isCut;
+        stageMgr.all_isCut = pre_all_isCut;
+        Debug.Log("所持コスト：" + stageMgr.all_isCut + "に戻りました.");
     }
 
     public void UndoTileData()
@@ -405,6 +414,7 @@ public class UndoRedoFunction : MonoBehaviour
         public AllStageTileData stageTileData = new AllStageTileData();
         public int have_ene = 0;
         public int all_sum_cos = 0;
+        public bool all_isCut;
         public List<StageOblectState> stageObjState = new List<StageOblectState>();
         public PlayerState playerState = new PlayerState();
         public StageManager.TileData copyTileData = new StageManager.TileData();
