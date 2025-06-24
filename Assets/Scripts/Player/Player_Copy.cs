@@ -32,7 +32,15 @@ public class Player_Copy : MonoBehaviour
         frame2.SetActive(false);
         //anounce = Instantiate(anounce);
         //anounce.SetActive(false);
-        tilemap = FindObjectOfType<Tilemap>();
+        Tilemap[] maps = FindObjectsOfType<Tilemap>();
+        foreach (var map in maps)
+        {
+            if (map.gameObject.tag == "Tilemap")
+            {
+                tilemap = map;
+                break;
+            }
+        }
         stageMgr = FindObjectOfType<StageManager>();
         urFunc = FindObjectOfType<UndoRedoFunction>();
 
