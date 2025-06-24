@@ -7457,6 +7457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player_HP: 100
   costHeal_timeOut: 0
+  stageNum: -1
   have_ene: 10000
   all_sum_cos: 0
   erase_cost: 0
