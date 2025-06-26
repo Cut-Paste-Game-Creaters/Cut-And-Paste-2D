@@ -7,6 +7,7 @@ public class WarpDoor : MonoBehaviour
 {
     public string stageName;
     public StageManager stageMgr;
+    public bool stopLoad = false;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -19,6 +20,7 @@ public class WarpDoor : MonoBehaviour
                 Destroy(obj);
             }
             stageMgr.EraseObjects = new List<GameObject>();
+            if (stopLoad) return;
             SceneManager.LoadScene(stageName);
         }
     }

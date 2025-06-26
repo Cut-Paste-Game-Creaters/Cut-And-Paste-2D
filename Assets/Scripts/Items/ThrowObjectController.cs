@@ -36,4 +36,12 @@ public class ThrowObjectController : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    void OnCollisionStay2D(Collision2D other)
+    {
+        if(other.gameObject.tag =="Player")
+        {
+            other.gameObject.transform.position += moveDir * PlayerInput.GetDeltaTime()/2;
+        }
+    }
 }
