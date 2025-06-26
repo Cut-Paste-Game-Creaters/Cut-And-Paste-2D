@@ -9,9 +9,11 @@ public class Player_Paste : MonoBehaviour
     [SerializeField] GameObject frame1;
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
     [SerializeField] ObjectScriptableObject objSB; //ScriptableObject
+    [SerializeField] bool PreviewCopyData = true;
     //[SerializeField] GameObject rectPrefab;
 
     private Tilemap tilemap;
+    private Tilemap display_Copy_Tilemap;
     private StageManager stageManager;
     private SpriteRenderer sr;
     private Vector3 frameData = Vector3.zero;
@@ -30,7 +32,10 @@ public class Player_Paste : MonoBehaviour
             if (map.gameObject.tag == "Tilemap")
             {
                 tilemap = map;
-                break;
+            }
+            if(map.gameObject.tag == "Display_Copy_Tilemap")
+            {
+                display_Copy_Tilemap = map;
             }
         }
         stageManager = FindObjectOfType<StageManager>();
@@ -57,6 +62,7 @@ public class Player_Paste : MonoBehaviour
         if (PlayerInput.GetMouseButton(1))
         {
             sr.enabled = true;
+            Time.timeScale = 0f;
             frameData = stageManager.GetInfo();
             sr.size = frameData;
             Vector3 framePos = mPos;
@@ -88,19 +94,30 @@ public class Player_Paste : MonoBehaviour
             }
 
             //貼り付け時の消すコストを計算する
-            CheckCost(false, mPos); //タイルセットしないで計算
+            CheckCost(false, mPos,display_Copy_Tilemap); //タイルセットしないで計算
             CheckObjectCost(false);      //オブジェクトの消すコストを計算する
             //Debug.Log("erase:"+stageManager.erase_cost);
 
             frame1.transform.position = framePos;
+
+            if (PreviewCopyData)
+            {
+                //右クリックを押している間、コピー内容を表示する
+                display_Copy_Tilemap.ClearAllTiles();
+                CheckCost(true, mPos, display_Copy_Tilemap);    //タイルセットしないで表示
+                DisplayObject();                                //ペーストしないで表示
+            }
+            
         }
         //右クリックで貼り付け
         if (PlayerInput.GetMouseButtonUp(1))
         {
             sr.enabled = false;     //枠を非表示にする
+            Time.timeScale = 1.0f;
+            display_Copy_Tilemap.ClearAllTiles();
 
             //貼り付け時の消すコストを計算する
-            CheckCost(false, mPos); //タイルセットしないで計算
+            CheckCost(false, mPos,tilemap); //タイルセットしないで計算
             CheckObjectCost(false);      //オブジェクトの消すコストを計算する
             Debug.Log("erase:" + stageManager.erase_cost);
 
@@ -116,7 +133,7 @@ public class Player_Paste : MonoBehaviour
                 stageManager.all_sum_cos += (stageManager.erase_cost + stageManager.write_cost / divide); //総消費コストに加算
                 Debug.Log("消えるコスト：" + stageManager.erase_cost + "," + "増やすコスト：" + stageManager.write_cost / divide + ", " + "所持コスト：" + stageManager.have_ene);
                 Debug.Log("総消費コスト：" + stageManager.all_sum_cos);
-                CheckCost(true, mPos);
+                CheckCost(true, mPos,tilemap);
                 CheckObjectCost(true);
                 //オブジェクトをペースト
                 PasteObject();
@@ -130,6 +147,21 @@ public class Player_Paste : MonoBehaviour
             }
             //Debug.Log("isCut == " + stageManager.all_isCut);
 
+        }
+    }
+
+    //コピーしたオブジェクトをペーストすることなく、仮想的に表示する
+    public void DisplayObject()
+    {
+        if (stageManager.objectData.Count > 0)
+        {
+            Vector3 mousePos = Input.mousePosition;
+            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+            foreach (var c in stageManager.objectData)
+            {
+                c.obj.SetActive(true);
+                c.obj.transform.position = c.pos + ChangeVecToInt(mousePos);
+            }
         }
     }
 
@@ -171,7 +203,11 @@ public class Player_Paste : MonoBehaviour
 
     }
 
-    public void CheckCost(bool isSetTile, Vector3Int mPos)
+    /*CheckCost : 2種類の使い方
+     * ①現在のコピータイルと下にあるタイルからコストを計算する
+     * ②タイルをペーストする
+     */
+    public void CheckCost(bool isSetTile, Vector3Int mPos,Tilemap _tilemap)
     {
         //if(!isSetTile)stageManager.erase_cost = 0;
         //タイルをペースト
@@ -200,7 +236,7 @@ public class Player_Paste : MonoBehaviour
 
                 if (isSetTile)
                 {
-                    tilemap.SetTile(_p, stageManager.tileData.tiles[y][x]);
+                    _tilemap.SetTile(_p, stageManager.tileData.tiles[y][x]);
                 }
                 else
                 {
@@ -214,6 +250,11 @@ public class Player_Paste : MonoBehaviour
         }
     }
 
+    /*
+     CheckObjectCost : ２つの作り方がある
+    ①コピーしたものの増やすコストと範囲内にある下のオブジェクトの消すコストを計算する
+    ②実際に範囲内にあるオブジェクトを消し、コピーしたオブジェクトをペーストする
+     */
     public void CheckObjectCost(bool isErase)
     {
         Vector3Int _p = Vector3Int.zero;
