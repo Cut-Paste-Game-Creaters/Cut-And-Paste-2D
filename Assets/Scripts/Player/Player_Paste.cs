@@ -103,6 +103,7 @@ public class Player_Paste : MonoBehaviour
             if (PreviewCopyData)
             {
                 //右クリックを押している間、コピー内容を表示する
+                Debug.Log("objectData:" + stageManager.objectData.Count);
                 display_Copy_Tilemap.ClearAllTiles();
                 CheckCost(true, mPos, display_Copy_Tilemap);    //タイルセットしないで表示
                 DisplayObject();                                //ペーストしないで表示
@@ -115,11 +116,12 @@ public class Player_Paste : MonoBehaviour
             sr.enabled = false;     //枠を非表示にする
             Time.timeScale = 1.0f;
             display_Copy_Tilemap.ClearAllTiles();
+            if(PreviewCopyData) UnDisplayObject();          //プレビューで出してたObjectを非表示にする
 
             //貼り付け時の消すコストを計算する
             CheckCost(false, mPos,tilemap); //タイルセットしないで計算
             CheckObjectCost(false);      //オブジェクトの消すコストを計算する
-            Debug.Log("erase:" + stageManager.erase_cost);
+            //Debug.Log("erase:" + stageManager.erase_cost);
 
             int divide = 1;
             if(stageManager.all_isCut)
@@ -161,6 +163,17 @@ public class Player_Paste : MonoBehaviour
             {
                 c.obj.SetActive(true);
                 c.obj.transform.position = c.pos + ChangeVecToInt(mousePos);
+            }
+        }
+    }
+
+    public void UnDisplayObject()
+    {
+        if (stageManager.objectData.Count > 0)
+        {
+            foreach (var c in stageManager.objectData)
+            {
+                c.obj.SetActive(false);
             }
         }
     }
