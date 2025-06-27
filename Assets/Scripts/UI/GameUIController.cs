@@ -12,6 +12,7 @@ public class GameUIController : MonoBehaviour
 
     private StageManager stageManager;
     private Tilemap tilemap;
+    private Vector3 initPos;
 
     void Start()
     {
@@ -24,6 +25,7 @@ public class GameUIController : MonoBehaviour
                 break;
             }
         }
+        initPos = tilemap.transform.localPosition;
     }
 
     // Update is called once per frame
@@ -42,12 +44,36 @@ public class GameUIController : MonoBehaviour
         if (stageManager.tileData.hasData)
         {
             tilemap.ClearAllTiles();
+            tilemap.gameObject.transform.position = initPos;
             int w = stageManager.tileData.width;
             int h = stageManager.tileData.height;
             float scaleRateX = 6.0f / (float)w;
             float scaleRateY = 6.0f / (float)h;
             float scaleRate = scaleRateX < scaleRateY ? scaleRateX : scaleRateY;
             tilemap.gameObject.transform.localScale = new Vector3(scaleRate,scaleRate,1);
+            float newX = 1;
+            float newY = 1;
+            switch (stageManager.tileData.direction)
+            {
+                case 0:
+                    newX = -w * 0.5f * scaleRate;
+                    newY = -h * 0.5f * scaleRate;
+                    break;
+                case 1:
+                    newX = -w * 0.5f * scaleRate;
+                    newY = -h * 0.5f * -scaleRate - scaleRate;
+                    break;
+                case 2:
+                    newX = -w * 0.5f * -scaleRate - scaleRate;
+                    newY = -h * 0.5f * -scaleRate - scaleRate;
+                    break;
+                case 3:
+                    newX = -w * 0.5f * -scaleRate - scaleRate;
+                    newY = -h * 0.5f * scaleRate;
+                    break;
+                    default:break;
+            }
+            tilemap.gameObject.transform.localPosition = new Vector3(initPos.x + newX,initPos.y + newY,initPos.z);
             for(int i = 0; i < h; i++)
             {
                 for(int j = 0; j < w; j++)
@@ -57,16 +83,16 @@ public class GameUIController : MonoBehaviour
                     switch (stageManager.tileData.direction)
                     {
                         case 0:
-                            _p = new Vector3Int(  j - w/2    ,  i - h/2    , 0);
+                            _p = new Vector3Int( j,i,0);
                             break;
                         case 1:
-                            _p = new Vector3Int(  j - w/2    , -i + h/2    , 0);
+                            _p = new Vector3Int( j,-i, 0);
                             break;
                         case 2:
-                            _p = new Vector3Int( -j + w/2    , -i + h/2    , 0);
+                            _p = new Vector3Int( -j,-i, 0);
                             break;
                         case 3:
-                            _p = new Vector3Int( -j + w/2    ,  i - h/2    , 0);
+                            _p = new Vector3Int( -j,i,0);
                             break;
                         default: break;
                     }
