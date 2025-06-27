@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Player_Function : MonoBehaviour
 {
-    public int hp; //プレイヤーのHP
     private GameOverFunction gameOverFunc;
     private ClearFunction clearFunc;
+    StageManager stageMgr;
 
     private float fallingLine_y = -10.0f;
     //private RigidBody rb;
@@ -17,13 +17,14 @@ public class Player_Function : MonoBehaviour
         //rb = GetComponent<RigidBody>();
         gameOverFunc = FindObjectOfType<GameOverFunction>();
         clearFunc = FindObjectOfType<ClearFunction>();
+        stageMgr = FindObjectOfType<StageManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
         /*テスト用に4ボタン押すと死んだことになる 本来はhpが0 もしくは　ステージから落ちたら*/
-        if(this.gameObject.transform.position.y < fallingLine_y || hp <= 0)
+        if(this.gameObject.transform.position.y < fallingLine_y || stageMgr.player_HP <= 0)
         {
             Die();
         }
