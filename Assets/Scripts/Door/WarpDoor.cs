@@ -9,9 +9,9 @@ public class WarpDoor : MonoBehaviour
     public StageManager stageMgr;
     public bool stopLoad = false;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.W))
         {
 
             //ƒV[ƒ“‘JˆÚ‚µ‚½‚Æ‚«‚É‚à‚µDontDestroyOnLoad‚É‰½‚©c‚Á‚Ä‚½‚çíœ
