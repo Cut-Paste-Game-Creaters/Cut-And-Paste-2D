@@ -42,34 +42,27 @@ public class CanonController : MonoBehaviour
         if(wholeTime > fireTime)
         {
             wholeTime = 0;
-            if (isRigid)
-            {
-                //Šp“x’²®
-                float _angle = angle + 90;
-                //Œü‚¢‚½•ûŒü‚É¶¬‚·‚é
-                Vector2 moveDir = new Vector2(
-                    Mathf.Cos(_angle * Mathf.Deg2Rad) * firePower, Mathf.Sin(_angle * Mathf.Deg2Rad) * firePower
-                    );
-                //Œü‚¢‚½•ûŒü‚ÉˆÊ’u‚ğ‘«‚·
-                Vector3 pos = this.transform.position;
-                pos.x += moveDir.normalized.x;
-                pos.y += moveDir.normalized.y;
+            //Šp“x’²®
+            float _angle = angle + 90;
+            //Œü‚¢‚½•ûŒü‚É¶¬‚·‚é
+            Vector2 moveDir = new Vector2(
+                Mathf.Cos(_angle * Mathf.Deg2Rad) * firePower, Mathf.Sin(_angle * Mathf.Deg2Rad) * firePower
+                );
+            //Œü‚¢‚½•ûŒü‚ÉˆÊ’u‚ğ‘«‚·
+            Vector3 pos = this.transform.position;
+            pos.x += moveDir.normalized.x;
+            pos.y += moveDir.normalized.y;
 
-                //’e‚ğ¶¬‚µ‚ÄŒü‚«‚ğ“`‚¦‚é
-                GameObject g = Instantiate(throwObject, pos,
-                    Quaternion.identity);
-                ThrowObjectController bc = g.GetComponent<ThrowObjectController>();
-                bc.SetDir(moveDir.normalized);
+            //’e‚ğ¶¬‚µ‚ÄŒü‚«‚ğ“`‚¦‚é
+            GameObject g = Instantiate(throwObject, pos,
+                Quaternion.identity);
+            ThrowObjectController bc = g.GetComponent<ThrowObjectController>();
+            bc.SetDir(moveDir.normalized);
 
-                //Šp“x‚ğ®‚¦‚é
-                Vector3 fire_rot = g.transform.localEulerAngles;
-                fire_rot.z = angle;
-                g.transform.localEulerAngles = fire_rot;
-            }
-            else
-            {
-
-            }
+            //Šp“x‚ğ®‚¦‚é
+            Vector3 fire_rot = g.transform.localEulerAngles;
+            fire_rot.z = angle;
+            g.transform.localEulerAngles = fire_rot;
         }
     }
 }
