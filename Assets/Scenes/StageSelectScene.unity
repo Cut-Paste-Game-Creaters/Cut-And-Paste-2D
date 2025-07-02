@@ -6320,6 +6320,10 @@ PrefabInstance:
       propertyPath: stopLoad
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9016092672927213838, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
+      propertyPath: stageName
+      value: Stage1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6693,7 +6697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9016092672927213838, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
       propertyPath: stageName
-      value: StageTemplate
+      value: Stage1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

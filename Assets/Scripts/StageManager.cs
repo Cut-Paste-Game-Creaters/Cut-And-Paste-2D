@@ -108,7 +108,7 @@ public class StageManager : MonoBehaviour
             {
                 have_ene = init_ene_array[stageNum];
             }
-            Debug.Log("所持コスト:" + have_ene);
+            //Debug.Log("所持コスト:" + have_ene);
             timeElapsed = 0.0f;
         }
     }
