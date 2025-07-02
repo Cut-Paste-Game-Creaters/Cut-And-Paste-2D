@@ -13,7 +13,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     bool hasJudged = false;
 
     //private int allCost = 24; //テスト用変数（総消費コスト
-    private int[,] stageRank = {{25, 50, 75, 100}, //stage1のランク基準数値
+    private int[,] stageRank = {{25000, 50000, 75000, 100000}, //stage1のランク基準数値
                                 {30, 60, 90, 120}, //stage2のランク基準数値
                                 {25, 50, 75, 100}, //stage3のランク基準数値
                                 {25, 50, 75, 100}, //stage4のランク基準数値
@@ -56,21 +56,32 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("hasJudged:" + hasJudged);
+        if (stageMgr==null)
+        {
+            stageMgr = FindObjectOfType<StageManager>();
+        }
+        if (rankDisplay == null)
+        {
+            rankDisplay = FindObjectOfType<RankDisplay>();
+        }
         //ゴールしたら
-        if(clearFunc != null)
+        if (clearFunc != null)
         {
             if((clearFunc.GetisClear()  && !hasJudged))
             {
                 JudgeAndUpdateRank(stageMgr.all_sum_cos);
                 //stageMgr.all_sum_cos = 0;
                 rankDisplay.SetText(rankText);
-                rankDisplay.InitTextSize();
+                rankDisplay.InitTextSize(); 
             }
             if(clearFunc.GetisClear() && hasJudged)
             {
                 rankDisplay.AnimateText();
             }
+        }
+        else
+        {
+            clearFunc = FindObjectOfType<ClearFunction>();
         }
     }
 
