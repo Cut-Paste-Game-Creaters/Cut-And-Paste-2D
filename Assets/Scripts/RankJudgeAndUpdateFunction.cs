@@ -27,6 +27,10 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
 
                                 }; //S~Fの判定基準
 
+    //private int allCost = 24; //テスト用変数（総消費コスト
+    private int[] clearAddCost = {1000,800,600,5}; //S～FでStageSelectのコストに追加するコスト
+                                                   //各ステージで増えるコストは同じ
+
     private int[] minConsumpCost = {-1, -1, -1, -1, -1,-1, -1, -1, -1, -1,-1}; //ステージ最低消費コスト配列
 
     public Dictionary<string, int> stageNumber = new Dictionary<string, int>() // Dictionaryクラスの宣言と初期値の設定
@@ -48,9 +52,15 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stageMgr = FindObjectOfType<StageManager>();
-        clearFunc = FindObjectOfType<ClearFunction>();
-        rankDisplay = FindObjectOfType<RankDisplay>();
+        InitStatus();
+    }
+
+    public void InitStatus()
+    {
+        stageMgr = null;
+        clearFunc = null;
+        rankDisplay = null;
+        hasJudged = false;
     }
 
     // Update is called once per frame
@@ -67,7 +77,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         //ゴールしたら
         if (clearFunc != null)
         {
-            if((clearFunc.GetisClear()  && !hasJudged))
+            if ((clearFunc.GetisClear()  && !hasJudged))
             {
                 JudgeAndUpdateRank(stageMgr.all_sum_cos);
                 //stageMgr.all_sum_cos = 0;
@@ -127,6 +137,8 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
             if(minConsumpCost[stage_num] == -1|| num < minConsumpCost[stage_num])
             {
                 minConsumpCost[stage_num] = num; //最低消費コストを書き換え
+                //StageSelectの初期コストを更新する
+                AddInitCost(stage_num);
                 Debug.Log("ステージ" + (stage_num + 1) + "の最低消費コストが" + num + "に更新されました");
             }
         }
@@ -136,5 +148,26 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         }
 
         hasJudged = true;
+    }
+
+    void AddInitCost(int stage_num)
+    {
+        switch (rankText)
+        {
+            case "S":
+                stageMgr.initAddCost_EachStage[stage_num] = clearAddCost[0];
+                break;
+            case "A":
+                stageMgr.initAddCost_EachStage[stage_num] = clearAddCost[1];
+                break;
+            case "B":
+                stageMgr.initAddCost_EachStage[stage_num] = clearAddCost[2];
+                break;
+            case "C":
+                stageMgr.initAddCost_EachStage[stage_num] = clearAddCost[3];
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -32,6 +32,7 @@ public class SceneManagerEvent : MonoBehaviour
         if(stageMgr != null && rankFunc != null)
         {
             stageMgr.InitAllSumCost(); //総消費コスト初期化
+            rankFunc.InitStatus();
             if(Regex.IsMatch(input, @"^Stage\d+$")) //シーン名がStageなんとかなら
             {
                 stageMgr.InitHaveCost(rankFunc.stageNumber[SceneManager.GetActiveScene().name]); //所持コストを初期コストに初期化
