@@ -101,10 +101,6 @@ MonoBehaviour:
     tile: {fileID: 11400000, guid: 1ab8bb2f2ccdd7047ad089d71091a6d6, type: 2}
     p_ene: 60
     ow_ene: 6000
-  - head: c_bridgeend2
-    tile: {fileID: 11400000, guid: 1ab8bb2f2ccdd7047ad089d71091a6d6, type: 2}
-    p_ene: 60
-    ow_ene: 6000
   - head: block_wood
     tile: {fileID: 11400000, guid: 5852ae5fcc1db4b49bde8046316fce9f, type: 2}
     p_ene: 60
@@ -171,9 +167,5 @@ MonoBehaviour:
     ow_ene: 6000
   - head: c_slope3
     tile: {fileID: 11400000, guid: 91b710d1c936f5e47bbb208d4bd00d50, type: 2}
-    p_ene: 60
-    ow_ene: 6000
-  - head: c_slope4
-    tile: {fileID: 11400000, guid: 003df84652163eb4fbf25b61a3812d44, type: 2}
     p_ene: 60
     ow_ene: 6000

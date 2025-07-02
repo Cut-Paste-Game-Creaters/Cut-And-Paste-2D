@@ -66,9 +66,7 @@ public class Player_Copy : MonoBehaviour
                 Time.timeScale = 0f;
 
                 //これまでコピーしてたものを初期化
-                InitList(stageMgr.tileData.tiles);
-                //stageMgr.tileData.tiles = new List<List<TileBase>>();
-                //stageMgr.tileData.hasData = false;
+                InitTileData();
                 //最初の位置取得(小数点)
                 startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
