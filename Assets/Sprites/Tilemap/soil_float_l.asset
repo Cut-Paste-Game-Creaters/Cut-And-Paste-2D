@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: soil_float_l
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -1493184285, guid: 196d9d52e1bece5498a96678f8e5d1e2, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.990566, g: 0.990566, b: 0.990566, a: 1}
   m_Transform:
     e00: 1
     e01: 0
