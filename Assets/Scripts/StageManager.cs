@@ -22,6 +22,7 @@ public class StageManager : MonoBehaviour
     public int stageNum = -1;
     private int[] init_ene_array = {100000, 150, 200, 250, 300, 350, 400, 450, 500, 550}; //ステージごとの初期コスト配列
     private int[] healAmount_array = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50}; //ステージごとの回復速度コストの配列
+    public int[] initAddCost_EachStage = {0,0,0,0,0,0,0,0,0,0};
     public int have_ene = 10000; //初期コスト
     public int all_sum_cos = 0; //ステージで消費した全てのコスト
     public int erase_cost = 0; //貼り付け箇所の消すコスト
@@ -89,7 +90,14 @@ public class StageManager : MonoBehaviour
     public void InitHaveCost(int stageNum)
     {
         have_ene = init_ene_array[stageNum];
-        Debug.Log("初期コストを" + stageNum + "ステージの" + have_ene + "に初期化しました." );
+        if (stageNum == 0)
+        {
+            foreach(var cost in initAddCost_EachStage)
+            {
+                have_ene += cost;
+            }
+        }
+            Debug.Log("初期コストを" + stageNum + "ステージの" + have_ene + "に初期化しました.");
     }
 
     public void StageSelectInitHaveCost()
@@ -108,7 +116,7 @@ public class StageManager : MonoBehaviour
             {
                 have_ene = init_ene_array[stageNum];
             }
-            Debug.Log("所持コスト:" + have_ene);
+            //Debug.Log("所持コスト:" + have_ene);
             timeElapsed = 0.0f;
         }
     }

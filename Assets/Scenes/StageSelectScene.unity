@@ -2029,7 +2029,8 @@ MonoBehaviour:
   player_HP: 100
   costHeal_timeOut: 0
   stageNum: -1
-  have_ene: 10000000
+  initAddCost_EachStage: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  have_ene: 100000
   all_sum_cos: 0
   erase_cost: 0
   write_cost: 0
@@ -6320,6 +6321,10 @@ PrefabInstance:
       propertyPath: stopLoad
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9016092672927213838, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
+      propertyPath: stageName
+      value: Stage1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6693,7 +6698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9016092672927213838, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
       propertyPath: stageName
-      value: StageTemplate
+      value: Stage1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
