@@ -18,6 +18,7 @@ public class Player_Paste : MonoBehaviour
     private SpriteRenderer sr;
     private Vector3 frameData = Vector3.zero;
     UndoRedoFunction urFunc;
+    private CaptureCopyZone captureCopyZone;
     //private GameObject rect;
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,7 @@ public class Player_Paste : MonoBehaviour
         }
         stageManager = FindObjectOfType<StageManager>();
         urFunc = FindObjectOfType<UndoRedoFunction>();
+        captureCopyZone = FindObjectOfType<CaptureCopyZone>();
     }
 
     // Update is called once per frame
@@ -143,6 +145,7 @@ public class Player_Paste : MonoBehaviour
                 if (stageManager.all_isCut) //1回のみペーストにする処理
                 {
                     InitTileData();
+                    captureCopyZone.disableImage();
                 }
 
                 urFunc.InfoPushToStack();
