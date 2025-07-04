@@ -8,6 +8,9 @@ using UnityEngine.UI;
 public class CaptureCopyZone : MonoBehaviour
 {
     private Rect captureArea = new Rect(100, 100, 300, 200); // x, y, width, height
+    private Camera cam;
+    private int originalMask;
+
     [SerializeField] Image image;
 
     void Start()
@@ -62,6 +65,16 @@ public class CaptureCopyZone : MonoBehaviour
         captureArea.y = startY_screen < endY_screen ? startY_screen : endY_screen;
         captureArea.width = Mathf.Abs(startX_screen - endX_screen);
         captureArea.height = Mathf.Abs(startY_screen - endY_screen);
+
+
+        // 元のカリングマスクを保存
+        cam = Camera.main;
+        originalMask = cam.cullingMask;
+
+        // 指定レイヤーを無視（ビット演算で除外）
+        int ignoreLayer = LayerMask.NameToLayer("UI");
+        cam.cullingMask &= ~(1 << ignoreLayer);
+
         StartCoroutine(CaptureAndSave());
     }
 
@@ -83,6 +96,9 @@ public class CaptureCopyZone : MonoBehaviour
             new Rect(0, 0, tex.width, tex.height),
             new Vector2(0.5f, 0.5f) // pivot (中央)
         );
+
+        // カリングマスクを元に戻す
+        cam.cullingMask = originalMask;
 
         // UI Image に反映
         image.sprite = capturedSprite;
@@ -166,5 +182,10 @@ public class CaptureCopyZone : MonoBehaviour
             }
         }
         return direction;
+    }
+
+    public void disableImage()
+    {
+        image.enabled = false;
     }
 }

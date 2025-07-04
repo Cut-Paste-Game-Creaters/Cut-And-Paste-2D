@@ -31,6 +31,7 @@ public class Player_Copy : MonoBehaviour
     {
         frame2 = Instantiate(frame2);
         frame2.SetActive(false);
+        frame2.layer = LayerMask.NameToLayer("UI");
         //anounce = Instantiate(anounce);
         //anounce.SetActive(false);
         Tilemap[] maps = FindObjectsOfType<Tilemap>();
@@ -221,6 +222,7 @@ public class Player_Copy : MonoBehaviour
             else
             {
                 InitTileData();
+                captureCopyZone.disableImage();
                 Debug.Log("カットできません！");
             }
         }
