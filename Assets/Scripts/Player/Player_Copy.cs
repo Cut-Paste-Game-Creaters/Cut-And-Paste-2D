@@ -23,6 +23,7 @@ public class Player_Copy : MonoBehaviour
     private int whichMode = -1;     //0:Copy, 1:Cut
     private bool makeDecision = false;  //マウス離したらOn
     UndoRedoFunction urFunc;
+    private CaptureCopyZone captureCopyZone;
     //public bool all_isCut = false; //コピー関数の引数のisCutと区別するため
 
     // Start is called before the first frame update
@@ -43,6 +44,7 @@ public class Player_Copy : MonoBehaviour
         }
         stageMgr = FindObjectOfType<StageManager>();
         urFunc = FindObjectOfType<UndoRedoFunction>();
+        captureCopyZone = FindObjectOfType<CaptureCopyZone>();
 
         anounce.SetActive(false);
     }
@@ -99,6 +101,7 @@ public class Player_Copy : MonoBehaviour
                 makeDecision = true;
                 whichMode = -1;
                 endPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                anounce.SetActive(true);
                 return;
             }
         }
@@ -109,9 +112,18 @@ public class Player_Copy : MonoBehaviour
             switch (whichMode)
             {
                 case -1:    //コピーかカットか選ぶ
-                    anounce.SetActive(true);
-                    if (PlayerInput.GetMouseButtonUp(0)) whichMode = 0;//copy
-                    else if (PlayerInput.GetMouseButtonUp(1)) whichMode = 1;//cut
+                    if (PlayerInput.GetMouseButtonUp(0))
+                    {
+                        whichMode = 0;//copy
+                        //コピーorカットする前に画像をキャプチャする
+                        captureCopyZone.CaptureImage(startPos, endPos);
+                    }
+                    else if (PlayerInput.GetMouseButtonUp(1))
+                    {
+                        whichMode = 1;//cut
+                        //コピーorカットする前に画像をキャプチャする
+                        captureCopyZone.CaptureImage(startPos, endPos);
+                    }
                     else if (PlayerInput.GetKeyDown(KeyCode.Escape)) whichMode = 2;//nothing
                     break;
                 case 0:     //コピーするなら
@@ -183,6 +195,7 @@ public class Player_Copy : MonoBehaviour
         }
         stageMgr.tileData.direction = direction;
 
+
         //タイルのコストを計算する
         CutInCopy(_startPos, _endPos, true);
 
@@ -199,6 +212,7 @@ public class Player_Copy : MonoBehaviour
             {
                 stageMgr.have_ene -= stageMgr.cut_erase_cost; //コスト引く
                 stageMgr.all_sum_cos += stageMgr.cut_erase_cost; //総消費コストに加算
+
                 Debug.Log("消すコスト(カット時):" + stageMgr.cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene + ", " + "総消費コスト：" + stageMgr.all_sum_cos);
                 CutInCopy(_startPos, _endPos, false);
                 CutInCopyObject(cols, false);
