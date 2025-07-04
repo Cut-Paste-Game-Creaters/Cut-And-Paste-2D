@@ -11,12 +11,12 @@ public class GameUIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI text_allCost;
 
     private StageManager stageManager;
-    private Tilemap tilemap;
+    //private Tilemap tilemap;
     private Vector3 initPos;
 
     void Start()
     {
-        Tilemap[] maps = FindObjectsOfType<Tilemap>();
+        /*Tilemap[] maps = FindObjectsOfType<Tilemap>();
         foreach (var map in maps)
         {
             if (map.gameObject.tag == "Copy_Tilemap")
@@ -25,7 +25,7 @@ public class GameUIController : MonoBehaviour
                 break;
             }
         }
-        initPos = tilemap.transform.localPosition;
+        initPos = tilemap.transform.localPosition;*/
     }
 
     // Update is called once per frame
@@ -40,7 +40,7 @@ public class GameUIController : MonoBehaviour
          現在コピーしているデータをUIに表示したい。どうやる？
         まず、コピーしているタイルデータをもとに新しいtilemapを作成する。
         作成したtilemapのサイズを、幅から計算してUIのところに収まるようにする。
-         */
+         
         if (stageManager.tileData.hasData)
         {
             tilemap.ClearAllTiles();
@@ -105,5 +105,6 @@ public class GameUIController : MonoBehaviour
         {
             tilemap.ClearAllTiles();
         }
+        */
     }
 }
