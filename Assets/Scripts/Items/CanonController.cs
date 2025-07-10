@@ -13,6 +13,7 @@ public class CanonController : MonoBehaviour
     private bool isRigid = false;   //gameObjectÇ…rigidoby2DÇ™Ç†ÇÈÇ©Ç«Ç§Ç©
     public float angle = 0;            //-90 Å` 0 Å`Å@90
     public float firePower = 1.0f;     //ë≈ÇøèoÇ∑óÕ
+    public float firespeed = 3.0f;     //í∑‡Ví«â¡
     public float fireTime = 3.0f;
 
     private float wholeTime = 0.0f;
@@ -57,7 +58,7 @@ public class CanonController : MonoBehaviour
             GameObject g = Instantiate(throwObject, pos,
                 Quaternion.identity);
             ThrowObjectController bc = g.GetComponent<ThrowObjectController>();
-            bc.SetDir(moveDir.normalized);
+            bc.SetDir(moveDir.normalized * firespeed); //í∑‡Ví«â¡
 
             //äpìxÇêÆÇ¶ÇÈ
             Vector3 fire_rot = g.transform.localEulerAngles;
