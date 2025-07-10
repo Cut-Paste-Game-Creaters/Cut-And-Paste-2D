@@ -18,6 +18,7 @@ public class SwitchController : MonoBehaviour
     public float waitTime = 1.0f;
 
     private SpriteRenderer sr;
+    private StageManager stageManager;
     public bool nowPressState = false;     //今のスイッチの状態
     public int hitState = -1;        //collider enter=0, stay=1, exit=2,押されてないとき-1
 
@@ -25,6 +26,7 @@ public class SwitchController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        stageManager = FindObjectOfType<StageManager>();
         sr = GetComponent<SpriteRenderer>();
     }
 
@@ -48,7 +50,7 @@ public class SwitchController : MonoBehaviour
             default: break;
         }
 
-        if (!nowPressState)
+        if (!stageManager.switch_state)
         {
             sr.sprite = stateOff;
         }
@@ -63,14 +65,14 @@ public class SwitchController : MonoBehaviour
     //一度おしたらずっとONになる
     private void FixedSwitch()
     {
-        if(hitState == 0&& !nowPressState)nowPressState = true;
+        if(hitState == 0&& !stageManager.switch_state) stageManager.switch_state = true;
     }
 
     //押している間だけONになる
     private void PushSwitch()
     {
-        if(hitState == 1)nowPressState=true;
-        else nowPressState=false;
+        if(hitState == 1) stageManager.switch_state = true;
+        else stageManager.switch_state = false;
     }
 
     //押すたびにOnとOffが切り替わる
@@ -78,7 +80,7 @@ public class SwitchController : MonoBehaviour
     {
         if (hitState == 0)
         {
-            nowPressState = !nowPressState;
+            stageManager.switch_state = !stageManager.switch_state;
         }
     }
 
@@ -87,20 +89,20 @@ public class SwitchController : MonoBehaviour
     {
         if(hitState == 0)
         {
-            nowPressState = true;
+            stageManager.switch_state = true;
             Invoke(nameof(TurnOffSwitch), waitTime);
         }
     }
 
     void TurnOffSwitch()
     {
-        nowPressState = false;
+        stageManager.switch_state = false;
     }
 
 
     public bool GetState()
     {
-        return nowPressState;
+        return stageManager.switch_state;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
