@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThrowObjectController : MonoBehaviour
 {
-    public float destroyTime = 5.0f;
+    public float destroyTime = 15.0f;
 
     private Vector3 moveDir = Vector3.zero;
     public float nowTime = 0.0f;
@@ -41,7 +41,8 @@ public class ThrowObjectController : MonoBehaviour
     {
         if(other.gameObject.tag =="Player")
         {
-            other.gameObject.transform.position += moveDir * PlayerInput.GetDeltaTime()/2;
+            other.gameObject.transform.position += moveDir * PlayerInput.GetDeltaTime();//’·àV’Ç‰Á
+            Debug.Log("“®‚©‚µ‚Ä‚é");
         }
     }
 }

@@ -105,7 +105,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 12
+  m_GravityScale: 6
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -130,8 +130,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  jumpForce: 30
-  groundCheckDistance: 1.1
+  jumpForce: 20
+  groundCheckDistance: 1.5
   maxHoldTime: 0.2
   groundLayer:
     serializedVersion: 2
@@ -167,6 +167,7 @@ MonoBehaviour:
   frame1: {fileID: 7333870219930048861, guid: d7d2341a525b8754ab5741df97ef5168, type: 3}
   tileSB: {fileID: 11400000, guid: b58413ee8aa87174e8571d021e40d761, type: 2}
   objSB: {fileID: 11400000, guid: 40ef67a603b5fac418e9ffb6109bef98, type: 2}
+  PreviewCopyData: 1
 --- !u!114 &6475246061550806216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,7 +180,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24193cabb713d834c920a2372cc1e6d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 1000
 --- !u!70 &1966444426650011466
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -213,5 +213,5 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.9, y: 0.95}
   m_Direction: 0

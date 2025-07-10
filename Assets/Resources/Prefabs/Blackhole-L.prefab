@@ -305,7 +305,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravityForce: 15000
   radius: 15
-  interval: 5
   trueDuration: 4
   falseDuration: 2
-  rotationSpeed: 200
+  rotationSpeed: 300
