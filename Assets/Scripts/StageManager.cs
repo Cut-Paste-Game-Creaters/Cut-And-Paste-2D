@@ -16,6 +16,9 @@ public class StageManager : MonoBehaviour
     RankJudgeAndUpdateFunction rankFunc;
     public int player_HP = 100;
 
+    /*スイッチ関連*/
+    public bool switch_state = false;
+
     /*コスト関連*/
     [SerializeField]private float costHeal_timeOut; //costが回復する間隔
 	private float timeElapsed;
