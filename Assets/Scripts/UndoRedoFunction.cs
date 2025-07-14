@@ -360,6 +360,7 @@ public class UndoRedoFunction : MonoBehaviour
         }
 
         Undo();
+        stageMgr.player_HP = 10;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
