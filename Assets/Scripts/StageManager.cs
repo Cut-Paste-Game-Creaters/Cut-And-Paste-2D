@@ -19,6 +19,9 @@ public class StageManager : MonoBehaviour
     /*スイッチ関連*/
     public bool switch_state = false;
 
+    /*鍵関連*/
+    public bool key_lock_state = false;
+
     /*コスト関連*/
     [SerializeField]private float costHeal_timeOut; //costが回復する間隔
 	private float timeElapsed;
