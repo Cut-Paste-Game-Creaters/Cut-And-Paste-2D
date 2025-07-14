@@ -37,3 +37,83 @@ MonoBehaviour:
     obj: {fileID: 5096264463535201358, guid: 4ae2f67f36f3d7e4f9fea45624748a0f, type: 3}
     p_ene: 30
     ow_ene: 3000
+  - name: ball-S
+    obj: {fileID: 6800254906470025560, guid: 25d723b9d7422bb49a7122cfccfe15a6, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: ball-M
+    obj: {fileID: 1193905351830765531, guid: ecb716a9144d17b4885faa6b32c0bcfb, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: ball-L
+    obj: {fileID: 575467041499296800, guid: 38394f1be96906146a850a7c28c94887, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: ball-XL
+    obj: {fileID: 7103272080347404590, guid: d1b4868f766c99c46a61f7085f009a18, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: Blackhole-L
+    obj: {fileID: 8861582115188641072, guid: 10fa6d43e5d19b44fb0a8b0b346a532f, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: Blackhole-M
+    obj: {fileID: 2624600633924030240, guid: b0f55d58228a6db4c824213983531dad, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: Blackhole-S
+    obj: {fileID: 8900095066899029712, guid: 20106c0534c5b6b419d9acac282c38fb, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: bumper-S
+    obj: {fileID: 5627736203465271130, guid: a3b38f5e376620c4495e4b960d9993dc, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: bumper-M
+    obj: {fileID: 4368776077075863461, guid: 1840f2340bde9bb44bae3954a8ccf59e, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: bumper-L
+    obj: {fileID: 3163715564208650277, guid: 7e74ba8a6a6e6664f970dcc57fbd7ac9, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: Needle
+    obj: {fileID: 8128896527873485178, guid: 6578e4ee29684fd4abc1ce71a1a2cff3, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: Rotate_Center_L
+    obj: {fileID: 4912859793595399357, guid: a28cc55aa194e0843948360b109c705e, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: Rotate_Center_M
+    obj: {fileID: 2233755994829837526, guid: 590ede736ec2ae74fa03e39b69db0f6b, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: Rotate_Center_S
+    obj: {fileID: 6910680186113493092, guid: a693fa33da383444daff10fac42a7994, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: Rotate_Edge_L
+    obj: {fileID: 8154928730361235224, guid: 8f2eb6f250300a849916b7a77a8d9207, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: Rotate_Edge_M
+    obj: {fileID: 8135703002190637435, guid: 5aad452ed1bbad2468740d18355ccd70, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: Rotate_Edge_S
+    obj: {fileID: 6219950655114163938, guid: cd33c0f0c1e5e6d458e8925e7a9dd151, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: soccerball-L
+    obj: {fileID: 7623700263378341396, guid: 7e1b09ac4975e21409e9f1e471ca0eb0, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: soccerball-M
+    obj: {fileID: 6535930441283066603, guid: 7f2429198524b1a418b06f723af7455e, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: soccerball-S
+    obj: {fileID: 7494345291764463393, guid: f4125e0082c73ee46a4d8a2eb06b38e6, type: 3}
+    p_ene: 30
+    ow_ene: 3000

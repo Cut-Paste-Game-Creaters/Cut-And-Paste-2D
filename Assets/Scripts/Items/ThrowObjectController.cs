@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThrowObjectController : MonoBehaviour
 {
-    public float destroyTime = 15.0f;
+    public float destroyTime = 20.0f;
 
     private Vector3 moveDir = Vector3.zero;
     public float nowTime = 0.0f;
