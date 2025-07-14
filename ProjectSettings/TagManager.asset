@@ -14,6 +14,7 @@ TagManager:
   - Copy_Tilemap
   - Display_Copy_Tilemap
   - Blackhole
+  - key_lock
   layers:
   - Default
   - TransparentFX

@@ -50,9 +50,9 @@ public class Player_Function : MonoBehaviour
         gameOverFunc.GameOver();
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Goal")
+        if(other.gameObject.tag == "Goal" && stageMgr.key_lock_state)
         {
             clearFunc.GameClear();
         }
