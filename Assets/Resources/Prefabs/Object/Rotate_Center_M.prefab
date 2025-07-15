@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rotate_Center_M
       objectReference: {fileID: 0}
+    - target: {fileID: 6910680186113493092, guid: a693fa33da383444daff10fac42a7994, type: 3}
+      propertyPath: m_TagString
+      value: Rotate_Center_M
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

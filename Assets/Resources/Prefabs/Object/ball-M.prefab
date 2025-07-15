@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ball-M
       objectReference: {fileID: 0}
+    - target: {fileID: 6800254906470025560, guid: 25d723b9d7422bb49a7122cfccfe15a6, type: 3}
+      propertyPath: m_TagString
+      value: ball-M
+      objectReference: {fileID: 0}
     - target: {fileID: 6814174063508491420, guid: 25d723b9d7422bb49a7122cfccfe15a6, type: 3}
       propertyPath: m_Mass
       value: 3

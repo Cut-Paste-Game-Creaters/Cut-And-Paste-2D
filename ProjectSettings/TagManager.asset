@@ -14,7 +14,29 @@ TagManager:
   - Copy_Tilemap
   - Display_Copy_Tilemap
   - Blackhole
-  - key_lock
+
+  - Blackhole-L
+  - Blackhole-M
+  - Blackhole-S
+  - ball-L
+  - ball-M
+  - ball-S
+  - ball-XL
+  - bumper-L
+  - bumper-M
+  - bumper-S
+  - Needle
+  - Rotate_Center_L
+  - Rotate_Center_M
+  - Rotate_Center_S
+  - Rotate_Edge_L
+  - Rotate_Edge_M
+  - Rotate_Edge_S
+  - soccerball-L
+  - soccerball-M
+  - soccerball-S
+  - whitehole
+
   layers:
   - Default
   - TransparentFX

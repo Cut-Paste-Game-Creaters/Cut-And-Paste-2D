@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6266658229931595502}
   m_Layer: 6
   m_Name: whitehole
-  m_TagString: Untagged
+  m_TagString: whitehole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
