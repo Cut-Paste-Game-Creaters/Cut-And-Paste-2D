@@ -120,6 +120,7 @@ public class UndoRedoFunction : MonoBehaviour
                 var canonobj = col.gameObject.GetComponent<CanonController>();
                 var throwobj = col.gameObject.GetComponent<ThrowObjectController>();
                 var wpdobj = col.gameObject.GetComponent<WarpDoor>();
+                var bumobj = col.gameObject.GetComponent<BumperForce>();
 
                 if(switchobj != null)
                 {
@@ -143,6 +144,11 @@ public class UndoRedoFunction : MonoBehaviour
                 {
                     stageObjState.stageName = wpdobj.stageName;
                     stageObjState.stageMgr = wpdobj.stageMgr;
+                }
+                else if(bumobj != null)
+                {
+                    stageObjState.bumper = new BumperForce(bumobj.checkDistance, bumobj.upwardForce, bumobj.bounceForce);
+                    Debug.Log("bumperインスタンスを保存" + stageObjState.bumper.checkDistance);
                 }
 
                 //全部情報入れたら最後にAdd
@@ -232,7 +238,7 @@ public class UndoRedoFunction : MonoBehaviour
         foreach (var obj in pre_objList)
         {
             string trimName = Regex.Replace(obj.prefabName, @"\([^)]*\)", "").Trim();
-            GameObject prefab = Resources.Load<GameObject>("Prefabs/" + trimName); //Resources/Prefabsフォルダから名前が同じのprefabを探す
+            GameObject prefab = Resources.Load<GameObject>("Prefabs/Object/" + trimName); //Resources/Prefabsフォルダから名前が同じのprefabを探す
             Debug.Log(obj.prefabName);
 
             if(prefab != null)
@@ -245,6 +251,7 @@ public class UndoRedoFunction : MonoBehaviour
                 var canonobj = g_prefab.gameObject.GetComponent<CanonController>();
                 var throwobj = g_prefab.gameObject.GetComponent<ThrowObjectController>();
                 var wpdobj = g_prefab.gameObject.GetComponent<WarpDoor>();
+                var bumobj = g_prefab.gameObject.GetComponent<BumperForce>();
 
                 if(switchobj != null)
                 {
@@ -268,6 +275,11 @@ public class UndoRedoFunction : MonoBehaviour
                 {
                     wpdobj.stageName = obj.stageName;
                     wpdobj.stageMgr = obj.stageMgr;
+                }
+                else if(bumobj != null)
+                {
+                    bumobj = obj.bumper;
+                    Debug.Log(prefab.name + "を生成しました." + bumobj.checkDistance);
                 }
                 Debug.Log(prefab.name + "を生成しました.");
                 //g_prefab.hp = 100;
@@ -397,6 +409,9 @@ public class UndoRedoFunction : MonoBehaviour
         //WArpDoor関連
         public string stageName;
         public StageManager stageMgr;
+
+        //Bumoer関連
+        public BumperForce bumper;
 
         //これ以降必要な情報追加する
         /*public SwitchController swCon;

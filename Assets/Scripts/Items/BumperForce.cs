@@ -14,6 +14,18 @@ public class BumperForce : MonoBehaviour
 
     public float bounceForce = 100f;
 
+    //コンストラクタ
+    public BumperForce(float checkDis, float upwardFor, float bounceFor)
+    {
+        checkDistance = checkDis;
+        upwardForce = upwardFor;
+        bounceForce = bounceFor;
+        playerLayer = this.playerLayer;
+        player = this.player;
+        pc = this.pc;
+        rb = this.rb;
+    }
+
     void Start()
     {
         // プレイヤーを一度だけ取得（タグやレイヤーで見つける）
