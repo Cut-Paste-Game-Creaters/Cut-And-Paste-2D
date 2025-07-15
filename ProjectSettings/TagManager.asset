@@ -14,17 +14,16 @@ TagManager:
   - Copy_Tilemap
   - Display_Copy_Tilemap
   - Blackhole
-
+  - ball-S
+  - ball-M
+  - ball-L
+  - ball-XL
   - Blackhole-L
   - Blackhole-M
   - Blackhole-S
-  - ball-L
-  - ball-M
-  - ball-S
-  - ball-XL
-  - bumper-L
-  - bumper-M
   - bumper-S
+  - bumper-M
+  - bumper-L
   - Needle
   - Rotate_Center_L
   - Rotate_Center_M
@@ -35,16 +34,14 @@ TagManager:
   - soccerball-L
   - soccerball-M
   - soccerball-S
-  - whitehole
-
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - Ground
+  - 
   - 
   - 
   - 
@@ -71,33 +68,6 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: desk
-    uniqueID: 2793213525
-    locked: 0
-  - name: note
-    uniqueID: 3262905035
-    locked: 0
-  - name: stein,sky
-    uniqueID: 1814674977
-    locked: 0
-  - name: cloud,mountain,kanban
-    uniqueID: 3260483087
-    locked: 0
-  - name: Tilemap
-    uniqueID: 41182441
-    locked: 0
-  - name: object,enemy
-    uniqueID: 2056436085
-    locked: 0
-  - name: player
-    uniqueID: 2800089205
-    locked: 0
-  - name: UI
-    uniqueID: 4119303581
-    locked: 0
-  - name: copyTiles
-    uniqueID: 2117157229
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
