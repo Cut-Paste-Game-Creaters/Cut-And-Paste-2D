@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ball-XL
       objectReference: {fileID: 0}
+    - target: {fileID: 575467041499296800, guid: 38394f1be96906146a850a7c28c94887, type: 3}
+      propertyPath: m_TagString
+      value: ball-XL
+      objectReference: {fileID: 0}
     - target: {fileID: 3938876494066626834, guid: 38394f1be96906146a850a7c28c94887, type: 3}
       propertyPath: m_LocalPosition.x
       value: 24.4

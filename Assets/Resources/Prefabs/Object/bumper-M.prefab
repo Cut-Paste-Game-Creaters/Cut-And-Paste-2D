@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: bumper-M
       objectReference: {fileID: 0}
+    - target: {fileID: 3163715564208650277, guid: 7e74ba8a6a6e6664f970dcc57fbd7ac9, type: 3}
+      propertyPath: m_TagString
+      value: bumper-M
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

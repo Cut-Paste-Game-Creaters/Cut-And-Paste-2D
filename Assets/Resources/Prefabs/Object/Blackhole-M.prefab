@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Blackhole-M
       objectReference: {fileID: 0}
+    - target: {fileID: 8861582115188641072, guid: 10fa6d43e5d19b44fb0a8b0b346a532f, type: 3}
+      propertyPath: m_TagString
+      value: Blackhole-M
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

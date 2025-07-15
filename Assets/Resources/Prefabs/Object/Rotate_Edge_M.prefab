@@ -108,6 +108,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rotate_Edge_M
       objectReference: {fileID: 0}
+    - target: {fileID: 6219950655114163938, guid: cd33c0f0c1e5e6d458e8925e7a9dd151, type: 3}
+      propertyPath: m_TagString
+      value: Rotate_Edge_M
+      objectReference: {fileID: 0}
     - target: {fileID: 7766946607029772204, guid: cd33c0f0c1e5e6d458e8925e7a9dd151, type: 3}
       propertyPath: m_LocalPosition.x
       value: 22.361

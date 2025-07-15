@@ -10,7 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6535930441283066603, guid: 7f2429198524b1a418b06f723af7455e, type: 3}
       propertyPath: m_Name
-      value: soccerball-L Variant
+      value: soccerball-L
+      objectReference: {fileID: 0}
+    - target: {fileID: 6535930441283066603, guid: 7f2429198524b1a418b06f723af7455e, type: 3}
+      propertyPath: m_TagString
+      value: soccerball-L
       objectReference: {fileID: 0}
     - target: {fileID: 7064257856839475950, guid: 7f2429198524b1a418b06f723af7455e, type: 3}
       propertyPath: m_LocalScale.x
