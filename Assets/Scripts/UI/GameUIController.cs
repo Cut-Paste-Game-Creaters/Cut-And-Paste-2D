@@ -8,15 +8,38 @@ public class GameUIController : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI text_HP;
     [SerializeField] TextMeshProUGUI text_nowCost;
-    [SerializeField] TextMeshProUGUI text_allCost;
+    [SerializeField] TextMeshProUGUI text_nowRank;
+    [SerializeField] TextMeshProUGUI text_nextRank;
 
     private StageManager stageManager;
+    private RankJudgeAndUpdateFunction judgeFunc;
     //private Tilemap tilemap;
     private Vector3 initPos;
 
     void Start()
     {
-        /*Tilemap[] maps = FindObjectsOfType<Tilemap>();
+        stageManager = FindObjectOfType<StageManager>();
+        judgeFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(judgeFunc == null)
+        {
+            judgeFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
+        }
+        text_HP.text = "PlayerHP\n:" + stageManager.player_HP;
+        text_nowCost.text = "nowCost\n:" + stageManager.have_ene;
+        //ジャッジする関数を持ってきてる。2つ目の変数は絶対にfalse。
+        //2つ目の変数をtrueにすると最小消費コストが更新され、既にジャッジが終わったと判定される
+        text_nowRank.text = judgeFunc.JudgeAndUpdateRank(stageManager.all_sum_cos, false);
+        text_nextRank.text = "next Rank ... left " + judgeFunc.culcCostToNextRank();
+    }
+}
+
+/* void Start()
+ * Tilemap[] maps = FindObjectsOfType<Tilemap>();
         foreach (var map in maps)
         {
             if (map.gameObject.tag == "Copy_Tilemap")
@@ -26,17 +49,8 @@ public class GameUIController : MonoBehaviour
             }
         }
         initPos = tilemap.transform.localPosition;*/
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        stageManager = FindObjectOfType<StageManager>();
-        text_HP.text = "PlayerHP\n:" + stageManager.player_HP;
-        text_nowCost.text = "nowCost\n:" + stageManager.have_ene;
-        text_allCost.text = "allCost\n:" + stageManager.all_sum_cos;
-
-        /*
+/*
+ * void Update()
          現在コピーしているデータをUIに表示したい。どうやる？
         まず、コピーしているタイルデータをもとに新しいtilemapを作成する。
         作成したtilemapのサイズを、幅から計算してUIのところに収まるようにする。
@@ -106,5 +120,3 @@ public class GameUIController : MonoBehaviour
             tilemap.ClearAllTiles();
         }
         */
-    }
-}

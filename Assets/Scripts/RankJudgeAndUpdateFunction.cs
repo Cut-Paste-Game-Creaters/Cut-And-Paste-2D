@@ -13,7 +13,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     bool hasJudged = false;
 
     //private int allCost = 24; //テスト用変数（総消費コスト
-    private int[,] stageRank = {{25000, 50000, 75000, 100000}, //stage1のランク基準数値
+    private int[,] stageRank = {{2500, 5000, 7500, 10000}, //stage1のランク基準数値
                                 {30, 60, 90, 120}, //stage2のランク基準数値
                                 {25, 50, 75, 100}, //stage3のランク基準数値
                                 {25, 50, 75, 100}, //stage4のランク基準数値
@@ -79,7 +79,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         {
             if ((clearFunc.GetisClear()  && !hasJudged))
             {
-                JudgeAndUpdateRank(stageMgr.all_sum_cos);
+                JudgeAndUpdateRank(stageMgr.all_sum_cos,true);
                 //stageMgr.all_sum_cos = 0;
                 rankDisplay.SetText(rankText);
                 rankDisplay.InitTextSize(); 
@@ -105,36 +105,62 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         }
     }*/
 
+    /*現在の総消費コストから次のランクに下がるまでのコストを計算する関数*/
+    public int culcCostToNextRank()
+    {
+        int nowCost = 0;
+        if (stageMgr != null)
+        {
+            nowCost = stageMgr.all_sum_cos; //総消費コスト
+        }
+        int stage_num = 0;          //ステージナンバーは0で初期化。もしデバッグ用ステージだったらstage1のコストを流用
+        if (Regex.IsMatch(SceneManager.GetActiveScene().name, @"^Stage\d+$")) //シーン名がStageなんとかなら
+        {
+            stage_num = stageNumber[SceneManager.GetActiveScene().name];
+        }
+
+        //もしF以上消費してたら0を返す、そうでなければ計算
+        if (nowCost < stageRank[stage_num, 3])
+        {
+            for(int i = 0; i < stageRank.GetLength(0); i++)
+            {
+                if (nowCost < stageRank[stage_num, i]) return stageRank[stage_num, i] - nowCost;
+            }
+        }
+
+        return 0;
+    }
+
     /*総消費コストのランク判定と最低消費コストの書き換えをおこなう関数*/
-    public void JudgeAndUpdateRank(int num) //num == 総消費コスト
+    public string JudgeAndUpdateRank(int num, bool isCleared) //num == 総消費コスト
     {
         string input = SceneManager.GetActiveScene().name;
         if(Regex.IsMatch(input, @"^Stage\d+$")) //シーン名がStageなんとかなら
         {
             int stage_num = stageNumber[SceneManager.GetActiveScene().name];
-            if(num <= stageRank[stage_num, 0])
+            if(num < stageRank[stage_num, 0])
             {
                 rankText = "S";
             }
-            else if(num <= stageRank[stage_num, 1])
+            else if(num < stageRank[stage_num, 1])
             {
                 rankText = "A";
             }
-            else if(num <= stageRank[stage_num, 2])
+            else if(num < stageRank[stage_num, 2])
             {
                 rankText = "B";
             }
-            else if(num <= stageRank[stage_num, 3])
+            else if(num < stageRank[stage_num, 3])
             {
                 rankText = "C";
             }
-            else if(num > stageRank[stage_num, 3])
+            else if(num >= stageRank[stage_num, 3])
             {
                 rankText = "F";
             }
 
             //まだ書き換えされていない(minConsumpCost[stage_num] == -1) または 今までの最低消費コストより小さければ
-            if(minConsumpCost[stage_num] == -1|| num < minConsumpCost[stage_num])
+            if(isCleared && (minConsumpCost[stage_num] == -1|| num < minConsumpCost[stage_num]))
             {
                 minConsumpCost[stage_num] = num; //最低消費コストを書き換え
                 //StageSelectの初期コストを更新する
@@ -144,10 +170,34 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         }
         else
         {
-            Debug.Log("ステージでないため判定できません.");
+            //デバッグ用ステージの場合、最小消費コストは更新されない
+            //Debug.Log("数字のステージではありません。デバッグ用ステージです。");
+            int stage_num = 0;
+            if (num < stageRank[stage_num, 0])
+            {
+                rankText = "S";
+            }
+            else if (num < stageRank[stage_num, 1])
+            {
+                rankText = "A";
+            }
+            else if (num < stageRank[stage_num, 2])
+            {
+                rankText = "B";
+            }
+            else if (num < stageRank[stage_num, 3])
+            {
+                rankText = "C";
+            }
+            else if (num >= stageRank[stage_num, 3])
+            {
+                rankText = "F";
+            }
+
         }
 
-        hasJudged = true;
+        if (isCleared)hasJudged = true;
+        return rankText;
     }
 
     void AddInitCost(int stage_num)
