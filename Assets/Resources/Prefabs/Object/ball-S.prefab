@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3546133957398590173}
   - component: {fileID: 6893572376677644732}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: ball_iron
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 584873151955202394}
   - component: {fileID: 6289051749146853024}
   - component: {fileID: 6814174063508491420}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: ball-S
   m_TagString: ball-S
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2056436085
+  m_SortingLayerID: 509548093
   m_SortingLayer: -4
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}

@@ -463,7 +463,7 @@ GameObject:
   - component: {fileID: 119543208}
   - component: {fileID: 119543207}
   - component: {fileID: 119543209}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Tilemap
   m_TagString: Tilemap
   m_Icon: {fileID: 0}
@@ -524,7 +524,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 41182441
-  m_SortingLayer: -5
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -46177,7 +46177,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text_HP: {fileID: 129590248}
   text_nowCost: {fileID: 846301522}
-  text_allCost: {fileID: 2073495430}
+  text_nowRank: {fileID: 0}
+  text_nextRank: {fileID: 0}
 --- !u!114 &587460882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47457,6 +47458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player_HP: 100
   switch_state: 0
+  key_lock_state: 0
   costHeal_timeOut: 0
   stageNum: -1
   initAddCost_EachStage: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -49035,7 +49037,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2117157229
-  m_SortingLayer: -1
+  m_SortingLayer: 0
   m_SortingOrder: 100
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

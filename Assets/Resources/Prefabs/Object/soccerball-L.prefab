@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: soccerball-L
       objectReference: {fileID: 0}
+    - target: {fileID: 6956417397648850394, guid: 7f2429198524b1a418b06f723af7455e, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 509548093
+      objectReference: {fileID: 0}
     - target: {fileID: 7064257856839475950, guid: 7f2429198524b1a418b06f723af7455e, type: 3}
       propertyPath: m_LocalScale.x
       value: 7

@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5926492510005219344, guid: f4125e0082c73ee46a4d8a2eb06b38e6, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 509548093
+      objectReference: {fileID: 0}
     - target: {fileID: 7494345291764463393, guid: f4125e0082c73ee46a4d8a2eb06b38e6, type: 3}
       propertyPath: m_Name
       value: soccerball-M
