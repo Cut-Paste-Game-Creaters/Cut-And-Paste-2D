@@ -135,7 +135,7 @@ MonoBehaviour:
   canon_body: {fileID: 1147574930475886824}
   angle: 0
   firePower: 2000000
-  firespeed: 4.5
+  firespeed: 2
   fireTime: 3
 --- !u!61 &4545017764845707187
 BoxCollider2D:
