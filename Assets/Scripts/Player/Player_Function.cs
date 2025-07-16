@@ -52,7 +52,7 @@ public class Player_Function : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Goal" && stageMgr.key_lock_state)
+        if(other.gameObject.tag == "Goal")
         {
             clearFunc.GameClear();
         }
