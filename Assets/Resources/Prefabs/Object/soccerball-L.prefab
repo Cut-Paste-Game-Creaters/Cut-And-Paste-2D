@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2001686896200013129, guid: 7f2429198524b1a418b06f723af7455e, type: 3}
+      propertyPath: m_Mass
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2001686896200013129, guid: 7f2429198524b1a418b06f723af7455e, type: 3}
+      propertyPath: m_GravityScale
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6535930441283066603, guid: 7f2429198524b1a418b06f723af7455e, type: 3}
       propertyPath: m_Name
       value: soccerball-L
