@@ -15,22 +15,28 @@ public class ClearDoorScript : MonoBehaviour
     {
         stageManager = FindObjectOfType<StageManager>();
         sr = GetComponent<SpriteRenderer>();
+        //鍵があるなら、ロックしてtag="Untagged"にしておく。
         if (isLocked)
         {
             sr.sprite = unOpenSprite;
-        }
+            this.gameObject.tag = "Untagged";
+        }   //鍵がないなら、解放してtag="Goal"にしておく
         else
         {
             sr.sprite = openSprite;
+            this.gameObject.tag = "Goal";
         }
+        //Player_functionでtag=="Goal"のものと接触したらゴール判定にする
     }
 
     // Update is called once per frame
     void Update()
     {
+        //鍵がかかってるドアで、鍵が取得されたら開放する。
         if(isLocked && stageManager.key_lock_state)
         {
             sr.sprite = openSprite;
+            this.gameObject.tag = "Goal";
         }
     }
 }
