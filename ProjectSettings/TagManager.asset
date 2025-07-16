@@ -35,6 +35,14 @@ TagManager:
   - soccerball-M
   - soccerball-S
   - whitehole
+  - key_lock
+  - Bumper
+  - Ball-small
+  - Ball-bound-S
+  - Box-M
+  - Box-L
+  - Bar-M
+  - Bar-L
   layers:
   - Default
   - TransparentFX
