@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Player_Function : MonoBehaviour
 {
@@ -8,8 +9,11 @@ public class Player_Function : MonoBehaviour
     private ClearFunction clearFunc;
     StageManager stageMgr;
 
-    private float fallingLine_y = -10.0f;
+    private Tilemap tilemap;
+    private float fallingLine_y;
     private SpriteRenderer sr;
+
+    public int fallLine_FromMin = 10;
     //private RigidBody rb;
 
     // Start is called before the first frame update
@@ -20,6 +24,17 @@ public class Player_Function : MonoBehaviour
         clearFunc = FindObjectOfType<ClearFunction>();
         stageMgr = FindObjectOfType<StageManager>();
         sr = GetComponent<SpriteRenderer>();
+
+        Tilemap[] maps = FindObjectsOfType<Tilemap>();
+        foreach (var map in maps)
+        {
+            if (map.gameObject.tag == "Tilemap")
+            {
+                tilemap = map;
+                break;
+            }
+        }
+        fallingLine_y = tilemap.cellBounds.min.y - fallLine_FromMin;
     }
 
     // Update is called once per frame
