@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2437582217348182277}
   - component: {fileID: 164552840611606002}
   - component: {fileID: 5366822268161902840}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: VanishFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2056436085
+  m_SortingLayerID: 509548093
   m_SortingLayer: -4
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}

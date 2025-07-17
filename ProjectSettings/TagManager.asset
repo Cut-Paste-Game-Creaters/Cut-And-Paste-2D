@@ -34,6 +34,15 @@ TagManager:
   - soccerball-L
   - soccerball-M
   - soccerball-S
+  - whitehole
+  - key_lock
+  - Bumper
+  - Ball-small
+  - Ball-bound-S
+  - Box-M
+  - Box-L
+  - Bar-M
+  - Bar-L
   layers:
   - Default
   - TransparentFX
@@ -68,6 +77,36 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: desk
+    uniqueID: 2051931927
+    locked: 0
+  - name: note
+    uniqueID: 816254043
+    locked: 0
+  - name: stein,sky
+    uniqueID: 1860889611
+    locked: 0
+  - name: mountain,cloud
+    uniqueID: 1670424331
+    locked: 0
+  - name: stone,kanban
+    uniqueID: 3006089071
+    locked: 0
+  - name: Tilemap
+    uniqueID: 2949054237
+    locked: 0
+  - name: object
+    uniqueID: 509548093
+    locked: 0
+  - name: player
+    uniqueID: 425301897
+    locked: 0
+  - name: UI
+    uniqueID: 3981352051
+    locked: 0
+  - name: CopyTile
+    uniqueID: 1714556263
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

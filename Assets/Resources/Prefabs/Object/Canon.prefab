@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1346924022945739745}
   - component: {fileID: 5773223133502768857}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Canon-body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2056436085
+  m_SortingLayerID: 509548093
   m_SortingLayer: -4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ef05ae0eee7f8d14c9b04949d1386b08, type: 3}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 6261157874143053311}
   - component: {fileID: 1535793234407478786}
   - component: {fileID: 4545017764845707187}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Canon
   m_TagString: Cannon
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ MonoBehaviour:
   canon_body: {fileID: 1147574930475886824}
   angle: 0
   firePower: 2000000
-  firespeed: 4.5
+  firespeed: 2
   fireTime: 3
 --- !u!61 &4545017764845707187
 BoxCollider2D:
@@ -192,7 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6840294990832922567}
   - component: {fileID: 461339289450065474}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Canon-base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +252,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2056436085
+  m_SortingLayerID: 509548093
   m_SortingLayer: -4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 896e66e9b0144ff4081ca9d2887b4654, type: 3}

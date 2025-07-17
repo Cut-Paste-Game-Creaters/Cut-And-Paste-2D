@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: bumper-M
       objectReference: {fileID: 0}
+    - target: {fileID: 8765109677937172544, guid: 7e74ba8a6a6e6664f970dcc57fbd7ac9, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 509548093
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

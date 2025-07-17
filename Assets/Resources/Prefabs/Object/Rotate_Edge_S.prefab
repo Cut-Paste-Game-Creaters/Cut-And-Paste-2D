@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7405145732190165075}
   - component: {fileID: 808403592605968956}
   - component: {fileID: 615785175101146968}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Rotate_Edge_S
   m_TagString: Rotate_Edge_S
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2056436085
+  m_SortingLayerID: 509548093
   m_SortingLayer: -4
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
@@ -157,7 +157,7 @@ GameObject:
   m_Component:
   - component: {fileID: 473449499814859824}
   - component: {fileID: 1739336513611190090}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: rotateE_S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 1510813466748078294}
   - component: {fileID: 8447817928130283066}
   - component: {fileID: 170862480500837856}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}

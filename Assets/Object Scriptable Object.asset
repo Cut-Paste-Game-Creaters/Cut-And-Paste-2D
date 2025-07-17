@@ -117,3 +117,15 @@ MonoBehaviour:
     obj: {fileID: 7494345291764463393, guid: f4125e0082c73ee46a4d8a2eb06b38e6, type: 3}
     p_ene: 30
     ow_ene: 3000
+  - name: Box-M
+    obj: {fileID: 3735023780895848326, guid: a59213a9c14a04b4ea8cab18a1e17e53, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: Bar-M
+    obj: {fileID: 1998025880269059254, guid: 76a4898235411aa45a7c7268cd42de6b, type: 3}
+    p_ene: 30
+    ow_ene: 3000
+  - name: Bar-L
+    obj: {fileID: 8518428318962598629, guid: 4e1f7a0c91675024485149b0c0d6f414, type: 3}
+    p_ene: 30
+    ow_ene: 3000

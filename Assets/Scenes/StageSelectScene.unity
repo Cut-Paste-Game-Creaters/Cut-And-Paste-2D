@@ -878,6 +878,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 461339289450065474, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 461339289450065474, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1250828036113984986, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
       propertyPath: m_Name
       value: Canon (1)
@@ -885,6 +893,14 @@ PrefabInstance:
     - target: {fileID: 1535793234407478786, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
       propertyPath: angle
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5773223133502768857, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5773223133502768857, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6261157874143053311, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1269,6 +1285,14 @@ PrefabInstance:
     - target: {fileID: 7654152235285816079, guid: 9053663e2ac49a9448a4ab464c0866f0, type: 3}
       propertyPath: m_Name
       value: switch (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8716936582227063528, guid: 9053663e2ac49a9448a4ab464c0866f0, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8716936582227063528, guid: 9053663e2ac49a9448a4ab464c0866f0, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1754,6 +1778,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7965379154160549734, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965379154160549734, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9016092672927213838, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
       propertyPath: stageMgr
       value: 
@@ -2027,6 +2059,14 @@ PrefabInstance:
     - target: {fileID: 7654152235285816079, guid: 9053663e2ac49a9448a4ab464c0866f0, type: 3}
       propertyPath: m_Name
       value: switch
+      objectReference: {fileID: 0}
+    - target: {fileID: 8716936582227063528, guid: 9053663e2ac49a9448a4ab464c0866f0, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8716936582227063528, guid: 9053663e2ac49a9448a4ab464c0866f0, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2385,6 +2425,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7965379154160549734, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
       propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965379154160549734, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965379154160549734, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
+      propertyPath: m_SortingLayerID
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9016092672927213838, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
@@ -2771,6 +2819,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7965379154160549734, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965379154160549734, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9016092672927213838, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
       propertyPath: stageMgr
       value: 
@@ -2796,7 +2852,7 @@ GameObject:
   - component: {fileID: 1806078382}
   - component: {fileID: 1806078381}
   - component: {fileID: 1806078380}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Tilemap
   m_TagString: Tilemap
   m_Icon: {fileID: 0}
@@ -6600,6 +6656,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7965379154160549734, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965379154160549734, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9016092672927213838, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
       propertyPath: stageMgr
       value: 
@@ -6625,6 +6689,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 461339289450065474, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 461339289450065474, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1250828036113984986, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
       propertyPath: m_Name
       value: Canon
@@ -6632,6 +6704,14 @@ PrefabInstance:
     - target: {fileID: 1535793234407478786, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
       propertyPath: angle
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5773223133502768857, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5773223133502768857, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6261157874143053311, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6902,6 +6982,18 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4462907966080867569, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4462907966080867569, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208446286499985901, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8709870156297503356, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
     m_RemovedGameObjects: []
@@ -6973,6 +7065,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7965379154160549734, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
       propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965379154160549734, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965379154160549734, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
+      propertyPath: m_SortingLayerID
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9016092672927213838, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
