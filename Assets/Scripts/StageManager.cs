@@ -15,6 +15,9 @@ public class StageManager : MonoBehaviour
     Player_Function playerFunc;
     RankJudgeAndUpdateFunction rankFunc;
     public int player_HP = 100;
+    public bool isPlayerDamaged = false;
+    private float noDamageTime = 3.0f;
+    private float nowNoDanageTime = 0.0f;
 
     /*スイッチ関連*/
     public bool switch_state = false;
@@ -51,6 +54,15 @@ public class StageManager : MonoBehaviour
         {
             HealCost(stageNum);
         }
+
+        if(isPlayerDamaged)
+        {
+            nowNoDanageTime += PlayerInput.GetDeltaTime();
+            if(nowNoDanageTime > noDamageTime)
+            {
+                isPlayerDamaged = false;
+            }
+        }
     }
 
     /////////////////////////////////////////////////
@@ -84,7 +96,13 @@ public class StageManager : MonoBehaviour
 
     public void DamageToPlayer(int damage) //引数分HPから減らす処理
     {
-        player_HP -= damage;
+        if (!isPlayerDamaged)
+        {
+            player_HP -= damage;
+            isPlayerDamaged = true;
+            nowNoDanageTime = 0.0f;
+        }
+
     }
 
     public void InitAllSumCost()
