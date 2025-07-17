@@ -17,13 +17,10 @@ public class BumperForce : MonoBehaviour
     //コンストラクタ
     public BumperForce(BumperForce bumper)
     {
-        checkDistance = bumper.checkDistance;
-        upwardForce = bumper.upwardForce;
-        bounceForce = bumper.bounceForce;
-        playerLayer = bumper.playerLayer;
-        player = bumper.player;
-        pc = bumper.pc;
-        rb = bumper.rb;
+        this.checkDistance = bumper.checkDistance;
+        this.upwardForce = bumper.upwardForce;
+        this.bounceForce = bumper.bounceForce;
+        this.playerLayer = bumper.playerLayer;
     }
 
     void Start()
