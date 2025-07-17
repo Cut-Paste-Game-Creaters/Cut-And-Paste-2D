@@ -15,15 +15,15 @@ public class BumperForce : MonoBehaviour
     public float bounceForce = 100f;
 
     //コンストラクタ
-    public BumperForce(float checkDis, float upwardFor, float bounceFor)
+    public BumperForce(BumperForce bumper)
     {
-        checkDistance = checkDis;
-        upwardForce = upwardFor;
-        bounceForce = bounceFor;
-        playerLayer = this.playerLayer;
-        player = this.player;
-        pc = this.pc;
-        rb = this.rb;
+        checkDistance = bumper.checkDistance;
+        upwardForce = bumper.upwardForce;
+        bounceForce = bumper.bounceForce;
+        playerLayer = bumper.playerLayer;
+        player = bumper.player;
+        pc = bumper.pc;
+        rb = bumper.rb;
     }
 
     void Start()

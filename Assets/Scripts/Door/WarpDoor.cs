@@ -9,6 +9,14 @@ public class WarpDoor : MonoBehaviour
     public StageManager stageMgr;
     public bool stopLoad = false;
 
+    //コンストラクタ
+    public WarpDoor(WarpDoor wpDoor)
+    {
+        stageName = wpDoor.stageName;
+        stageMgr = wpDoor.stageMgr;
+        stopLoad = wpDoor.stopLoad;
+    }
+
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.W))
