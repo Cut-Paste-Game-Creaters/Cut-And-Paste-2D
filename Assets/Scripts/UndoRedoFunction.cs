@@ -142,12 +142,11 @@ public class UndoRedoFunction : MonoBehaviour
                 }
                 else if(wpdobj != null)
                 {
-                    stageObjState.stageName = wpdobj.stageName;
-                    stageObjState.stageMgr = wpdobj.stageMgr;
+                    stageObjState.wpDoor = new WarpDoor(wpdobj);
                 }
                 else if(bumobj != null)
                 {
-                    stageObjState.bumper = new BumperForce(bumobj.checkDistance, bumobj.upwardForce, bumobj.bounceForce);
+                    stageObjState.bumper = new BumperForce(bumobj);
                     Debug.Log("bumperインスタンスを保存" + stageObjState.bumper.checkDistance);
                 }
 
@@ -273,8 +272,7 @@ public class UndoRedoFunction : MonoBehaviour
                 }
                 else if(wpdobj != null)
                 {
-                    wpdobj.stageName = obj.stageName;
-                    wpdobj.stageMgr = obj.stageMgr;
+                    wpdobj = obj.wpDoor;
                 }
                 else if(bumobj != null)
                 {
@@ -407,8 +405,7 @@ public class UndoRedoFunction : MonoBehaviour
         public float nowTime;
 
         //WArpDoor関連
-        public string stageName;
-        public StageManager stageMgr;
+        public WarpDoor wpDoor;
 
         //Bumoer関連
         public BumperForce bumper;
