@@ -49,7 +49,7 @@ MonoBehaviour:
     tile: {fileID: 11400000, guid: 0407b0181fd910648a28bb4ed8627220, type: 2}
     p_ene: 10
     ow_ene: 10
-  - head: uncut
+  - head: soil_float
     tile: {fileID: 11400000, guid: 7f0b9321867d0cc4eb5a6ee82ac6671b, type: 2}
     p_ene: 10
     ow_ene: 10
