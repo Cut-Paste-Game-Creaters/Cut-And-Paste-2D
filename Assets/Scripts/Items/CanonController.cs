@@ -19,6 +19,15 @@ public class CanonController : MonoBehaviour
     private float wholeTime = 0.0f;
     private Rigidbody2D rb;
 
+    //コンストラクタ
+    public CanonController(CanonController cc)
+    {
+        angle = cc.angle;
+        firePower = cc.firePower;
+        firespeed = cc.firespeed;
+        fireTime = cc.fireTime;
+    }
+
     void Start()
     {
         Vector3 rot = canon_body.transform.localEulerAngles;
