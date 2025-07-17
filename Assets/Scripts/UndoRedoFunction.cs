@@ -60,7 +60,7 @@ public class UndoRedoFunction : MonoBehaviour
         allStageInfo.all_isCut = stageMgr.all_isCut;
         allStageInfo.stageObjState = RecordObjectState();
         allStageInfo.playerState = RecordPlayerInfo();
-        allStageInfo.copyTileData = RecordCopyTileData();
+        //allStageInfo.copyTileData = RecordCopyTileData();
         allStageInfo.copyObjectData = RecordCopyObjectData();
         undoStack.Push(allStageInfo);
         Debug.Log(undoStack.Count);
@@ -124,21 +124,15 @@ public class UndoRedoFunction : MonoBehaviour
 
                 if(switchobj != null)
                 {
-                    stageObjState.mode = switchobj.mode;
-                    stageObjState.waitTime = switchobj.waitTime;
-                    stageObjState.nowPressState = switchobj.nowPressState;     //今のスイッチの状態
-                    stageObjState.hitState = switchobj.hitState;
+                    stageObjState.swc = new SwitchController(switchobj);
                 }
                 else if(canonobj != null)
                 {
-                    stageObjState.angle = canonobj.angle;            //-90 ～ 0 ～　90
-                    stageObjState.firePower = canonobj.firePower;     //打ち出す力
-                    stageObjState.fireTime = canonobj.fireTime;
+                    stageObjState.cc = new CanonController(canonobj);
                 }
                 else if(throwobj != null)
                 {
-                    stageObjState.moveDir = throwobj.GetDir();
-                    stageObjState.nowTime = throwobj.nowTime;
+                    stageObjState.toC = new ThrowObjectController(throwobj);
                 }
                 else if(wpdobj != null)
                 {
@@ -178,14 +172,17 @@ public class UndoRedoFunction : MonoBehaviour
         return playerState;
     }
 
-    public StageManager.TileData RecordCopyTileData()
+    /*public StageManager.TileData RecordCopyTileData()
     {
-        StageManager.TileData copyTileData = new StageManager.TileData();
+        StageManager.TileData copyTileData = new StageManager.TileData(stageMgr.tileData.width, stageMgr.tileData.height);
 
-        copyTileData = stageMgr.tileData;
+        copyTileData.direction = stageMgr.tileData.direction;
+        copyTileData.tiles = stageMgr.tileData.tiles;
+        copyTileData.hasData= stageMgr.tileData.hasData;
+        copyTileData.isCut= stageMgr.tileData.isCut;
 
         return copyTileData;
-    }
+    }*/
 
     public List<StageManager.ObjectData> RecordCopyObjectData()
     {
@@ -207,7 +204,7 @@ public class UndoRedoFunction : MonoBehaviour
             UndoAllIsCut();
             UndoObjState();
             UndoPlayerState();
-            UndoCopyTileData();
+            //UndoCopyTileData();
             UndoCopyObjectData();
         }
     }
@@ -254,21 +251,15 @@ public class UndoRedoFunction : MonoBehaviour
 
                 if(switchobj != null)
                 {
-                    switchobj.mode = obj.mode;
-                    switchobj.waitTime = obj.waitTime;
-                    switchobj.nowPressState = obj.nowPressState;     //今のスイッチの状態
-                    switchobj.hitState = obj.hitState;
+                    obj.CopyData(switchobj);
                 }
                 else if(canonobj != null)
                 {
-                    canonobj.angle = obj.angle;            //-90 ～ 0 ～　90
-                    canonobj.firePower = obj.firePower;     //打ち出す力
-                    canonobj.fireTime = obj.fireTime;
+                    obj.CopyData(canonobj);
                 }
                 else if(throwobj != null)
                 {
-                    throwobj.SetDir(obj.moveDir);
-                    throwobj.nowTime = obj.nowTime;
+                    obj.CopyData(throwobj);
                 }
                 else if(wpdobj != null)
                 {
@@ -347,12 +338,17 @@ public class UndoRedoFunction : MonoBehaviour
         player.transform.rotation = pre_playerState.objRotation;
     }
 
-    void UndoCopyTileData()
+    /*void UndoCopyTileData()
     {
         StageManager.TileData pre_copyTileData = undoStack.Peek().copyTileData;
 
-        stageMgr.tileData = pre_copyTileData;
-    }
+        stageMgr.tileData.width = pre_copyTileData.width;
+        stageMgr.tileData.height = pre_copyTileData.width;
+        stageMgr.tileData.direction = pre_copyTileData.direction;
+        stageMgr.tileData.tiles = pre_copyTileData.tiles;
+        stageMgr.tileData.hasData = pre_copyTileData.hasData;
+        stageMgr.tileData.isCut = pre_copyTileData.isCut;
+    }*/
 
     void UndoCopyObjectData()
     {
@@ -390,19 +386,13 @@ public class UndoRedoFunction : MonoBehaviour
         public Quaternion objRotation;
 
         //switch情報
-        public SwitchController.SwitchMode mode;
-        public float waitTime;
-        public bool nowPressState;     //今のスイッチの状態
-        public int hitState;
+        public SwitchController swc;
 
         //canon情報
-        public float angle;            //-90 ～ 0 ～　90
-        public float firePower;     //打ち出す力
-        public float fireTime;
+        public CanonController cc;
 
         //ThrowObject関連
-        public Vector3 moveDir;
-        public float nowTime;
+        public ThrowObjectController toC;
 
         //WArpDoor関連
         public WarpDoor wpDoor;
@@ -410,12 +400,39 @@ public class UndoRedoFunction : MonoBehaviour
         //Bumper関連
         public BumperForce bumper;
 
+        //データコピー関数
+        //SwitchControllerのコピー処理
+        public void CopyData(SwitchController copySwc)
+        {
+            copySwc.stateOff = swc.stateOff;
+            copySwc.stateOn = swc.stateOn;
+            copySwc.mode = swc.mode;
+            copySwc.nowPressState = swc.nowPressState;
+            copySwc.hitState = swc.hitState;
+        }
+        //CanonControllerのコピー処理
+        public void CopyData(CanonController copyCc)
+        {
+            copyCc.angle = cc.angle;
+            copyCc.firePower = cc.firePower;
+            copyCc.firespeed = cc.firespeed;
+            copyCc.fireTime = cc.fireTime;
+        }
+        //ThrowObjectControllerのコピー処理
+        public void CopyData(ThrowObjectController copyToCon)
+        {
+            copyToCon.destroyTime = toC.destroyTime;
+            copyToCon.nowTime = toC.nowTime;
+            copyToCon.disAppearTime = toC.disAppearTime;
+        }
+        //WarpDoorのコピー処理
         public void CopyData(WarpDoor copyWpd)
         {
             copyWpd.stageName = wpDoor.stageName;
             copyWpd.stageMgr = wpDoor.stageMgr;
             copyWpd.stopLoad = wpDoor.stageMgr;
         }
+        //BumperForceのコピー処理
         public void CopyData(BumperForce copyBumper)
         {
             copyBumper.checkDistance = bumper.checkDistance;
