@@ -272,11 +272,11 @@ public class UndoRedoFunction : MonoBehaviour
                 }
                 else if(wpdobj != null)
                 {
-                    wpdobj = obj.wpDoor;
+                    obj.CopyData(wpdobj);
                 }
                 else if(bumobj != null)
                 {
-                    bumobj = obj.bumper;
+                    obj.CopyData(bumobj);
                     Debug.Log(prefab.name + "を生成しました." + bumobj.checkDistance);
                 }
                 Debug.Log(prefab.name + "を生成しました.");
@@ -407,8 +407,21 @@ public class UndoRedoFunction : MonoBehaviour
         //WArpDoor関連
         public WarpDoor wpDoor;
 
-        //Bumoer関連
+        //Bumper関連
         public BumperForce bumper;
+
+        public void CopyData(WarpDoor copyWpd)
+        {
+            copyWpd.stageName = wpDoor.stageName;
+            copyWpd.stageMgr = wpDoor.stageMgr;
+            copyWpd.stopLoad = wpDoor.stageMgr;
+        }
+        public void CopyData(BumperForce copyBumper)
+        {
+            copyBumper.checkDistance = bumper.checkDistance;
+            copyBumper.upwardForce = bumper.upwardForce;
+            copyBumper.playerLayer = bumper.playerLayer;
+        }
 
         //これ以降必要な情報追加する
         /*public SwitchController swCon;
