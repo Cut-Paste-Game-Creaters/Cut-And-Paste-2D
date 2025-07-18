@@ -65,7 +65,7 @@ public class Blackhole : MonoBehaviour
                     Vector2 direction = (transform.position - rb.transform.position).normalized;
                     //force = (radius - distance) / radius;///Mathf.Max(distance, 0.5f); //一次関数的
                     //force = 1 / Mathf.Max(distance, 0.5f);// 近づくほど強い 二次関数的　distanceの最小値を0.5fに設定
-                    force = Mathf.Pow(2f, radius - distance); // 修正コード：指数関数的に強くする（例）
+                    force = Mathf.Pow(1.7f, radius - distance); // 修正コード：指数関数的に強くする（例）
                     rb.AddForce(direction * (force) * gravityForce * Time.fixedDeltaTime, ForceMode2D.Force);
                 }
             }
