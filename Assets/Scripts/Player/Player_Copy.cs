@@ -112,7 +112,7 @@ public class Player_Copy : MonoBehaviour
         {
             switch (whichMode)
             {
-                case -1:    //コピーかカットか選ぶ
+                /*case -1:    //コピーかカットか選ぶ
                     if (PlayerInput.GetMouseButtonUp(0))
                     {
                         whichMode = 0;//copy
@@ -127,22 +127,41 @@ public class Player_Copy : MonoBehaviour
                     }
                     else if (PlayerInput.GetKeyDown(KeyCode.Escape)) whichMode = 2;//nothing
                     break;
+                */
+                case -1:
+                    if (PlayerInput.GetMouseButtonUp(0))
+                    {
+                        whichMode = 0;//copy
+                    }
+                    else if (PlayerInput.GetMouseButtonUp(1))
+                    {
+                        whichMode = 1;//cut
+                    }
+                    else if (PlayerInput.GetKeyDown(KeyCode.Escape)) whichMode = 10;//nothing
+                    break;
                 case 0:     //コピーするなら
                     stageMgr.all_isCut = false;
                     CopyContents(startPos, endPos);
-                    CopyObject(startPos, endPos);
-                    //all_isCut = false;
-                    InitWhichMode();
+                    SetCaptureLayer();
+                    whichMode = 2;
                     break;
                 case 1:     //カットするなら
                     stageMgr.all_isCut = true;
                     CopyContents(startPos, endPos, true);
-                    CopyObject(startPos, endPos, true);
-                    //all_isCut = true;
+                    SetCaptureLayer();
+                    whichMode = 2;
+                    break;
+                case 2:
+                    captureCopyZone.CaptureImage(startPos, endPos);
+                    whichMode = 3;
+                    break;
+                case 3:
+                    if(stageMgr.all_isCut) CutInCopy(ChangeVecToInt(startPos), ChangeVecToInt(endPos), false);
+                    DisActiveCutObject();
                     InitWhichMode();
                     break;
                 default:
-                    InitWhichMode();
+                    InitTileData();
                     break;
             }
         }
@@ -198,6 +217,8 @@ public class Player_Copy : MonoBehaviour
 
 
         //タイルのコストを計算する
+        //既にstagemanagerのwritecost,erasecostは計算して、タイルのコピーもここでしている。
+        //３つ目の引数がfalseなら下のタイルをnullにして消す。
         CutInCopy(_startPos, _endPos, true);
 
         //オブジェクトのコスト計算をする
@@ -215,7 +236,6 @@ public class Player_Copy : MonoBehaviour
                 stageMgr.all_sum_cos += stageMgr.cut_erase_cost; //総消費コストに加算
 
                 Debug.Log("消すコスト(カット時):" + stageMgr.cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene + ", " + "総消費コスト：" + stageMgr.all_sum_cos);
-                CutInCopy(_startPos, _endPos, false);
                 CutInCopyObject(cols, false);
                 urFunc.InfoPushToStack();
             }
@@ -234,10 +254,49 @@ public class Player_Copy : MonoBehaviour
 
     }
 
-    //選択範囲のオブジェクトをコピーする関数
-    public void CopyObject(Vector3 startPos, Vector3 endPos, bool isCut = false)
+    private void DisActiveCutObject()
     {
-        
+        tilemap.gameObject.layer = LayerMask.NameToLayer("Ground");
+        foreach (var obj in stageMgr.objectData)
+        {
+            SetLayerRecursively(obj.obj,"Ground");
+            obj.obj.SetActive(false);
+        }
+    }
+
+    private void SetCaptureLayer()
+    {
+        tilemap.gameObject.layer = LayerMask.NameToLayer("CaptureLayer");
+        Debug.Log("キャプチャしたobjectの数:"+stageMgr.objectData.Count);
+        foreach (var obj in stageMgr.objectData)
+        {
+            SetLayerRecursively(obj.obj, "CaptureLayer");
+        }
+    }
+
+    private void SetLayerRecursively(GameObject obj, string layerName)
+    {
+        // レイヤー名をレイヤーのインデックスに変換
+        int layerIndex = LayerMask.NameToLayer(layerName);
+
+        // 指定されたレイヤー名が存在しない場合のチェック
+        if (layerIndex == -1)
+        {
+            Debug.LogError($"指定されたレイヤー名「{layerName}」が見つかりません。UnityエディターのTag & Layers設定を確認してください。", obj);
+            return; // 処理を中断
+        }
+
+        // 自身のGameObjectのレイヤーを設定
+        obj.layer = layerIndex;
+        // Debug.Log($"Changed layer of {obj.name} to {layerName} (Index: {layerIndex})");
+
+        // 子オブジェクトのレイヤーを再帰的に設定
+        // obj.transformをforeachで回すと、そのGameObjectの直接の子Transformを一つずつ取得できる
+        foreach (Transform child in obj.transform)
+        {
+            // 各子TransformのgameObjectプロパティを使って、子GameObjectに対して再度SetLayerRecursivelyを呼び出す
+            SetLayerRecursively(child.gameObject, layerName);
+        }
     }
 
     public void CutInCopyObject(Collider2D[] cols,bool isFirst)
@@ -276,12 +335,13 @@ public class Player_Copy : MonoBehaviour
                         col.gameObject.transform.parent = stageMgr.transform;
                     }
                     c.pos = col.gameObject.transform.position - ChangeVecToInt(startPos);
-                    c.obj.SetActive(false);
+                    //c.obj.SetActive(false);
                     stageMgr.objectData.Add(c);
                 }
             }
 
         }
+        
     }
 
     public void CutInCopy(Vector3Int _startPos, Vector3 _endPos, bool Count)
