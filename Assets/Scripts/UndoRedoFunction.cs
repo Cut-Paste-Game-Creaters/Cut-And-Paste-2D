@@ -574,7 +574,8 @@ public class UndoRedoFunction : MonoBehaviour
         public void CopyData(VanishFloor copy_vf)
         {
             copy_vf.stayTime = vf.stayTime;
-            copy_vf.elapsed = vf.elapsed;
+            copy_vf.SetElapsed(vf.GetElapsed());
+            copy_vf.SetIsCollision(vf.GetIsCollision());
         }
 
         //これ以降必要な情報追加する

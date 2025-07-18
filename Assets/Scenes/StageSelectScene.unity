@@ -6759,6 +6759,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VanishFloor
       objectReference: {fileID: 0}
+    - target: {fileID: 5366822268161902840, guid: 92880a01147ef614ca9fa94687c11418, type: 3}
+      propertyPath: stayTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8065485574148634764, guid: 92880a01147ef614ca9fa94687c11418, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.901713
