@@ -121,6 +121,10 @@ public class UndoRedoFunction : MonoBehaviour
                 var throwobj = col.gameObject.GetComponent<ThrowObjectController>();
                 var wpdobj = col.gameObject.GetComponent<WarpDoor>();
                 var bumobj = col.gameObject.GetComponent<BumperForce>();
+                var togeobj = col.gameObject.GetComponent<TogeController>();
+                var b_h_obj = col.gameObject.GetComponent<Blackhole>();
+                var w_h_obj = col.gameObject.GetComponent<WhiteHole2D>();
+                var svmobj = col.gameObject.GetComponent<SinVerticalMover>();
 
                 if(switchobj != null)
                 {
@@ -142,6 +146,22 @@ public class UndoRedoFunction : MonoBehaviour
                 {
                     stageObjState.bumper = new BumperForce(bumobj);
                     Debug.Log("bumperインスタンスを保存" + stageObjState.bumper.checkDistance);
+                }
+                else if(togeobj != null)
+                {
+                    stageObjState.toge = new TogeController(togeobj);
+                }
+                else if(b_h_obj != null)
+                {
+                    stageObjState.b_hole = new Blackhole(b_h_obj);
+                }
+                else if(w_h_obj != null)
+                {
+                    stageObjState.w_hole = new WhiteHole2D(w_h_obj);
+                }
+                else if(svmobj != null)
+                {
+                    stageObjState.svm = new SinVerticalMover(svmobj);
                 }
 
                 //全部情報入れたら最後にAdd
@@ -248,6 +268,10 @@ public class UndoRedoFunction : MonoBehaviour
                 var throwobj = g_prefab.gameObject.GetComponent<ThrowObjectController>();
                 var wpdobj = g_prefab.gameObject.GetComponent<WarpDoor>();
                 var bumobj = g_prefab.gameObject.GetComponent<BumperForce>();
+                var togeobj = g_prefab.gameObject.GetComponent<TogeController>();
+                var b_h_obj = g_prefab.gameObject.GetComponent<Blackhole>();
+                var w_h_obj = g_prefab.gameObject.GetComponent<WhiteHole2D>();
+                var svmobj = g_prefab.gameObject.GetComponent<SinVerticalMover>();
 
                 if(switchobj != null)
                 {
@@ -268,9 +292,25 @@ public class UndoRedoFunction : MonoBehaviour
                 else if(bumobj != null)
                 {
                     obj.CopyData(bumobj);
-                    Debug.Log(prefab.name + "を生成しました." + bumobj.checkDistance);
+                    //Debug.Log(prefab.name + "を生成しました." + bumobj.checkDistance);
                 }
-                Debug.Log(prefab.name + "を生成しました.");
+                else if(togeobj != null)
+                {
+                    obj.CopyData(togeobj);
+                }
+                else if(b_h_obj != null)
+                {
+                    obj.CopyData(b_h_obj);
+                }
+                else if(w_h_obj != null)
+                {
+                    obj.CopyData(w_h_obj);
+                }
+                else if(svmobj != null)
+                {
+                    obj.CopyData(svmobj);
+                }
+                //Debug.Log(prefab.name + "を生成しました.");
                 //g_prefab.hp = 100;
             }
         }
@@ -400,6 +440,18 @@ public class UndoRedoFunction : MonoBehaviour
         //Bumper関連
         public BumperForce bumper;
 
+        //Toge関連
+        public TogeController toge;
+
+        //BlackHole関連
+        public Blackhole b_hole;
+
+        //WhiteHole
+        public WhiteHole2D w_hole;
+
+        //SinVeerticalMover
+        public SinVerticalMover svm;
+
         //データコピー関数
         //SwitchControllerのコピー処理
         public void CopyData(SwitchController copySwc)
@@ -438,6 +490,33 @@ public class UndoRedoFunction : MonoBehaviour
             copyBumper.checkDistance = bumper.checkDistance;
             copyBumper.upwardForce = bumper.upwardForce;
             copyBumper.playerLayer = bumper.playerLayer;
+        }
+        //TogeControllerのコピー処理
+        public void CopyData(TogeController copyToge)
+        {
+            copyToge.togeDamage = toge.togeDamage;
+        }
+        //BlackHoleのコピー処理
+        public void CopyData(Blackhole copyB_hole)
+        {
+            copyB_hole.gravityForce = b_hole.gravityForce;
+            copyB_hole.radius = b_hole.radius;
+            copyB_hole.trueDuration = b_hole.trueDuration;
+            copyB_hole.falseDuration = b_hole.falseDuration;
+            copyB_hole.rotationSpeed = b_hole.rotationSpeed;
+        }
+        //WhiteHoleのコピー処理
+        public void CopyData(WhiteHole2D copyW_hole)
+        {
+            copyW_hole.repelForce = w_hole.repelForce;
+            copyW_hole.radius = w_hole.radius;
+        }
+        //SinVerticalMoverのコピー処理
+        public void CopyData(SinVerticalMover copy_svm)
+        {
+            copy_svm.amplitude = svm.amplitude;
+            copy_svm.frequency = svm.frequency;
+            copy_svm.cos = svm.cos;
         }
 
         //これ以降必要な情報追加する

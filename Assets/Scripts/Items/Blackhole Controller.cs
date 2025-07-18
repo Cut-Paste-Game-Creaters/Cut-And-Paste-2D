@@ -18,6 +18,16 @@ public class Blackhole : MonoBehaviour
 
     public float rotationSpeed = 0.5f;
 
+    //コンストラクタ
+    public Blackhole(Blackhole b_hole)
+    {
+        gravityForce = b_hole.gravityForce;
+        radius = b_hole.radius;
+        trueDuration = b_hole.trueDuration;
+        falseDuration = b_hole.falseDuration;
+        rotationSpeed = b_hole.rotationSpeed;
+    }
+
     void FixedUpdate()
     {
 
