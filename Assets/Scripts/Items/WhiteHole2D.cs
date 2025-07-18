@@ -7,6 +7,13 @@ public class WhiteHole2D : MonoBehaviour
     public float repelForce = 10f; // 反発力の基本強度
     public float radius = 5f;      // 反発範囲（中心からこの距離内にあるものに作用）
 
+    //コンストラクタ
+    public WhiteHole2D(WhiteHole2D w_hole)
+    {
+        repelForce = w_hole.repelForce;
+        radius = w_hole.radius;
+    }
+
     void FixedUpdate()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius);

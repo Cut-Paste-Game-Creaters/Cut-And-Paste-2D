@@ -16,6 +16,13 @@ public class SinVerticalMover : MonoBehaviour
     float newY = 0.0f;
     float newX = 0.0f;  
 
+    public SinVerticalMover(SinVerticalMover svm)
+    {
+        amplitude = svm.amplitude;
+        frequency = svm.frequency;
+        cos = svm.cos;
+    }
+
     void Start()
     {
         if (cos)
