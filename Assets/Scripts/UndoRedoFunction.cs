@@ -117,6 +117,7 @@ public class UndoRedoFunction : MonoBehaviour
                 stageObjState.objRotation = col.gameObject.transform.rotation;
 
                 var switchobj = col.gameObject.GetComponent<SwitchController>();
+                var s_blockobj = col.gameObject.GetComponent<SwitchblockController>();
                 var canonobj = col.gameObject.GetComponent<CanonController>();
                 var throwobj = col.gameObject.GetComponent<ThrowObjectController>();
                 var wpdobj = col.gameObject.GetComponent<WarpDoor>();
@@ -125,10 +126,16 @@ public class UndoRedoFunction : MonoBehaviour
                 var b_h_obj = col.gameObject.GetComponent<Blackhole>();
                 var w_h_obj = col.gameObject.GetComponent<WhiteHole2D>();
                 var svmobj = col.gameObject.GetComponent<SinVerticalMover>();
+                var rcobj = col.gameObject.GetComponent<RotateController>();
+                var vfobj = col.gameObject.GetComponent<VanishFloor>();
 
                 if(switchobj != null)
                 {
                     stageObjState.swc = new SwitchController(switchobj);
+                }
+                if(s_blockobj != null)
+                {
+                    stageObjState.sbc = new SwitchblockController(s_blockobj);
                 }
                 else if(canonobj != null)
                 {
@@ -162,6 +169,14 @@ public class UndoRedoFunction : MonoBehaviour
                 else if(svmobj != null)
                 {
                     stageObjState.svm = new SinVerticalMover(svmobj);
+                }
+                else if(rcobj != null)
+                {
+                    stageObjState.rc = new RotateController(rcobj);
+                }
+                else if(vfobj != null)
+                {
+                    stageObjState.vf = new VanishFloor(vfobj);
                 }
 
                 //全部情報入れたら最後にAdd
@@ -264,6 +279,7 @@ public class UndoRedoFunction : MonoBehaviour
                 g_prefab.name = obj.prefabName;
 
                 var switchobj = g_prefab.gameObject.GetComponent<SwitchController>();
+                var s_blockobj = g_prefab.gameObject.GetComponent<SwitchblockController>();
                 var canonobj = g_prefab.gameObject.GetComponent<CanonController>();
                 var throwobj = g_prefab.gameObject.GetComponent<ThrowObjectController>();
                 var wpdobj = g_prefab.gameObject.GetComponent<WarpDoor>();
@@ -272,10 +288,16 @@ public class UndoRedoFunction : MonoBehaviour
                 var b_h_obj = g_prefab.gameObject.GetComponent<Blackhole>();
                 var w_h_obj = g_prefab.gameObject.GetComponent<WhiteHole2D>();
                 var svmobj = g_prefab.gameObject.GetComponent<SinVerticalMover>();
+                var rcobj = g_prefab.gameObject.GetComponent<RotateController>();
+                var vfobj = g_prefab.gameObject.GetComponent<VanishFloor>();
 
                 if(switchobj != null)
                 {
                     obj.CopyData(switchobj);
+                }
+                else if(s_blockobj != null)
+                {
+                    obj.CopyData(s_blockobj);
                 }
                 else if(canonobj != null)
                 {
@@ -309,6 +331,14 @@ public class UndoRedoFunction : MonoBehaviour
                 else if(svmobj != null)
                 {
                     obj.CopyData(svmobj);
+                }
+                else if(rcobj != null)
+                {
+                    obj.CopyData(rcobj);
+                }
+                else if(vfobj != null)
+                {
+                    obj.CopyData(vfobj);
                 }
                 //Debug.Log(prefab.name + "を生成しました.");
                 //g_prefab.hp = 100;
@@ -428,6 +458,9 @@ public class UndoRedoFunction : MonoBehaviour
         //switch情報
         public SwitchController swc;
 
+        //switchblock
+        public SwitchblockController sbc;
+
         //canon情報
         public CanonController cc;
 
@@ -452,6 +485,12 @@ public class UndoRedoFunction : MonoBehaviour
         //SinVeerticalMover
         public SinVerticalMover svm;
 
+        //RotateController
+        public RotateController rc;
+
+        //VanishFloor
+        public VanishFloor vf;
+
         //データコピー関数
         //SwitchControllerのコピー処理
         public void CopyData(SwitchController copySwc)
@@ -461,6 +500,12 @@ public class UndoRedoFunction : MonoBehaviour
             copySwc.mode = swc.mode;
             copySwc.nowPressState = swc.nowPressState;
             copySwc.hitState = swc.hitState;
+        }
+        //SwitchBlockControllerのコピー処理
+        public void CopyData(SwitchblockController copySbc)
+        {
+            copySbc.stateOff = sbc.stateOff;
+            copySbc.stateOn = sbc.stateOn;
         }
         //CanonControllerのコピー処理
         public void CopyData(CanonController copyCc)
@@ -476,6 +521,7 @@ public class UndoRedoFunction : MonoBehaviour
             copyToCon.destroyTime = toC.destroyTime;
             copyToCon.nowTime = toC.nowTime;
             copyToCon.disAppearTime = toC.disAppearTime;
+            copyToCon.SetDir(toC.GetDir());
         }
         //WarpDoorのコピー処理
         public void CopyData(WarpDoor copyWpd)
@@ -517,6 +563,18 @@ public class UndoRedoFunction : MonoBehaviour
             copy_svm.amplitude = svm.amplitude;
             copy_svm.frequency = svm.frequency;
             copy_svm.cos = svm.cos;
+        }
+        //RotateControllerのコピー処理
+        public void CopyData(RotateController copy_rc)
+        {
+            copy_rc.rotateTime = rc.rotateTime;
+            copy_rc.dir = rc.dir;
+        }
+        //VanishFloorのコピー処理
+        public void CopyData(VanishFloor copy_vf)
+        {
+            copy_vf.stayTime = vf.stayTime;
+            copy_vf.elapsed = vf.elapsed;
         }
 
         //これ以降必要な情報追加する
