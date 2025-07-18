@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6287085634661312183}
   - component: {fileID: 247534162469598162}
   - component: {fileID: 713943231380744002}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Rotate_Center_S
   m_TagString: Rotate_Center_S
   m_Icon: {fileID: 0}

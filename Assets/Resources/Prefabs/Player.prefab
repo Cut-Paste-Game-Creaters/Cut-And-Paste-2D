@@ -131,11 +131,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   jumpForce: 15
-  groundCheckDistance: 1.7
+  groundCheckDistance: 1.5
+  objectCheckDistance: 1.05
   maxHoldTime: 0.2
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  longobjectLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &2660686992821530170
 MonoBehaviour:
   m_ObjectHideFlags: 0
