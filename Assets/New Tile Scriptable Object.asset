@@ -176,8 +176,8 @@ MonoBehaviour:
   - head: uncut2
     tile: {fileID: 11400000, guid: b92f0f0a5b3122a448d31746ed3c9f43, type: 2}
     p_ene: 10
-    ow_ene: 500
+    ow_ene: 1000
   - head: uncut4
     tile: {fileID: 11400000, guid: 20301f6e56c4b9a4ea0db0e2a55ee80d, type: 2}
     p_ene: 10
-    ow_ene: 1000
+    ow_ene: 2000
