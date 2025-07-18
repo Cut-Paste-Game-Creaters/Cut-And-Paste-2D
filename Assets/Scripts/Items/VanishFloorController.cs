@@ -5,15 +5,21 @@ using UnityEngine;
 public class VanishFloor : MonoBehaviour
 {
     public float stayTime = 2.0f; //消えるまでの時間
+    public float elapsed = 0.0f;
+    
     SpriteRenderer sprite;
     Color32 color;
     
     //自身の幅
     //float width;
     float height;
-
-    float elapsed = 0.0f;
     bool isCollision;
+
+    public VanishFloor(VanishFloor vf)
+    {
+        stayTime = vf.stayTime;
+        elapsed = vf.elapsed;
+    }
 
     // Start is called before the first frame update
     void Start()

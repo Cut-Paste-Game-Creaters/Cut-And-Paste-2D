@@ -18,6 +18,7 @@ public class ThrowObjectController : MonoBehaviour
         destroyTime = toC.destroyTime;
         nowTime = toC.nowTime;
         disAppearTime = toC.disAppearTime;
+        moveDir = toC.moveDir;
     }
 
     public void SetDir(Vector3 dir)

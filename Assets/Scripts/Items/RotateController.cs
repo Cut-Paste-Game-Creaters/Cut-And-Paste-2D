@@ -10,6 +10,13 @@ public class RotateController : MonoBehaviour
     private SpriteRenderer sr;
     private StageManager stageManager;
 
+    //コンストラクタ
+    public RotateController(RotateController rc)
+    {
+        rotateTime = rc.rotateTime;
+        dir = rc.dir;
+    }
+
     void Start()
     {
         stageManager = FindObjectOfType<StageManager>();
