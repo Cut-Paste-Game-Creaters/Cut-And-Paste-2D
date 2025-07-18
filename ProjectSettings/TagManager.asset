@@ -45,6 +45,7 @@ TagManager:
   - Bar-L
   - Needleball
   - weight
+  - VanishFloor
   layers:
   - Default
   - TransparentFX
