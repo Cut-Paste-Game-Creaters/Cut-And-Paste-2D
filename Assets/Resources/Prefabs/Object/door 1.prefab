@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7965379154160549734}
   - component: {fileID: 5542295973266396634}
   - component: {fileID: 9016092672927213838}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: door 1
   m_TagString: WarpDoor
   m_Icon: {fileID: 0}

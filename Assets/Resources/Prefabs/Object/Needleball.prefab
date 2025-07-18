@@ -194,7 +194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4831830149815093592}
   - component: {fileID: 1633714351845959316}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Needleball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
