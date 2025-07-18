@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddee3c3de5916584d8e1cb536140b766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityForce: 70000
+  gravityForce: 500
   radius: 15
   trueDuration: 4
   falseDuration: 2
