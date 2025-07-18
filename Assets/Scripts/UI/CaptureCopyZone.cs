@@ -72,8 +72,8 @@ public class CaptureCopyZone : MonoBehaviour
         originalMask = cam.cullingMask;
 
         // 指定レイヤーを無視（ビット演算で除外）
-        int ignoreLayer = LayerMask.NameToLayer("UI");
-        cam.cullingMask &= ~(1 << ignoreLayer);
+        int getLayer = LayerMask.NameToLayer("CaptureLayer");
+        cam.cullingMask &= (1 << getLayer);
 
         StartCoroutine(CaptureAndSave());
     }
