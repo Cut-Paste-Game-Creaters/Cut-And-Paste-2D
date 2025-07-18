@@ -13,6 +13,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1785843676091825425, guid: 10fa6d43e5d19b44fb0a8b0b346a532f, type: 3}
+      propertyPath: gravityForce
+      value: 60000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785843676091825425, guid: 10fa6d43e5d19b44fb0a8b0b346a532f, type: 3}
       propertyPath: trueDuration
       value: 4
       objectReference: {fileID: 0}
