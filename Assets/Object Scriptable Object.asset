@@ -39,7 +39,7 @@ MonoBehaviour:
     ow_ene: 0
   - name: ball-S
     obj: {fileID: 6800254906470025560, guid: 25d723b9d7422bb49a7122cfccfe15a6, type: 3}
-    p_ene: 20
+    p_ene: 30
     ow_ene: 10
   - name: ball-M
     obj: {fileID: 1193905351830765531, guid: ecb716a9144d17b4885faa6b32c0bcfb, type: 3}
