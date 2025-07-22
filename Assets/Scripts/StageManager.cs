@@ -16,7 +16,7 @@ public class StageManager : MonoBehaviour
     RankJudgeAndUpdateFunction rankFunc;
     public int player_HP = 100;
     public bool isPlayerDamaged = false;
-    private float noDamageTime = 3.0f;
+    private float noDamageTime = 1.0f;
     private float nowNoDanageTime = 0.0f;
 
     /*スイッチ関連*/
