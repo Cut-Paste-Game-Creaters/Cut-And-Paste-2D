@@ -122,7 +122,7 @@ MonoBehaviour:
     p_ene: 10
     ow_ene: 5
   - name: Bar-M
-    obj: {fileID: 1998025880269059254, guid: 76a4898235411aa45a7c7268cd42de6b, type: 3}
+    obj: {fileID: 6585899477325734917, guid: 76a4898235411aa45a7c7268cd42de6b, type: 3}
     p_ene: 10
     ow_ene: 5
   - name: Bar-L
