@@ -71,11 +71,27 @@ public class BumperForce : MonoBehaviour
             Debug.Log("huretawane");
             if (rb != null)
             {
-                // 接触点の法線を取得
+                // 接触点の法線ベクトルを取得
                 Vector2 normal = collision.GetContact(0).normal;
 
-                // 法線方向に力を加える
-                rb.AddForce(-normal * bounceForce, ForceMode2D.Impulse);
+            float speed = rb.velocity.magnitude;
+            Debug.Log(speed);
+
+
+            // 速度によってバウンドの力を調整
+            float adjustedBounceForce = 1;
+            if (speed < 10f)
+            {
+                adjustedBounceForce = 3 +speed *0.1f ;//遅くても一定以上は跳ね返す
+            }else if (speed >= 10f)
+            {
+                adjustedBounceForce = 4f - speed * 0.1f;//早すぎたら調整
+            }
+
+
+
+            // 法線方向に力を加える
+            rb.AddForce(-(normal  ) * bounceForce * adjustedBounceForce, ForceMode2D.Impulse);
                 Debug.Log("huretawane");
             }
         }
