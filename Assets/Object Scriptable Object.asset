@@ -70,7 +70,7 @@ MonoBehaviour:
     p_ene: 10
     ow_ene: 5
   - name: bumper-M
-    obj: {fileID: 4368776077075863461, guid: 1840f2340bde9bb44bae3954a8ccf59e, type: 3}
+    obj: {fileID: 3248825109043084209, guid: 1840f2340bde9bb44bae3954a8ccf59e, type: 3}
     p_ene: 10
     ow_ene: 10
   - name: bumper-L

@@ -28,7 +28,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
                                 }; //S~Fの判定基準
 
     //private int allCost = 24; //テスト用変数（総消費コスト
-    private int[] clearAddCost = {1000,800,600,5}; //S～FでStageSelectのコストに追加するコスト
+    private int[] clearAddCost = {20,10,5,3,1}; //S～FでStageSelectの初期コストに追加するコスト
                                                    //各ステージで増えるコストは同じ
 
     private int[] minConsumpCost = {-1, -1, -1, -1, -1,-1, -1, -1, -1, -1,-1}; //ステージ最低消費コスト配列
