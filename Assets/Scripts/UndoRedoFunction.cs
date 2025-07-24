@@ -437,6 +437,9 @@ public class UndoRedoFunction : MonoBehaviour
 
         Undo();
         stageMgr.player_HP = 10;
+        //オブジェクトの状態を初期化(switch&key)
+        stageMgr.ResetObjectState();
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 

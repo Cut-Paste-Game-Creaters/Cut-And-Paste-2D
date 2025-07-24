@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
+using System.Text.RegularExpressions;
 
 public class StageManager : MonoBehaviour
 {
@@ -25,6 +27,10 @@ public class StageManager : MonoBehaviour
     /*鍵関連*/
     public bool key_lock_state = false;
 
+    /*スイッチと鍵の初期状態*/
+    //[HideInInspector]
+    public Pair<bool, bool>[] switch_key_states;
+
     /*コスト関連*/
     [SerializeField]private float costHeal_timeOut; //costが回復する間隔
 	private float timeElapsed;
@@ -40,12 +46,29 @@ public class StageManager : MonoBehaviour
     public bool all_isCut = false; //copyかcutかを判別する変数
 
     //オブジェクトを別シーンに持ってく関連
+    [HideInInspector]
     public List<GameObject> EraseObjects = new List<GameObject>();
 
     void Start()
     {
         playerFunc = FindObjectOfType<Player_Function>();
         rankFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
+
+        //各ステージでのスイッチと鍵の初期状態
+        //Pair.bool1 = switchState, Pair.bool2 = keyState
+        switch_key_states = new Pair<bool, bool>[]
+        {
+            new Pair<bool, bool>(false, false),
+            new Pair<bool, bool>(false, false),
+            new Pair<bool, bool>(false, false),
+            new Pair<bool, bool>(false, false),
+            new Pair<bool, bool>(true, false),
+            new Pair<bool, bool>(false, false),
+            new Pair<bool, bool>(false, false),
+            new Pair<bool, bool>(false, false),
+            new Pair<bool, bool>(false, false),
+            new Pair<bool, bool>(false, false),
+        };
     }
     
     void Update()
@@ -62,6 +85,19 @@ public class StageManager : MonoBehaviour
             {
                 isPlayerDamaged = false;
             }
+        }
+    }
+
+    [System.Serializable] // Unityエディタでシリアライズ可能にする
+    public class Pair<T1, T2>
+    {
+        public T1 first;
+        public T2 second;
+
+        public Pair(T1 first, T2 second)
+        {
+            this.first = first;
+            this.second = second;
         }
     }
 
@@ -93,6 +129,21 @@ public class StageManager : MonoBehaviour
         //カットするオブジェクトの相対位置
         public Vector3 pos;
     }
+
+    public Dictionary<string, int> stageNumber = new Dictionary<string, int>() // Dictionaryクラスの宣言と初期値の設定
+    {
+        {"Stage1", 0},
+        {"Stage2", 1},
+        {"Stage3", 2},
+        {"Stage4", 3},
+        {"Stage5", 4},
+        {"Stage6", 5},
+        {"Stage7", 6},
+        {"Stage8", 7},
+        {"Stage9", 8},
+        {"Stage10", 9},
+        {"StageTemplate",10 }
+    };
 
     public void DamageToPlayer(int damage) //引数分HPから減らす処理
     {
@@ -156,6 +207,22 @@ public class StageManager : MonoBehaviour
         }
 
         return v;
+    }
+
+    public void ResetObjectState()
+    {
+        string input = SceneManager.GetActiveScene().name;
+        if (Regex.IsMatch(input, @"^Stage\d+$")) //シーン名がStageなんとかなら
+        {
+            int stage_num = stageNumber[SceneManager.GetActiveScene().name];
+            switch_state = switch_key_states[stage_num].first;
+            key_lock_state = switch_key_states[stage_num].second;
+        }
+        else
+        {
+            switch_state = false;
+            key_lock_state = false;
+        }
     }
 
     //////////////////////////////////////////////////////////
