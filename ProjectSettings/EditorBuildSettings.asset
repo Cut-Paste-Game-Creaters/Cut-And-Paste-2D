@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Stagetest2.unity
     guid: ec53b97a9d822f84c934907b1e3c92d5
+  - enabled: 1
+    path: Assets/Scenes/nagasawatest/Stage5.unity
+    guid: f4fdba661531ff4499f5ef657d9f6a32
   m_configObjects: {}
