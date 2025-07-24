@@ -141,3 +141,11 @@ MonoBehaviour:
     obj: {fileID: 4191004688952013668, guid: c58aa3cdd033f6048ac5af044845fee5, type: 3}
     p_ene: 20
     ow_ene: 10
+  - name: HPHeal
+    obj: {fileID: 2210278136747466567, guid: 847b5c78846ccb045a30083b60fa1306, type: 3}
+    p_ene: 20
+    ow_ene: 0
+  - name: key_lock
+    obj: {fileID: 452536124641921469, guid: 4a7f36a9583bbc643950bfaedb40bffb, type: 3}
+    p_ene: 500
+    ow_ene: 0

@@ -79,7 +79,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         {
             if ((clearFunc.GetisClear()  && !hasJudged))
             {
-                JudgeAndUpdateRank(stageMgr.all_sum_cos,true);
+                JudgeAndUpdateRank(stageMgr.all_sum_cos-stageMgr.player_HP, true);
                 //stageMgr.all_sum_cos = 0;
                 rankDisplay.SetText(rankText);
                 rankDisplay.InitTextSize(); 
@@ -111,7 +111,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         int nowCost = 0;
         if (stageMgr != null)
         {
-            nowCost = stageMgr.all_sum_cos; //総消費コスト
+            nowCost = stageMgr.all_sum_cos - stageMgr.player_HP; //総消費コスト
         }
         int stage_num = 0;          //ステージナンバーは0で初期化。もしデバッグ用ステージだったらstage1のコストを流用
         if (Regex.IsMatch(SceneManager.GetActiveScene().name, @"^Stage\d+$")) //シーン名がStageなんとかなら

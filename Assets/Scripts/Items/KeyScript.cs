@@ -9,12 +9,17 @@ public class KeyLockScript : MonoBehaviour
     void Start()
     {
         stageManager = FindObjectOfType<StageManager>();
-        stageManager.key_lock_state = false;
+        //stageManager.key_lock_state = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        stageManager.key_lock_state = true;
-        Destroy(this.gameObject);
+
+        if (other.gameObject.CompareTag("Player")) // "Player"タグのオブジェクトと衝突したら
+        {
+            stageManager.key_lock_state = true;
+            Destroy(this.gameObject);
+        }
+
     }
 }

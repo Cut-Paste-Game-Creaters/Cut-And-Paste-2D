@@ -2308,46 +2308,6 @@ RectTransform:
   m_AnchoredPosition: {x: 20, y: -175}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0, y: 1}
---- !u!1 &1236940938 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3807169329540211649, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
-  m_PrefabInstance: {fileID: 2602327985525169769}
-  m_PrefabAsset: {fileID: 0}
---- !u!70 &1236940947
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1236940938}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 1}
-  m_Direction: 0
 --- !u!1 &1278022660
 GameObject:
   m_ObjectHideFlags: 0
@@ -2664,13 +2624,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player_HP: 100
+  player_MAXHP: 100
   isPlayerDamaged: 0
   switch_state: 0
   key_lock_state: 0
+  switch_key_states: []
   costHeal_timeOut: 0
   stageNum: -1
   initAddCost_EachStage: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-  have_ene: 100000
+  have_ene: 200000
   all_sum_cos: 0
   erase_cost: 0
   write_cost: 0
@@ -11478,11 +11440,11 @@ PrefabInstance:
       objectReference: {fileID: 1475439277}
     - target: {fileID: 3588919106790919407, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -33.56
+      value: -35.32
       objectReference: {fileID: 0}
     - target: {fileID: 3588919106790919407, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.11
+      value: -3.25
       objectReference: {fileID: 0}
     - target: {fileID: 3588919106790919407, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11564,10 +11526,7 @@ PrefabInstance:
     - {fileID: 8709870156297503356, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3807169329540211649, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1236940947}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
 --- !u!1001 &3280173084595662182
 PrefabInstance:
