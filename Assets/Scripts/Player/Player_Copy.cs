@@ -13,6 +13,8 @@ public class Player_Copy : MonoBehaviour
     [SerializeField] GameObject anounce;
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
     [SerializeField] ObjectScriptableObject objSB;
+    [SerializeField] GameObject copyicon;
+    [SerializeField] GameObject cuticon;
 
     private Tilemap tilemap;
     private StageManager stageMgr;
@@ -48,6 +50,8 @@ public class Player_Copy : MonoBehaviour
         captureCopyZone = FindObjectOfType<CaptureCopyZone>();
 
         anounce.SetActive(false);
+        copyicon.SetActive(false);
+        cuticon.SetActive(false);
     }
 
     // Update is called once per frame
@@ -143,12 +147,14 @@ public class Player_Copy : MonoBehaviour
                     stageMgr.all_isCut = false;
                     CopyContents(startPos, endPos);
                     SetCaptureLayer();
+                    SetActiveCopyIcon();
                     whichMode = 2;
                     break;
                 case 1:     //カットするなら
                     stageMgr.all_isCut = true;
                     CopyContents(startPos, endPos, true);
                     SetCaptureLayer();
+                    SetActiveCutIcon();
                     whichMode = 2;
                     break;
                 case 2:
@@ -407,6 +413,18 @@ public class Player_Copy : MonoBehaviour
             }
             stageMgr.tileData.tiles.Add(tBases);
         }
+    }
+
+    void SetActiveCopyIcon()
+    {
+        cuticon.SetActive(false);
+        copyicon.SetActive(true);
+    }
+
+    void SetActiveCutIcon()
+    {
+        copyicon.SetActive(false);
+        cuticon.SetActive(true);
     }
 
     //コピーかカットかの選択が終わった後の共通の処理
