@@ -46,6 +46,7 @@ TagManager:
   - Needleball
   - weight
   - VanishFloor
+  - HPHeal
   layers:
   - Default
   - TransparentFX

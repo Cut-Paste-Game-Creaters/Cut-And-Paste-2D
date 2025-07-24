@@ -33,7 +33,7 @@ public class GameUIController : MonoBehaviour
         text_nowCost.text = "nowCost\n:" + stageManager.have_ene;
         //ジャッジする関数を持ってきてる。2つ目の変数は絶対にfalse。
         //2つ目の変数をtrueにすると最小消費コストが更新され、既にジャッジが終わったと判定される
-        text_nowRank.text = judgeFunc.JudgeAndUpdateRank(stageManager.all_sum_cos, false);
+        text_nowRank.text = judgeFunc.JudgeAndUpdateRank(stageManager.all_sum_cos - stageManager.player_HP, false);
         text_nextRank.text = "next Rank ... left " + judgeFunc.culcCostToNextRank();
     }
 }
