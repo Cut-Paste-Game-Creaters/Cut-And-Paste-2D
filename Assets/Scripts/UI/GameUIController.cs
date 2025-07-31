@@ -10,6 +10,7 @@ public class GameUIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI text_nowCost;
     [SerializeField] TextMeshProUGUI text_nowRank;
     [SerializeField] TextMeshProUGUI text_nextRank;
+    [SerializeField] TextMeshProUGUI text_duplicateCost;
 
     private StageManager stageManager;
     private RankJudgeAndUpdateFunction judgeFunc;
@@ -20,6 +21,7 @@ public class GameUIController : MonoBehaviour
     {
         stageManager = FindObjectOfType<StageManager>();
         judgeFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
+        text_duplicateCost.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -35,6 +37,23 @@ public class GameUIController : MonoBehaviour
         //2つ目の変数をtrueにすると最小消費コストが更新され、既にジャッジが終わったと判定される
         text_nowRank.text = judgeFunc.JudgeAndUpdateRank(stageManager.all_sum_cos - stageManager.player_HP, false);
         text_nextRank.text = "next Rank ... left " + judgeFunc.culcCostToNextRank();
+        if (stageManager.tileData.hasData)
+        {
+            if (stageManager.all_isCut)
+            {
+                text_duplicateCost.text = "huyasu cost:" + stageManager.write_cost*0.5f;
+            }
+            else
+            {
+                text_duplicateCost.text = "huyasu cost:" + stageManager.write_cost;
+            }
+
+                text_duplicateCost.gameObject.SetActive(true);
+        }
+        else
+        {
+            text_duplicateCost.gameObject.SetActive(false);
+        }
     }
 }
 
