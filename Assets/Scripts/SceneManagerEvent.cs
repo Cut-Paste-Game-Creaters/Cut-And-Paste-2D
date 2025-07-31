@@ -16,6 +16,16 @@ public class SceneManagerEvent : MonoBehaviour
         rankFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
         // イベントにイベントハンドラーを追加
         SceneManager.sceneLoaded += SceneLoaded;
+
+        //WarpDoorのscriptを集める
+        WarpDoor[] doorList = GameObject.FindObjectsOfType<WarpDoor>();
+        foreach (WarpDoor door in doorList)
+        {
+            //ステージ名を取得、そのステージのランクを取得、spriteを表示
+            string stageName = door.GetStageName();
+            string stage_rank = rankFunc.GetStageRank(stageName);
+            door.SetRankSprite(stage_rank);
+        }
     }
 
     // Update is called once per frame
@@ -38,6 +48,19 @@ public class SceneManagerEvent : MonoBehaviour
             {
                 stageMgr.InitHaveCost(rankFunc.stageNumber[SceneManager.GetActiveScene().name]); //所持コストを初期コストに初期化
                 stageMgr.stageNum = rankFunc.stageNumber[SceneManager.GetActiveScene().name];
+            }
+            //ステージセレクトならドアにランクを表示する
+            else if(input == "StageSelect")
+            {
+                //WarpDoorのscriptを集める
+                WarpDoor[] doorList = GameObject.FindObjectsOfType<WarpDoor>();
+                foreach(WarpDoor door in doorList)
+                {
+                    //ステージ名を取得、そのステージのランクを取得、spriteを表示
+                    string stageName = door.GetStageName();
+                    string stage_rank = rankFunc.GetStageRank(stageName);
+                    door.SetRankSprite(stage_rank);
+                }
             }
             else
             {

@@ -131,6 +131,48 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         return 0;
     }
 
+    /*ほかのスクリプトから各ステージのランクを取得する関数*/
+    public string GetStageRank(string stageName)
+    {
+        //ステージ名から数字を取得
+        if (stageNumber.TryGetValue(stageName, out int stageNum))
+        {
+            int minCost = minConsumpCost[stageNum];
+            //最小スコアがないならNONE
+            if (minCost == -1)
+            {
+                return "NONE";
+            }
+            //各スコアからランクを返す
+            if (minCost < stageRank[stageNum, 0])
+            {
+                return "S";
+            }
+            else if (minCost < stageRank[stageNum, 1])
+            {
+                return "A";
+            }
+            else if (minCost < stageRank[stageNum, 2])
+            {
+                return "B";
+            }
+            else if (minCost < stageRank[stageNum, 3])
+            {
+                return "C";
+            }
+            else if (minCost >= stageRank[stageNum, 3])
+            {
+                return "F";
+            }
+        }
+        else     //ステージ名から取得できなかったら
+        {
+            return "NONE";
+        }
+
+        return "NONE";
+    }
+
     /*総消費コストのランク判定と最低消費コストの書き換えをおこなう関数*/
     public string JudgeAndUpdateRank(int num, bool isCleared) //num == 総消費コスト
     {

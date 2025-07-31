@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class WarpDoor : MonoBehaviour
 {
-    [SerializeField] GameObject rankText_S;
-    [SerializeField] GameObject rankText_A;
-    [SerializeField] GameObject rankText_B;
-    [SerializeField] GameObject rankText_C;
-    [SerializeField] GameObject rankText_F;
+    [SerializeField] Image rankDisplayImage;
+    [SerializeField] Sprite rankText_S;
+    [SerializeField] Sprite rankText_A;
+    [SerializeField] Sprite rankText_B;
+    [SerializeField] Sprite rankText_C;
+    [SerializeField] Sprite rankText_F;
 
     Dictionary<string, GameObject> rankText;
     public string stageName;
@@ -18,6 +20,43 @@ public class WarpDoor : MonoBehaviour
     private RankJudgeAndUpdateFunction judgeFunc;
     private ClearFunction clearFunc;
     private GameObject currentRank;
+
+    public string GetStageName()
+    {
+        return stageName;
+    }
+
+    //SceneManagerEventでStageSelectをロードしたときにセットされる
+    public void SetRankSprite(string stage_rank)
+    {
+        Sprite rankImage = rankText_S;
+        if (stage_rank == "NONE")
+        {
+            rankImage = null;
+        }
+        else if (stage_rank == "S")
+        {
+            rankImage = rankText_S;
+        }
+        else if (stage_rank == "A")
+        {
+            rankImage = rankText_A;
+        }
+        else if (stage_rank == "B")
+        {
+            rankImage = rankText_B;
+        }
+        else if (stage_rank == "C")
+        {
+            rankImage = rankText_C;
+        }
+        else if (stage_rank == "F")
+        {
+            rankImage = rankText_F;
+        }
+
+        rankDisplayImage.sprite = rankImage;
+    }
 
     //コンストラクタ
     public WarpDoor(WarpDoor wpDoor)
@@ -29,14 +68,14 @@ public class WarpDoor : MonoBehaviour
 
     void Start()
     {
-        rankText = new Dictionary<string, GameObject>() // Dictionaryクラスの宣言と初期値の設定
-        {
-            {"S", rankText_S},
-            {"A", rankText_A},
-            {"B", rankText_B},
-            {"C", rankText_C},
-            {"F", rankText_F}
-        };
+        //rankText = new Dictionary<string, GameObject>() // Dictionaryクラスの宣言と初期値の設定
+        //{
+        //    {"S", rankText_S},
+        //    {"A", rankText_A},
+        //    {"B", rankText_B},
+        //    {"C", rankText_C},
+        //    {"F", rankText_F}
+        //};
 
         judgeFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
         clearFunc = FindObjectOfType<ClearFunction>();
@@ -59,6 +98,7 @@ public class WarpDoor : MonoBehaviour
         {
 
         }*/
+
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -92,10 +132,10 @@ public class WarpDoor : MonoBehaviour
 
     void AllTextDisable()
     {
-        rankText_S.SetActive(false);
-        rankText_A.SetActive(false);
-        rankText_B.SetActive(false);
-        rankText_C.SetActive(false);
-        rankText_F.SetActive(false);
+        //rankText_S.SetActive(false);
+        //rankText_A.SetActive(false);
+        //rankText_B.SetActive(false);
+        //rankText_C.SetActive(false);
+        //rankText_F.SetActive(false);
     }
 }
