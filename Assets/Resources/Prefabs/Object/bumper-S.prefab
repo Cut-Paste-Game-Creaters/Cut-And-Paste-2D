@@ -167,7 +167,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
-  bounceForce: 3
+  bounceForce: 10
 --- !u!1 &9115392889262078313
 GameObject:
   m_ObjectHideFlags: 0

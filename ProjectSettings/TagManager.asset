@@ -47,6 +47,7 @@ TagManager:
   - weight
   - VanishFloor
   - HPHeal
+  - Needle-M
   layers:
   - Default
   - TransparentFX

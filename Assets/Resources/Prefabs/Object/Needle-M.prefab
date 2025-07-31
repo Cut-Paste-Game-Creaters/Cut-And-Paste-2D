@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: -5891703234652050589}
   m_Layer: 3
   m_Name: Needle-M
-  m_TagString: Needle
+  m_TagString: Needle-M
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

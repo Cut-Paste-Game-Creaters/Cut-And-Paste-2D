@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5542295973266396634}
   - component: {fileID: 9016092672927213838}
   m_Layer: 3
-  m_Name: door 1
+  m_Name: WarpDoor
   m_TagString: WarpDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,6 +143,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c3e302d98a7dff49aea4791612dbe1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rankText_S: {fileID: 0}
+  rankText_A: {fileID: 0}
+  rankText_B: {fileID: 0}
+  rankText_C: {fileID: 0}
+  rankText_F: {fileID: 0}
   stageName: StageTemplate
   stageMgr: {fileID: 0}
   stopLoad: 0
