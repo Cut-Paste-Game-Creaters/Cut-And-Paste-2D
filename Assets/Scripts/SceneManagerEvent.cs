@@ -8,14 +8,18 @@ public class SceneManagerEvent : MonoBehaviour
 {
     StageManager stageMgr;
     RankJudgeAndUpdateFunction rankFunc;
+    CaptureCopyZone captureFunc;
 
     // Start is called before the first frame update
     void Start()
     {
         stageMgr = FindObjectOfType<StageManager>();
         rankFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
+        captureFunc = this.gameObject.GetComponent<CaptureCopyZone>();
         // イベントにイベントハンドラーを追加
         SceneManager.sceneLoaded += SceneLoaded;
+        SceneManager.sceneLoaded += captureFunc.LoadSceneObject;
+
 
         //WarpDoorのscriptを集める
         WarpDoor[] doorList = GameObject.FindObjectsOfType<WarpDoor>();
