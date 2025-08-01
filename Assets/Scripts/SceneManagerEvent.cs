@@ -29,7 +29,6 @@ public class SceneManagerEvent : MonoBehaviour
             string stageName = door.GetStageName();
             string stage_rank = rankFunc.GetStageRank(stageName);
             door.SetRankSprite(stage_rank);
-            Debug.Log(stageName + ":" + stage_rank);
         }
     }
 
