@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using TMPro;
 
@@ -11,17 +12,22 @@ public class GameUIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI text_nowRank;
     [SerializeField] TextMeshProUGUI text_nextRank;
     [SerializeField] TextMeshProUGUI text_duplicateCost;
+    [SerializeField] GameObject CostDisplay;
 
     private StageManager stageManager;
     private RankJudgeAndUpdateFunction judgeFunc;
     //private Tilemap tilemap;
     private Vector3 initPos;
+    //costDisplay用
+    private RectTransform rectT;
+    private Canvas costDisplayCanvas;
 
     void Start()
     {
         stageManager = FindObjectOfType<StageManager>();
         judgeFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
         text_duplicateCost.gameObject.SetActive(false);
+        CostDisplay.SetActive(false);
     }
 
     // Update is called once per frame
@@ -54,6 +60,33 @@ public class GameUIController : MonoBehaviour
         {
             text_duplicateCost.gameObject.SetActive(false);
         }
+    }
+
+    public void DisplayObjectCost(int writeCost, int eraseCost)
+    {
+        if (rectT == null)
+        {
+            rectT = CostDisplay.GetComponent<RectTransform>();
+        }
+        if(costDisplayCanvas == null)
+        {
+            costDisplayCanvas = CostDisplay.transform.parent.GetComponent<Canvas>();
+        }
+        //マウスカーソルに追従する
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            costDisplayCanvas.transform as RectTransform,
+            Input.mousePosition,
+            costDisplayCanvas.worldCamera, // ここが重要！
+            out localPoint
+        );
+        rectT.anchoredPosition = localPoint;
+        CostDisplay.SetActive(true);
+    }
+
+    public void UnDisplayObjectCost()
+    {
+        CostDisplay.SetActive(false);
     }
 }
 
