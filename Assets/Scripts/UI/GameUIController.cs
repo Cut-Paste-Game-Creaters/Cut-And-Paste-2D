@@ -12,13 +12,13 @@ public class GameUIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI text_nowRank;
     [SerializeField] TextMeshProUGUI text_nextRank;
     [SerializeField] TextMeshProUGUI text_duplicateCost;
-    [SerializeField] GameObject CostDisplay;
 
     private StageManager stageManager;
     private RankJudgeAndUpdateFunction judgeFunc;
     //private Tilemap tilemap;
     private Vector3 initPos;
     //costDisplay—p
+    private GameObject CostDisplay;
     private RectTransform rectT;
     private Canvas costDisplayCanvas;
 
@@ -27,7 +27,8 @@ public class GameUIController : MonoBehaviour
         stageManager = FindObjectOfType<StageManager>();
         judgeFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
         text_duplicateCost.gameObject.SetActive(false);
-        CostDisplay.SetActive(false);
+        CostDisplay = gameObject.transform.Find("CostDisplay").gameObject;
+        CostDisplay.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -64,6 +65,10 @@ public class GameUIController : MonoBehaviour
 
     public void DisplayObjectCost(int writeCost, int eraseCost)
     {
+        if (CostDisplay == null)
+        {
+            return;
+        }
         if (rectT == null)
         {
             rectT = CostDisplay.GetComponent<RectTransform>();
@@ -86,7 +91,10 @@ public class GameUIController : MonoBehaviour
 
     public void UnDisplayObjectCost()
     {
-        CostDisplay.SetActive(false);
+        if (CostDisplay != null)
+        {
+            CostDisplay.SetActive(false);
+        }
     }
 }
 

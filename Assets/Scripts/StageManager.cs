@@ -113,6 +113,10 @@ public class StageManager : MonoBehaviour
                 //そのオブジェクトの消すコスト、増やすコストを表示する
                 int writeCost = objSB.objectList.Single(t => t.obj.tag == hitCollider.gameObject.tag).p_ene;
                 int eraseCost = objSB.objectList.Single(t => t.obj.tag == hitCollider.gameObject.tag).ow_ene;
+                if (gameUI == null)
+                {
+                    gameUI = FindObjectOfType<GameUIController>();
+                }
                 gameUI.DisplayObjectCost(writeCost, eraseCost);
             }
             else
