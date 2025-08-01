@@ -13,6 +13,7 @@ public class UndoRedoFunction : MonoBehaviour
     private GameObject player;
     StageManager stageMgr;
     CameraMove camMove;
+    Vector3Int stageStartPos;
 
     Stack<AllStageInfoList> undoStack = new Stack<AllStageInfoList>();
     Stack<AllStageInfoList> redoStack = new Stack<AllStageInfoList>();
@@ -83,6 +84,10 @@ public class UndoRedoFunction : MonoBehaviour
             {
                 // オフセット付きのローカル座標から絶対タイル座標を計算
                 Vector3Int tilePos = new Vector3Int(b.x + j, b.y + i, 0);
+                if(i == 0 && j == 0)
+                {
+                    stageStartPos = tilePos;
+                }
                 TileBase t = tilemap.GetTile(tilePos);
                 tBases.Add(t);
             }
@@ -91,26 +96,27 @@ public class UndoRedoFunction : MonoBehaviour
         return allTileData;
     }
 
-    public List<StageOblectState> RecordObjectState()
+    public List<StageObjectState> RecordObjectState()
     {
-        List<StageOblectState> stageObjStateList = new List<StageOblectState>();
+        List<StageObjectState> stageObjStateList = new List<StageObjectState>();
 
         tilemap.CompressBounds(); //タイルを最小まで圧縮
         var b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
 
-        Collider2D[] cols = Physics2D.OverlapAreaAll(new Vector2(-((32 / 2) + 1), -((18 / 2) + 1)), new Vector2(b.size.x, b.size.y));
+        Collider2D[] cols = Physics2D.OverlapAreaAll(new Vector2(b.x/*((32 / 2) + 1)*/, b.y/*((18 / 2) + 1)*/), new Vector2(b.size.x, b.size.y));
         foreach(var col in cols)
         {
             if(col.gameObject.tag != "Tilemap"
                 && col.gameObject.tag != "Player"
                 && col.gameObject.tag != "Uncuttable")
             {
-                StageOblectState stageObjState = new StageOblectState();
+                StageObjectState stageObjState = new StageObjectState();
 
                 /*
                 Prefabの名前は同じ種類なら同じ名前にする　switch(1)などはまだ対応できてない
                 */
                 stageObjState.prefabName = col.name; //prefabの名前を保存 (Clone)が付いていたらそれを削除
+                stageObjState.objtag = col.gameObject.tag; //オブジェクトのtagを保存
                 Debug.Log(stageObjState.prefabName);
 
                 stageObjState.objPosition = col.gameObject.transform.position;
@@ -248,13 +254,13 @@ public class UndoRedoFunction : MonoBehaviour
 
     public void UndoObjState()
     {
-        List<StageOblectState> pre_objList = undoStack.Peek().stageObjState;
+        List<StageObjectState> pre_objList = undoStack.Peek().stageObjState;
 
         tilemap.CompressBounds(); //タイルを最小まで圧縮
         var b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
 
         /*画面上オブジェクト削除*/
-        Collider2D[] cols = Physics2D.OverlapAreaAll(new Vector2(-((32 / 2) + 1), -((18 / 2) + 1)), new Vector2(b.size.x, b.size.y));
+        Collider2D[] cols = Physics2D.OverlapAreaAll(new Vector2(b.x/*-((32 / 2) + 1)*/, b.y/*-((18 / 2) + 1))*/), new Vector2(b.size.x, b.size.y));
         foreach (var col in cols)
         {
             //ここでどのオブジェクトに流し込むのか判定が必要
@@ -271,7 +277,16 @@ public class UndoRedoFunction : MonoBehaviour
         foreach (var obj in pre_objList)
         {
             string trimName = Regex.Replace(obj.prefabName, @"\([^)]*\)", "").Trim();
-            GameObject prefab = Resources.Load<GameObject>("Prefabs/Object/" + trimName); //Resources/Prefabsフォルダから名前が同じのprefabを探す
+            //GameObject prefab = Resources.Load<GameObject>("Prefabs/Object/" + trimName); //Resources/Prefabsフォルダから名前が同じのprefabを探す
+            GameObject[] prefabs = Resources.LoadAll<GameObject>("Prefabs/Object"); //objectfile内の全オブジェクトを取得
+            GameObject prefab = null;
+            foreach(GameObject pre in prefabs)
+            {
+                if(pre.tag.Equals(obj.objtag))
+                {
+                    prefab = pre;
+                }
+            }
             Debug.Log(obj.prefabName);
 
             if(prefab != null)
@@ -381,7 +396,7 @@ public class UndoRedoFunction : MonoBehaviour
             {
                 for(int j = 0; j < stageTileData.width; j++)
                 {
-                    tilemap.SetTile(new Vector3Int(j - ((32 / 2) + 1), i - ((18 / 2) + 2)), stageTileData.tiles[i][j]); //カメラの高さor幅 / 2　+ 1
+                    tilemap.SetTile(new Vector3Int(j + stageStartPos.x/* - ((32 / 2) + 1)*/, i + stageStartPos.y/* - ((18 / 2) + 2)*/), stageTileData.tiles[i][j]); //カメラの高さor幅 / 2　+ 1
                 }
             }
             Debug.Log("1つ前に戻りました");
@@ -453,10 +468,11 @@ public class UndoRedoFunction : MonoBehaviour
         public int height;
         public List<List<TileBase>> tiles = new List<List<TileBase>>();
     }
-    public class StageOblectState
+    public class StageObjectState
     {
         //共通情報
         public string prefabName; //保存した情報をどれに入れるのか一致させるために必要
+        public string objtag;
         public Vector3 objPosition;
         public Quaternion objRotation;
 
@@ -601,7 +617,7 @@ public class UndoRedoFunction : MonoBehaviour
         public int have_ene = 0;
         public int all_sum_cos = 0;
         public bool all_isCut;
-        public List<StageOblectState> stageObjState = new List<StageOblectState>();
+        public List<StageObjectState> stageObjState = new List<StageObjectState>();
         public PlayerState playerState = new PlayerState();
         public StageManager.TileData copyTileData = new StageManager.TileData();
         public List<StageManager.ObjectData> copyObjectData = new List<StageManager.ObjectData>();
