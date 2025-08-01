@@ -8,14 +8,18 @@ public class SceneManagerEvent : MonoBehaviour
 {
     StageManager stageMgr;
     RankJudgeAndUpdateFunction rankFunc;
+    CaptureCopyZone captureFunc;
 
     // Start is called before the first frame update
     void Start()
     {
         stageMgr = FindObjectOfType<StageManager>();
         rankFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
+        captureFunc = this.gameObject.GetComponent<CaptureCopyZone>();
         // イベントにイベントハンドラーを追加
         SceneManager.sceneLoaded += SceneLoaded;
+        SceneManager.sceneLoaded += captureFunc.LoadSceneObject;
+
 
         //WarpDoorのscriptを集める
         WarpDoor[] doorList = GameObject.FindObjectsOfType<WarpDoor>();
@@ -25,6 +29,7 @@ public class SceneManagerEvent : MonoBehaviour
             string stageName = door.GetStageName();
             string stage_rank = rankFunc.GetStageRank(stageName);
             door.SetRankSprite(stage_rank);
+            Debug.Log(stageName + ":" + stage_rank);
         }
     }
 
@@ -50,7 +55,7 @@ public class SceneManagerEvent : MonoBehaviour
                 stageMgr.stageNum = rankFunc.stageNumber[SceneManager.GetActiveScene().name];
             }
             //ステージセレクトならドアにランクを表示する
-            else if(input == "StageSelect")
+            else if(input == "StageSelectScene")
             {
                 //WarpDoorのscriptを集める
                 WarpDoor[] doorList = GameObject.FindObjectsOfType<WarpDoor>();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class CaptureCopyZone : MonoBehaviour
@@ -11,11 +12,19 @@ public class CaptureCopyZone : MonoBehaviour
     private Camera cam;
     private int originalMask;
 
-    [SerializeField] Image image;
+    private Image image;
 
     void Start()
     {
-        image.enabled = false; 
+        image = GameObject.Find("captureImage").GetComponent<Image>();
+        image.enabled = false;
+    }
+
+    //SceneManagerEventÇ≈é¿çsÇ≥ÇÍÇÈ
+    public void LoadSceneObject(Scene nextScene, LoadSceneMode mode)
+    {
+        image = GameObject.Find("captureImage").GetComponent<Image>();
+        image.enabled = false;
     }
 
     public void CaptureImage(Vector3 startPos, Vector3 endPos)
