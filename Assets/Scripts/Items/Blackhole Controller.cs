@@ -18,14 +18,22 @@ public class Blackhole : MonoBehaviour
 
     public float rotationSpeed = 0.5f;
 
-    //コンストラクタ
-    public Blackhole(Blackhole b_hole)
+    public class CopyBlackhole
     {
-        gravityForce = b_hole.gravityForce;
-        radius = b_hole.radius;
-        trueDuration = b_hole.trueDuration;
-        falseDuration = b_hole.falseDuration;
-        rotationSpeed = b_hole.rotationSpeed;
+        public float gravityForce; // 引力の強さ
+        public float radius;        // 引力が届く範囲
+        public float trueDuration;   // trueの時間
+        public float falseDuration;  // falseの時間
+        public float rotationSpeed;
+
+        public CopyBlackhole(Blackhole b_hole)
+        {
+            gravityForce = b_hole.gravityForce;
+            radius = b_hole.radius;
+            trueDuration = b_hole.trueDuration;
+            falseDuration = b_hole.falseDuration;
+            rotationSpeed = b_hole.rotationSpeed;
+        }
     }
 
     void FixedUpdate()

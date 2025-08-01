@@ -22,14 +22,22 @@ public class SwitchController : MonoBehaviour
     public bool nowPressState = false;     //今のスイッチの状態
     public int hitState = -1;        //collider enter=0, stay=1, exit=2,押されてないとき-1
 
-    //コンストラクタ
-    public SwitchController(SwitchController swc)
+    public class CopySwitchController
     {
-        stateOff = swc.stateOff;
-        stateOn = swc.stateOn;
-        mode = swc.mode;
-        nowPressState = swc.nowPressState;
-        hitState = swc.hitState;
+        public Sprite stateOff;
+        public Sprite stateOn;
+        public SwitchMode mode;
+        public bool nowPressState;     //今のスイッチの状態
+        public int hitState;
+
+        public CopySwitchController(SwitchController swc)
+        {
+            stateOff = swc.stateOff;
+            stateOn = swc.stateOn;
+            mode = swc.mode;
+            nowPressState = swc.nowPressState;
+            hitState = swc.hitState;
+        }
     }
 
     // Start is called before the first frame update

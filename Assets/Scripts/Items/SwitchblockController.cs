@@ -13,10 +13,16 @@ public class SwitchblockController : MonoBehaviour
     private Collider2D col;
     private bool prevState;
 
-    public SwitchblockController(SwitchblockController sbc)
+    public class CopySwitchblockController
     {
-        stateOff = sbc.stateOff;
-        stateOn = sbc.stateOn;
+        public Sprite stateOff;
+        public Sprite stateOn;
+
+        public CopySwitchblockController(SwitchblockController sbc)
+        {
+            stateOff = sbc.stateOff;
+            stateOn = sbc.stateOn;
+        }
     }
 
     // Start is called before the first frame update

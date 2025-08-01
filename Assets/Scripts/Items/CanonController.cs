@@ -19,13 +19,20 @@ public class CanonController : MonoBehaviour
     private float wholeTime = 0.0f;
     private Rigidbody2D rb;
 
-    //コンストラクタ
-    public CanonController(CanonController cc)
+    public class CopyCanonController
     {
-        angle = cc.angle;
-        firePower = cc.firePower;
-        firespeed = cc.firespeed;
-        fireTime = cc.fireTime;
+        public float angle;            //-90 ～ 0 ～　90
+        public float firePower;     //打ち出す力
+        public float firespeed;     //長澤追加
+        public float fireTime;
+
+        public CopyCanonController(CanonController cc)
+        {
+            angle = cc.angle;
+            firePower = cc.firePower;
+            firespeed = cc.firespeed;
+            fireTime = cc.fireTime;
+        }
     }
 
     void Start()
