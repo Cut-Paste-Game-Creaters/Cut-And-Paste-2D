@@ -250,7 +250,7 @@ public class Player_Copy : MonoBehaviour
 
                 Debug.Log("消すコスト(カット時):" + stageMgr.cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene + ", " + "総消費コスト：" + stageMgr.all_sum_cos);
                 CutInCopyObject(cols, false);
-                urFunc.InfoPushToStack();
+                //urFunc.InfoPushToStack();
             }
             else
             {
@@ -436,6 +436,10 @@ public class Player_Copy : MonoBehaviour
                 else Debug.Log("null");*/
             }
             stageMgr.tileData.tiles.Add(tBases);
+        }
+        if(!Count)
+        {
+            urFunc.InfoPushToStack();
         }
     }
 
