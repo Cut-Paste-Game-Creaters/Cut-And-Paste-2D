@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 1535793234407478786}
   - component: {fileID: 4545017764845707187}
   m_Layer: 3
-  m_Name: Canon
+  m_Name: Cannon
   m_TagString: Cannon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

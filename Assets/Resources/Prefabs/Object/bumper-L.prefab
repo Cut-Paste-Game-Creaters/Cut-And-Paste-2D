@@ -251,4 +251,4 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
-  bounceForce: 5
+  bounceForce: 10

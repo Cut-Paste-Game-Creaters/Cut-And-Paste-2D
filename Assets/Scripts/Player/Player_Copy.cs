@@ -26,6 +26,7 @@ public class Player_Copy : MonoBehaviour
     private bool makeDecision = false;  //マウス離したらOn
     UndoRedoFunction urFunc;
     private CaptureCopyZone captureCopyZone;
+    private Dictionary<GameObject, int> originalLayers = new Dictionary<GameObject, int>();
     //public bool all_isCut = false; //コピー関数の引数のisCutと区別するため
 
     // Start is called before the first frame update
@@ -263,10 +264,10 @@ public class Player_Copy : MonoBehaviour
     private void DisActiveCutObject()
     {
         tilemap.gameObject.layer = LayerMask.NameToLayer("Ground");
-        foreach (var obj in stageMgr.objectData)
+        foreach (var objData in stageMgr.objectData)
         {
-            SetLayerRecursively(obj.obj,"Ground");
-            obj.obj.SetActive(false);
+            ResetLayerRecursively(objData.obj);
+            objData.obj.SetActive(false);
         }
     }
 
@@ -274,14 +275,31 @@ public class Player_Copy : MonoBehaviour
     {
         tilemap.gameObject.layer = LayerMask.NameToLayer("CaptureLayer");
         Debug.Log("キャプチャしたobjectの数:"+stageMgr.objectData.Count);
+        //レイヤー保存配列を初期化
+        originalLayers = new Dictionary<GameObject, int>();
         foreach (var obj in stageMgr.objectData)
         {
             SetLayerRecursively(obj.obj, "CaptureLayer");
         }
     }
 
+    private void ResetLayerRecursively(GameObject obj)
+    {
+        if (originalLayers.TryGetValue(obj, out int layer))
+        {
+            obj.gameObject.layer = layer;
+        }
+        else
+        {
+            obj.gameObject.layer = LayerMask.NameToLayer("Ground");
+        }
+    }
+
     private void SetLayerRecursively(GameObject obj, string layerName)
     {
+        //元のレイヤーを保存する
+        originalLayers[obj] = obj.layer;
+
         // レイヤー名をレイヤーのインデックスに変換
         int layerIndex = LayerMask.NameToLayer(layerName);
 

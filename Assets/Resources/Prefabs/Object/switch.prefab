@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2899104388653176939}
   - component: {fileID: 7640876395676839938}
   m_Layer: 3
-  m_Name: switch
+  m_Name: Switch
   m_TagString: Switch
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

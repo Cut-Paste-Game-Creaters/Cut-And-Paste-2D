@@ -79,7 +79,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         {
             if ((clearFunc.GetisClear()  && !hasJudged))
             {
-                JudgeAndUpdateRank(stageMgr.all_sum_cos,true);
+                JudgeAndUpdateRank(stageMgr.all_sum_cos-stageMgr.player_HP, true);
                 //stageMgr.all_sum_cos = 0;
                 rankDisplay.SetText(rankText);
                 rankDisplay.InitTextSize(); 
@@ -111,7 +111,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         int nowCost = 0;
         if (stageMgr != null)
         {
-            nowCost = stageMgr.all_sum_cos; //総消費コスト
+            nowCost = stageMgr.all_sum_cos - stageMgr.player_HP; //総消費コスト
         }
         int stage_num = 0;          //ステージナンバーは0で初期化。もしデバッグ用ステージだったらstage1のコストを流用
         if (Regex.IsMatch(SceneManager.GetActiveScene().name, @"^Stage\d+$")) //シーン名がStageなんとかなら
@@ -129,6 +129,48 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         }
 
         return 0;
+    }
+
+    /*ほかのスクリプトから各ステージのランクを取得する関数*/
+    public string GetStageRank(string stageName)
+    {
+        //ステージ名から数字を取得
+        if (stageNumber.TryGetValue(stageName, out int stageNum))
+        {
+            int minCost = minConsumpCost[stageNum];
+            //最小スコアがないならNONE
+            if (minCost == -1)
+            {
+                return "NONE";
+            }
+            //各スコアからランクを返す
+            if (minCost < stageRank[stageNum, 0])
+            {
+                return "S";
+            }
+            else if (minCost < stageRank[stageNum, 1])
+            {
+                return "A";
+            }
+            else if (minCost < stageRank[stageNum, 2])
+            {
+                return "B";
+            }
+            else if (minCost < stageRank[stageNum, 3])
+            {
+                return "C";
+            }
+            else if (minCost >= stageRank[stageNum, 3])
+            {
+                return "F";
+            }
+        }
+        else     //ステージ名から取得できなかったら
+        {
+            return "NONE";
+        }
+
+        return "NONE";
     }
 
     /*総消費コストのランク判定と最低消費コストの書き換えをおこなう関数*/

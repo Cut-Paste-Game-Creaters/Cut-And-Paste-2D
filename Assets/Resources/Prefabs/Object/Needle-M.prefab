@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: -5891703234652050589}
   m_Layer: 3
   m_Name: Needle-M
-  m_TagString: Needle
+  m_TagString: Needle-M
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 051f2fdcf8e66f646a57e8ca6a9a42e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  togeDamage: 5
+  togeDamage: 40
 --- !u!61 &-5891703234652050589
 BoxCollider2D:
   m_ObjectHideFlags: 0
