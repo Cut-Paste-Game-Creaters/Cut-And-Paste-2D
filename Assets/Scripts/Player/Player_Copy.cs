@@ -16,8 +16,9 @@ public class Player_Copy : MonoBehaviour
     [SerializeField] GameObject copyicon;
     [SerializeField] GameObject cuticon;
 
-    private Tilemap tilemap;
+    private Tilemap tilemap;                        //ステージのタイルマップs
     private StageManager stageMgr;
+    private bool isSelectZone = false;
     private Vector3 startPos = Vector3.zero;
     private Vector3 endPos = Vector3.zero;
     private bool isDrawing = false;
@@ -28,6 +29,7 @@ public class Player_Copy : MonoBehaviour
     private CaptureCopyZone captureCopyZone;
     private Dictionary<GameObject, int> originalLayers = new Dictionary<GameObject, int>();
     //public bool all_isCut = false; //コピー関数の引数のisCutと区別するため
+
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +61,8 @@ public class Player_Copy : MonoBehaviour
     void Update()
     {
         CopyTiles();
+
+        stageMgr.isSelectZone = isSelectZone;
     }
 
     //コピーする範囲を決定する
@@ -78,6 +82,8 @@ public class Player_Copy : MonoBehaviour
                 //最初の位置取得(小数点)
                 startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+                //今選択をしていることを表すフラグ
+                isSelectZone = true;
 
                 //四角を描く
                 frame2.SetActive(true);
@@ -453,6 +459,9 @@ public class Player_Copy : MonoBehaviour
         //四角を消す
         isDrawing = false;
         frame2.SetActive(false);
+
+        //選択が終わったことを示すフラグ
+        isSelectZone = false;
 
         //データ保持フラグon!
         stageMgr.tileData.hasData = true;
