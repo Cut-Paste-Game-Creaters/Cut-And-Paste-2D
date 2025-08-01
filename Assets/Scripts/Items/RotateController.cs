@@ -10,11 +10,16 @@ public class RotateController : MonoBehaviour
     private SpriteRenderer sr;
     private StageManager stageManager;
 
-    //コンストラクタ
-    public RotateController(RotateController rc)
+    public class CopyRotateController
     {
-        rotateTime = rc.rotateTime;
-        dir = rc.dir;
+        public float rotateTime;
+        public int dir;
+
+        public CopyRotateController(RotateController rc)
+        {
+            rotateTime = rc.rotateTime;
+            dir = rc.dir;
+        }
     }
 
     void Start()

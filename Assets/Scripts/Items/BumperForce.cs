@@ -14,13 +14,20 @@ public class BumperForce : MonoBehaviour
 
     public float bounceForce = 100f;
 
-    //コンストラクタ
-    public BumperForce(BumperForce bumper)
+    public class CopyBumperForce
     {
-        this.checkDistance = bumper.checkDistance;
-        this.upwardForce = bumper.upwardForce;
-        this.bounceForce = bumper.bounceForce;
-        this.playerLayer = bumper.playerLayer;
+        public float checkDistance;        // この距離内なら「上付近」
+        public float upwardForce;
+        public float bounceForce;
+        public LayerMask playerLayer;
+
+        public CopyBumperForce(BumperForce bumper)
+        {
+            this.checkDistance = bumper.checkDistance;
+            this.upwardForce = bumper.upwardForce;
+            this.bounceForce = bumper.bounceForce;
+            this.playerLayer = bumper.playerLayer;
+        }
     }
 
     void Start()

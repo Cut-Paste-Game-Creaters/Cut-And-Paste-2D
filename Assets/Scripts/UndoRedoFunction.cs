@@ -64,7 +64,7 @@ public class UndoRedoFunction : MonoBehaviour
         allStageInfo.copyTileData = RecordCopyTileData();
         allStageInfo.copyObjectData = RecordCopyObjectData();
         undoStack.Push(allStageInfo);
-        Debug.Log(undoStack.Count);
+        Debug.Log("stackに保存されました" + undoStack.Count);
     }
 
     public AllStageTileData RecordStageHistory()
@@ -137,19 +137,19 @@ public class UndoRedoFunction : MonoBehaviour
 
                 if(switchobj != null)
                 {
-                    stageObjState.swc = new SwitchController(switchobj);
+                    stageObjState.swc = new SwitchController.CopySwitchController(switchobj);
                 }
                 if(s_blockobj != null)
                 {
-                    stageObjState.sbc = new SwitchblockController(s_blockobj);
+                    stageObjState.sbc = new SwitchblockController.CopySwitchblockController(s_blockobj);
                 }
                 else if(canonobj != null)
                 {
-                    stageObjState.cc = new CanonController(canonobj);
+                    stageObjState.cc = new CanonController.CopyCanonController(canonobj);
                 }
                 else if(throwobj != null)
                 {
-                    stageObjState.toC = new ThrowObjectController(throwobj);
+                    stageObjState.toC = new ThrowObjectController.CopyThrowObjectController(throwobj);
                 }
                 else if(wpdobj != null)
                 {
@@ -159,32 +159,31 @@ public class UndoRedoFunction : MonoBehaviour
                 }
                 else if(bumobj != null)
                 {
-                    stageObjState.bumper = new BumperForce(bumobj);
-                    Debug.Log("bumperインスタンスを保存" + stageObjState.bumper.checkDistance);
+                    stageObjState.bumper = new BumperForce.CopyBumperForce(bumobj);
                 }
                 else if(togeobj != null)
                 {
-                    stageObjState.toge = new TogeController(togeobj);
+                    stageObjState.toge = new TogeController.CopyTogeController(togeobj);
                 }
                 else if(b_h_obj != null)
                 {
-                    stageObjState.b_hole = new Blackhole(b_h_obj);
+                    stageObjState.b_hole = new Blackhole.CopyBlackhole(b_h_obj);
                 }
                 else if(w_h_obj != null)
                 {
-                    stageObjState.w_hole = new WhiteHole2D(w_h_obj);
+                    stageObjState.w_hole = new WhiteHole2D.CopyWhiteHole2D(w_h_obj);
                 }
                 else if(svmobj != null)
                 {
-                    stageObjState.svm = new SinVerticalMover(svmobj);
+                    stageObjState.svm = new SinVerticalMover.CopySinVerticalMover(svmobj);
                 }
                 else if(rcobj != null)
                 {
-                    stageObjState.rc = new RotateController(rcobj);
+                    stageObjState.rc = new RotateController.CopyRotateController(rcobj);
                 }
                 else if(vfobj != null)
                 {
-                    stageObjState.vf = new VanishFloor(vfobj);
+                    stageObjState.vf = new VanishFloor.CopyVanishFloor(vfobj);
                 }
 
                 //全部情報入れたら最後にAdd
@@ -247,7 +246,7 @@ public class UndoRedoFunction : MonoBehaviour
             UndoAllIsCut();
             UndoObjState();
             UndoPlayerState();
-            //UndoCopyTileData();
+            UndoCopyTileData();
             UndoCopyObjectData();
         }
     }
@@ -429,12 +428,14 @@ public class UndoRedoFunction : MonoBehaviour
     {
         StageManager.TileData pre_copyTileData = undoStack.Peek().copyTileData;
 
-        stageMgr.tileData.width = pre_copyTileData.width;
+        stageMgr.tileData = pre_copyTileData;
+
+        /*stageMgr.tileData.width = pre_copyTileData.width;
         stageMgr.tileData.height = pre_copyTileData.width;
         stageMgr.tileData.direction = pre_copyTileData.direction;
         stageMgr.tileData.tiles = pre_copyTileData.tiles;
         stageMgr.tileData.hasData = pre_copyTileData.hasData;
-        stageMgr.tileData.isCut = pre_copyTileData.isCut;
+        stageMgr.tileData.isCut = pre_copyTileData.isCut;*/
     }
 
     void UndoCopyObjectData()
@@ -477,40 +478,40 @@ public class UndoRedoFunction : MonoBehaviour
         public Quaternion objRotation;
 
         //switch情報
-        public SwitchController swc;
+        public SwitchController.CopySwitchController swc;
 
         //switchblock
-        public SwitchblockController sbc;
+        public SwitchblockController.CopySwitchblockController sbc;
 
         //canon情報
-        public CanonController cc;
+        public CanonController.CopyCanonController cc;
 
         //ThrowObject関連
-        public ThrowObjectController toC;
+        public ThrowObjectController.CopyThrowObjectController toC;
 
         //WArpDoor関連
         public WarpDoor.CopyWarpDoor cwpDoor;
 
         //Bumper関連
-        public BumperForce bumper;
+        public BumperForce.CopyBumperForce bumper;
 
         //Toge関連
-        public TogeController toge;
+        public TogeController.CopyTogeController toge;
 
         //BlackHole関連
-        public Blackhole b_hole;
+        public Blackhole.CopyBlackhole b_hole;
 
         //WhiteHole
-        public WhiteHole2D w_hole;
+        public WhiteHole2D.CopyWhiteHole2D w_hole;
 
         //SinVeerticalMover
-        public SinVerticalMover svm;
+        public SinVerticalMover.CopySinVerticalMover svm;
 
         //RotateController
-        public RotateController rc;
+        public RotateController.CopyRotateController rc;
 
         //VanishFloor
-        public VanishFloor vf;
+        public VanishFloor.CopyVanishFloor vf;
 
         //データコピー関数
         //SwitchControllerのコピー処理
@@ -542,20 +543,21 @@ public class UndoRedoFunction : MonoBehaviour
             copyToCon.destroyTime = toC.destroyTime;
             copyToCon.nowTime = toC.nowTime;
             copyToCon.disAppearTime = toC.disAppearTime;
-            copyToCon.SetDir(toC.GetDir());
+            copyToCon.SetDir(toC.moveDir);
         }
         //WarpDoorのコピー処理
         public void CopyData(WarpDoor copyWpd)
         {
             copyWpd.stageName = cwpDoor.stageName;
             copyWpd.stageMgr = cwpDoor.stageMgr;
-            copyWpd.stopLoad = cwpDoor.stageMgr;
+            copyWpd.stopLoad = cwpDoor.stopLoad;
         }
         //BumperForceのコピー処理
         public void CopyData(BumperForce copyBumper)
         {
             copyBumper.checkDistance = bumper.checkDistance;
             copyBumper.upwardForce = bumper.upwardForce;
+            copyBumper.bounceForce = bumper.bounceForce;
             copyBumper.playerLayer = bumper.playerLayer;
         }
         //TogeControllerのコピー処理
@@ -584,6 +586,7 @@ public class UndoRedoFunction : MonoBehaviour
             copy_svm.amplitude = svm.amplitude;
             copy_svm.frequency = svm.frequency;
             copy_svm.cos = svm.cos;
+            copy_svm.sin = svm.sin;
         }
         //RotateControllerのコピー処理
         public void CopyData(RotateController copy_rc)
@@ -595,8 +598,8 @@ public class UndoRedoFunction : MonoBehaviour
         public void CopyData(VanishFloor copy_vf)
         {
             copy_vf.stayTime = vf.stayTime;
-            copy_vf.SetElapsed(vf.GetElapsed());
-            copy_vf.SetIsCollision(vf.GetIsCollision());
+            copy_vf.SetElapsed(vf.elapsed);
+            copy_vf.SetIsCollision(vf.isCollision);
         }
 
         //これ以降必要な情報追加する

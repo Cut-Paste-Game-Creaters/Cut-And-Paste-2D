@@ -7,10 +7,14 @@ public class TogeController : MonoBehaviour
     StageManager stageMgr;
     public int togeDamage;
 
-    //コンストラクタ
-    public TogeController(TogeController toge)
+    public class CopyTogeController
     {
-        togeDamage = toge.togeDamage;
+        public int togeDamage;
+
+        public CopyTogeController(TogeController toge)
+        {
+            togeDamage = toge.togeDamage;
+        }
     }
 
     // Start is called before the first frame update

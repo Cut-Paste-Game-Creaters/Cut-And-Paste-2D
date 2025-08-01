@@ -12,13 +12,20 @@ public class ThrowObjectController : MonoBehaviour
     private SpriteRenderer sr;
     private bool nowDisplayState = true;
 
-    //コンストラクタ
-    public ThrowObjectController(ThrowObjectController toC)
+    public class CopyThrowObjectController
     {
-        destroyTime = toC.destroyTime;
-        nowTime = toC.nowTime;
-        disAppearTime = toC.disAppearTime;
-        moveDir = toC.moveDir;
+        public float destroyTime;
+        public float nowTime;
+        public float disAppearTime;
+        public Vector3 moveDir;
+
+        public CopyThrowObjectController(ThrowObjectController toC)
+        {
+            destroyTime = toC.destroyTime;
+            nowTime = toC.nowTime;
+            disAppearTime = toC.disAppearTime;
+            moveDir = toC.GetDir();
+        }
     }
 
     public void SetDir(Vector3 dir)

@@ -15,11 +15,18 @@ public class VanishFloor : MonoBehaviour
     float elapsed = 0.0f;
     bool isCollision;
 
-    public VanishFloor(VanishFloor vf)
+    public class CopyVanishFloor
     {
-        stayTime = vf.stayTime;
-        elapsed = vf.GetElapsed();
-        isCollision = vf.GetIsCollision();
+        public float stayTime;
+        public float elapsed;
+        public bool isCollision;
+
+        public CopyVanishFloor(VanishFloor vf)
+        {
+            stayTime = vf.stayTime;
+            elapsed = vf.GetElapsed();
+            isCollision = vf.GetIsCollision();
+        }
     }
 
     public void SetElapsed(float ela)
