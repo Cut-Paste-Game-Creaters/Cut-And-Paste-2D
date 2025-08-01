@@ -29,6 +29,7 @@ public class SceneManagerEvent : MonoBehaviour
             string stageName = door.GetStageName();
             string stage_rank = rankFunc.GetStageRank(stageName);
             door.SetRankSprite(stage_rank);
+            Debug.Log(stageName + ":" + stage_rank);
         }
     }
 
@@ -54,7 +55,7 @@ public class SceneManagerEvent : MonoBehaviour
                 stageMgr.stageNum = rankFunc.stageNumber[SceneManager.GetActiveScene().name];
             }
             //ステージセレクトならドアにランクを表示する
-            else if(input == "StageSelect")
+            else if(input == "StageSelectScene")
             {
                 //WarpDoorのscriptを集める
                 WarpDoor[] doorList = GameObject.FindObjectsOfType<WarpDoor>();
