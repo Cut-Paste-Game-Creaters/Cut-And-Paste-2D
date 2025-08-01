@@ -165,6 +165,26 @@ public class StageManager : MonoBehaviour
         public Vector3 pos;
     }
 
+    public struct CopyStageManager
+    {
+        public int have_ene;
+        public int all_sum_cos;
+        public int write_cost;
+        public bool all_isCut;
+        public bool switch_state;
+        public bool key_lock_state;
+
+        public CopyStageManager(StageManager smgr)
+        {
+            have_ene = smgr.have_ene;
+            all_sum_cos = smgr.all_sum_cos;
+            write_cost = smgr.write_cost;
+            all_isCut = smgr.all_isCut;
+            switch_state = smgr.switch_state;
+            key_lock_state = smgr.key_lock_state;
+        }
+    }
+
     public Dictionary<string, int> stageNumber = new Dictionary<string, int>() // DictionaryƒNƒ‰ƒX‚ÌéŒ¾‚Æ‰Šú’l‚Ìİ’è
     {
         {"Stage1", 0},

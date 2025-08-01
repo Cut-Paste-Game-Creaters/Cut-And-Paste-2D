@@ -56,9 +56,10 @@ public class UndoRedoFunction : MonoBehaviour
         AllStageInfoList allStageInfo = new AllStageInfoList(); //一枚分のステージ, オブジェクトなど全情報
 
         allStageInfo.stageTileData = RecordStageHistory(); //一枚分の全情報のクラスのタイルデータ部分に保存
-        allStageInfo.have_ene = stageMgr.have_ene;
+        /*allStageInfo.have_ene = stageMgr.have_ene;
         allStageInfo.all_sum_cos = stageMgr.all_sum_cos;
-        allStageInfo.all_isCut = stageMgr.all_isCut;
+        allStageInfo.all_isCut = stageMgr.all_isCut;*/
+        allStageInfo.cStageMgr = RecordStageManagerInfo();
         allStageInfo.stageObjState = RecordObjectState();
         allStageInfo.playerState = RecordPlayerInfo();
         allStageInfo.copyTileData = RecordCopyTileData();
@@ -214,6 +215,12 @@ public class UndoRedoFunction : MonoBehaviour
         return playerState;
     }
 
+    public StageManager.CopyStageManager RecordStageManagerInfo()
+    {
+        StageManager.CopyStageManager cStageMgr = new StageManager.CopyStageManager(stageMgr);
+        return cStageMgr;
+    }
+
     public StageManager.TileData RecordCopyTileData()
     {
         StageManager.TileData copyTileData = new StageManager.TileData(stageMgr.tileData.width, stageMgr.tileData.height);
@@ -241,9 +248,10 @@ public class UndoRedoFunction : MonoBehaviour
         {
             redoStack.Push(undoStack.Pop());
             UndoTileData();
-            UndoCost();
-            UndoAllSumCost();
-            UndoAllIsCut();
+            //UndoCost();
+            //UndoAllSumCost();
+            //UndoAllIsCut();
+            UndoStageManagerInfo();
             UndoObjState();
             UndoPlayerState();
             UndoCopyTileData();
@@ -362,7 +370,7 @@ public class UndoRedoFunction : MonoBehaviour
         }
     }
 
-    public void UndoCost()
+    /*public void UndoCost()
     {
         int pre_cost = undoStack.Peek().have_ene;
         stageMgr.have_ene = pre_cost;
@@ -381,6 +389,18 @@ public class UndoRedoFunction : MonoBehaviour
         bool pre_all_isCut = undoStack.Peek().all_isCut;
         stageMgr.all_isCut = pre_all_isCut;
         Debug.Log("所持コスト：" + stageMgr.all_isCut + "に戻りました.");
+    }*/
+
+    public void UndoStageManagerInfo()
+    {
+        StageManager.CopyStageManager pre_csm = undoStack.Peek().cStageMgr;
+
+        stageMgr.have_ene = pre_csm.have_ene;
+        stageMgr.all_sum_cos = pre_csm.all_sum_cos;
+        stageMgr.write_cost = pre_csm.write_cost;
+        stageMgr.all_isCut = pre_csm.all_isCut;
+        stageMgr.switch_state = pre_csm.switch_state;
+        stageMgr.key_lock_state = pre_csm.key_lock_state;
     }
 
     public void UndoTileData()
@@ -428,14 +448,14 @@ public class UndoRedoFunction : MonoBehaviour
     {
         StageManager.TileData pre_copyTileData = undoStack.Peek().copyTileData;
 
-        stageMgr.tileData = pre_copyTileData;
+        //stageMgr.tileData = pre_copyTileData;
 
-        /*stageMgr.tileData.width = pre_copyTileData.width;
-        stageMgr.tileData.height = pre_copyTileData.width;
+        stageMgr.tileData.width = pre_copyTileData.width;
+        stageMgr.tileData.height = pre_copyTileData.height;
         stageMgr.tileData.direction = pre_copyTileData.direction;
         stageMgr.tileData.tiles = pre_copyTileData.tiles;
         stageMgr.tileData.hasData = pre_copyTileData.hasData;
-        stageMgr.tileData.isCut = pre_copyTileData.isCut;*/
+        stageMgr.tileData.isCut = pre_copyTileData.isCut;
     }
 
     void UndoCopyObjectData()
@@ -620,9 +640,10 @@ public class UndoRedoFunction : MonoBehaviour
         public int have_ene = 0;
         public int all_sum_cos = 0;
         public bool all_isCut;
+        public StageManager.CopyStageManager cStageMgr;
         public List<StageObjectState> stageObjState = new List<StageObjectState>();
         public PlayerState playerState = new PlayerState();
-        public StageManager.TileData copyTileData = new StageManager.TileData();
+        public StageManager.TileData copyTileData;
         public List<StageManager.ObjectData> copyObjectData = new List<StageManager.ObjectData>();
     }
 }

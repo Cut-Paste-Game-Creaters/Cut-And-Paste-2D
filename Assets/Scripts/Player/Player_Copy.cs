@@ -265,6 +265,7 @@ public class Player_Copy : MonoBehaviour
             Debug.Log("消すコスト(カット時):" + stageMgr.cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene);
         }
 
+        //urFunc.InfoPushToStack(); /*これだとコピーの回数分のみ保存できるが, カットした時, 正常じゃなくなる*/
     }
 
     private void DisActiveCutObject()
@@ -437,10 +438,7 @@ public class Player_Copy : MonoBehaviour
             }
             stageMgr.tileData.tiles.Add(tBases);
         }
-        if(!Count)
-        {
-            urFunc.InfoPushToStack();
-        }
+        urFunc.InfoPushToStack(); //コピーの時も保存できるが, オブジェクトとタイルが一緒に入ってるとその個数分繰り返し保存してしまう
     }
 
     /*void SetActiveCopyIcon()
