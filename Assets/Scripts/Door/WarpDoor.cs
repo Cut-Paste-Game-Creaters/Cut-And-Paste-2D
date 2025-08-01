@@ -57,13 +57,19 @@ public class WarpDoor : MonoBehaviour
 
         rankDisplayImage.sprite = rankImage;
     }
-
-    //コンストラクタ
-    public WarpDoor(WarpDoor wpDoor)
+    
+    public class CopyWarpDoor
     {
-        stageName = wpDoor.stageName;
-        stageMgr = wpDoor.stageMgr;
-        stopLoad = wpDoor.stopLoad;
+        public string stageName;
+        public StageManager stageMgr;
+        public bool stopLoad;
+
+        public CopyWarpDoor(WarpDoor wpDoor)
+        {
+            stageName = wpDoor.stageName;
+            stageMgr = wpDoor.stageMgr;
+            stopLoad = wpDoor.stopLoad;
+        }
     }
 
     void Start()
@@ -116,6 +122,17 @@ public class WarpDoor : MonoBehaviour
             SceneManager.LoadScene(stageName);
         }
     }
+
+    /*public WarpDoor GetMyself()
+    {
+        WarpDoor wpDoor = new WarpDoor();
+
+        wpDoor.stageName = stageName;
+        wpDoor.stageMgr = stageMgr;
+        wpDoor.stopLoad = stopLoad;
+
+        return wpDoor;
+    }*/
 
     /*void UpdateRankText()
     {

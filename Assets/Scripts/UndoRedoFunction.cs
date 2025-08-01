@@ -60,7 +60,7 @@ public class UndoRedoFunction : MonoBehaviour
         allStageInfo.all_isCut = stageMgr.all_isCut;
         allStageInfo.stageObjState = RecordObjectState();
         allStageInfo.playerState = RecordPlayerInfo();
-        //allStageInfo.copyTileData = RecordCopyTileData();
+        allStageInfo.copyTileData = RecordCopyTileData();
         allStageInfo.copyObjectData = RecordCopyObjectData();
         undoStack.Push(allStageInfo);
         Debug.Log(undoStack.Count);
@@ -147,7 +147,9 @@ public class UndoRedoFunction : MonoBehaviour
                 }
                 else if(wpdobj != null)
                 {
-                    stageObjState.wpDoor = new WarpDoor(wpdobj);
+                    stageObjState.cwpDoor = new WarpDoor.CopyWarpDoor(wpdobj);
+                    //WarpDoor wpdoor = wpdobj.GetMyself();
+                    //stageObjState.wpDoor = new WarpDoor(wpdobj);
                 }
                 else if(bumobj != null)
                 {
@@ -207,7 +209,7 @@ public class UndoRedoFunction : MonoBehaviour
         return playerState;
     }
 
-    /*public StageManager.TileData RecordCopyTileData()
+    public StageManager.TileData RecordCopyTileData()
     {
         StageManager.TileData copyTileData = new StageManager.TileData(stageMgr.tileData.width, stageMgr.tileData.height);
 
@@ -217,7 +219,7 @@ public class UndoRedoFunction : MonoBehaviour
         copyTileData.isCut= stageMgr.tileData.isCut;
 
         return copyTileData;
-    }*/
+    }
 
     public List<StageManager.ObjectData> RecordCopyObjectData()
     {
@@ -379,7 +381,7 @@ public class UndoRedoFunction : MonoBehaviour
             {
                 for(int j = 0; j < stageTileData.width; j++)
                 {
-                    tilemap.SetTile(new Vector3Int(j - ((32 / 2) + 1), i - ((18 / 2) + 1)), stageTileData.tiles[i][j]); //カメラの高さor幅 / 2　+ 1
+                    tilemap.SetTile(new Vector3Int(j - ((32 / 2) + 1), i - ((18 / 2) + 2)), stageTileData.tiles[i][j]); //カメラの高さor幅 / 2　+ 1
                 }
             }
             Debug.Log("1つ前に戻りました");
@@ -408,7 +410,7 @@ public class UndoRedoFunction : MonoBehaviour
         player.transform.rotation = pre_playerState.objRotation;
     }
 
-    /*void UndoCopyTileData()
+    void UndoCopyTileData()
     {
         StageManager.TileData pre_copyTileData = undoStack.Peek().copyTileData;
 
@@ -418,7 +420,7 @@ public class UndoRedoFunction : MonoBehaviour
         stageMgr.tileData.tiles = pre_copyTileData.tiles;
         stageMgr.tileData.hasData = pre_copyTileData.hasData;
         stageMgr.tileData.isCut = pre_copyTileData.isCut;
-    }*/
+    }
 
     void UndoCopyObjectData()
     {
@@ -471,7 +473,7 @@ public class UndoRedoFunction : MonoBehaviour
         public ThrowObjectController toC;
 
         //WArpDoor関連
-        public WarpDoor wpDoor;
+        public WarpDoor.CopyWarpDoor cwpDoor;
 
         //Bumper関連
         public BumperForce bumper;
@@ -529,9 +531,9 @@ public class UndoRedoFunction : MonoBehaviour
         //WarpDoorのコピー処理
         public void CopyData(WarpDoor copyWpd)
         {
-            copyWpd.stageName = wpDoor.stageName;
-            copyWpd.stageMgr = wpDoor.stageMgr;
-            copyWpd.stopLoad = wpDoor.stageMgr;
+            copyWpd.stageName = cwpDoor.stageName;
+            copyWpd.stageMgr = cwpDoor.stageMgr;
+            copyWpd.stopLoad = cwpDoor.stageMgr;
         }
         //BumperForceのコピー処理
         public void CopyData(BumperForce copyBumper)
