@@ -10,7 +10,7 @@ public class Player_Paste : MonoBehaviour
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
     [SerializeField] ObjectScriptableObject objSB; //ScriptableObject
     [SerializeField] bool PreviewCopyData = true;
-    [SerializeField] GameObject cuticon;
+    //[SerializeField] GameObject cuticon;
     //[SerializeField] GameObject rectPrefab;
 
     private Tilemap tilemap;
@@ -146,7 +146,7 @@ public class Player_Paste : MonoBehaviour
                 if (stageManager.all_isCut) //1回のみペーストにする処理
                 {
                     InitTileData();
-                    cuticon.SetActive(false); //カットアイコン非表示
+                    //cuticon.SetActive(false); //カットアイコン非表示
                     captureCopyZone.disableImage();
                 }
 
