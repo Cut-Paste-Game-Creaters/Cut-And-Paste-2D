@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 public class StageManager : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class StageManager : MonoBehaviour
     public bool isPlayerDamaged = false;
     private float noDamageTime = 1.0f;
     private float nowNoDanageTime = 0.0f;
+    public bool isSelectZone = false;
+
 
     /*スイッチ関連*/
     public bool switch_state = false;
@@ -33,6 +36,7 @@ public class StageManager : MonoBehaviour
     public Pair<bool, bool>[] switch_key_states;
 
     /*コスト関連*/
+    [SerializeField]private ObjectScriptableObject objSB;
     [SerializeField]private float costHeal_timeOut; //costが回復する間隔
 	private float timeElapsed;
     public int stageNum = -1;
@@ -50,10 +54,13 @@ public class StageManager : MonoBehaviour
     [HideInInspector]
     public List<GameObject> EraseObjects = new List<GameObject>();
 
+    private GameUIController gameUI;
+
     void Start()
     {
         playerFunc = FindObjectOfType<Player_Function>();
         rankFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
+        gameUI = FindObjectOfType<GameUIController>();
 
         //各ステージでのスイッチと鍵の初期状態
         //Pair.bool1 = switchState, Pair.bool2 = keyState
@@ -87,6 +94,33 @@ public class StageManager : MonoBehaviour
                 isPlayerDamaged = false;
             }
         }
+
+        /*プレイヤーが範囲選択中じゃないとき、かつオブジェクトにマウスカーソルを当てたとき*/
+        if (!isSelectZone)
+        {
+            // マウスのスクリーン座標をワールド座標に変換
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            /// マウス位置にある2Dコライダーを取得
+            Collider2D hitCollider = Physics2D.OverlapPoint(mousePos);
+
+            if (hitCollider != null
+                && hitCollider.gameObject.tag != "Player"
+                && hitCollider.gameObject.tag != "Tilemap"
+                && hitCollider.gameObject.tag != "Uncuttable"
+                )
+            {
+                //そのオブジェクトの消すコスト、増やすコストを表示する
+                int writeCost = objSB.objectList.Single(t => t.obj.tag == hitCollider.gameObject.tag).p_ene;
+                int eraseCost = objSB.objectList.Single(t => t.obj.tag == hitCollider.gameObject.tag).ow_ene;
+                gameUI.DisplayObjectCost(writeCost, eraseCost);
+            }
+            else
+            {
+                gameUI.UnDisplayObjectCost();
+            }
+        }
+
     }
 
     [System.Serializable] // Unityエディタでシリアライズ可能にする
