@@ -47,8 +47,8 @@ public class UndoRedoFunction : MonoBehaviour
         if(PlayerInput.GetKey(KeyCode.Z) && PlayerInput.GetKeyDown(KeyCode.LeftShift) ||
                 PlayerInput.GetKeyDown(KeyCode.Z) && PlayerInput.GetKey(KeyCode.LeftShift)) //Shift+Zボタンが押されたらUndo
         {
-            //Undo();
-            if(undoStack.Count > 1)
+            Undo();
+            /*if(undoStack.Count > 1)
             {
                 redoStack.Push(undoStack.Pop());
                 UndoTileData();
@@ -60,7 +60,7 @@ public class UndoRedoFunction : MonoBehaviour
                 UndoPlayerState();
                 UndoCopyTileData();
                 UndoCopyObjectData();
-            }
+            }*/
         }
     }
 
@@ -460,7 +460,7 @@ public class UndoRedoFunction : MonoBehaviour
                     tilemap.SetTile(new Vector3Int(j + stageStartPos.x/* - ((32 / 2) + 1)*/, i + stageStartPos.y/* - ((18 / 2) + 2)*/), stageTileData.tiles[i][j]); //カメラの高さor幅 / 2　+ 1
                 }
             }
-            Debug.Log("1つ前に戻りました");
+            //Debug.Log("1つ前に戻りました");
     }
 
     void UndoPlayerState()
