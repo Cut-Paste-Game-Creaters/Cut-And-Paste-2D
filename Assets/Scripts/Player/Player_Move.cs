@@ -26,6 +26,8 @@ public class Player_Move : MonoBehaviour
     private float jumpTimeCounter;
     private float gravity_init = 0;
     // Start is called before the first frame update
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -52,8 +54,10 @@ public class Player_Move : MonoBehaviour
         // 接地していて Wキーを押した瞬間にジャンプ開始
         if (IsGrounded() && PlayerInput.GetKeyDown(KeyCode.W))
         {
+            SEManager.instance.ClipAtPointSE(SEManager.instance.jumpSE);//効果音
             isJumping = true;
             jumpTimeCounter = maxHoldTime;
+           
         }
 
         // Wキーを離したらジャンプ終了
