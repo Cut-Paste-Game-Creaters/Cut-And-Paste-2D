@@ -544,13 +544,13 @@ public class UndoRedoFunction : MonoBehaviour
     //リトライ
     public void Retry()
     {
-        while(undoStack.Count > 2)
+        /*while(undoStack.Count > 2)
         {
             undoStack.Pop();
         }
 
-        Undo();
-        stageMgr.player_HP = 10;
+        Undo();*/
+        stageMgr.player_HP = 100;
         //オブジェクトの状態を初期化(switch&key)
         stageMgr.ResetObjectState();
 
