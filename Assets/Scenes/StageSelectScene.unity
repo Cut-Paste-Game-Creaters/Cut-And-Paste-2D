@@ -1410,11 +1410,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 1}
   m_Direction: 0
---- !u!1 &1278022660 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7718718642472874768, guid: 7bca0eaa0e87c43428073cae2d9b6092, type: 3}
-  m_PrefabInstance: {fileID: 8709716151275969861}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1406785023
 GameObject:
   m_ObjectHideFlags: 0
@@ -10322,7 +10317,7 @@ PrefabInstance:
     - target: {fileID: 2660686992821530170, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: cuticon
       value: 
-      objectReference: {fileID: 1278022660}
+      objectReference: {fileID: 0}
     - target: {fileID: 2660686992821530170, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: tilemap
       value: 
@@ -10378,7 +10373,7 @@ PrefabInstance:
     - target: {fileID: 3593118860794272406, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: cuticon
       value: 
-      objectReference: {fileID: 1278022660}
+      objectReference: {fileID: 0}
     - target: {fileID: 3593118860794272406, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: tilemap
       value: 
@@ -10686,6 +10681,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2005302406041469273, guid: 7bca0eaa0e87c43428073cae2d9b6092, type: 3}
+      propertyPath: m_Name
+      value: cutcopyicon
+      objectReference: {fileID: 0}
     - target: {fileID: 5499588415239268668, guid: 7bca0eaa0e87c43428073cae2d9b6092, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -10774,8 +10773,17 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 45535812}
+    - target: {fileID: 8510892336154189334, guid: 7bca0eaa0e87c43428073cae2d9b6092, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -629.99994
+      objectReference: {fileID: 0}
+    - target: {fileID: 8510892336154189334, guid: 7bca0eaa0e87c43428073cae2d9b6092, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -110
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7718718642472874768, guid: 7bca0eaa0e87c43428073cae2d9b6092, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bca0eaa0e87c43428073cae2d9b6092, type: 3}
