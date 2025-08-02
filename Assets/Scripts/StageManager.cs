@@ -113,10 +113,6 @@ public class StageManager : MonoBehaviour
                 //そのオブジェクトの消すコスト、増やすコストを表示する
                 int writeCost = objSB.objectList.Single(t => t.obj.tag == hitCollider.gameObject.tag).p_ene;
                 int eraseCost = objSB.objectList.Single(t => t.obj.tag == hitCollider.gameObject.tag).ow_ene;
-                if (gameUI == null)
-                {
-                    gameUI = FindObjectOfType<GameUIController>();
-                }
                 gameUI.DisplayObjectCost(writeCost, eraseCost);
             }
             else
@@ -239,10 +235,15 @@ public class StageManager : MonoBehaviour
         //各ステージのランクに応じて設定
     }
 
+    public void InitHealTimeOut(int num)
+    {
+        costHeal_timeOut = healAmount_array[num];
+    }
+
     public void HealCost(int stageNum)
     {
           /*一定時間（costHeal_timeOut）ごとに所持コストを回復*/
-        timeElapsed += Time.deltaTime;
+        timeElapsed += PlayerInput.GetDeltaTime();
         if(timeElapsed >= costHeal_timeOut)
         {
             have_ene += healAmount_array[stageNum];

@@ -52,6 +52,7 @@ public class SceneManagerEvent : MonoBehaviour
             {
                 stageMgr.InitHaveCost(rankFunc.stageNumber[SceneManager.GetActiveScene().name]); //所持コストを初期コストに初期化
                 stageMgr.stageNum = rankFunc.stageNumber[SceneManager.GetActiveScene().name];
+                stageMgr.InitHealTimeOut(rankFunc.stageNumber[SceneManager.GetActiveScene().name]);
             }
             //ステージセレクトならドアにランクを表示する
             else if(input == "StageSelectScene")
