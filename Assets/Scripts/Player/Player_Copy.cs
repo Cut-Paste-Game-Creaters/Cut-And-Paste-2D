@@ -171,6 +171,7 @@ public class Player_Copy : MonoBehaviour
                 case 3:
                     if(stageMgr.all_isCut) CutInCopy(ChangeVecToInt(startPos), ChangeVecToInt(endPos), false);
                     DisActiveCutObject();
+                    urFunc.InfoPushToStack();
                     InitWhichMode();
                     break;
                 default:
@@ -438,7 +439,7 @@ public class Player_Copy : MonoBehaviour
             }
             stageMgr.tileData.tiles.Add(tBases);
         }
-        urFunc.InfoPushToStack(); //コピーの時も保存できるが, オブジェクトとタイルが一緒に入ってるとその個数分繰り返し保存してしまう
+        //urFunc.InfoPushToStack(); //コピーの時も保存できるが, オブジェクトとタイルが一緒に入ってるとその個数分繰り返し保存してしまう
     }
 
     /*void SetActiveCopyIcon()
