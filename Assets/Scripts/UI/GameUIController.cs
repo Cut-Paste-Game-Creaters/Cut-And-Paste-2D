@@ -12,6 +12,12 @@ public class GameUIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI text_nowRank;
     [SerializeField] TextMeshProUGUI text_nextRank;
     [SerializeField] TextMeshProUGUI text_duplicateCost;
+    [SerializeField] TextMeshProUGUI text_writeCost;
+    [SerializeField] TextMeshProUGUI text_writeCost2;
+    [SerializeField] TextMeshProUGUI text_overwriteCost;
+    [SerializeField] TextMeshProUGUI text_overwriteCost2;
+    [SerializeField] float paddingX = 100.0f;        //マウスカーソルからimageの近い方の端までの距離
+    [SerializeField] float paddingY = 80.0f;         //画面端からどれだけ余分を残して表示するか
 
     private StageManager stageManager;
     private RankJudgeAndUpdateFunction judgeFunc;
@@ -21,6 +27,7 @@ public class GameUIController : MonoBehaviour
     private GameObject CostDisplay;
     private RectTransform rectT;
     private Canvas costDisplayCanvas;
+    private float baseWidth = 150.0f;
 
     void Start()
     {
@@ -77,15 +84,96 @@ public class GameUIController : MonoBehaviour
         {
             costDisplayCanvas = CostDisplay.transform.parent.GetComponent<Canvas>();
         }
+
+        /*
+        //増やすコスト、消すコストをひょうじする
+        text_writeCost.text = writeCost.ToString();
+        text_writeCost2.text = writeCost.ToString();
+        text_overwriteCost.text = eraseCost.ToString();
+        text_overwriteCost2.text = eraseCost.ToString();
+
+        //文字列の幅を取得し、長い方に合わせてimageの幅を決める
+        Canvas.ForceUpdateCanvases();
+        float longestWidth = text_writeCost.preferredWidth >= text_overwriteCost.preferredWidth
+            ? text_writeCost.preferredWidth : text_overwriteCost.preferredWidth;
+
+        rectT.sizeDelta = new Vector2(baseWidth + longestWidth,rectT.sizeDelta.y);
+
         //マウスカーソルに追従する
-        Vector2 localPoint;
+        Vector2 localPoint;         //imageの座標
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             costDisplayCanvas.transform as RectTransform,
             Input.mousePosition,
             costDisplayCanvas.worldCamera, // ここが重要！
             out localPoint
         );
-        rectT.anchoredPosition = localPoint;
+        //まず右側に出すと想定して計算
+        float rectPosX = rectT.rect.width * 0.5f + paddingX;
+        float rectPosY = paddingY;
+
+        //もし右側に出して画面外に行くなら左側
+        if(Input.mousePosition.x + paddingX + rectT.rect.width > Screen.width)
+        {
+            rectPosX *= -1;
+        }
+
+        rectT.anchoredPosition = localPoint + new Vector2(rectPosX,rectPosY);
+
+        //もしオブジェクトが下（または上）のギリギリにいたら画面内にimageがいるようにする
+        if (Input.mousePosition.y - rectT.rect.height*0.5f - paddingY < 0)
+        {
+            //アンカーは画面中央なので、(0,0)は画面中央になる
+            rectT.anchoredPosition = new Vector2(
+                rectT.anchoredPosition.x, rectT.rect.height*0.5f+paddingY - Screen.height*0.5f);
+        }
+        else if(Input.mousePosition.y + rectT.rect.height*0.5f + paddingY > Screen.height)
+        {
+            rectT.anchoredPosition = new Vector2(
+                rectT.anchoredPosition.x, Screen.height*0.5f - rectT.rect.height * 0.5f - paddingY);
+        }*/
+
+        //増やすコスト、消すコストをひょうじする
+        text_writeCost.text = writeCost.ToString();
+        text_writeCost2.text = writeCost.ToString();
+        text_overwriteCost.text = eraseCost.ToString();
+        text_overwriteCost2.text = eraseCost.ToString();
+
+        //文字列の幅を取得し、長い方に合わせてimageの幅を決める
+        Canvas.ForceUpdateCanvases();
+        float longestWidth = text_writeCost.preferredWidth >= text_overwriteCost.preferredWidth
+            ? text_writeCost.preferredWidth : text_overwriteCost.preferredWidth;
+
+        rectT.sizeDelta = new Vector2(baseWidth + longestWidth, rectT.sizeDelta.y);
+
+        //マウスカーソルに追従する
+        Vector2 localPoint;         //imageの座標
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            costDisplayCanvas.transform as RectTransform,
+            Input.mousePosition,
+            costDisplayCanvas.worldCamera, // ここが重要！
+            out localPoint
+        );
+
+        //まず右側に出すと想定して計算,下のx,yは画面中心からマウスカーソルまでの差分
+        float rectPosX = localPoint.x + paddingX;
+        float rectPosY = localPoint.y;
+
+        //もし右側に出して画面外に行くなら左側
+        if (rectPosX + rectT.rect.width + paddingX > Screen.width*0.5f)//←canvasは画面中心が(0,0)なので
+        {
+            rectPosX = localPoint.x - rectT.rect.width - paddingX;
+        }
+
+        if (rectPosY - rectT.rect.height * 0.5f - paddingY < -Screen.height*0.5f)
+        {
+            rectPosY = -Screen.height*0.5f + rectT.rect.height * 0.5f + paddingY;
+        }
+        else if (rectPosY + rectT.rect.height * 0.5f + paddingY > Screen.height * 0.5f)
+        {
+            rectPosY = Screen.height * 0.5f - rectT.rect.height * 0.5f;
+        }
+
+        rectT.anchoredPosition = new Vector2(rectPosX, rectPosY);
         CostDisplay.SetActive(true);
     }
 
