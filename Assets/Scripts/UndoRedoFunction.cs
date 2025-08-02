@@ -47,7 +47,20 @@ public class UndoRedoFunction : MonoBehaviour
         if(PlayerInput.GetKey(KeyCode.Z) && PlayerInput.GetKeyDown(KeyCode.LeftShift) ||
                 PlayerInput.GetKeyDown(KeyCode.Z) && PlayerInput.GetKey(KeyCode.LeftShift)) //Shift+Zボタンが押されたらUndo
         {
-            Undo();
+            //Undo();
+            if(undoStack.Count > 1)
+            {
+                redoStack.Push(undoStack.Pop());
+                UndoTileData();
+                //UndoCost();
+                //UndoAllSumCost();
+                //UndoAllIsCut();
+                UndoStageManagerInfo();
+                UndoObjState();
+                UndoPlayerState();
+                UndoCopyTileData();
+                UndoCopyObjectData();
+            }
         }
     }
 
@@ -226,7 +239,25 @@ public class UndoRedoFunction : MonoBehaviour
         StageManager.TileData copyTileData = new StageManager.TileData(stageMgr.tileData.width, stageMgr.tileData.height);
 
         copyTileData.direction = stageMgr.tileData.direction;
-        copyTileData.tiles = stageMgr.tileData.tiles;
+        for(int y = 0; y < copyTileData.height; y++)
+        {
+            List<TileBase> tbs = new List<TileBase>();
+            for(int x = 0; x < copyTileData.width; x++)
+            {
+                tbs.Add(stageMgr.tileData.tiles[y][x]);
+                //Debug.Log(stageMgr.tileData.tiles[y][x]);
+                
+            }
+            copyTileData.tiles.Add(tbs);
+        }
+        /*foreach(List<TileBase> tbase in copyTileData.tiles)
+        {
+            for(int i = 0; i < tbase.Count; i++)
+            {
+                Debug.Log(tbase[i].name);
+            }
+        }*/
+        //copyTileData.tiles = stageMgr.tileData.tiles;
         copyTileData.hasData= stageMgr.tileData.hasData;
         copyTileData.isCut= stageMgr.tileData.isCut;
 
@@ -237,7 +268,18 @@ public class UndoRedoFunction : MonoBehaviour
     {
         List<StageManager.ObjectData> copyObjectData = new List<StageManager.ObjectData>();
 
-        copyObjectData = stageMgr.objectData;
+        //copyObjectData.obj = stageMgr.objectData.obj;
+        //copyObjectData.pos = stageMgr.objectData.pos;
+        foreach(StageManager.ObjectData s_obj in stageMgr.objectData)
+        {
+            StageManager.ObjectData obj_d = new StageManager.ObjectData();
+
+            obj_d.obj = s_obj.obj;
+            obj_d.pos = s_obj.pos;
+
+            copyObjectData.Add(obj_d);
+            //Debug.Log(obj_d.obj.name);
+        }
 
         return copyObjectData;
     }
@@ -450,19 +492,53 @@ public class UndoRedoFunction : MonoBehaviour
 
         //stageMgr.tileData = pre_copyTileData;
 
-        stageMgr.tileData.width = pre_copyTileData.width;
-        stageMgr.tileData.height = pre_copyTileData.height;
+        stageMgr.tileData = new StageManager.TileData(pre_copyTileData.width, pre_copyTileData.height);
+
+        //stageMgr.tileData.width = pre_copyTileData.width;
+        //stageMgr.tileData.height = pre_copyTileData.height;
         stageMgr.tileData.direction = pre_copyTileData.direction;
-        stageMgr.tileData.tiles = pre_copyTileData.tiles;
+        for(int y = 0; y < pre_copyTileData.height; y++)
+        {
+            List<TileBase> tbs = new List<TileBase>();
+            for(int x = 0; x < pre_copyTileData.width; x++)
+            {
+                tbs.Add(pre_copyTileData.tiles[y][x]);
+            }
+            stageMgr.tileData.tiles.Add(tbs);
+        }
+        int j = 0;
+        foreach(List<TileBase> b in stageMgr.tileData.tiles)
+        {
+            j++;
+            for(int i = 0; i < b.Count; i++)
+            {
+                Debug.Log(b[i]);
+            }
+        }
+        Debug.Log(j + "回回りました");
         stageMgr.tileData.hasData = pre_copyTileData.hasData;
         stageMgr.tileData.isCut = pre_copyTileData.isCut;
+        //stageMgr.tileData.tiles = pre_copyTileData.tiles;
+        
     }
 
     void UndoCopyObjectData()
     {
+        stageMgr.objectData.Clear(); //全要素削除
+
         List<StageManager.ObjectData> pre_copyObjectData = undoStack.Peek().copyObjectData;
 
-        stageMgr.objectData = pre_copyObjectData;
+        //stageMgr.objectData = pre_copyObjectData;
+
+        foreach(StageManager.ObjectData p_obj in pre_copyObjectData)
+        {
+            StageManager.ObjectData obj_d = new StageManager.ObjectData();
+
+            obj_d.obj = p_obj.obj;
+            obj_d.pos = p_obj.pos;
+
+            stageMgr.objectData.Add(obj_d);
+        }
     }
 
     //リトライ
