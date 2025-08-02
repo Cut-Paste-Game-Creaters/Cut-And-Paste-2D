@@ -16,6 +16,9 @@ public class GameUIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI text_writeCost2;
     [SerializeField] TextMeshProUGUI text_overwriteCost;
     [SerializeField] TextMeshProUGUI text_overwriteCost2;
+    [SerializeField] Image icon_copycut;
+    [SerializeField] Sprite s_copy;
+    [SerializeField] Sprite s_cut;
     [SerializeField] float paddingX = 100.0f;        //マウスカーソルからimageの近い方の端までの距離
     [SerializeField] float paddingY = 80.0f;         //画面端からどれだけ余分を残して表示するか
 
@@ -36,6 +39,7 @@ public class GameUIController : MonoBehaviour
         text_duplicateCost.gameObject.SetActive(false);
         CostDisplay = gameObject.transform.Find("CostDisplay").gameObject;
         CostDisplay.gameObject.SetActive(false);
+        icon_copycut.enabled = false;
     }
 
     // Update is called once per frame
@@ -53,13 +57,16 @@ public class GameUIController : MonoBehaviour
         text_nextRank.text = "next Rank ... left " + judgeFunc.culcCostToNextRank();
         if (stageManager.tileData.hasData)
         {
+            icon_copycut.enabled = true;
             if (stageManager.all_isCut)
             {
                 text_duplicateCost.text = "huyasu cost:" + stageManager.write_cost*0.5f;
+                icon_copycut.sprite = s_cut; //カットのスプライトを設定
             }
             else
             {
                 text_duplicateCost.text = "huyasu cost:" + stageManager.write_cost;
+                icon_copycut.sprite = s_copy;
             }
 
                 text_duplicateCost.gameObject.SetActive(true);
@@ -67,6 +74,7 @@ public class GameUIController : MonoBehaviour
         else
         {
             text_duplicateCost.gameObject.SetActive(false);
+            icon_copycut.enabled = false;
         }
     }
 
