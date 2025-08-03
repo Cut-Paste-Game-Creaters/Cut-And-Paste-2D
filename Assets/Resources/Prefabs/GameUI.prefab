@@ -1955,7 +1955,7 @@ GameObject:
   - component: {fileID: 8148270808772589894}
   - component: {fileID: 3301758920313533540}
   - component: {fileID: 1484755647766156803}
-  - component: {fileID: 7675894737115165431}
+  - component: {fileID: 1732550620433027446}
   m_Layer: 5
   m_Name: AllCostDisplay
   m_TagString: Untagged
@@ -2043,7 +2043,7 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &7675894737115165431
+--- !u!114 &1732550620433027446
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -150,8 +150,9 @@ public class Player_Paste : MonoBehaviour
                     captureCopyZone.disableImage();
                 }
 
-                urFunc.InfoPushToStack();
+                //urFunc.InfoPushToStack();
             }
+            urFunc.InfoPushToStack();
             //Debug.Log("isCut == " + stageManager.all_isCut);
 
         }
