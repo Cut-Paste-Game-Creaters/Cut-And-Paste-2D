@@ -16,7 +16,7 @@ public class Player_Copy : MonoBehaviour
     //[SerializeField] GameObject copyicon;
     //[SerializeField] GameObject cuticon;
 
-    private Tilemap tilemap;                        //ステージのタイルマップs
+    private Tilemap tilemap;                        //ステージのタイルマップ
     private StageManager stageMgr;
     private bool isSelectZone = false;
     private Vector3 startPos = Vector3.zero;

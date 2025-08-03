@@ -37,6 +37,7 @@ public class StageManager : MonoBehaviour
 
     /*コスト関連*/
     [SerializeField]private ObjectScriptableObject objSB;
+    [SerializeField]private TileScriptableObject tileSB;
     [SerializeField]private float costHeal_timeOut; //costが回復する間隔
 	private float timeElapsed;
     public int stageNum = -1;
@@ -55,7 +56,9 @@ public class StageManager : MonoBehaviour
     [HideInInspector]
     public List<GameObject> EraseObjects = new List<GameObject>();
 
+    //その他
     private GameUIController gameUI;
+    private Tilemap tilemap = null;
 
     void Start()
     {
@@ -96,11 +99,36 @@ public class StageManager : MonoBehaviour
             }
         }
 
-        /*プレイヤーが範囲選択中じゃないとき、かつオブジェクトにマウスカーソルを当てたとき*/
-        if (!isSelectZone)
+        //もしタイルもオブジェクトも表示しないならfalse, どちらかを表示するならtrue
+        bool isDisplayInformation = false;
+
+        /*プレイヤーが範囲選択中じゃないとき、かつオブジェクトにマウスカーソルを当てたとき
+         かつ、Spaceを押したとき*/
+        if (!isSelectZone && Input.GetKey(KeyCode.Space))
         {
+
             // マウスのスクリーン座標をワールド座標に変換
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            /*タイル編*/
+            Vector3Int pos = Vector3Int.zero;       //マウスのある座標のタイルの座標
+            pos.x = (int)Mathf.Floor(mousePos.x);
+            pos.y = (int)Mathf.Floor(mousePos.y);
+            pos.z = 0;
+            if (tilemap == null)
+            {
+                tilemap = GameObject.FindWithTag("Tilemap").GetComponent<Tilemap>();
+            }
+            if (tilemap != null && tilemap.HasTile(pos))
+            {
+                int tile_writeCost = tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(pos)).p_ene;
+                int tile_overwriteCost = tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(pos)).ow_ene;
+                gameUI.DisplayObjectCost(tile_writeCost, tile_overwriteCost);
+                isDisplayInformation = true;
+            }
+
+
+            /*オブジェクト編*/
 
             /// マウス位置にある2Dコライダーを取得
             Collider2D hitCollider = Physics2D.OverlapPoint(mousePos);
@@ -112,14 +140,18 @@ public class StageManager : MonoBehaviour
                 )
             {
                 //そのオブジェクトの消すコスト、増やすコストを表示する
-                int writeCost = objSB.objectList.Single(t => t.obj.tag == hitCollider.gameObject.tag).p_ene;
-                int eraseCost = objSB.objectList.Single(t => t.obj.tag == hitCollider.gameObject.tag).ow_ene;
-                gameUI.DisplayObjectCost(writeCost, eraseCost);
+                int object_writeCost = objSB.objectList.Single(t => t.obj.tag == hitCollider.gameObject.tag).p_ene;
+                int object_overwriteCost = objSB.objectList.Single(t => t.obj.tag == hitCollider.gameObject.tag).ow_ene;
+                gameUI.DisplayObjectCost(object_writeCost, object_overwriteCost);
+                isDisplayInformation = true;
             }
-            else
-            {
-                gameUI.UnDisplayObjectCost();
-            }
+
+
+        }
+        //もしどちらも表示しないなら消す
+        if (!isDisplayInformation)
+        {
+            gameUI.UnDisplayObjectCost();
         }
 
     }
