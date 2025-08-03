@@ -48,6 +48,8 @@ TagManager:
   - VanishFloor
   - HPHeal
   - Needle-M
+  - Switchblock
+  - BrackCurtain
   layers:
   - Default
   - TransparentFX

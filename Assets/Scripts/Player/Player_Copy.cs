@@ -17,6 +17,7 @@ public class Player_Copy : MonoBehaviour
     //[SerializeField] GameObject cuticon;
 
     private Tilemap tilemap;                        //ステージのタイルマップ
+    private Tilemap display_Copy_Tilemap;                        //ステージのタイルマップ
     private StageManager stageMgr;
     private bool isSelectZone = false;
     private Vector3 startPos = Vector3.zero;
@@ -29,6 +30,7 @@ public class Player_Copy : MonoBehaviour
     private CaptureCopyZone captureCopyZone;
     private Dictionary<GameObject, int> originalLayers = new Dictionary<GameObject, int>();
     //public bool all_isCut = false; //コピー関数の引数のisCutと区別するため
+    private Image brackCurtain;
 
 
     // Start is called before the first frame update
@@ -45,14 +47,20 @@ public class Player_Copy : MonoBehaviour
             if (map.gameObject.tag == "Tilemap")
             {
                 tilemap = map;
-                break;
+            }
+            if (map.gameObject.tag == "Display_Copy_Tilemap")
+            {
+                display_Copy_Tilemap = map;
             }
         }
         stageMgr = FindObjectOfType<StageManager>();
         urFunc = FindObjectOfType<UndoRedoFunction>();
         captureCopyZone = FindObjectOfType<CaptureCopyZone>();
 
+        brackCurtain = GameObject.FindWithTag("BrackCurtain").GetComponent<Image>();
+
         anounce.SetActive(false);
+        brackCurtain.enabled = false;
         //copyicon.SetActive(false);
         //cuticon.SetActive(false);
     }
@@ -84,6 +92,7 @@ public class Player_Copy : MonoBehaviour
 
                 //今選択をしていることを表すフラグ
                 isSelectZone = true;
+                brackCurtain.enabled = true;
 
                 //四角を描く
                 frame2.SetActive(true);
@@ -105,6 +114,8 @@ public class Player_Copy : MonoBehaviour
                 Vector3 nowpos = (currentPos + startPos) / 2;
                 nowpos.z = 0;
                 frame2.transform.localPosition = nowpos;
+
+                DisplaySelectedTilesAndObjects(startPos,currentPos,display_Copy_Tilemap);
             }
 
 
@@ -267,6 +278,73 @@ public class Player_Copy : MonoBehaviour
         }
 
         //urFunc.InfoPushToStack(); /*これだとコピーの回数分のみ保存できるが, カットした時, 正常じゃなくなる*/
+    }
+
+    private void DisplaySelectedTilesAndObjects(Vector3 startPos, Vector3 endPos, Tilemap _tilemap)
+    {
+        /*
+        1. tilemapのclear
+        2. startPosとendPosのVectot3Int化とdirectionの計算
+        3. 原点を設定
+        4. tilemap→display_copy_tilemapに移す
+         */
+        _tilemap.ClearAllTiles();
+
+        Vector3Int newStartPos = ChangeVecToInt(startPos);
+        Vector3Int newEndPos = ChangeVecToInt(endPos);
+        int direction = 0;
+        if (newEndPos.x - newStartPos.x >= 0)//右向き
+        {
+            if (newEndPos.y - newStartPos.y >= 0) direction = 0;    //上
+            else direction = 1;                                     //下
+        }
+        else  //左向き
+        {
+            if (newEndPos.y - newStartPos.y >= 0) direction = 3;    //上
+            else direction = 2;                                     //下
+        }
+        int width = Mathf.Abs((newEndPos.x - newStartPos.x)) + 1;
+        int height = Mathf.Abs((newEndPos.y - newStartPos.y)) + 1;
+
+        for (int y = 0; y < height; y++)
+        {
+            //1列ごとのList
+            //List<TileBase> tBases = new List<TileBase>();
+            for (int x = 0; x < width; x++)
+            {
+                Vector3Int p = Vector3Int.zero;
+                //向きによって取得する
+                switch (direction)
+                {
+                    case 0:
+                        p = new Vector3Int(
+                        newStartPos.x + x,
+                        newStartPos.y + y, 0);
+                        break;
+                    case 1:
+                        p = new Vector3Int(
+                        newStartPos.x + x,
+                        newStartPos.y - y, 0);
+                        break;
+                    case 2:
+                        p = new Vector3Int(
+                        newStartPos.x - x,
+                        newStartPos.y - y, 0);
+                        break;
+                    case 3:
+                        p = new Vector3Int(
+                        newStartPos.x - x,
+                        newStartPos.y + y, 0);
+                        break;
+                    default: break;
+                }
+
+                if (tilemap.HasTile(p))
+                {
+                    _tilemap.SetTile(p, tilemap.GetTile(p));
+                }
+            }
+        }
     }
 
     private void DisActiveCutObject()
@@ -465,6 +543,7 @@ public class Player_Copy : MonoBehaviour
 
         //選択が終わったことを示すフラグ
         isSelectZone = false;
+        brackCurtain.enabled = false;
 
         //データ保持フラグon!
         stageMgr.tileData.hasData = true;
