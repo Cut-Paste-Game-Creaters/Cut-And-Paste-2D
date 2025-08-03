@@ -31,6 +31,7 @@ public class Player_Copy : MonoBehaviour
     private Dictionary<GameObject, int> originalLayers = new Dictionary<GameObject, int>();
     //public bool all_isCut = false; //コピー関数の引数のisCutと区別するため
     private Image brackCurtain;
+    private Stack<GameObject> selectedObjects = new Stack<GameObject>();
 
 
     // Start is called before the first frame update
@@ -115,6 +116,9 @@ public class Player_Copy : MonoBehaviour
                 nowpos.z = 0;
                 frame2.transform.localPosition = nowpos;
 
+                //いったんobjectのソートを元に戻す
+                ResetObjectSorting();
+                //選択中のタイルやオブジェクトを明示的に示す
                 DisplaySelectedTilesAndObjects(startPos,currentPos,display_Copy_Tilemap);
             }
 
@@ -345,6 +349,38 @@ public class Player_Copy : MonoBehaviour
                 }
             }
         }
+
+
+        //オブジェクトの明示
+        Collider2D[] cols = Physics2D.OverlapAreaAll(startPos, endPos);
+        foreach (var col in cols)
+        {
+            if(col.gameObject.tag != "Tilemap"
+                && col.gameObject.tag != "Player"
+                && col.gameObject.tag != "Uncuttable")
+            {
+                //後で戻すためにstackしておく
+                SpriteRenderer sr = col.gameObject.GetComponent<SpriteRenderer>();
+                if (sr != null)
+                {
+                    sr.sortingLayerName = "Default";
+                    sr.sortingOrder = 110;
+                    selectedObjects.Push(col.gameObject);
+                }
+            }
+        }
+    }
+
+    private void ResetObjectSorting()
+    {
+        while (selectedObjects.Count > 0)
+        {
+            GameObject obj = selectedObjects.Pop();
+
+            SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+            sr.sortingLayerName = "object";
+            sr.sortingOrder = 0;
+        }
     }
 
     private void DisActiveCutObject()
@@ -544,6 +580,7 @@ public class Player_Copy : MonoBehaviour
         //選択が終わったことを示すフラグ
         isSelectZone = false;
         brackCurtain.enabled = false;
+        display_Copy_Tilemap.ClearAllTiles();
 
         //データ保持フラグon!
         stageMgr.tileData.hasData = true;
