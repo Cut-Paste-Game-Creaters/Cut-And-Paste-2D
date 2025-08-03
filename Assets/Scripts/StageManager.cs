@@ -40,7 +40,7 @@ public class StageManager : MonoBehaviour
     [SerializeField]private float costHeal_timeOut; //costが回復する間隔
 	private float timeElapsed;
     public int stageNum = -1;
-    private int[] init_ene_array = {100000, 150, 200, 250, 300, 350, 400, 450, 500, 550}; //ステージごとの初期コスト配列
+    private int[] init_ene_array = {100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000}; //ステージごとの初期コスト配列
     private int[] costHeal_timeOut_array = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3}; //ステージごとのコスト回復間隔
     private int[] healAmount_array = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50}; //ステージごとの回復速度コストの配列
     public int[] initAddCost_EachStage = {0,0,0,0,0,0,0,0,0,0};
