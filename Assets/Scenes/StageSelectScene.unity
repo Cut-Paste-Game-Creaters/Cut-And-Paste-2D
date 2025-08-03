@@ -10675,6 +10675,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8037034241673365162, guid: 7bca0eaa0e87c43428073cae2d9b6092, type: 3}
+      propertyPath: objSB
+      value: 
+      objectReference: {fileID: 11400000, guid: 40ef67a603b5fac418e9ffb6109bef98, type: 2}
+    - target: {fileID: 8037034241673365162, guid: 7bca0eaa0e87c43428073cae2d9b6092, type: 3}
       propertyPath: CostDisplay
       value: 
       objectReference: {fileID: 221267088}

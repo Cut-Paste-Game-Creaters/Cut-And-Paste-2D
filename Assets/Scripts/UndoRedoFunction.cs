@@ -7,13 +7,13 @@ using System.Text.RegularExpressions;
 
 public class UndoRedoFunction : MonoBehaviour
 {
-    [SerializeField] Tilemap tilemap; //保存したいtilemap
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
     GameObject playerCam;
     private GameObject player;
     StageManager stageMgr;
     CameraMove camMove;
     Vector3Int stageStartPos;
+    private Tilemap tilemap; //ステージtilemap
 
     Stack<AllStageInfoList> undoStack = new Stack<AllStageInfoList>();
     Stack<AllStageInfoList> redoStack = new Stack<AllStageInfoList>();
@@ -32,6 +32,14 @@ public class UndoRedoFunction : MonoBehaviour
         stageMgr = FindObjectOfType<StageManager>();
         playerCam = Camera.main.gameObject;
         camMove = FindObjectOfType<CameraMove>();
+        Tilemap[] maps = FindObjectsOfType<Tilemap>();
+        foreach (var map in maps)
+        {
+            if (map.gameObject.tag == "Tilemap")
+            {
+                tilemap = map;
+            }
+        }
         InfoPushToStack();
         //tilemap.CompressBounds(); //タイルを最小まで圧縮
         //b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
@@ -48,19 +56,6 @@ public class UndoRedoFunction : MonoBehaviour
                 PlayerInput.GetKeyDown(KeyCode.Z) && PlayerInput.GetKey(KeyCode.LeftShift)) //Shift+Zボタンが押されたらUndo
         {
             Undo();
-            /*if(undoStack.Count > 1)
-            {
-                redoStack.Push(undoStack.Pop());
-                UndoTileData();
-                //UndoCost();
-                //UndoAllSumCost();
-                //UndoAllIsCut();
-                UndoStageManagerInfo();
-                UndoObjState();
-                UndoPlayerState();
-                UndoCopyTileData();
-                UndoCopyObjectData();
-            }*/
         }
     }
 
@@ -69,14 +64,11 @@ public class UndoRedoFunction : MonoBehaviour
         AllStageInfoList allStageInfo = new AllStageInfoList(); //一枚分のステージ, オブジェクトなど全情報
 
         allStageInfo.stageTileData = RecordStageHistory(); //一枚分の全情報のクラスのタイルデータ部分に保存
-        /*allStageInfo.have_ene = stageMgr.have_ene;
-        allStageInfo.all_sum_cos = stageMgr.all_sum_cos;
-        allStageInfo.all_isCut = stageMgr.all_isCut;*/
         allStageInfo.cStageMgr = RecordStageManagerInfo();
         allStageInfo.stageObjState = RecordObjectState();
         allStageInfo.playerState = RecordPlayerInfo();
         allStageInfo.copyTileData = RecordCopyTileData();
-        allStageInfo.copyObjectData = RecordCopyObjectData();
+        //allStageInfo.copyObjectData = RecordCopyObjectData();
         undoStack.Push(allStageInfo);
         Debug.Log("stackに保存されました" + undoStack.Count);
     }
@@ -250,14 +242,6 @@ public class UndoRedoFunction : MonoBehaviour
             }
             copyTileData.tiles.Add(tbs);
         }
-        /*foreach(List<TileBase> tbase in copyTileData.tiles)
-        {
-            for(int i = 0; i < tbase.Count; i++)
-            {
-                Debug.Log(tbase[i].name);
-            }
-        }*/
-        //copyTileData.tiles = stageMgr.tileData.tiles;
         copyTileData.hasData= stageMgr.tileData.hasData;
         copyTileData.isCut= stageMgr.tileData.isCut;
 
@@ -297,7 +281,7 @@ public class UndoRedoFunction : MonoBehaviour
             UndoObjState();
             UndoPlayerState();
             UndoCopyTileData();
-            UndoCopyObjectData();
+            //UndoCopyObjectData();
         }
     }
 

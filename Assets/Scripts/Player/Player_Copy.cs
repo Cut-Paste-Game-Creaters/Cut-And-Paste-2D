@@ -186,8 +186,8 @@ public class Player_Copy : MonoBehaviour
                 case 3:
                     if(stageMgr.all_isCut) CutInCopy(ChangeVecToInt(startPos), ChangeVecToInt(endPos), false);
                     DisActiveCutObject();
-                    urFunc.InfoPushToStack();
                     InitWhichMode();
+                    urFunc.InfoPushToStack();
                     break;
                 default:
                     InitTileData();
