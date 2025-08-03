@@ -10,26 +10,28 @@ public class SEManager : MonoBehaviour
 
     // 再生したい効果音をここに登録（Inspectorで設定）
     public AudioClip jumpSE;
-    public AudioClip blackhole1SE;
-    public AudioClip blackhole2SE;
-    public AudioClip bumper2SE;
-    public AudioClip cheersSE;
-    public AudioClip cheers2SE;
+    public AudioClip blackholeSE;
+    public AudioClip blackholeyoinSE;
+    public AudioClip bumperSE;
+    public AudioClip cheersASE;
+    public AudioClip cheersSSE;
     public AudioClip clearSuikomiSE;
     public AudioClip closeSE;
     public AudioClip copySE;
     public AudioClip cutshortSE;
     public AudioClip damageSE;
-    public AudioClip death1SE;
-    public AudioClip death2SE;
+    public AudioClip deathbiribiriSE;
+    public AudioClip deathyoinSE;
     public AudioClip decideSE;
     public AudioClip flip1SE;
     public AudioClip healSE;
     public AudioClip iitokiSE;
     public AudioClip keyOpenSE;
     public AudioClip landingSE;
-    public AudioClip mekuruSE;
-
+    public AudioClip flip2SE;
+    public AudioClip CannonfireSE;
+    public AudioClip SwitchSE;
+    public AudioClip katiSE;//範囲選択時、移動するたびになる
 
     void Update()
     {
