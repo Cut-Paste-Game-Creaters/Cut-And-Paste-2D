@@ -77,10 +77,6 @@ MonoBehaviour:
     obj: {fileID: 3163715564208650277, guid: 7e74ba8a6a6e6664f970dcc57fbd7ac9, type: 3}
     p_ene: 20
     ow_ene: 10
-  - name: Needle
-    obj: {fileID: 8128896527873485178, guid: 6578e4ee29684fd4abc1ce71a1a2cff3, type: 3}
-    p_ene: 2
-    ow_ene: 500
   - name: Rotate_Center_L
     obj: {fileID: 4912859793595399357, guid: a28cc55aa194e0843948360b109c705e, type: 3}
     p_ene: 30
@@ -129,6 +125,14 @@ MonoBehaviour:
     obj: {fileID: 4550408371338664941, guid: abda40439fb799a4f8b7e3dced8ee53c, type: 3}
     p_ene: 20
     ow_ene: 5
+  - name: Needle-M
+    obj: {fileID: 3881063583115998866, guid: 6ab5071d1282862488435315536a84bc, type: 3}
+    p_ene: 2
+    ow_ene: 1000
+  - name: Needle
+    obj: {fileID: 8128896527873485178, guid: 6578e4ee29684fd4abc1ce71a1a2cff3, type: 3}
+    p_ene: 2
+    ow_ene: 500
   - name: Needleball
     obj: {fileID: 849976956736410216, guid: ab0ec7b3ab6cf8743807e667afdb351c, type: 3}
     p_ene: 5
