@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class GameUIController : MonoBehaviour
 {
@@ -19,9 +20,11 @@ public class GameUIController : MonoBehaviour
     [SerializeField] Image icon_copycut;
     [SerializeField] Sprite s_copy;
     [SerializeField] Sprite s_cut;
+    [SerializeField] ObjectScriptableObject objSB;
     [SerializeField] float paddingX = 100.0f;        //マウスカーソルからimageの近い方の端までの距離
     [SerializeField] float paddingY = 80.0f;         //画面端からどれだけ余分を残して表示するか
 
+    private Tilemap tilemap;
     private StageManager stageManager;
     private RankJudgeAndUpdateFunction judgeFunc;
     //private Tilemap tilemap;
@@ -31,14 +34,32 @@ public class GameUIController : MonoBehaviour
     private RectTransform rectT;
     private Canvas costDisplayCanvas;
     private float baseWidth = 150.0f;
+    //コスト一覧display用
+    private GameObject allCostDisplay;
+    private Vector2 startPos;
+    private GraphicRaycaster raycaster;
+    private EventSystem eventSystem;
 
     void Start()
     {
+        Tilemap[] maps = FindObjectsOfType<Tilemap>();
+        foreach (var map in maps)
+        {
+            if (map.gameObject.tag == "Tilemap")
+            {
+                tilemap = map;
+            }
+        }
+        DisplayAllObjectCost();
         stageManager = FindObjectOfType<StageManager>();
         judgeFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
         text_duplicateCost.gameObject.SetActive(false);
         CostDisplay = gameObject.transform.Find("CostDisplay").gameObject;
         CostDisplay.gameObject.SetActive(false);
+        allCostDisplay = gameObject.transform.Find("AllCostDisplay").gameObject;
+        startPos = allCostDisplay.GetComponent<RectTransform>().anchoredPosition;
+        eventSystem = FindObjectOfType<EventSystem>();
+        raycaster = FindObjectOfType<GraphicRaycaster>();
         icon_copycut.enabled = false;
     }
 
@@ -76,6 +97,8 @@ public class GameUIController : MonoBehaviour
             text_duplicateCost.gameObject.SetActive(false);
             icon_copycut.enabled = false;
         }
+
+        AppearAllCostDisplay(); //コスト一覧表表示
     }
 
     public void DisplayObjectCost(int writeCost, int eraseCost)
@@ -183,6 +206,60 @@ public class GameUIController : MonoBehaviour
 
         rectT.anchoredPosition = new Vector2(rectPosX, rectPosY);
         CostDisplay.SetActive(true);
+    }
+
+    public void DisplayAllObjectCost()
+    {
+        tilemap.CompressBounds(); //タイルを最小まで圧縮
+        var b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
+
+        List<string> tags = new List<string>(); //存在しているオブジェクトのタグを保存する用のリスト
+
+        Collider2D[] cols = Physics2D.OverlapAreaAll(new Vector2(b.x, b.y), new Vector2(b.size.x, b.size.y));
+        foreach(var col in cols)
+        {
+            if(col.gameObject.tag != "Tilemap"
+                && col.gameObject.tag != "Player"
+                && col.gameObject.tag != "Uncuttable")
+            {
+                foreach(ObjectStore obj_s in objSB.objectList) //シーン上のオブジェクトのtagを取得
+                {
+                    if(obj_s.obj.tag.Equals(col.gameObject.tag))
+                    {
+                        if(!tags.Contains(col.gameObject.tag))
+                        {
+                            tags.Add(col.gameObject.tag);
+                            Debug.Log(col.gameObject.tag + "の増やすコストは" + obj_s.p_ene + " 消すコストは" + obj_s.ow_ene);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void AppearAllCostDisplay() //カーソル合わせた時にdisplayを画面上に出現させる
+    {
+        //この4行でUIとの重なり判定, 判定取りたい奴にGraphicRayCasterコンポーネント付ける
+        PointerEventData pointerData = new PointerEventData(eventSystem);
+        pointerData.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        raycaster.Raycast(pointerData, results);
+
+        Vector2 size = allCostDisplay.GetComponent<RectTransform>().sizeDelta; //UIのサイズ
+        Vector2 hiddenPos = startPos; //隠れているUIの位置
+        Vector2 appearPos = hiddenPos + new Vector2(-size.x + 50, 0); //50はカーソル合わせる幅, UIの出現位置
+
+        if (results.Count > 0)
+        {
+            if(allCostDisplay.GetComponent<RectTransform>().anchoredPosition == hiddenPos)
+            {
+                allCostDisplay.GetComponent<RectTransform>().anchoredPosition = appearPos;
+            }
+        }
+        else
+        {
+            allCostDisplay.GetComponent<RectTransform>().anchoredPosition = hiddenPos;
+        }
     }
 
     public void UnDisplayObjectCost()
