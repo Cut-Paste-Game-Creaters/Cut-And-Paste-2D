@@ -10,7 +10,7 @@ using System.Linq;
 public class Player_Copy : MonoBehaviour
 {
     [SerializeField] GameObject frame2;
-    [SerializeField] GameObject anounce;
+    //[SerializeField] GameObject anounce;
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
     [SerializeField] ObjectScriptableObject objSB;
     //[SerializeField] GameObject copyicon;
@@ -30,9 +30,26 @@ public class Player_Copy : MonoBehaviour
     private CaptureCopyZone captureCopyZone;
     private Dictionary<GameObject, int> originalLayers = new Dictionary<GameObject, int>();
     //public bool all_isCut = false; //コピー関数の引数のisCutと区別するため
-    private Image brackCurtain;
+    private Image blackCurtain;
     private Stack<GameObject> selectedObjects = new Stack<GameObject>();
+    private GameObject CopyButton;
+    private GameObject CutButton;
 
+
+    public void OnCopyButtonSelected()
+    {
+        whichMode = 0;
+    }
+
+    public void OnCutButtonSelected()
+    {
+        whichMode = 1;
+    }
+
+    public void OnWithoutSelected()
+    {
+        whichMode = 10;     //switchではdefaultになるはず
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -58,10 +75,17 @@ public class Player_Copy : MonoBehaviour
         urFunc = FindObjectOfType<UndoRedoFunction>();
         captureCopyZone = FindObjectOfType<CaptureCopyZone>();
 
-        brackCurtain = GameObject.FindWithTag("BrackCurtain").GetComponent<Image>();
+        blackCurtain = GameObject.FindWithTag("BrackCurtain").GetComponent<Image>();
 
-        anounce.SetActive(false);
-        brackCurtain.enabled = false;
+        //anounce.SetActive(false);
+        blackCurtain.enabled = false;
+        CopyButton = GameObject.FindWithTag("CopyButton");
+        CutButton = GameObject.FindWithTag("CutButton");
+        CopyButton.GetComponent<Button>().onClick.AddListener(OnCopyButtonSelected);
+        CutButton.GetComponent<Button>().onClick.AddListener(OnCutButtonSelected);
+        blackCurtain.gameObject.GetComponent<Button>().onClick.AddListener(OnWithoutSelected);
+        CopyButton.SetActive(false);
+        CutButton.SetActive(false);
         //copyicon.SetActive(false);
         //cuticon.SetActive(false);
     }
@@ -95,7 +119,7 @@ public class Player_Copy : MonoBehaviour
 
                 //今選択をしていることを表すフラグ
                 isSelectZone = true;
-                brackCurtain.enabled = true;
+                blackCurtain.enabled = true;
 
                 //四角を描く
                 frame2.SetActive(true);
@@ -130,7 +154,7 @@ public class Player_Copy : MonoBehaviour
                 makeDecision = true;
                 whichMode = -1;
                 endPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                anounce.SetActive(true);
+                //anounce.SetActive(true);
                 return;
             }
         }
@@ -140,24 +164,8 @@ public class Player_Copy : MonoBehaviour
         {
             switch (whichMode)
             {
-                /*case -1:    //コピーかカットか選ぶ
-                    if (PlayerInput.GetMouseButtonUp(0))
-                    {
-                        whichMode = 0;//copy
-                        //コピーorカットする前に画像をキャプチャする
-                        captureCopyZone.CaptureImage(startPos, endPos);
-                    }
-                    else if (PlayerInput.GetMouseButtonUp(1))
-                    {
-                        whichMode = 1;//cut
-                        //コピーorカットする前に画像をキャプチャする
-                        captureCopyZone.CaptureImage(startPos, endPos);
-                    }
-                    else if (PlayerInput.GetKeyDown(KeyCode.Escape)) whichMode = 2;//nothing
-                    break;
-                */
                 case -1:
-                    if (PlayerInput.GetMouseButtonUp(0))
+                    /*if (PlayerInput.GetMouseButtonUp(0))
                     {
                         whichMode = 0;//copy
                     }
@@ -166,6 +174,10 @@ public class Player_Copy : MonoBehaviour
                         whichMode = 1;//cut
                     }
                     else if (PlayerInput.GetKeyDown(KeyCode.Escape)) whichMode = 10;//nothing
+                    */
+                    //コピーカットの選択はボタンになりました, blackCurtain（2button以外の場所）おしたら無しになる
+                    CopyButton.SetActive(true);
+                    CutButton.SetActive(true);
                     break;
                 case 0:     //コピーするなら
                     stageMgr.all_isCut = false;
@@ -193,6 +205,7 @@ public class Player_Copy : MonoBehaviour
                     break;
                 default:
                     InitTileData();
+                    InitWhichMode();
                     break;
             }
         }
@@ -284,7 +297,7 @@ public class Player_Copy : MonoBehaviour
         }
 
         //urFunc.InfoPushToStack(); /*これだとコピーの回数分のみ保存できるが, カットした時, 正常じゃなくなる*/
-    }
+            }
 
     private void DisplaySelectedTilesAndObjects(Vector3 startPos, Vector3 endPos, Tilemap _tilemap)
     {
@@ -581,13 +594,16 @@ public class Player_Copy : MonoBehaviour
 
         //選択が終わったことを示すフラグ
         isSelectZone = false;
-        brackCurtain.enabled = false;
+        blackCurtain.enabled = false;
         display_Copy_Tilemap.ClearAllTiles();
+
+        CopyButton.SetActive(false);
+        CutButton.SetActive(false);
 
         //データ保持フラグon!
         stageMgr.tileData.hasData = true;
         makeDecision = false;
-        anounce.SetActive(false);
+        //anounce.SetActive(false);
     }
 
     //コピーしていた情報の初期化
@@ -605,6 +621,9 @@ public class Player_Copy : MonoBehaviour
         stageMgr.tileData.hasData = false;
 
         stageMgr.objectData = new List<StageManager.ObjectData>();
+
+        CopyButton.SetActive(false);
+        CutButton.SetActive(false);
     }
 
     //マウスの座標をタイルの座標に変換する関数

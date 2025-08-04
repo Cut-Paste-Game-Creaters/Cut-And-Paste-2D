@@ -51,6 +51,8 @@ TagManager:
   - Switchblock
   - BrackCurtain
   - Needleball-L
+  - CopyButton
+  - CutButton
   layers:
   - Default
   - TransparentFX
