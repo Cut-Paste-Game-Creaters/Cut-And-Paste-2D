@@ -40,6 +40,15 @@ public class GameUIController : MonoBehaviour
     private RectTransform targetUI;
     private Camera uiCamera;
 
+    [Header("生成するプレハブ")]
+    public GameObject itemPrefab;
+
+    [Header("親RectTransform（UI内の配置範囲）")]
+    public RectTransform spawnArea;
+
+    /*[Header("左右マージンと間隔")]
+    public float horizontalMargin = 20f;*/
+
     void Start()
     {
         uiCamera = FindObjectOfType<Camera>();
@@ -215,6 +224,8 @@ public class GameUIController : MonoBehaviour
 
         List<string> tags = new List<string>(); //存在しているオブジェクトのタグを保存する用のリスト
 
+        int objCount = 0;
+
         Collider2D[] cols = Physics2D.OverlapAreaAll(new Vector2(b.x, b.y), new Vector2(b.size.x, b.size.y));
         foreach(var col in cols)
         {
@@ -229,11 +240,77 @@ public class GameUIController : MonoBehaviour
                         if(!tags.Contains(col.gameObject.tag))
                         {
                             tags.Add(col.gameObject.tag);
+                            objCount++;
                             Debug.Log(col.gameObject.tag + "の増やすコストは" + obj_s.p_ene + " 消すコストは" + obj_s.ow_ene);
                         }
                     }
                 }
             }
+        }
+
+        // プレハブの幅を一時的に取得（仮生成）
+        GameObject temp = Instantiate(itemPrefab);
+        RectTransform tempRT = temp.GetComponent<RectTransform>();
+        float itemWidth = tempRT.rect.width;
+        Destroy(temp);
+
+        /*// 配置範囲の幅を取得
+        float areaWidth = spawnArea.anchoredPosition.x;
+
+        // 1個あたりの幅を計算（全体からマージンと間隔を引く）
+        float totalSpacing = spacing * (objCount - 1);
+        float availableWidth = areaWidth - (horizontalMargin * 2) - totalSpacing;
+        float itemWidth = availableWidth / objCount;*/
+
+        float areaWidth = spawnArea.rect.width;
+        float oneItemWidth = areaWidth / objCount;
+        Vector2 centerPos = new Vector2(spawnArea.anchoredPosition.x, spawnArea.anchoredPosition.y);
+        Vector2 startPos = centerPos - new Vector2(areaWidth / 2, 0) /*+ new Vector2(oneItemWidth / 2, 0)*/;
+        //Debug.Log("表示エリアのxサイズは" + areaWidth);
+        //float usableWidth = areaWidth - (horizontalMargin * 2);
+
+        // spacingを自動計算（空白を「アイテム間」に均等に割る）
+        
+
+        /*float totalItemsWidth = itemWidth * objCount;
+        float totalSpacing = usableWidth - totalItemsWidth;
+        float spacing = (objCount > 1) ? totalSpacing / (objCount - 1) : 0f;*/
+
+        for (int i = 0; i < objCount; i++)
+        {
+            GameObject item = Instantiate(itemPrefab, spawnArea);
+            Image plusIcon_s = item.transform.Find("PlusCostIcon").gameObject.GetComponent<Image>();
+            TextMeshProUGUI plusText = item.transform.Find("PlusCostText").gameObject.GetComponent<TextMeshProUGUI>();
+            Image eraseIcon_s = item.transform.Find("EraseCostIcon").gameObject.GetComponent<Image>();
+            TextMeshProUGUI eraseText = item.transform.Find("EraseCostText").gameObject.GetComponent<TextMeshProUGUI>();
+            RectTransform itemRT = item.GetComponent<RectTransform>();
+
+            foreach(ObjectStore obj_s in objSB.objectList) //シーン上のオブジェクトのtagを取得
+            {
+                if(obj_s.obj.tag.Equals(tags[i]))
+                {
+                    plusIcon_s.sprite = obj_s.obj.GetComponent<SpriteRenderer>().sprite;
+                    plusText.text = obj_s.p_ene.ToString();
+                    eraseIcon_s.sprite = obj_s.obj.GetComponent<SpriteRenderer>().sprite;
+                    eraseText.text = obj_s.ow_ene.ToString();
+                    //Debug.Log(col.gameObject.tag + "の増やすコストは" + obj_s.p_ene + " 消すコストは" + obj_s.ow_ene);
+                }
+            }
+
+            // サイズ指定
+            //itemRT.sizeDelta = new Vector2(oneItemWidth, itemRT.sizeDelta.y);
+
+            // アンカーと位置指定（左寄せ固定）
+            /*itemRT.anchorMin = new Vector2(0, 0.5f);
+            itemRT.anchorMax = new Vector2(0, 0.5f);
+            itemRT.pivot = new Vector2(0, 0.5f);*/
+
+            /*float xPos = horizontalMargin + (itemWidth / 2f) + i * (itemWidth + spacing);
+            itemRT.anchoredPosition = new Vector2(xPos, 0f);*/
+
+            // 配置位置（左から順に並べる）
+            //float xPos = horizontalMargin + (i + 1) * (oneItemWidth / 2f);
+            itemRT.anchoredPosition = startPos + new Vector2(i * oneItemWidth, 0);
         }
     }
 
