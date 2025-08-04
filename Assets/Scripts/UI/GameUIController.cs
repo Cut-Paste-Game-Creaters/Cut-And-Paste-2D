@@ -37,11 +37,12 @@ public class GameUIController : MonoBehaviour
     //コスト一覧display用
     private GameObject allCostDisplay;
     private Vector2 startPos;
-    private GraphicRaycaster raycaster;
-    private EventSystem eventSystem;
+    private RectTransform targetUI;
+    private Camera uiCamera;
 
     void Start()
     {
+        uiCamera = FindObjectOfType<Camera>();
         Tilemap[] maps = FindObjectsOfType<Tilemap>();
         foreach (var map in maps)
         {
@@ -50,16 +51,15 @@ public class GameUIController : MonoBehaviour
                 tilemap = map;
             }
         }
-        DisplayAllObjectCost();
+        CalcDisplayAllObjectCost();
         stageManager = FindObjectOfType<StageManager>();
         judgeFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
         text_duplicateCost.gameObject.SetActive(false);
         CostDisplay = gameObject.transform.Find("CostDisplay").gameObject;
         CostDisplay.gameObject.SetActive(false);
         allCostDisplay = gameObject.transform.Find("AllCostDisplay").gameObject;
-        startPos = allCostDisplay.GetComponent<RectTransform>().anchoredPosition;
-        eventSystem = FindObjectOfType<EventSystem>();
-        raycaster = FindObjectOfType<GraphicRaycaster>();
+        targetUI = allCostDisplay.GetComponent<RectTransform>();
+        startPos = targetUI.anchoredPosition;
         icon_copycut.enabled = false;
     }
 
@@ -208,7 +208,7 @@ public class GameUIController : MonoBehaviour
         CostDisplay.SetActive(true);
     }
 
-    public void DisplayAllObjectCost()
+    public void CalcDisplayAllObjectCost()
     {
         tilemap.CompressBounds(); //タイルを最小まで圧縮
         var b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
@@ -240,16 +240,24 @@ public class GameUIController : MonoBehaviour
     public void AppearAllCostDisplay() //カーソル合わせた時にdisplayを画面上に出現させる
     {
         //この4行でUIとの重なり判定, 判定取りたい奴にGraphicRayCasterコンポーネント付ける
-        PointerEventData pointerData = new PointerEventData(eventSystem);
+        /*PointerEventData pointerData = new PointerEventData(eventSystem);
         pointerData.position = Input.mousePosition;
         List<RaycastResult> results = new List<RaycastResult>();
-        raycaster.Raycast(pointerData, results);
+        raycaster.Raycast(pointerData, results);*/
+
+        Vector2 mousePosition = Input.mousePosition;
+
+        bool isOver = RectTransformUtility.RectangleContainsScreenPoint(
+            targetUI,
+            mousePosition,
+            uiCamera // World SpaceやCameraの場合は指定。Screen Space - Overlayなら null にする
+        );
 
         Vector2 size = allCostDisplay.GetComponent<RectTransform>().sizeDelta; //UIのサイズ
         Vector2 hiddenPos = startPos; //隠れているUIの位置
         Vector2 appearPos = hiddenPos + new Vector2(-size.x + 50, 0); //50はカーソル合わせる幅, UIの出現位置
 
-        if (results.Count > 0)
+        if (isOver)
         {
             if(allCostDisplay.GetComponent<RectTransform>().anchoredPosition == hiddenPos)
             {
