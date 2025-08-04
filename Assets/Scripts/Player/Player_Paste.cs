@@ -48,6 +48,8 @@ public class Player_Paste : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (stageManager == null) stageManager = FindObjectOfType<StageManager>();
+        if (captureCopyZone == null) captureCopyZone = FindObjectOfType<CaptureCopyZone>();
         if (stageManager.tileData.hasData)
         {
             PasteTiles(Camera.main.ScreenToWorldPoint(Input.mousePosition));

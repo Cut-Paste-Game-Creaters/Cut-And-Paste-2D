@@ -1259,7 +1259,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64de2a2b328b87b40af2ff15e519853d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap: {fileID: 2049821729}
   tileSB: {fileID: 11400000, guid: b58413ee8aa87174e8571d021e40d761, type: 2}
 --- !u!4 &794371244
 Transform:
@@ -10414,7 +10413,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9016092672927213838, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
       propertyPath: stageName
-      value: Stage4
+      value: Stage1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

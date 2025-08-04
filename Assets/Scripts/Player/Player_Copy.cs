@@ -69,6 +69,8 @@ public class Player_Copy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(stageMgr==null) stageMgr = FindObjectOfType<StageManager>();
+        if(captureCopyZone==null) captureCopyZone = FindObjectOfType<CaptureCopyZone>();
         CopyTiles();
 
         stageMgr.isSelectZone = isSelectZone;
