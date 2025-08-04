@@ -50,6 +50,7 @@ TagManager:
   - Needle-M
   - Switchblock
   - BrackCurtain
+  - Needleball-L
   layers:
   - Default
   - TransparentFX

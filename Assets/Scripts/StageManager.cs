@@ -18,7 +18,7 @@ public class StageManager : MonoBehaviour
     Player_Function playerFunc;
     RankJudgeAndUpdateFunction rankFunc;
     public int player_HP = 100;
-    public int player_MAXHP = 100;
+    public int player_MAXHP = 200;
     public bool isPlayerDamaged = false;
     private float noDamageTime = 1.0f;
     private float nowNoDanageTime = 0.0f;
@@ -74,7 +74,7 @@ public class StageManager : MonoBehaviour
             new Pair<bool, bool>(false, false),
             new Pair<bool, bool>(false, false),
             new Pair<bool, bool>(false, false),
-            new Pair<bool, bool>(true, false),
+            new Pair<bool, bool>(false, false),
             new Pair<bool, bool>(false, false),
             new Pair<bool, bool>(false, false),
             new Pair<bool, bool>(false, false),

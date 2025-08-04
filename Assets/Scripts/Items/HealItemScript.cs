@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealItemScript : MonoBehaviour
 {
     private StageManager stageManager;
-    public int Healamount = 10;
+    private int Healamount = 20;
 
     void Start()
     {

@@ -153,3 +153,7 @@ MonoBehaviour:
     obj: {fileID: 452536124641921469, guid: 4a7f36a9583bbc643950bfaedb40bffb, type: 3}
     p_ene: 500
     ow_ene: 0
+  - name: Needleball-L
+    obj: {fileID: 2505159541229034835, guid: f6ff1a027ac583d49bbb32754b89583b, type: 3}
+    p_ene: 5
+    ow_ene: 300
