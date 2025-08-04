@@ -21,6 +21,7 @@ public class SwitchController : MonoBehaviour
     private StageManager stageManager;
     public bool nowPressState = false;     //今のスイッチの状態
     public int hitState = -1;        //collider enter=0, stay=1, exit=2,押されてないとき-1
+    private AnimationManager animManager = null;
 
     public class CopySwitchController
     {
@@ -67,14 +68,14 @@ public class SwitchController : MonoBehaviour
             default: break;
         }
 
-        if (!stageManager.switch_state)
-        {
-            sr.sprite = stateOff;
-        }
-        else
-        {
-            sr.sprite = stateOn;
-        }
+        //if (!stageManager.switch_state)
+        //{
+        //    sr.sprite = stateOff;
+        //}
+        //else
+        //{
+        //    sr.sprite = stateOn;
+        //}
 
         if (hitState == 2) hitState = -1;
     }
@@ -125,6 +126,15 @@ public class SwitchController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         hitState = 0;
+        if (animManager == null) animManager = FindObjectOfType<AnimationManager>();
+        if(stageManager.switch_state)
+        {
+            animManager.Play("switch_off", sr);
+        }
+        else
+        {
+            animManager.Play("switch_on", sr);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D other)
