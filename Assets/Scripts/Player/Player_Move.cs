@@ -21,18 +21,22 @@ public class Player_Move : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask longobjectLayer;
 
-    private Rigidbody2D rb; 
+    private Rigidbody2D rb;
+    private SpriteRenderer sr;
     private bool isJumping = false;
     private float jumpTimeCounter;
     private float gravity_init = 0;
+    private AnimationManager animManager;
     // Start is called before the first frame update
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
         gravity_init = rb.gravityScale;
         Time.fixedDeltaTime = 0.01f;
+        animManager = FindObjectOfType<AnimationManager>();
     }
 
     // Update is called once per frame
