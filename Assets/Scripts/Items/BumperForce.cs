@@ -76,7 +76,8 @@ public class BumperForce : MonoBehaviour
         {
             Rigidbody2D rb = collision.rigidbody;
             Debug.Log("huretawane");
-            if (rb != null)
+        SEManager.instance.ClipAtPointSE(SEManager.instance.bumperSE);
+        if (rb != null)
             {
                 // 接触点の法線ベクトルを取得
                 Vector2 normal = collision.GetContact(0).normal;

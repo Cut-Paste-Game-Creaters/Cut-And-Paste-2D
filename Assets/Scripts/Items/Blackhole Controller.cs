@@ -52,6 +52,9 @@ public class Blackhole : MonoBehaviour
             currentValue = true;
             timer = 0f;
             Debug.Log("Switched to TRUE");
+            SEManager.instance.ClipAtPointWithFadeInOut(SEManager.instance.blackholeSE, 3f);
+            SEManager.instance.ClipAtPointWithFadeInOut(SEManager.instance.blackholeyoinSE, 3f);
+
         }
 
         if (currentValue)
