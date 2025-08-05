@@ -154,6 +154,8 @@ public class StageManager : MonoBehaviour
             gameUI.UnDisplayObjectCost();
         }
 
+        gameUI.AppearAllCostDisplay(isSelectZone); //コスト一覧表表示
+
     }
 
     [System.Serializable] // Unityエディタでシリアライズ可能にする
@@ -240,8 +242,8 @@ public class StageManager : MonoBehaviour
             player_HP -= damage;
             isPlayerDamaged = true;
             nowNoDanageTime = 0.0f;
+            SEManager.instance.ClipAtPointSE(SEManager.instance.damageSE);
         }
-
     }
 
     public void InitAllSumCost()
