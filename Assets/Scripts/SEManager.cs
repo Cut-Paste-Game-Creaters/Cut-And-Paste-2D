@@ -20,17 +20,17 @@ public class SEManager : MonoBehaviour
     public AudioClip copySE;//
     public AudioClip cutshortSE;//
     public AudioClip damageSE;
-    public AudioClip deathbiribiriSE;//
-    public AudioClip deathyoinSE;//
+    public AudioClip deathbiribiriSE;
+    public AudioClip deathyoinSE;
     public AudioClip decideSE;//
     public AudioClip flip1SE;//
     public AudioClip healSE;
     public AudioClip iitokiSE;//
-    public AudioClip keyOpenSE;//
+    public AudioClip keyOpenSE;
     public AudioClip landingSE;//
     public AudioClip flip2SE;//
-    public AudioClip CannonfireSE;//
-    public AudioClip SwitchSE;//
+    public AudioClip CannonfireSE;
+    public AudioClip SwitchSE;
     public AudioClip katiSE;//”ÍˆÍ‘I‘ğAˆÚ“®‚·‚é‚½‚Ñ‚É‚È‚é
 
     void Update()

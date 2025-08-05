@@ -126,6 +126,7 @@ public class SwitchController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         hitState = 0;
+        SEManager.instance.ClipAtPointSE(SEManager.instance.SwitchSE);
         if (animManager == null) animManager = FindObjectOfType<AnimationManager>();
         if(stageManager.switch_state)
         {

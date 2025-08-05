@@ -134,6 +134,7 @@ public class Player_Move : MonoBehaviour
 
         if (IsGrounded() && PlayerInput.GetKeyDown(KeyCode.W))
         {
+            SEManager.instance.ClipAtPointSE(SEManager.instance.jumpSE);//Œø‰Ê‰¹
             isJumping = true;
             jumpTimeCounter = maxHoldTime;
         }

@@ -18,6 +18,7 @@ public class KeyLockScript : MonoBehaviour
         if (other.gameObject.CompareTag("Player")) // "Player"タグのオブジェクトと衝突したら
         {
             stageManager.key_lock_state = true;
+            SEManager.instance.ClipAtPointSE(SEManager.instance.keyOpenSE);
             Destroy(this.gameObject);
         }
 

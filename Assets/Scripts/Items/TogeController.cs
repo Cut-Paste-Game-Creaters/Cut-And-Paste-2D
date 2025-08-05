@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TogeController : MonoBehaviour
 {
-    StageManager stageMgr;
     public int togeDamage;
 
     public class CopyTogeController
@@ -17,24 +16,12 @@ public class TogeController : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        stageMgr = FindObjectOfType<StageManager>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void OnCollisionStay2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player") //衝突したのがプレイヤーなら
+        if (collision.gameObject.CompareTag("Player") && StageManager.Instance != null && !StageManager.Instance.isPlayerDamaged)
         {
-            stageMgr.DamageToPlayer(togeDamage);
-            Debug.Log("トゲからプレイヤーへ" + togeDamage + "のダメージ");
+            StageManager.Instance.DamageToPlayer(togeDamage);
         }
     }
 }
+

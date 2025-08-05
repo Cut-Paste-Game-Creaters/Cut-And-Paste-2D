@@ -6,7 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class WarpDoor : MonoBehaviour
 {
+    [SerializeField] SpriteRenderer door;
     [SerializeField] Image rankDisplayImage;
+    [SerializeField] Sprite notclear;
+    [SerializeField] Sprite clear;
     [SerializeField] Sprite rankText_S;
     [SerializeField] Sprite rankText_A;
     [SerializeField] Sprite rankText_B;
@@ -29,10 +32,12 @@ public class WarpDoor : MonoBehaviour
     //SceneManagerEventでStageSelectをロードしたときにセットされる
     public void SetRankSprite(string stage_rank)
     {
+        Sprite doorImage = clear;
         Sprite rankImage = rankText_S;
         if (stage_rank == "NONE")
         {
             rankImage = null;
+            doorImage = notclear;
         }
         else if (stage_rank == "S")
         {
@@ -56,6 +61,7 @@ public class WarpDoor : MonoBehaviour
         }
 
         rankDisplayImage.sprite = rankImage;
+        door.sprite = doorImage;
     }
     
     public class CopyWarpDoor
@@ -72,7 +78,7 @@ public class WarpDoor : MonoBehaviour
             stopLoad = wpDoor.stopLoad;
         }
     }
-
+ 
     void Start()
     {
         //rankText = new Dictionary<string, GameObject>() // Dictionaryクラスの宣言と初期値の設定
@@ -87,8 +93,13 @@ public class WarpDoor : MonoBehaviour
         judgeFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
         clearFunc = FindObjectOfType<ClearFunction>();
 
+        door = GetComponent<SpriteRenderer>();
+
         AllTextDisable();
+
     }
+
+
 
     void Update()
     {

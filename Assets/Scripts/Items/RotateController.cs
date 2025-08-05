@@ -8,7 +8,6 @@ public class RotateController : MonoBehaviour
     public int dir = -1;
 
     private SpriteRenderer sr;
-    private StageManager stageManager;
 
     public class CopyRotateController
     {
@@ -22,19 +21,24 @@ public class RotateController : MonoBehaviour
         }
     }
 
-    void Start()
+    IEnumerator Start()
     {
-        stageManager = FindObjectOfType<StageManager>();
+        // SpriteRenderer ‚ğæ‚Éæ“¾
         sr = GetComponent<SpriteRenderer>();
+
+        // StageManager.Instance ‚ª null ‚ÌŠÔ‚Í‘Ò‹@
+        while (StageManager.Instance == null)
+        {
+            yield return null;
+        }
     }
 
     void Update()
     {
-        if (stageManager.switch_state)
+        if (StageManager.Instance != null && StageManager.Instance.switch_state)
         {
             float delta = 360.0f * dir * (PlayerInput.GetDeltaTime() / rotateTime);
             transform.Rotate(0.0f, 0.0f, delta);
         }
     }
 }
-

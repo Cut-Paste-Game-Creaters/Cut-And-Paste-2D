@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class SwitchblockController : MonoBehaviour
 {
-
     public Sprite stateOff;
     public Sprite stateOn;
-    private SpriteRenderer sr;
-    private StageManager stageManager;
 
+    private SpriteRenderer sr;
     private Collider2D col;
     private bool prevState;
 
@@ -25,22 +23,28 @@ public class SwitchblockController : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
         col = GetComponent<Collider2D>();
-        stageManager = FindObjectOfType<StageManager>();
-        prevState = stageManager.switch_state; // ‰Šúó‘Ô‚ğ‹L˜^
-        ApplyState(prevState); // ‰Šúó‘Ô‚ğ”½‰f
+
+        if (StageManager.Instance != null)
+        {
+            prevState = StageManager.Instance.switch_state;
+            ApplyState(prevState);
+        }
+        else
+        {
+            Debug.LogWarning("StageManager.Instance is null in SwitchblockController.");
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        bool currentState = stageManager.switch_state;
+        if (StageManager.Instance == null) return;
 
-        // ó‘Ô‚ª•Ï‚í‚Á‚½‚Æ‚«‚¾‚¯ˆ—
+        bool currentState = StageManager.Instance.switch_state;
+
         if (currentState != prevState)
         {
             ApplyState(currentState);
@@ -50,18 +54,8 @@ public class SwitchblockController : MonoBehaviour
 
     void ApplyState(bool isVisible)
     {
- 
         col.enabled = isVisible;
 
-        if (isVisible)
-        {
-            sr.sprite = stateOn;
-        }
-        else if(!isVisible)
-        {
-            sr.sprite = stateOff;
-        }
-  
- 
+        sr.sprite = isVisible ? stateOn : stateOff;
     }
 }
