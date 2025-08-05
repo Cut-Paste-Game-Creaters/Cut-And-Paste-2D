@@ -13,6 +13,7 @@ public class AnimationInstance
 
     public bool IsFinished => isFinished;
     public SpriteRenderer TargetRenderer => renderer; // rendererを読み取り専用で公開する
+    public string GetAnimationName() { return data.name; }
 
     public AnimationInstance(SpriteAnimationData data, SpriteRenderer renderer)
     {
@@ -28,7 +29,7 @@ public class AnimationInstance
     public void Update(float deltaTime)
     {
         //もし終了しているアニメーションだったり、アニメの画像が0だったらreturn
-        if (IsFinished || data.frames.Count == 0)
+        if (IsFinished || data.frames.Count == 0 || renderer==null)
             return;
 
         timer += deltaTime;

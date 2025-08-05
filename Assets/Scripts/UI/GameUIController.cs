@@ -331,6 +331,9 @@ public class GameUIController : MonoBehaviour
             uiCamera // World SpaceやCameraの場合は指定。Screen Space - Overlayなら null にする
         );
 
+        //シーンをまたぐと参照が途切れるので
+        if(allCostDisplay==null) allCostDisplay = gameObject.transform.Find("AllCostDisplay").gameObject;
+
         Vector2 size = allCostDisplay.GetComponent<RectTransform>().sizeDelta; //UIのサイズ
         Vector2 hiddenPos = startPos; //隠れているUIの位置
         Vector2 appearPos = hiddenPos + new Vector2(-size.x + 50, 0); //50はカーソル合わせる幅, UIの出現位置

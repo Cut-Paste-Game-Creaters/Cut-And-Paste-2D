@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerState
+{
+    Idle,
+    MoveRight,
+    MoveLeft,
+    Jump,
+}
+
 public class Player_Move : MonoBehaviour
 {
     /*
@@ -23,10 +31,12 @@ public class Player_Move : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
+    private PlayerState currentState=PlayerState.Idle;
     private bool isJumping = false;
     private float jumpTimeCounter;
     private float gravity_init = 0;
     private AnimationManager animManager;
+    private bool isWaiting = true;
     // Start is called before the first frame update
 
 
@@ -42,16 +52,39 @@ public class Player_Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(animManager==null)animManager = FindObjectOfType<AnimationManager>();
+        HandleInput();
+        UpdateState();
+
+        /*
         Vector3 pos = this.transform.position;
+        float dx = 0.0f;
         //プレイヤーの左右の動き
         if (PlayerInput.GetKey(KeyCode.A))
         {
-            pos.x -= moveSpeed * PlayerInput.GetDeltaTime();
+            dx   = -moveSpeed * PlayerInput.GetDeltaTime();
+            sr.flipX = true;
+            if(!isJumping)animManager.Play("player_walk", sr,true);
+            isWaiting = false;
         }
         if (PlayerInput.GetKey(KeyCode.D))
         {
-            pos.x += moveSpeed * PlayerInput.GetDeltaTime();
+            dx = moveSpeed * PlayerInput.GetDeltaTime();
+            sr.flipX = false;
+            if (!isJumping) animManager.Play("player_walk", sr,true);
+            isWaiting = false;
         }
+        //移動してないならwait
+        if(Mathf.Abs(dx)< 0.001f)
+        {
+            if (!isWaiting)
+            {
+                animManager.Play("player_wait", sr);
+                isWaiting = true;
+            }
+        }
+
+            pos.x += dx;
 
         //プレイヤーのジャンプ
 
@@ -61,6 +94,7 @@ public class Player_Move : MonoBehaviour
             //SEManager.instance.ClipAtPointSE(SEManager.instance.jumpSE);//効果音
             isJumping = true;
             jumpTimeCounter = maxHoldTime;
+            animManager.Play("player_jump", sr);
            
         }
 
@@ -71,6 +105,70 @@ public class Player_Move : MonoBehaviour
         }
 
         this.transform.position = pos;
+        */
+    }
+
+    private void HandleInput()
+    {
+        float move = Input.GetAxisRaw("Horizontal");
+
+        Vector3 pos = this.transform.position;
+
+        if (move > 0)
+        {
+            pos.x += moveSpeed * PlayerInput.GetDeltaTime();
+            currentState = PlayerState.MoveRight;
+            sr.flipX = false;
+        }
+        else if (move < 0)
+        {
+            pos.x -= moveSpeed * PlayerInput.GetDeltaTime();
+            currentState = PlayerState.MoveLeft;
+            sr.flipX = true;
+        }
+        else
+        {
+            currentState = PlayerState.Idle;
+        }
+
+        if (IsGrounded() && PlayerInput.GetKeyDown(KeyCode.W))
+        {
+            isJumping = true;
+            jumpTimeCounter = maxHoldTime;
+        }
+        if (!IsGrounded())
+        {
+            currentState = PlayerState.Jump;
+        }
+        // Wキーを離したらジャンプ終了
+        if (PlayerInput.GetKeyUp(KeyCode.W))
+        {
+            isJumping = false;
+        }
+
+        this.transform.position = pos;
+    }
+
+    private void UpdateState()
+    {
+
+        // 必要に応じて状態に応じた処理を書く（アニメーションなど）
+        switch (currentState)
+        {
+            case PlayerState.Idle:
+                animManager.Play("player_wait", sr,true);
+                break;
+            case PlayerState.MoveRight:
+                animManager.Play("player_walk", sr, true);
+                break;
+            case PlayerState.MoveLeft:
+                animManager.Play("player_walk", sr, true);
+                break;
+            case PlayerState.Jump:
+                animManager.Play("player_jump", sr, true);
+                break;
+            default:break;
+        }
     }
 
     private void FixedUpdate()

@@ -50,12 +50,23 @@ public class AnimationManager : MonoBehaviour
     }
 
     //アニメーションの実行を指示する関数
-    public void Play(string name, SpriteRenderer targetRenderer)
+    public void Play(string name, SpriteRenderer targetRenderer,bool overlapAnim=false)
     {
         if (!animationDict.TryGetValue(name, out var clip))
         {
             Debug.LogWarning($"Animation '{name}' not found!");
             return;
+        }
+        if(overlapAnim)     //これがtrueなら、同じspriteRendererに対して同じアニメーション呼び出ししたら無視
+        {
+            for (int i = activeAnimations.Count - 1; i >= 0; i--)
+            {
+                if (activeAnimations[i].TargetRenderer == targetRenderer
+                    && activeAnimations[i].GetAnimationName()==name)
+                {
+                    return;
+                }
+            }
         }
 
         Stop(targetRenderer);

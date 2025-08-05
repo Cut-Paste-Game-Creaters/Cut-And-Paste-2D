@@ -67,3 +67,25 @@ MonoBehaviour:
     - {fileID: 21300000, guid: f1f871b8d0085c442bbea4869e9a823f, type: 3}
     frameRate: 30
     isLoop: 0
+  - name: player_walk
+    frames:
+    - {fileID: 21300000, guid: 0240e9f4ae67d0a48836ff837cefdd1f, type: 3}
+    - {fileID: 21300000, guid: 7c1ff387f53c26d48acebdc2f8a89cc2, type: 3}
+    frameRate: 10
+    isLoop: 1
+  - name: player_wait
+    frames:
+    - {fileID: 21300000, guid: 0240e9f4ae67d0a48836ff837cefdd1f, type: 3}
+    - {fileID: 21300000, guid: 720c4d0711709ed4987210bb22be23fe, type: 3}
+    frameRate: 10
+    isLoop: 1
+  - name: player_jump
+    frames:
+    - {fileID: 21300000, guid: cd057bfd56b83ec47a012ff43d196696, type: 3}
+    frameRate: 10
+    isLoop: 1
+  - name: player_damage
+    frames:
+    - {fileID: 21300000, guid: 53f2d84964435cf4bad2b2f61394a401, type: 3}
+    frameRate: 10
+    isLoop: 1
