@@ -39,6 +39,7 @@ public class GameUIController : MonoBehaviour
     private Vector2 startPos;
     private RectTransform targetUI;
     private Camera uiCamera;
+    bool isLeft = false; //UIが右端にあるかどうか
 
     [Header("生成するプレハブ")]
     public GameObject itemPrefab;
@@ -107,7 +108,7 @@ public class GameUIController : MonoBehaviour
             icon_copycut.enabled = false;
         }
 
-        AppearAllCostDisplay(); //コスト一覧表表示
+        //AppearAllCostDisplay(); //コスト一覧表表示
     }
 
     public void DisplayObjectCost(int writeCost, int eraseCost)
@@ -314,7 +315,7 @@ public class GameUIController : MonoBehaviour
         }
     }
 
-    public void AppearAllCostDisplay() //カーソル合わせた時にdisplayを画面上に出現させる
+    public void AppearAllCostDisplay(bool isSelectZone) //カーソル合わせた時にdisplayを画面上に出現させる
     {
         //この4行でUIとの重なり判定, 判定取りたい奴にGraphicRayCasterコンポーネント付ける
         /*PointerEventData pointerData = new PointerEventData(eventSystem);
@@ -333,17 +334,57 @@ public class GameUIController : MonoBehaviour
         Vector2 size = allCostDisplay.GetComponent<RectTransform>().sizeDelta; //UIのサイズ
         Vector2 hiddenPos = startPos; //隠れているUIの位置
         Vector2 appearPos = hiddenPos + new Vector2(-size.x + 50, 0); //50はカーソル合わせる幅, UIの出現位置
+        Vector2 leftPos = appearPos + new Vector2(-(size.x - 70), 0); //左端の位置
 
-        if (isOver)
+        if(isSelectZone)
         {
-            if(allCostDisplay.GetComponent<RectTransform>().anchoredPosition == hiddenPos)
+            //allCostDisplay.GetComponent<RectTransform>().anchoredPosition = appearPos;
+
+            /*if(!isLeft)
             {
                 allCostDisplay.GetComponent<RectTransform>().anchoredPosition = appearPos;
+                if(isOver && PlayerInput.GetMouseButtonDown(0))
+                {
+                    allCostDisplay.GetComponent<RectTransform>().anchoredPosition = leftPos;
+                    isLeft = true;
+                }
+            }
+            else
+            {
+                if(isOver && PlayerInput.GetMouseButtonDown(0))
+                {
+                    allCostDisplay.GetComponent<RectTransform>().anchoredPosition = appearPos;
+                    isLeft = false;
+                }
+            }*/
+
+            if(isOver)
+            {
+                if(!isLeft)
+                {
+                    allCostDisplay.GetComponent<RectTransform>().anchoredPosition = leftPos;
+                    isLeft = true;
+                }
+                else
+                {
+                    allCostDisplay.GetComponent<RectTransform>().anchoredPosition = appearPos;
+                    isLeft = false;
+                }
             }
         }
         else
         {
-            allCostDisplay.GetComponent<RectTransform>().anchoredPosition = hiddenPos;
+            if (isOver)
+            {
+                if(allCostDisplay.GetComponent<RectTransform>().anchoredPosition == hiddenPos)
+                {
+                    allCostDisplay.GetComponent<RectTransform>().anchoredPosition = appearPos;
+                }
+            }
+            else
+            {
+                allCostDisplay.GetComponent<RectTransform>().anchoredPosition = hiddenPos;
+            }
         }
     }
 
