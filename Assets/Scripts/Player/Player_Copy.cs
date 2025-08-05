@@ -605,6 +605,16 @@ public class Player_Copy : MonoBehaviour
         cuticon.SetActive(true);
     }*/
 
+    //UndoRedoへの情報譲渡用
+    public Stack<GameObject> GetSelectedObjects()
+    {
+        return selectedObjects;
+    }
+    public void SetSelectedObjects(Stack<GameObject> so_info)
+    {
+        selectedObjects = so_info;
+    }
+
     //コピーかカットかの選択が終わった後の共通の処理
     void InitWhichMode()
     {

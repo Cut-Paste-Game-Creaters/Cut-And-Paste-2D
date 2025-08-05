@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
+using UnityEngine.UI;
 
 public class UndoRedoFunction : MonoBehaviour
 {
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
     GameObject playerCam;
     private GameObject player;
+    private Player_Copy p_copy;
+    private CaptureCopyZone ccz;
     StageManager stageMgr;
     CameraMove camMove;
     Vector3Int stageStartPos;
@@ -29,7 +32,9 @@ public class UndoRedoFunction : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player");
+        p_copy = player.GetComponent<Player_Copy>();
         stageMgr = FindObjectOfType<StageManager>();
+        ccz = FindObjectOfType<CaptureCopyZone>();
         playerCam = Camera.main.gameObject;
         camMove = FindObjectOfType<CameraMove>();
         Tilemap[] maps = FindObjectsOfType<Tilemap>();
@@ -69,6 +74,8 @@ public class UndoRedoFunction : MonoBehaviour
         allStageInfo.playerState = RecordPlayerInfo();
         allStageInfo.copyTileData = RecordCopyTileData();
         //allStageInfo.copyObjectData = RecordCopyObjectData();
+        //allStageInfo.copySelectedObjects = RecordCopySelectedObjects();
+        allStageInfo.copyImage = RecordCopyImage();
         undoStack.Push(allStageInfo);
         Debug.Log("stackに保存されました" + undoStack.Count);
     }
@@ -268,6 +275,28 @@ public class UndoRedoFunction : MonoBehaviour
         return copyObjectData;
     }
 
+    public Stack<GameObject> RecordCopySelectedObjects()
+    {
+        Stack<GameObject> cs_objs = new Stack<GameObject>();
+
+        /*while(p_copy.GetSelectedObjects().Count > 0)
+        {
+            GameObject obj = p_copy.GetSelectedObjects().Peek();
+            cs_objs.Push(obj);
+        }*/
+
+        return cs_objs;
+    }
+
+    public Image RecordCopyImage()
+    {
+        Image copyImage;
+
+        copyImage = ccz.GetImage();
+
+        return copyImage;
+    }
+
     public void Undo()
     {
         if(undoStack.Count > 1)
@@ -282,6 +311,8 @@ public class UndoRedoFunction : MonoBehaviour
             UndoPlayerState();
             UndoCopyTileData();
             //UndoCopyObjectData();
+            //UndoCopySelectedObjects();
+            UndoCopyImage();
         }
     }
 
@@ -525,6 +556,28 @@ public class UndoRedoFunction : MonoBehaviour
         }
     }
 
+    void UndoCopySelectedObjects()
+    {
+        Stack<GameObject> pre_copySelectedObjects = undoStack.Peek().copySelectedObjects;
+
+        p_copy.SetSelectedObjects(pre_copySelectedObjects);
+    }
+
+    void UndoCopyImage()
+    {
+        Image pre_copyImage = undoStack.Peek().copyImage;
+
+        ccz.SetImage(pre_copyImage);
+        if(stageMgr.tileData.hasData)
+        {
+            ccz.ableImage();
+        }
+        else
+        {
+            ccz.disableImage();
+        }
+    }
+
     //リトライ
     public void Retry()
     {
@@ -705,5 +758,7 @@ public class UndoRedoFunction : MonoBehaviour
         public PlayerState playerState = new PlayerState();
         public StageManager.TileData copyTileData;
         public List<StageManager.ObjectData> copyObjectData = new List<StageManager.ObjectData>();
+        public Stack<GameObject> copySelectedObjects = new Stack<GameObject>();
+        public Image copyImage;
     }
 }

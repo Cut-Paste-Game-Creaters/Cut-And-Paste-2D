@@ -152,6 +152,16 @@ public class CaptureCopyZone : MonoBehaviour
         image.transform.localScale = scale;
     }
 
+    public Image GetImage()
+    {
+        return image;
+    }
+
+    public void SetImage(Image copyImage)
+    {
+        image = copyImage;
+    }
+
 
     //マウスの座標をタイルの座標に変換する関数
     private Vector3Int ChangeVecToInt(Vector3 v)
@@ -191,6 +201,11 @@ public class CaptureCopyZone : MonoBehaviour
             }
         }
         return direction;
+    }
+
+    public void ableImage()
+    {
+        image.enabled = true;
     }
 
     public void disableImage()

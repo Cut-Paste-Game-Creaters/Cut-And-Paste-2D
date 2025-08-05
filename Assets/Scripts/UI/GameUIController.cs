@@ -343,7 +343,7 @@ public class GameUIController : MonoBehaviour
         {
             //allCostDisplay.GetComponent<RectTransform>().anchoredPosition = appearPos;
 
-            /*if(!isLeft)
+            if(!isLeft)
             {
                 allCostDisplay.GetComponent<RectTransform>().anchoredPosition = appearPos;
                 if(isOver && PlayerInput.GetMouseButtonDown(0))
@@ -359,9 +359,9 @@ public class GameUIController : MonoBehaviour
                     allCostDisplay.GetComponent<RectTransform>().anchoredPosition = appearPos;
                     isLeft = false;
                 }
-            }*/
+            }
 
-            if(isOver)
+            /*if(isOver)
             {
                 if(!isLeft)
                 {
@@ -373,7 +373,7 @@ public class GameUIController : MonoBehaviour
                     allCostDisplay.GetComponent<RectTransform>().anchoredPosition = appearPos;
                     isLeft = false;
                 }
-            }
+            }*/
         }
         else
         {
