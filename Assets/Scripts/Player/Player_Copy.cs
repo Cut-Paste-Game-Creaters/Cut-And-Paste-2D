@@ -414,9 +414,12 @@ public class Player_Copy : MonoBehaviour
         {
             GameObject obj = selectedObjects.Pop();
 
-            SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
-            sr.sortingLayerName = "object";
-            sr.sortingOrder = 0;
+            if(obj != null)
+            {
+                SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+                sr.sortingLayerName = "object";
+                sr.sortingOrder = 0;
+            }
         }
     }
 
