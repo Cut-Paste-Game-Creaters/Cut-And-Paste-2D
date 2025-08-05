@@ -23242,15 +23242,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4462907966080867569, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4462907966080867569, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4462907966080867569, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7208446286499985901, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: moveSpeed
@@ -30329,6 +30329,7 @@ SceneRoots:
   - {fileID: 1199248978}
   - {fileID: 2069531259}
   - {fileID: 749469360}
+  - {fileID: 1880618641}
   - {fileID: 159891384}
   - {fileID: 73281798}
   - {fileID: 109927218}
@@ -30446,4 +30447,3 @@ SceneRoots:
   - {fileID: 893642932}
   - {fileID: 2144594271}
   - {fileID: 1379853900}
-  - {fileID: 1880618641}

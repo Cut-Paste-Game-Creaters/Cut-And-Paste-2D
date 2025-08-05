@@ -90,6 +90,11 @@ public class StageManager : MonoBehaviour
             HealCost(stageNum);
         }
 
+        if (gameUI == null)
+        {
+            gameUI = FindObjectOfType<GameUIController>();
+        }
+
         if(isPlayerDamaged)
         {
             nowNoDanageTime += PlayerInput.GetDeltaTime();
