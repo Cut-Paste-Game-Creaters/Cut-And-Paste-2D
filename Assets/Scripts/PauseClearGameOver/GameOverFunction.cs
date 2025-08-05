@@ -27,6 +27,8 @@ public class GameOverFunction : MonoBehaviour
 
     public void GameOver()
     {
+        SEManager.instance.ClipAtPointSE(SEManager.instance.deathbiribiriSE);
+        SEManager.instance.ClipAtPointSE(SEManager.instance.deathyoinSE);
         canvas.enabled = true;
         PlayerInput.isPausing = true;
         Time.timeScale = 0f;
