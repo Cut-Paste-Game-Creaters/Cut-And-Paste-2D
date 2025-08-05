@@ -13,6 +13,7 @@ public class UndoRedoFunction : MonoBehaviour
     private GameObject player;
     private Player_Copy p_copy;
     private CaptureCopyZone ccz;
+    private RankJudgeAndUpdateFunction rankFunc;
     StageManager stageMgr;
     CameraMove camMove;
     Vector3Int stageStartPos;
@@ -35,6 +36,7 @@ public class UndoRedoFunction : MonoBehaviour
         p_copy = player.GetComponent<Player_Copy>();
         stageMgr = FindObjectOfType<StageManager>();
         ccz = FindObjectOfType<CaptureCopyZone>();
+        rankFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
         playerCam = Camera.main.gameObject;
         camMove = FindObjectOfType<CameraMove>();
         Tilemap[] maps = FindObjectsOfType<Tilemap>();
@@ -73,9 +75,9 @@ public class UndoRedoFunction : MonoBehaviour
         allStageInfo.stageObjState = RecordObjectState();
         allStageInfo.playerState = RecordPlayerInfo();
         allStageInfo.copyTileData = RecordCopyTileData();
-        //allStageInfo.copyObjectData = RecordCopyObjectData();
+        allStageInfo.copyObjectData = RecordCopyObjectData();
         //allStageInfo.copySelectedObjects = RecordCopySelectedObjects();
-        allStageInfo.copyImage = RecordCopyImage();
+        allStageInfo.copyImageSprite = RecordCopyImageSprite();
         undoStack.Push(allStageInfo);
         Debug.Log("stackに保存されました" + undoStack.Count);
     }
@@ -265,36 +267,39 @@ public class UndoRedoFunction : MonoBehaviour
         {
             StageManager.ObjectData obj_d = new StageManager.ObjectData();
 
-            obj_d.obj = s_obj.obj;
+            obj_d.obj = GameObject.Instantiate(s_obj.obj);
             obj_d.pos = s_obj.pos;
 
+            //obj_d = s_obj;
+
             copyObjectData.Add(obj_d);
+            //copyObjectData.Add(obj_d);
             //Debug.Log(obj_d.obj.name);
         }
 
         return copyObjectData;
     }
 
-    public Stack<GameObject> RecordCopySelectedObjects()
+    /*public Stack<GameObject> RecordCopySelectedObjects()
     {
         Stack<GameObject> cs_objs = new Stack<GameObject>();
 
-        /*while(p_copy.GetSelectedObjects().Count > 0)
+        while(p_copy.GetSelectedObjects().Count > 0)
         {
             GameObject obj = p_copy.GetSelectedObjects().Peek();
             cs_objs.Push(obj);
-        }*/
+        }
 
         return cs_objs;
-    }
+    }*/
 
-    public Image RecordCopyImage()
+    public Sprite RecordCopyImageSprite()
     {
-        Image copyImage;
+        Sprite copyImageSprite;
 
-        copyImage = ccz.GetImage();
+        copyImageSprite = ccz.GetImageSprite();
 
-        return copyImage;
+        return copyImageSprite;
     }
 
     public void Undo()
@@ -310,9 +315,9 @@ public class UndoRedoFunction : MonoBehaviour
             UndoObjState();
             UndoPlayerState();
             UndoCopyTileData();
-            //UndoCopyObjectData();
+            UndoCopyObjectData();
             //UndoCopySelectedObjects();
-            UndoCopyImage();
+            UndoCopyImageSprite();
         }
     }
 
@@ -391,6 +396,7 @@ public class UndoRedoFunction : MonoBehaviour
                 else if(wpdobj != null)
                 {
                     obj.CopyData(wpdobj);
+                    wpdobj.SetRankSprite(rankFunc.GetStageRank(obj.cwpDoor.stageName));
                 }
                 else if(bumobj != null)
                 {
@@ -549,26 +555,30 @@ public class UndoRedoFunction : MonoBehaviour
         {
             StageManager.ObjectData obj_d = new StageManager.ObjectData();
 
-            obj_d.obj = p_obj.obj;
+            obj_d.obj = GameObject.Instantiate(p_obj.obj);
             obj_d.pos = p_obj.pos;
 
+            //obj_d = p_obj;
             stageMgr.objectData.Add(obj_d);
+            //stageMgr.objectData.Add(p_obj);
         }
     }
 
-    void UndoCopySelectedObjects()
+    /*void UndoCopySelectedObjects()
     {
         Stack<GameObject> pre_copySelectedObjects = undoStack.Peek().copySelectedObjects;
 
         p_copy.SetSelectedObjects(pre_copySelectedObjects);
-    }
+    }*/
 
-    void UndoCopyImage()
+    void UndoCopyImageSprite()
     {
-        Image pre_copyImage = undoStack.Peek().copyImage;
+        ccz.disableImage(); //今ある画像を消す
 
-        ccz.SetImage(pre_copyImage);
-        if(stageMgr.tileData.hasData)
+        Sprite pre_copyImageSprite = undoStack.Peek().copyImageSprite;
+
+        ccz.SetImageSprite(pre_copyImageSprite);
+        if(stageMgr.tileData.hasData || stageMgr.objectData.Count > 0)
         {
             ccz.ableImage();
         }
@@ -684,6 +694,7 @@ public class UndoRedoFunction : MonoBehaviour
             copyWpd.stageName = cwpDoor.stageName;
             copyWpd.stageMgr = cwpDoor.stageMgr;
             copyWpd.stopLoad = cwpDoor.stopLoad;
+            //copyWpd.SetRankSprite(rankFunc.GetStageRank(cwpDoor.stageName));
         }
         //BumperForceのコピー処理
         public void CopyData(BumperForce copyBumper)
@@ -757,8 +768,8 @@ public class UndoRedoFunction : MonoBehaviour
         public List<StageObjectState> stageObjState = new List<StageObjectState>();
         public PlayerState playerState = new PlayerState();
         public StageManager.TileData copyTileData;
-        public List<StageManager.ObjectData> copyObjectData = new List<StageManager.ObjectData>();
-        public Stack<GameObject> copySelectedObjects = new Stack<GameObject>();
-        public Image copyImage;
+        public List<StageManager.ObjectData> copyObjectData;
+        //public Stack<GameObject> copySelectedObjects = new Stack<GameObject>();
+        public Sprite copyImageSprite;
     }
 }

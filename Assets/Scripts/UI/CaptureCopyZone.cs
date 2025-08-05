@@ -152,14 +152,14 @@ public class CaptureCopyZone : MonoBehaviour
         image.transform.localScale = scale;
     }
 
-    public Image GetImage()
+    public Sprite GetImageSprite()
     {
-        return image;
+        return image.sprite;
     }
 
-    public void SetImage(Image copyImage)
+    public void SetImageSprite(Sprite copyImageSprite)
     {
-        image = copyImage;
+        image.sprite = copyImageSprite;
     }
 
 

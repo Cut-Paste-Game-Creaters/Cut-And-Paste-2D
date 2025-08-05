@@ -60,6 +60,7 @@ public class WarpDoor : MonoBehaviour
     
     public class CopyWarpDoor
     {
+        public Dictionary<string, GameObject> rankText;
         public string stageName;
         public StageManager stageMgr;
         public bool stopLoad;
