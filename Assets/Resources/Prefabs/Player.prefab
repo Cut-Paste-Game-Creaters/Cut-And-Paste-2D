@@ -33,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -12.49, y: -4.74, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.9, y: 2.2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -131,8 +131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 9
   jumpForce: 15
-  groundCheckDistance: 1.5
-  objectCheckDistance: 1.05
+  groundCheckDistance: 1.4
+  objectCheckDistance: 1.2
   maxHoldTime: 0.2
   groundLayer:
     serializedVersion: 2
@@ -218,6 +218,6 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.014296532, y: 0}
-  m_Size: {x: 0.5, y: 1}
+  m_Offset: {x: -0.016704014, y: -0.111027196}
+  m_Size: {x: 0.49518517, y: 0.7779455}
   m_Direction: 0

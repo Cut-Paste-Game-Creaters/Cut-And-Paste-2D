@@ -58,6 +58,7 @@ public class CanonController : MonoBehaviour
 
         if(wholeTime > fireTime)
         {
+            SEManager.instance.ClipAtPointSE(SEManager.instance.CannonfireSE);
             wholeTime = 0;
             //КpУxТ▓Ро
             float _angle = angle + 90;
