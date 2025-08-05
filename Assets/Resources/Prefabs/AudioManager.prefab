@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 8343618099312019142}
   - component: {fileID: 7844606397630600954}
   - component: {fileID: 7281964226981590259}
+  - component: {fileID: 9124060226184224348}
   m_Layer: 0
-  m_Name: SEManager
+  m_Name: AudioManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +68,7 @@ MonoBehaviour:
   landingSE: {fileID: 8300000, guid: a79669b635ee5ef4bb808de19dd73fd5, type: 3}
   flip2SE: {fileID: 8300000, guid: 1b33f23e2c7282c47a9c37d225d90898, type: 3}
   CannonfireSE: {fileID: 8300000, guid: 3439a4fbd9d59fd45935b5ce369a267f, type: 3}
-  SwitchSE: {fileID: 8300000, guid: edf4441d079be10448de209141360c35, type: 3}
+  SwitchSE: {fileID: 8300000, guid: 4c35f676e874aba4189078f7b4fe0227, type: 3}
   katiSE: {fileID: 0}
 --- !u!82 &7281964226981590259
 AudioSource:
@@ -165,3 +166,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &9124060226184224348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2969647300762921742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81adfed4e04b74441a70407c1f4b27fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bard: {fileID: 8300000, guid: eca885660ebe5ce478abc4aead367ee1, type: 3}
+  calm: {fileID: 8300000, guid: c9c1ba7772700e0478946a784ec06a05, type: 3}
+  park: {fileID: 8300000, guid: c3b267ebd7706e64695c2d75a7d35bad, type: 3}
+  semi: {fileID: 8300000, guid: 00ebd1990cabd9f438e7fcd57e582bf9, type: 3}
+  groundStage: {fileID: 8300000, guid: 4ef2c4618daf21b4ebb43ff820d28e71, type: 3}
+  catsleStage: {fileID: 8300000, guid: 9c048055a11e3d346bac8d15a007fc9a, type: 3}
+  cosmicStage: {fileID: 8300000, guid: 1d8d7c3bfa2135b43a394e8320dc31c3, type: 3}

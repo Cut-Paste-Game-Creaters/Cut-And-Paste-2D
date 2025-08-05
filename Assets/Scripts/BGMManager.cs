@@ -6,14 +6,22 @@ public class BGMManager : MonoBehaviour
 {
     public static BGMManager instance;
 
-    private AudioSource bgmSource1;
-    private AudioSource bgmSource2;
+    private AudioSource ambientsound;
+    private AudioSource mainBGM;
 
-    public AudioClip ambientsound;//環境音
-    public AudioClip mainBGM;
+    //環境音
+    public AudioClip bard;
+    public AudioClip calm;
+    public AudioClip park;
+    public AudioClip semi;
+
+    //BGM
+    public AudioClip groundStage;
+    public AudioClip catsleStage;
+    public AudioClip cosmicStage;
     /// <summary>
-    /// 初めにBGMと環境音を設定
-    /// 現実っぽくしたいときはBGM:環境音＝１：９
+    /// scene開始時にBGMと環境音を設定
+    /// scene遷移する際はStopAllBGM
     /// ゲームオーバー時は環境音のみ
     /// </summary>
     private void Awake()
@@ -24,11 +32,11 @@ public class BGMManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
 
             // AudioSourceを2つ用意
-            bgmSource1 = gameObject.AddComponent<AudioSource>();
-            bgmSource2 = gameObject.AddComponent<AudioSource>();
+            ambientsound = gameObject.AddComponent<AudioSource>();
+            mainBGM = gameObject.AddComponent<AudioSource>();
 
-            bgmSource1.loop = true;
-            bgmSource2.loop = true;
+            ambientsound.loop = true;
+            mainBGM.loop = true;
         }
         else
         {
@@ -40,26 +48,26 @@ public class BGMManager : MonoBehaviour
     {
         if (clip1 != null)
         {
-            bgmSource1.clip = clip1;
-            bgmSource1.Play();
+            ambientsound.clip = clip1;
+            ambientsound.Play();
         }
 
         if (clip2 != null)
         {
-            bgmSource2.clip = clip2;
-            bgmSource2.Play();
+            mainBGM.clip = clip2;
+            mainBGM.Play();
         }
     }
 
     public void StopAllBGM()
     {
-        bgmSource1.Stop();
-        bgmSource2.Stop();
+        ambientsound.Stop();
+        mainBGM.Stop();
     }
 
     public void SetVolumes(float vol1, float vol2)
     {
-        bgmSource1.volume = vol1;
-        bgmSource2.volume = vol2;
+        ambientsound.volume = vol1;
+        mainBGM.volume = vol2;
     }
 }
