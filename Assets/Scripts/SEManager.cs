@@ -20,17 +20,17 @@ public class SEManager : MonoBehaviour
     public AudioClip copySE;//
     public AudioClip cutshortSE;//
     public AudioClip damageSE;
-    public AudioClip deathbiribiriSE;
-    public AudioClip deathyoinSE;
-    public AudioClip decideSE;
-    public AudioClip flip1SE;
+    public AudioClip deathbiribiriSE;//
+    public AudioClip deathyoinSE;//
+    public AudioClip decideSE;//
+    public AudioClip flip1SE;//
     public AudioClip healSE;
-    public AudioClip iitokiSE;
-    public AudioClip keyOpenSE;
-    public AudioClip landingSE;
-    public AudioClip flip2SE;
-    public AudioClip CannonfireSE;
-    public AudioClip SwitchSE;
+    public AudioClip iitokiSE;//
+    public AudioClip keyOpenSE;//
+    public AudioClip landingSE;//
+    public AudioClip flip2SE;//
+    public AudioClip CannonfireSE;//
+    public AudioClip SwitchSE;//
     public AudioClip katiSE;//範囲選択時、移動するたびになる
 
     void Update()
@@ -54,7 +54,7 @@ private void Awake()
     }
 
     /// <summary>
-    /// SEManager.instance.ClipAtPointSE(SEManager.instance.jumpSE);
+    ///使用例:SEManager.instance.ClipAtPointSE(SEManager.instance.jumpSE);
     /// </summary>
     /// <param name="clip"></param>
     public void ClipAtPointSE(AudioClip clip)

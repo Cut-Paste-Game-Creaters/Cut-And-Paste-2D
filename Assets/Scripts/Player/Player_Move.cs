@@ -91,7 +91,7 @@ public class Player_Move : MonoBehaviour
         // 接地していて Wキーを押した瞬間にジャンプ開始
         if (IsGrounded() && PlayerInput.GetKeyDown(KeyCode.W))
         {
-            //SEManager.instance.ClipAtPointSE(SEManager.instance.jumpSE);//効果音
+            SEManager.instance.ClipAtPointSE(SEManager.instance.jumpSE);//効果音
             isJumping = true;
             jumpTimeCounter = maxHoldTime;
             animManager.Play("player_jump", sr);
