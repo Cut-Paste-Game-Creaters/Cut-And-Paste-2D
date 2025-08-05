@@ -8,6 +8,7 @@ public enum PlayerState
     MoveRight,
     MoveLeft,
     Jump,
+    Damage,
 }
 
 public class Player_Move : MonoBehaviour
@@ -29,6 +30,7 @@ public class Player_Move : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask longobjectLayer;
 
+    private StageManager stageManager;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private PlayerState currentState=PlayerState.Idle;
@@ -36,7 +38,6 @@ public class Player_Move : MonoBehaviour
     private float jumpTimeCounter;
     private float gravity_init = 0;
     private AnimationManager animManager;
-    private bool isWaiting = true;
     // Start is called before the first frame update
 
 
@@ -147,6 +148,9 @@ public class Player_Move : MonoBehaviour
         }
 
         this.transform.position = pos;
+
+        if (stageManager == null) stageManager = FindObjectOfType<StageManager>();
+        if(stageManager.isPlayerDamaged)currentState = PlayerState.Damage;
     }
 
     private void UpdateState()
@@ -166,6 +170,9 @@ public class Player_Move : MonoBehaviour
                 break;
             case PlayerState.Jump:
                 animManager.Play("player_jump", sr, true);
+                break;
+            case PlayerState.Damage:
+                animManager.Play("player_damage",sr,true);
                 break;
             default:break;
         }
