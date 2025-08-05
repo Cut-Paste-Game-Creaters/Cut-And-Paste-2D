@@ -119,11 +119,11 @@ MonoBehaviour:
     ow_ene: 5
   - name: Bar-M
     obj: {fileID: 6585899477325734917, guid: 76a4898235411aa45a7c7268cd42de6b, type: 3}
-    p_ene: 10
+    p_ene: 20
     ow_ene: 5
   - name: Bar-L
     obj: {fileID: 4550408371338664941, guid: abda40439fb799a4f8b7e3dced8ee53c, type: 3}
-    p_ene: 20
+    p_ene: 30
     ow_ene: 5
   - name: Needle-M
     obj: {fileID: 3881063583115998866, guid: 6ab5071d1282862488435315536a84bc, type: 3}
