@@ -13,12 +13,12 @@ public class SEManager : MonoBehaviour
     public AudioClip blackholeSE;
     public AudioClip blackholeyoinSE;
     public AudioClip bumperSE;
-    public AudioClip cheersASE;
-    public AudioClip cheersSSE;
-    public AudioClip clearSuikomiSE;
-    public AudioClip closeSE;
-    public AudioClip copySE;
-    public AudioClip cutshortSE;
+    public AudioClip cheersASE;//
+    public AudioClip cheersSSE;//
+    public AudioClip clearSuikomiSE;//
+    public AudioClip closeSE;//
+    public AudioClip copySE;//
+    public AudioClip cutshortSE;//
     public AudioClip damageSE;
     public AudioClip deathbiribiriSE;
     public AudioClip deathyoinSE;
@@ -53,6 +53,10 @@ private void Awake()
         }
     }
 
+    /// <summary>
+    /// SEManager.instance.ClipAtPointSE(SEManager.instance.jumpSE);
+    /// </summary>
+    /// <param name="clip"></param>
     public void ClipAtPointSE(AudioClip clip)
     {
         if (clip != null)
@@ -71,10 +75,20 @@ private void Awake()
 
     /// <summary>
     /// フェードイン・フェードアウト付きで効果音を再生
+    /// 使用例　SEManager.instance.ClipAtPointWithFadeInOut(clip, 3f); // 3秒再生（0.2秒フェードイン、0.8秒フェードアウト）
     /// </summary>
-    public void ClipAtPointWithFadeInOut(AudioClip clip, float fadeInTime = 0.2f, float fadeOutTime = 0.8f, float maxVolume = 1f)
+    public void ClipAtPointWithFadeInOut(AudioClip clip, float duration, float fadeInTime = 0.2f, float fadeOutTime = 0.8f, float maxVolume = 1f)
     {
-        if (clip == null) return;
+        if (clip == null || duration <= 0f) return;
+
+        // フェード時間が再生時間を超えていたら調整
+        float totalFade = fadeInTime + fadeOutTime;
+        if (totalFade > duration)
+        {
+            float scale = duration / totalFade;
+            fadeInTime *= scale;
+            fadeOutTime *= scale;
+        }
 
         GameObject audioObj = new GameObject("SE_" + clip.name);
         audioObj.transform.position = Camera.main.transform.position;
@@ -84,15 +98,11 @@ private void Awake()
         source.volume = 0f;
         source.Play();
 
-        float clipLength = clip.length;
-        float playTime = Mathf.Max(0, clipLength - fadeOutTime); // フェードアウト前まで再生
+        float playTime = Mathf.Max(0, duration); // 再生時間
 
         StartCoroutine(FadeInOutRoutine(source, fadeInTime, fadeOutTime, maxVolume, playTime, audioObj));
     }
 
-    /// <summary>
-    /// フェードインして再生し、終わり際にフェードアウト
-    /// </summary>
     private IEnumerator FadeInOutRoutine(AudioSource source, float fadeInTime, float fadeOutTime, float maxVolume, float playTime, GameObject objToDestroy)
     {
         // フェードイン
@@ -106,8 +116,10 @@ private void Awake()
 
         source.volume = maxVolume;
 
-        // フェードイン後 → 再生を維持（フェードアウト開始まで待つ）
-        yield return new WaitForSeconds(playTime - fadeInTime);
+        // フェードイン後 → 再生維持（フェードアウト前まで）
+        float sustainTime = playTime - fadeInTime - fadeOutTime;
+        if (sustainTime > 0)
+            yield return new WaitForSeconds(sustainTime);
 
         // フェードアウト
         t = 0f;
@@ -121,6 +133,7 @@ private void Awake()
         source.Stop();
         Destroy(objToDestroy);
     }
+
 
 
 

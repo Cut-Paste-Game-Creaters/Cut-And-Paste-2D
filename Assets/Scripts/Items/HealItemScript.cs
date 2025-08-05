@@ -19,6 +19,7 @@ public class HealItemScript : MonoBehaviour
         {
             stageManager.player_HP += Healamount;
             Debug.Log(Healamount + "‰ñ•œ");
+            SEManager.instance.ClipAtPointSE(SEManager.instance.healSE);
         }
         else
         {
