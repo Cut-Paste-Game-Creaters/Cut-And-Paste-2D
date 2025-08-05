@@ -6,13 +6,16 @@ using UnityEngine.EventSystems;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 using UnityEngine.Tilemaps;
 using System.Linq;
+using TMPro;
 
 public class Player_Copy : MonoBehaviour
 {
     [SerializeField] GameObject frame2;
-    //[SerializeField] GameObject anounce;
+    //[SerializeField] GameObject anounce;        //廃止
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
     [SerializeField] ObjectScriptableObject objSB;
+    [SerializeField] GameObject costDisplay_copy;
+    [SerializeField] GameObject costDisplay_cut;
     //[SerializeField] GameObject copyicon;
     //[SerializeField] GameObject cuticon;
 
@@ -34,6 +37,10 @@ public class Player_Copy : MonoBehaviour
     private Stack<GameObject> selectedObjects = new Stack<GameObject>();
     private GameObject CopyButton;
     private GameObject CutButton;
+    private TextMeshProUGUI copy_cost_write;
+    private TextMeshProUGUI copy_cost_erase;
+    private TextMeshProUGUI cut_cost_write;
+    private TextMeshProUGUI cut_cost_erase;
 
 
     public void OnCopyButtonSelected()
@@ -86,6 +93,11 @@ public class Player_Copy : MonoBehaviour
         blackCurtain.gameObject.GetComponent<Button>().onClick.AddListener(OnWithoutSelected);
         CopyButton.SetActive(false);
         CutButton.SetActive(false);
+
+        copy_cost_write = costDisplay_copy.transform.Find("text_write").GetComponent<TextMeshProUGUI>();
+        copy_cost_erase = costDisplay_copy.transform.Find("text_erase").GetComponent<TextMeshProUGUI>();
+        cut_cost_write = costDisplay_cut.transform.Find("text_write").GetComponent<TextMeshProUGUI>();
+        cut_cost_erase = costDisplay_cut.transform.Find("text_erase").GetComponent<TextMeshProUGUI>();
         //copyicon.SetActive(false);
         //cuticon.SetActive(false);
     }
@@ -141,7 +153,6 @@ public class Player_Copy : MonoBehaviour
                 Vector3 nowpos = (currentPos + startPos) / 2;
                 nowpos.z = 0;
                 frame2.transform.localPosition = nowpos;
-
                 //いったんobjectのソートを元に戻す
                 ResetObjectSorting();
                 //選択中のタイルやオブジェクトを明示的に示す
@@ -175,6 +186,13 @@ public class Player_Copy : MonoBehaviour
                     }
                     else if (PlayerInput.GetKeyDown(KeyCode.Escape)) whichMode = 10;//nothing
                     */
+                    //コストを計算してみる 四つ目のtrueが大事
+                    stageMgr.all_isCut = true;  //trueにするとカットもコピーも計算できる
+                    CopyContents(startPos, endPos, false, true);
+                    copy_cost_write.text = stageMgr.write_cost.ToString();
+                    copy_cost_erase.text = "0";
+                    cut_cost_write.text =$"{stageMgr.write_cost * 0.5f}";
+                    cut_cost_erase.text = stageMgr.cut_erase_cost.ToString();
                     //コピーカットの選択はボタンになりました, blackCurtain（2button以外の場所）おしたら無しになる
                     CopyButton.SetActive(true);
                     CutButton.SetActive(true);
@@ -212,7 +230,7 @@ public class Player_Copy : MonoBehaviour
     }
 
     //実際にタイルをコピーをする関数
-    void CopyContents(Vector3 sPos, Vector3 ePos, bool isCut = false)
+    void CopyContents(Vector3 sPos, Vector3 ePos, bool isCut = false,bool isPreview=false)
     {
         //増やすコストを初期化 コピーの時はコピーされるたびに初期化　逆にそれ以外は更新されてはいけない
         stageMgr.write_cost = 0;
@@ -269,6 +287,10 @@ public class Player_Copy : MonoBehaviour
         Collider2D[] cols = Physics2D.OverlapAreaAll(startPos, endPos);
         stageMgr.objectData = new List<StageManager.ObjectData>();
         CutInCopyObject(cols, true);
+
+        //もし仮に計算してみるだけだったらここで終わり
+        //コピーとカットの時のコストを計算するために使用する
+        if (isPreview) return;
 
         //カットであるかそうでないかで分ける
         if (stageMgr.all_isCut)
