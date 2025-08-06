@@ -10,6 +10,27 @@ public class ClearDoorScript : MonoBehaviour
 
     private SpriteRenderer sr;
     private StageManager stageManager;
+
+    public class CopyClearDoor
+    {
+        public bool isLocked;
+
+        public CopyClearDoor(ClearDoorScript cDoor)
+        {
+            isLocked = cDoor.GetIsLocked();
+        }
+    }
+
+    public bool GetIsLocked()
+    {
+        return isLocked;
+    }
+
+    public void SetIsLocked(bool isLocked_)
+    {
+        isLocked = isLocked_;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
