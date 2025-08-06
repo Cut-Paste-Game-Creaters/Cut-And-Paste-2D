@@ -25,6 +25,22 @@ PrefabInstance:
       value: soccerball-L
       objectReference: {fileID: 0}
     - target: {fileID: 6956417397648850394, guid: 7f2429198524b1a418b06f723af7455e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 46adfe98062d345429aede3407013b16, type: 3}
+    - target: {fileID: 6956417397648850394, guid: 7f2429198524b1a418b06f723af7455e, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956417397648850394, guid: 7f2429198524b1a418b06f723af7455e, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956417397648850394, guid: 7f2429198524b1a418b06f723af7455e, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956417397648850394, guid: 7f2429198524b1a418b06f723af7455e, type: 3}
       propertyPath: m_SortingLayerID
       value: 509548093
       objectReference: {fileID: 0}
@@ -77,7 +93,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5248978366752466209, guid: 7f2429198524b1a418b06f723af7455e, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f2429198524b1a418b06f723af7455e, type: 3}

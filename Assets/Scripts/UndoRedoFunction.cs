@@ -614,9 +614,6 @@ public class UndoRedoFunction : MonoBehaviour
 
         Undo();*/
         if (stageMgr == null) stageMgr = FindObjectOfType<StageManager>();
-        //stageMgr.player_HP = 100;
-        stageMgr.isPlayerDamaged = false;
-        stageMgr.isPlayerDead = false;
         //オブジェクトの状態を初期化(switch&key)
         //stageMgr.ResetObjectState();
 

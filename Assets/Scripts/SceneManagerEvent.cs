@@ -50,6 +50,11 @@ public class SceneManagerEvent : MonoBehaviour
         {
             stageMgr.InitAllSumCost(); //総消費コスト初期化
             stageMgr.ResetObjectState();    //オブジェクトの状態を初期化(switch&key)
+
+            stageMgr.InitPlayerHP();
+            stageMgr.isPlayerDamaged = false;
+            stageMgr.isPlayerDead = false;
+
             rankFunc.InitStatus();
             if(Regex.IsMatch(input, @"^Stage\d+$")) //シーン名がStageなんとかなら
             {

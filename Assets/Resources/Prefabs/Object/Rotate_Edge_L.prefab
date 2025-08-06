@@ -92,6 +92,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 615785175101146968, guid: cd33c0f0c1e5e6d458e8925e7a9dd151, type: 3}
+      propertyPath: m_Size.x
+      value: 14.973976
+      objectReference: {fileID: 0}
+    - target: {fileID: 615785175101146968, guid: cd33c0f0c1e5e6d458e8925e7a9dd151, type: 3}
+      propertyPath: m_Offset.x
+      value: 6.986988
+      objectReference: {fileID: 0}
     - target: {fileID: 808403592605968956, guid: cd33c0f0c1e5e6d458e8925e7a9dd151, type: 3}
       propertyPath: rotateTime
       value: 6
