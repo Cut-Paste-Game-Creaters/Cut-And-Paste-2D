@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class PauseInStage : MonoBehaviour
 {
     [SerializeField] Canvas canvas;
+
+    private StageManager stageMgr;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,9 +18,10 @@ public class PauseInStage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (stageMgr == null) stageMgr = FindObjectOfType<StageManager>();
         this.transform.position =
             new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + 1);
-        if (PlayerInput.GetKeyDown(KeyCode.Escape))
+        if (PlayerInput.GetKeyDown(KeyCode.Escape) && !stageMgr.isSelectZone)
         {
             canvas.enabled = true;
             PlayerInput.isPausing = true;
