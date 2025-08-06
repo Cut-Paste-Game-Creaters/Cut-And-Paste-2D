@@ -14,6 +14,13 @@ public class BumperForce : MonoBehaviour
 
     public float bounceForce = 100f;
 
+
+
+    public float scaleMultiplier = 1.1f; // 拡大倍率
+    public float scaleDuration = 0.1f;   // 拡大する時間（秒）
+    private Vector3 originalScale;
+
+
     public class CopyBumperForce
     {
         public float checkDistance;        // この距離内なら「上付近」
@@ -29,7 +36,7 @@ public class BumperForce : MonoBehaviour
             this.playerLayer = bumper.playerLayer;
         }
     }
-
+    
     void Start()
     {
         // プレイヤーを一度だけ取得（タグやレイヤーで見つける）
@@ -40,7 +47,12 @@ public class BumperForce : MonoBehaviour
 
             Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
         }
+        originalScale = transform.localScale;
     }
+    
+
+
+
 
 
 
@@ -102,7 +114,8 @@ public class BumperForce : MonoBehaviour
             rb.AddForce(-(normal  ) * bounceForce * adjustedBounceForce, ForceMode2D.Impulse);
                 Debug.Log("huretawane");
             }
-        }
+        StartCoroutine(ScaleTemporarily());
+    }
     
 
 
@@ -112,5 +125,12 @@ public class BumperForce : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawLine(transform.position, transform.position + Vector3.up * checkDistance);
+    }
+
+    private System.Collections.IEnumerator ScaleTemporarily()
+    {
+        transform.localScale = originalScale * scaleMultiplier;
+        yield return new WaitForSeconds(scaleDuration);
+        transform.localScale = originalScale;
     }
 }

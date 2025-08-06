@@ -19,6 +19,9 @@ public class CanonController : MonoBehaviour
     private float wholeTime = 0.0f;
     private Rigidbody2D rb;
 
+    public float scaleMultiplier = 1.1f; // ägëÂî{ó¶
+    public float scaleDuration = 0.1f;   // ägëÂÇ∑ÇÈéûä‘ÅiïbÅj
+    private Vector3 originalScale;
     public class CopyCanonController
     {
         public float angle;            //-90 Å` 0 Å`Å@90
@@ -45,6 +48,7 @@ public class CanonController : MonoBehaviour
         {
             isRigid = true;
         }
+        originalScale = canon_body.transform.localScale;
     }
 
     // Update is called once per frame
@@ -81,6 +85,14 @@ public class CanonController : MonoBehaviour
             Vector3 fire_rot = g.transform.localEulerAngles;
             fire_rot.z = angle;
             g.transform.localEulerAngles = fire_rot;
+            StartCoroutine(ScaleTemporarily());//í∑‡Ví«â¡ àÍèuägëÂ
         }
     }
+    private System.Collections.IEnumerator ScaleTemporarily()
+    {
+        canon_body.transform.localScale = originalScale * scaleMultiplier;
+        yield return new WaitForSeconds(scaleDuration);
+        canon_body.transform.localScale = originalScale;
+    }
+
 }
