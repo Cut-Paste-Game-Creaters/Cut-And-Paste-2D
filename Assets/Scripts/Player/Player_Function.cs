@@ -40,6 +40,8 @@ public class Player_Function : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (stageMgr == null) stageMgr = FindObjectOfType<StageManager>();
+
         //もしダメージをうけて無敵時間なら半透明にする
         Color currentColor = sr.color;
         currentColor.a = stageMgr.isPlayerDamaged ? 0.5f : 1.0f;
@@ -47,7 +49,8 @@ public class Player_Function : MonoBehaviour
         /*テスト用に4ボタン押すと死んだことになる 本来はhpが0 もしくは　ステージから落ちたら*/
         if(this.gameObject.transform.position.y < fallingLine_y || stageMgr.player_HP <= 0)
         {
-            Die();
+            stageMgr.player_HP = 0;
+            if(!stageMgr.isPlayerDead) Die();
         }
     }
 
@@ -68,6 +71,8 @@ public class Player_Function : MonoBehaviour
     void Die()
     {
         //ゲームオーバーファンクション呼び出し
+        stageMgr.isPlayerDead = true;
+        if(gameOverFunc==null)gameOverFunc = FindObjectOfType<GameOverFunction>();
         gameOverFunc.GameOver();
     }
 

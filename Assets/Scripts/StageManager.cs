@@ -23,6 +23,7 @@ public class StageManager : MonoBehaviour
     private float noDamageTime = 1.0f;
     private float nowNoDanageTime = 0.0f;
     public bool isSelectZone = false;
+    public bool isPlayerDead = false;
 
 
     /*スイッチ関連*/
@@ -249,6 +250,11 @@ public class StageManager : MonoBehaviour
             nowNoDanageTime = 0.0f;
             SEManager.instance.ClipAtPointSE(SEManager.instance.damageSE);
         }
+    }
+
+    public void InitPlayerHP()
+    {
+        player_HP = 100;
     }
 
     public void InitAllSumCost()
