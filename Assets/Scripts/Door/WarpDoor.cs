@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class WarpDoor : MonoBehaviour
 {
-    [SerializeField] SpriteRenderer door;
     [SerializeField] Image rankDisplayImage;
     [SerializeField] Sprite notclear;
     [SerializeField] Sprite clear;
@@ -23,46 +22,14 @@ public class WarpDoor : MonoBehaviour
     private RankJudgeAndUpdateFunction judgeFunc;
     private ClearFunction clearFunc;
     private GameObject currentRank;
+    private SpriteRenderer door;
 
     public string GetStageName()
     {
         return stageName;
     }
 
-    //SceneManagerEventでStageSelectをロードしたときにセットされる
-    public void SetRankSprite(string stage_rank)
-    {
-        Sprite doorImage = clear;
-        Sprite rankImage = rankText_S;
-        if (stage_rank == "NONE")
-        {
-            rankImage = null;
-            doorImage = notclear;
-        }
-        else if (stage_rank == "S")
-        {
-            rankImage = rankText_S;
-        }
-        else if (stage_rank == "A")
-        {
-            rankImage = rankText_A;
-        }
-        else if (stage_rank == "B")
-        {
-            rankImage = rankText_B;
-        }
-        else if (stage_rank == "C")
-        {
-            rankImage = rankText_C;
-        }
-        else if (stage_rank == "F")
-        {
-            rankImage = rankText_F;
-        }
-
-        rankDisplayImage.sprite = rankImage;
-        door.sprite = doorImage;
-    }
+    
     
     public class CopyWarpDoor
     {
@@ -93,7 +60,6 @@ public class WarpDoor : MonoBehaviour
         judgeFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
         clearFunc = FindObjectOfType<ClearFunction>();
 
-        door = GetComponent<SpriteRenderer>();
 
         AllTextDisable();
 
@@ -133,6 +99,45 @@ public class WarpDoor : MonoBehaviour
             if (stopLoad) return;
             SceneManager.LoadScene(stageName);
         }
+    }
+
+    //SceneManagerEventでStageSelectをロードしたときにセットされる
+    public void SetRankSprite(string stage_rank)
+    {
+        Sprite doorImage = clear;
+        Sprite rankImage = rankText_S;
+        if (stage_rank == "NONE")
+        {
+            rankImage = null;
+            doorImage = notclear;
+        }
+        else if (stage_rank == "S")
+        {
+            rankImage = rankText_S;
+        }
+        else if (stage_rank == "A")
+        {
+            rankImage = rankText_A;
+        }
+        else if (stage_rank == "B")
+        {
+            rankImage = rankText_B;
+        }
+        else if (stage_rank == "C")
+        {
+            rankImage = rankText_C;
+        }
+        else if (stage_rank == "F")
+        {
+            rankImage = rankText_F;
+        }
+
+        rankDisplayImage.sprite = rankImage;
+        if (door == null)
+        {
+            door = GetComponent<SpriteRenderer>();
+        }
+        door.sprite = doorImage;
     }
 
     /*public WarpDoor GetMyself()

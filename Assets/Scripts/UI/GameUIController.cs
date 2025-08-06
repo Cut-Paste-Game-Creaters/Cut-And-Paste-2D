@@ -62,28 +62,34 @@ public class GameUIController : MonoBehaviour
             }
         }
         CalcDisplayAllObjectCost();
-        stageManager = FindObjectOfType<StageManager>();
-        judgeFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
-        text_duplicateCost.gameObject.SetActive(false);
-        CostDisplay = gameObject.transform.Find("CostDisplay").gameObject;
-        CostDisplay.gameObject.SetActive(false);
-        allCostDisplay = gameObject.transform.Find("AllCostDisplay").gameObject;
-        targetUI = allCostDisplay.GetComponent<RectTransform>();
-        startPos = targetUI.anchoredPosition;
+        InitData();
+
         icon_copycut.enabled = false;
+        text_duplicateCost.gameObject.SetActive(false);
+    }
+
+    //なぜかstartでロードされない人たち　Updateでも実行する
+    void InitData()
+    {
+        if(stageManager == null) stageManager = FindObjectOfType<StageManager>();
+        if(judgeFunc==null) judgeFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
+        if (CostDisplay == null)
+        {
+            CostDisplay = gameObject.transform.Find("CostDisplay").gameObject;
+            CostDisplay.gameObject.SetActive(false);
+        }
+        if(allCostDisplay==null) allCostDisplay = gameObject.transform.Find("AllCostDisplay").gameObject;
+        if(targetUI==null)
+        {
+            targetUI = allCostDisplay.GetComponent<RectTransform>();
+            startPos = targetUI.anchoredPosition;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(judgeFunc == null)
-        {
-            judgeFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
-        }
-        if(stageManager == null)
-        {
-            stageManager = FindObjectOfType<StageManager>();
-        }
+        InitData();
         text_HP.text = "PlayerHP\n:" + stageManager.player_HP;
         text_nowCost.text = "nowCost\n:" + stageManager.have_ene;
         //ジャッジする関数を持ってきてる。2つ目の変数は絶対にfalse。
