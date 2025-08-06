@@ -80,6 +80,10 @@ public class GameUIController : MonoBehaviour
         {
             judgeFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
         }
+        if(stageManager == null)
+        {
+            stageManager = FindObjectOfType<StageManager>();
+        }
         text_HP.text = "PlayerHP\n:" + stageManager.player_HP;
         text_nowCost.text = "nowCost\n:" + stageManager.have_ene;
         //ジャッジする関数を持ってきてる。2つ目の変数は絶対にfalse。
