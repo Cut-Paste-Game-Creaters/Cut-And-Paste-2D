@@ -283,6 +283,10 @@ public class Player_Copy : MonoBehaviour
         //３つ目の引数がfalseなら下のタイルをnullにして消す。
         CutInCopy(_startPos, _endPos, true);
 
+
+        //選択範囲のオブジェクトのレイヤーをもどす
+        ResetObjectSorting();
+
         //オブジェクトのコスト計算をする
         Collider2D[] cols = Physics2D.OverlapAreaAll(startPos, endPos);
         stageMgr.objectData = new List<StageManager.ObjectData>();
@@ -639,6 +643,7 @@ public class Player_Copy : MonoBehaviour
         stageMgr.tileData.hasData = true;
         makeDecision = false;
         //anounce.SetActive(false);
+
     }
 
     //コピーしていた情報の初期化

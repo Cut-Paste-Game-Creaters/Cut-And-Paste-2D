@@ -22,7 +22,7 @@ public class StageManager : MonoBehaviour
     public bool isPlayerDamaged = false;
     private float noDamageTime = 1.0f;
     private float nowNoDanageTime = 0.0f;
-    public bool isSelectZone = false;
+    public bool isSelectZone = false;           //プレイヤーが今範囲を選択しているか
     public bool isPlayerDead = false;
 
 
