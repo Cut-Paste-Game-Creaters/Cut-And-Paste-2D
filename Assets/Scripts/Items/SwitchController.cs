@@ -36,7 +36,7 @@ public class SwitchController : MonoBehaviour
             stateOff = swc.stateOff;
             stateOn = swc.stateOn;
             mode = swc.mode;
-            nowPressState = swc.nowPressState;
+            //nowPressState = swc.nowPressState;
             hitState = swc.hitState;
         }
     }

@@ -33,7 +33,7 @@ public class UndoRedoFunction : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-        p_copy = player.GetComponent<Player_Copy>();
+        p_copy = FindObjectOfType<Player_Copy>();
         stageMgr = FindObjectOfType<StageManager>();
         ccz = FindObjectOfType<CaptureCopyZone>();
         rankFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
@@ -58,6 +58,18 @@ public class UndoRedoFunction : MonoBehaviour
         if(ccz == null)
         {
             ccz = FindObjectOfType<CaptureCopyZone>();
+        }
+        if(p_copy == null)
+        {
+            p_copy = FindObjectOfType<Player_Copy>();
+        }
+        if(stageMgr == null)
+        {
+            stageMgr = FindObjectOfType<StageManager>();
+        }
+        if(rankFunc == null)
+        {
+            rankFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
         }
         /*if(PlayerInput.GetKeyDown(KeyCode.Alpha1)) //1ボタンが押されたら保存
         {
@@ -153,6 +165,7 @@ public class UndoRedoFunction : MonoBehaviour
                 var svmobj = col.gameObject.GetComponent<SinVerticalMover>();
                 var rcobj = col.gameObject.GetComponent<RotateController>();
                 var vfobj = col.gameObject.GetComponent<VanishFloor>();
+                var cdobj = col.gameObject.GetComponent<ClearDoorScript>();
 
                 if(switchobj != null)
                 {
@@ -203,6 +216,10 @@ public class UndoRedoFunction : MonoBehaviour
                 else if(vfobj != null)
                 {
                     stageObjState.vf = new VanishFloor.CopyVanishFloor(vfobj);
+                }
+                else if(cdobj != null)
+                {
+                    stageObjState.cd = new ClearDoorScript.CopyClearDoor(cdobj);
                 }
 
                 //全部情報入れたら最後にAdd
@@ -327,8 +344,8 @@ public class UndoRedoFunction : MonoBehaviour
             //UndoCost();
             //UndoAllSumCost();
             //UndoAllIsCut();
-            UndoStageManagerInfo();
             UndoObjState();
+            UndoStageManagerInfo();
             UndoPlayerState();
             UndoCopyTileData();
             UndoCopyObjectData();
@@ -378,7 +395,7 @@ public class UndoRedoFunction : MonoBehaviour
             {
                 GameObject g_prefab;
                 g_prefab = Instantiate(prefab, obj.objPosition, obj.objRotation);
-                g_prefab.name = obj.prefabName;
+                g_prefab.name = trimName;
 
                 var switchobj = g_prefab.gameObject.GetComponent<SwitchController>();
                 var s_blockobj = g_prefab.gameObject.GetComponent<SwitchblockController>();
@@ -392,6 +409,7 @@ public class UndoRedoFunction : MonoBehaviour
                 var svmobj = g_prefab.gameObject.GetComponent<SinVerticalMover>();
                 var rcobj = g_prefab.gameObject.GetComponent<RotateController>();
                 var vfobj = g_prefab.gameObject.GetComponent<VanishFloor>();
+                var cdobj = g_prefab.gameObject.GetComponent<ClearDoorScript>();
 
                 if(switchobj != null)
                 {
@@ -442,6 +460,10 @@ public class UndoRedoFunction : MonoBehaviour
                 else if(vfobj != null)
                 {
                     obj.CopyData(vfobj);
+                }
+                else if(cdobj != null)
+                {
+                    obj.CopyData(cdobj);
                 }
                 //Debug.Log(prefab.name + "を生成しました.");
                 //g_prefab.hp = 100;
@@ -589,7 +611,7 @@ public class UndoRedoFunction : MonoBehaviour
 
     void UndoCopyImageSprite()
     {
-        ccz.disableImage(); //今ある画像を消す
+        //ccz.disableImage(); //今ある画像を消す
 
         Sprite pre_copyImageSprite = undoStack.Peek().copyImageSprite;
 
@@ -607,12 +629,13 @@ public class UndoRedoFunction : MonoBehaviour
     //リトライ
     public void Retry()
     {
-        /*while(undoStack.Count > 2)
+        //UndoしてRetryの時はコピー情報元に戻す
+        while(undoStack.Count > 1)
         {
             undoStack.Pop();
         }
 
-        Undo();*/
+        Undo();
         if (stageMgr == null) stageMgr = FindObjectOfType<StageManager>();
         //オブジェクトの状態を初期化(switch&key)
         //stageMgr.ResetObjectState();
@@ -672,6 +695,9 @@ public class UndoRedoFunction : MonoBehaviour
         //VanishFloor
         public VanishFloor.CopyVanishFloor vf;
 
+        //ClearDoor
+        public ClearDoorScript.CopyClearDoor cd;
+
         //データコピー関数
         //SwitchControllerのコピー処理
         public void CopyData(SwitchController copySwc)
@@ -679,7 +705,7 @@ public class UndoRedoFunction : MonoBehaviour
             copySwc.stateOff = swc.stateOff;
             copySwc.stateOn = swc.stateOn;
             copySwc.mode = swc.mode;
-            copySwc.nowPressState = swc.nowPressState;
+            //copySwc.nowPressState = swc.nowPressState;
             copySwc.hitState = swc.hitState;
         }
         //SwitchBlockControllerのコピー処理
@@ -760,6 +786,11 @@ public class UndoRedoFunction : MonoBehaviour
             copy_vf.stayTime = vf.stayTime;
             copy_vf.SetElapsed(vf.elapsed);
             copy_vf.SetIsCollision(vf.isCollision);
+        }
+        //Cleardoorのコピー処理
+        public void CopyData(ClearDoorScript copy_cd)
+        {
+            copy_cd.SetIsLocked(cd.isLocked);
         }
 
         //これ以降必要な情報追加する
