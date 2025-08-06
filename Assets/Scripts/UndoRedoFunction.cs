@@ -55,6 +55,10 @@ public class UndoRedoFunction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(ccz == null)
+        {
+            ccz = FindObjectOfType<CaptureCopyZone>();
+        }
         /*if(PlayerInput.GetKeyDown(KeyCode.Alpha1)) //1ボタンが押されたら保存
         {
             InfoPushToStack();
@@ -295,7 +299,19 @@ public class UndoRedoFunction : MonoBehaviour
 
     public Sprite RecordCopyImageSprite()
     {
-        Sprite copyImageSprite;
+        //Sprite getImageSprite;
+        Sprite copyImageSprite ;
+
+        /*getImageSprite = ccz.GetImageSprite();
+
+        if(getImageSprite != null)
+        {
+            copyImageSprite = getImageSprite;
+        }
+        else
+        {
+            return null;
+        }*/
 
         copyImageSprite = ccz.GetImageSprite();
 
