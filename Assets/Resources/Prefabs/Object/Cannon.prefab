@@ -138,8 +138,6 @@ MonoBehaviour:
   firePower: 2000000
   firespeed: 4.5
   fireTime: 3
-  scaleMultiplier: 1.1
-  scaleDuration: 0.1
 --- !u!61 &4545017764845707187
 BoxCollider2D:
   m_ObjectHideFlags: 0
