@@ -172,7 +172,14 @@ public class CaptureCopyZone : MonoBehaviour
 
     public Sprite GetImageSprite()
     {
-        return image.sprite;
+        if(image != null)
+        {
+            return image.sprite;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public void SetImageSprite(Sprite copyImageSprite)
