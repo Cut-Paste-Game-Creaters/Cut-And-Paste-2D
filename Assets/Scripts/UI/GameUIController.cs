@@ -90,23 +90,23 @@ public class GameUIController : MonoBehaviour
     void Update()
     {
         InitData();
-        text_HP.text = "PlayerHP\n:" + stageManager.player_HP;
-        text_nowCost.text = "nowCost\n:" + stageManager.have_ene;
+        text_HP.text = "HP:" + stageManager.player_HP;
+        text_nowCost.text = ":" + stageManager.have_ene;
         //ジャッジする関数を持ってきてる。2つ目の変数は絶対にfalse。
         //2つ目の変数をtrueにすると最小消費コストが更新され、既にジャッジが終わったと判定される
         text_nowRank.text = judgeFunc.JudgeAndUpdateRank(stageManager.all_sum_cos - stageManager.player_HP, false);
-        text_nextRank.text = "next Rank ... left " + judgeFunc.culcCostToNextRank();
+        text_nextRank.text = "ダウンまで" + judgeFunc.culcCostToNextRank();
         if (stageManager.tileData.hasData)
         {
             icon_copycut.enabled = true;
             if (stageManager.all_isCut)
             {
-                text_duplicateCost.text = "huyasu cost:" + stageManager.write_cost*0.5f;
+                text_duplicateCost.text = ":" + stageManager.write_cost*0.5f;
                 icon_copycut.sprite = s_cut; //カットのスプライトを設定
             }
             else
             {
-                text_duplicateCost.text = "huyasu cost:" + stageManager.write_cost;
+                text_duplicateCost.text = ":" + stageManager.write_cost;
                 icon_copycut.sprite = s_copy;
             }
 
