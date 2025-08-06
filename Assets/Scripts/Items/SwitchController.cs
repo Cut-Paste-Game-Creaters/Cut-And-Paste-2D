@@ -48,6 +48,11 @@ public class SwitchController : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
     }
 
+    private void Update()
+    {
+        if (stageManager == null) stageManager = FindObjectOfType<StageManager>();
+    }
+
     private void FixedUpdate()
     {
         //enum‚Í’è”‚Ì—ñ‹“Œ^‚È‚Ì‚ÅintƒLƒƒƒXƒg‚Å”š‚É‚Å‚«‚é
@@ -76,6 +81,19 @@ public class SwitchController : MonoBehaviour
         //{
         //    sr.sprite = stateOn;
         //}
+        if(nowPressState != stageManager.switch_state)
+        {
+            if (animManager == null) animManager = FindObjectOfType<AnimationManager>();
+            if (stageManager.switch_state)
+            {
+                animManager.Play("switch_on", sr);
+            }
+            else
+            {
+                animManager.Play("switch_off", sr);
+            }
+            nowPressState = stageManager.switch_state;
+        }
 
         if (hitState == 2) hitState = -1;
     }
@@ -127,15 +145,6 @@ public class SwitchController : MonoBehaviour
     {
         hitState = 0;
         SEManager.instance.ClipAtPointSE(SEManager.instance.SwitchSE);
-        if (animManager == null) animManager = FindObjectOfType<AnimationManager>();
-        if(stageManager.switch_state)
-        {
-            animManager.Play("switch_off", sr);
-        }
-        else
-        {
-            animManager.Play("switch_on", sr);
-        }
     }
 
     private void OnTriggerStay2D(Collider2D other)
