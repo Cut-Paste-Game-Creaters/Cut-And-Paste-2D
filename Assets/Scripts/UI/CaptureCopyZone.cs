@@ -11,20 +11,38 @@ public class CaptureCopyZone : MonoBehaviour
     private Rect captureArea = new Rect(100, 100, 300, 200); // x, y, width, height
     private Camera cam;
     private int originalMask;
+    private StageManager stageMgr;
 
     private Image image;
 
     void Start()
     {
+        stageMgr = FindObjectOfType<StageManager>();
         image = GameObject.Find("captureImage").GetComponent<Image>();
         image.enabled = false;
+    }
+
+    void Update()
+    {
+        if(stageMgr != null)
+        {
+            stageMgr = FindObjectOfType<StageManager>();
+        }
     }
 
     //SceneManagerEventÇ≈é¿çsÇ≥ÇÍÇÈ
     public void LoadSceneObject(Scene nextScene, LoadSceneMode mode)
     {
         image = GameObject.Find("captureImage").GetComponent<Image>();
-        image.enabled = false;
+        if(stageMgr.tileData.hasData || stageMgr.objectData.Count > 0)
+        {
+            image.enabled = true;
+        }
+        else
+        {
+            image.enabled = false;
+        }
+        //image.enabled = false;
     }
 
     public void CaptureImage(Vector3 startPos, Vector3 endPos)

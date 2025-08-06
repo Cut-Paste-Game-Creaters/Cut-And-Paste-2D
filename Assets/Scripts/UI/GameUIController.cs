@@ -253,6 +253,10 @@ public class GameUIController : MonoBehaviour
                             tags.Add(col.gameObject.tag);
                             objCount++;
                             Debug.Log(col.gameObject.tag + "の増やすコストは" + obj_s.p_ene + " 消すコストは" + obj_s.ow_ene);
+                            if(obj_s.obj.tag.Equals("Cannon")) //Canonがあるときはbulletを追加
+                            {
+                                tags.Add("Bullet");
+                            }
                         }
                     }
                 }
@@ -298,12 +302,17 @@ public class GameUIController : MonoBehaviour
 
             foreach(ObjectStore obj_s in objSB.objectList) //シーン上のオブジェクトのtagを取得
             {
-                if(obj_s.obj.tag.Equals(tags[i]))
+                if(obj_s.obj.tag.Equals(tags[i])/* && !obj_s.obj.tag.Equals("Cannon")*/)
                 {
-                    plusIcon_s.sprite = obj_s.obj.GetComponent<SpriteRenderer>().sprite;
                     plusText.text = obj_s.p_ene.ToString();
-                    eraseIcon_s.sprite = obj_s.obj.GetComponent<SpriteRenderer>().sprite;
                     eraseText.text = obj_s.ow_ene.ToString();
+                    obj_s.obj.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
+                    plusIcon_s.sprite = obj_s.obj.GetComponent<SpriteRenderer>().sprite;
+                    eraseIcon_s.sprite = obj_s.obj.GetComponent<SpriteRenderer>().sprite;
+                    if(obj_s.obj.tag.Equals("Cannon"))
+                    {
+                        obj_s.obj.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 255);
+                    }
                     //Debug.Log(col.gameObject.tag + "の増やすコストは" + obj_s.p_ene + " 消すコストは" + obj_s.ow_ene);
                 }
             }
