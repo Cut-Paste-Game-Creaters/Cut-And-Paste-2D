@@ -129,6 +129,10 @@ PrefabInstance:
       value: Rotate_Edge_M
       objectReference: {fileID: 0}
     - target: {fileID: 7405145732190165075, guid: cd33c0f0c1e5e6d458e8925e7a9dd151, type: 3}
+      propertyPath: m_Color.a
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 7405145732190165075, guid: cd33c0f0c1e5e6d458e8925e7a9dd151, type: 3}
       propertyPath: m_SortingLayerID
       value: 509548093
       objectReference: {fileID: 0}
