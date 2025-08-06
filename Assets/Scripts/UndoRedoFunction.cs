@@ -130,9 +130,6 @@ public class UndoRedoFunction : MonoBehaviour
     public List<StageObjectState> RecordObjectState()
     {
         List<StageObjectState> stageObjStateList = new List<StageObjectState>();
-        SwitchblockController[] s_blocks; //switchblock取得用
-
-        s_blocks = FindObjectsOfType<SwitchblockController>();
 
         tilemap.CompressBounds(); //タイルを最小まで圧縮
         var b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
@@ -228,26 +225,6 @@ public class UndoRedoFunction : MonoBehaviour
                 //全部情報入れたら最後にAdd
                 stageObjStateList.Add(stageObjState);
             }
-        }
-
-        foreach(SwitchblockController s_block in s_blocks)
-        {
-            if(s_blocks != null)
-            {
-                StageObjectState stageObjState_ = new StageObjectState();
-
-                stageObjState_.prefabName = s_block.gameObject.name; //prefabの名前を保存 (Clone)が付いていたらそれを削除
-                stageObjState_.objtag = s_block.gameObject.tag; //オブジェクトのtagを保存
-                stageObjState_.objPosition = s_block.gameObject.transform.position;
-                stageObjState_.objRotation = s_block.gameObject.transform.rotation;
-
-                //var s_blockobj = s_block/*.gameObject.GetComponent<SwitchblockController>()*/;
-                stageObjState_.sbc = new SwitchblockController.CopySwitchblockController(s_block);
-
-                stageObjStateList.Add(stageObjState_);
-            }
-
-
         }
         return stageObjStateList;
     }
