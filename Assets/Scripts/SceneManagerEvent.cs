@@ -35,7 +35,10 @@ public class SceneManagerEvent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(captureFunc == null)
+        {
+            this.gameObject.GetComponent<CaptureCopyZone>();
+        }
     }
 
     // イベントハンドラー（イベント発生時に動かしたい処理）
@@ -74,5 +77,17 @@ public class SceneManagerEvent : MonoBehaviour
                 //セレクト画面に遷移したときは各ステージのランクに応じて初期コストを設定
             }
         }
+
+        /*if(captureFunc != null) //シーン遷移時画像表示
+        {
+            if(stageMgr.tileData.hasData || stageMgr.objectData.Count > 0)
+            {
+                captureFunc.ableImage();
+            }
+            else
+            {
+                captureFunc.disableImage();
+            }
+        }*/
     }
 }
