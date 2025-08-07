@@ -265,15 +265,20 @@ public class StageManager : MonoBehaviour
 
     public void InitHaveCost(int stageNum)
     {
-        have_ene = init_ene_array[stageNum];
-        if (stageNum == 0)
+        if (stageNum == -1) //Stage●じゃないとき, (StageSelectのとき)
         {
+            have_ene = 0; //所持コスト0にして各ステージのランクに応じたコストを足す
             foreach(var cost in initAddCost_EachStage)
             {
                 have_ene += cost;
+                Debug.Log("所持コストに" + cost + "が追加されました");
             }
         }
-            Debug.Log("初期コストを" + stageNum + "ステージの" + have_ene + "に初期化しました.");
+        else //stage●の時は, それぞれの初期コストに設定
+        {
+            have_ene = init_ene_array[stageNum];
+        }
+        Debug.Log("初期コストを" + stageNum + "ステージの" + have_ene + "に初期化しました.");
     }
 
     public void StageSelectInitHaveCost()

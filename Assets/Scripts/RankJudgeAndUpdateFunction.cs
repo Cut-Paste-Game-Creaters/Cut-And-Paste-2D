@@ -242,7 +242,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         return rankText;
     }
 
-    void AddInitCost(int stage_num)
+    public void AddInitCost(int stage_num)
     {
         switch (rankText)
         {
