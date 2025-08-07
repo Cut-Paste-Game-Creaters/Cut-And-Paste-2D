@@ -23,6 +23,7 @@ public class WarpDoor : MonoBehaviour
     private ClearFunction clearFunc;
     private GameObject currentRank;
     private SpriteRenderer door;
+    private FadeScreen fadeScreen;
 
     public string GetStageName()
     {
@@ -59,7 +60,7 @@ public class WarpDoor : MonoBehaviour
 
         judgeFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
         clearFunc = FindObjectOfType<ClearFunction>();
-
+        fadeScreen = FindObjectOfType<FadeScreen>();
 
         AllTextDisable();
 
@@ -97,7 +98,7 @@ public class WarpDoor : MonoBehaviour
             }
             stageMgr.EraseObjects = new List<GameObject>();
             if (stopLoad) return;
-            SceneManager.LoadScene(stageName);
+            fadeScreen.StartFadeOut(stageName);
         }
     }
 

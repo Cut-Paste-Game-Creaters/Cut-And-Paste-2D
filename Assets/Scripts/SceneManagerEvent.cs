@@ -9,6 +9,7 @@ public class SceneManagerEvent : MonoBehaviour
     StageManager stageMgr;
     RankJudgeAndUpdateFunction rankFunc;
     CaptureCopyZone captureFunc;
+    FadeScreen fadeScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -16,8 +17,10 @@ public class SceneManagerEvent : MonoBehaviour
         stageMgr = FindObjectOfType<StageManager>();
         rankFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
         captureFunc = this.gameObject.GetComponent<CaptureCopyZone>();
+        fadeScreen = FindObjectOfType<FadeScreen>();
         // イベントにイベントハンドラーを追加
         SceneManager.sceneLoaded += SceneLoaded;
+        SceneManager.sceneLoaded += fadeScreen.SceneStartListener;
         SceneManager.sceneLoaded += captureFunc.LoadSceneObject;
 
 
