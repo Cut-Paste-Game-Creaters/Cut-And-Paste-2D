@@ -27,8 +27,12 @@ public class FadeScreen : MonoBehaviour
             return;
         }
 
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+        if(SceneManager.GetActiveScene().name != "TitleScene")
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        Debug.Log("fadeScreen wake");
 
         SceneBlackScreen.gameObject.SetActive(false);
     }
@@ -57,6 +61,12 @@ public class FadeScreen : MonoBehaviour
     {
         isSceneEnding = true;
         sceneName=_sceneName;
+    }
+
+
+    public void StartFadeIn()
+    {
+        isSceneStarted = true;
     }
 
     private void LoadSceneWithFadeOut()
