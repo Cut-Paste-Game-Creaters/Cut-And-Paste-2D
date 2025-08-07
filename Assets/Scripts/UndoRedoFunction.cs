@@ -246,8 +246,6 @@ public class UndoRedoFunction : MonoBehaviour
 
                 stageObjStateList.Add(stageObjState_);
             }
-
-
         }
         return stageObjStateList;
     }
@@ -384,6 +382,9 @@ public class UndoRedoFunction : MonoBehaviour
         tilemap.CompressBounds(); //タイルを最小まで圧縮
         var b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
 
+        SwitchblockController[] s_blocks; //switchblock取得用
+        s_blocks = FindObjectsOfType<SwitchblockController>();
+
         /*画面上オブジェクト削除*/
         Collider2D[] cols = Physics2D.OverlapAreaAll(new Vector2(b.x/*-((32 / 2) + 1)*/, b.y/*-((18 / 2) + 1))*/), new Vector2(b.size.x, b.size.y));
         foreach (var col in cols)
@@ -397,6 +398,17 @@ public class UndoRedoFunction : MonoBehaviour
                 Debug.Log(col.gameObject.name + "を削除しました.");
             }
         }
+
+        //switchblock削除
+        foreach(SwitchblockController s_block in s_blocks)
+        {
+            if(s_blocks != null)
+            {
+                Destroy(s_block.gameObject);
+            }
+        }
+
+
 
         /*画面上オブジェクト生成*/
         foreach (var obj in pre_objList)
