@@ -8,12 +8,14 @@ public class ClearFunction : MonoBehaviour
 {
     private Canvas canvas;
     private bool isClear = false;
+    private FadeScreen fadeCurtain;
     // Start is called before the first frame update
     void Start()
     {
         canvas = GetComponent<Canvas>();
         canvas.enabled = false;
         isClear = false;
+        fadeCurtain = FindObjectOfType<FadeScreen>();
     }
 
     // Update is called once per frame
@@ -46,6 +48,7 @@ public class ClearFunction : MonoBehaviour
     public void LoadStageSelect()
     {
         PauseOff();
-        SceneManager.LoadScene("StageSelectScene");
+        fadeCurtain.StartFadeOut("StageSelectScene");
+        //SceneManager.LoadScene("StageSelectScene");
     }
 }
