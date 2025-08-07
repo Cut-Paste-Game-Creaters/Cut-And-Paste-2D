@@ -9,6 +9,7 @@ public class GameOverFunction : MonoBehaviour
     private Canvas canvas;
     private GameObject player;
     private Vector3 initPlayerPos;
+    private FadeScreen fadeCurtain;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +17,7 @@ public class GameOverFunction : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         initPlayerPos = player.transform.position;
         canvas.enabled = false;
+        fadeCurtain = FindObjectOfType<FadeScreen>();
     }
 
     // Update is called once per frame
@@ -45,6 +47,7 @@ public class GameOverFunction : MonoBehaviour
     public void LoadStageSelect()
     {
         PauseOff();
-        SceneManager.LoadScene("StageSelectScene");
+        fadeCurtain.StartFadeOut("StageSelectScene");
+        //SceneManager.LoadScene("StageSelectScene");
     }
 }
