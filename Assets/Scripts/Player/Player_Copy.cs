@@ -498,6 +498,10 @@ public class Player_Copy : MonoBehaviour
     {
         foreach (var col in cols)
         {
+            //Untaggedだったらスキップ
+            if (col.gameObject.tag == "Untagged") continue;
+
+
             if (col.gameObject.tag != "Tilemap"
                 && col.gameObject.tag != "Player"
                 && col.gameObject.tag != "Uncuttable")
