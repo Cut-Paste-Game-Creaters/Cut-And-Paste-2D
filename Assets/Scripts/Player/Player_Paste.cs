@@ -67,6 +67,7 @@ public class Player_Paste : MonoBehaviour
         //右クリックを押してる間枠表示
         if (PlayerInput.GetMouseButton(1))
         {
+            stageManager.isPasting = true;
             sr.enabled = true;
             Time.timeScale = 0f;
             frameData = stageManager.GetInfo();
@@ -121,6 +122,7 @@ public class Player_Paste : MonoBehaviour
         //右クリックで貼り付け
         if (PlayerInput.GetMouseButtonUp(1))
         {
+            stageManager.isPasting = false;
             sr.enabled = false;     //枠を非表示にする
             m_BGMManager.ResetBGMVolume();
             Time.timeScale = 1.0f;
@@ -318,6 +320,7 @@ public class Player_Paste : MonoBehaviour
         //上書き範囲内のコライダーの消すコストを計算する
         foreach(var col in cols)
         {
+            if (col.gameObject.tag == "Untagged") continue;
             if (col.gameObject.tag != "Tilemap"
                 && col.gameObject.tag != "Player"
                 && col.gameObject.tag != "Uncuttable")

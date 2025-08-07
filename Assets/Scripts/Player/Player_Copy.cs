@@ -120,7 +120,7 @@ public class Player_Copy : MonoBehaviour
         {
             //マウスを右クリックして、移動して離す
             //最初と最後の座標だけとれば範囲が指定できる
-            if (PlayerInput.GetMouseButtonDown(0))
+            if (PlayerInput.GetMouseButtonDown(0) && !stageMgr.isPasting)
             {
                 //範囲選択時時間を停止する(またはスローモー)
                 Time.timeScale = 0f;
