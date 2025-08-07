@@ -43,16 +43,16 @@ MonoBehaviour:
     ow_ene: 10
   - name: ball-M
     obj: {fileID: 1193905351830765531, guid: ecb716a9144d17b4885faa6b32c0bcfb, type: 3}
-    p_ene: 30
-    ow_ene: 15
-  - name: ball-L
-    obj: {fileID: 575467041499296800, guid: 38394f1be96906146a850a7c28c94887, type: 3}
     p_ene: 40
     ow_ene: 20
+  - name: ball-L
+    obj: {fileID: 575467041499296800, guid: 38394f1be96906146a850a7c28c94887, type: 3}
+    p_ene: 50
+    ow_ene: 30
   - name: ball-XL
     obj: {fileID: 7103272080347404590, guid: d1b4868f766c99c46a61f7085f009a18, type: 3}
-    p_ene: 50
-    ow_ene: 25
+    p_ene: 60
+    ow_ene: 40
   - name: Blackhole-L
     obj: {fileID: 8861582115188641072, guid: 10fa6d43e5d19b44fb0a8b0b346a532f, type: 3}
     p_ene: 30
