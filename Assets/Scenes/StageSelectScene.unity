@@ -1318,6 +1318,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9124060226184224348, guid: 8a1c132a40bef1e43a72eb9570c9cbe1, type: 3}
+      propertyPath: lowVolume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9124060226184224348, guid: 8a1c132a40bef1e43a72eb9570c9cbe1, type: 3}
       propertyPath: sceneSounds.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -1328,7 +1332,7 @@ PrefabInstance:
     - target: {fileID: 9124060226184224348, guid: 8a1c132a40bef1e43a72eb9570c9cbe1, type: 3}
       propertyPath: stageSelectSounds.second
       value: 
-      objectReference: {fileID: 8300000, guid: eca885660ebe5ce478abc4aead367ee1, type: 3}
+      objectReference: {fileID: 8300000, guid: 00ebd1990cabd9f438e7fcd57e582bf9, type: 3}
     - target: {fileID: 9124060226184224348, guid: 8a1c132a40bef1e43a72eb9570c9cbe1, type: 3}
       propertyPath: sceneSounds.Array.data[0].first
       value: 
@@ -1336,7 +1340,7 @@ PrefabInstance:
     - target: {fileID: 9124060226184224348, guid: 8a1c132a40bef1e43a72eb9570c9cbe1, type: 3}
       propertyPath: sceneSounds.Array.data[0].second
       value: 
-      objectReference: {fileID: 8300000, guid: c9c1ba7772700e0478946a784ec06a05, type: 3}
+      objectReference: {fileID: 8300000, guid: eca885660ebe5ce478abc4aead367ee1, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -20,6 +20,7 @@ public class Player_Paste : MonoBehaviour
     private Vector3 frameData = Vector3.zero;
     UndoRedoFunction urFunc;
     private CaptureCopyZone captureCopyZone;
+    private BGMManager m_BGMManager;
     //private GameObject rect;
     // Start is called before the first frame update
     void Start()
@@ -71,6 +72,8 @@ public class Player_Paste : MonoBehaviour
             frameData = stageManager.GetInfo();
             sr.size = frameData;
             Vector3 framePos = mPos;
+            if (m_BGMManager == null) m_BGMManager = FindObjectOfType<BGMManager>();
+            m_BGMManager.DecreaseBGMVolume();
 
             switch (frameData.z)
             {
@@ -119,6 +122,7 @@ public class Player_Paste : MonoBehaviour
         if (PlayerInput.GetMouseButtonUp(1))
         {
             sr.enabled = false;     //枠を非表示にする
+            m_BGMManager.ResetBGMVolume();
             Time.timeScale = 1.0f;
             display_Copy_Tilemap.ClearAllTiles();
             if(PreviewCopyData) UnDisplayObject();          //プレビューで出してたObjectを非表示にする

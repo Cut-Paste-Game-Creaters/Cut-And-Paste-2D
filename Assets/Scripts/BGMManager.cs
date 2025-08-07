@@ -21,6 +21,7 @@ public class BGMManager : MonoBehaviour
 
     public static BGMManager instance;
 
+    [SerializeField] private float lowVolume = 0.1f;
     [SerializeField] private Pair<AudioClip, AudioClip> stageSelectSounds;
     [SerializeField] private Pair<AudioClip, AudioClip>[] sceneSounds;
 
@@ -91,17 +92,32 @@ public class BGMManager : MonoBehaviour
 
     public void PlayDualBGM(AudioClip clip1, AudioClip clip2)
     {
+
         if (clip1 != null)
         {
-            ambientsound.clip = clip1;
-            ambientsound.Play();
-        }
-
-        if (clip2 != null)
-        {
-            mainBGM.clip = clip2;
+            mainBGM.clip = clip1;
             mainBGM.Play();
         }
+        if (clip2 != null)
+        {
+            ambientsound.clip = clip2;
+            ambientsound.Play();
+        }
+    }
+
+    public void StopBackgroundMusic()
+    {
+        mainBGM.Stop();
+    }
+
+    public void DecreaseBGMVolume()
+    {
+        mainBGM.volume = lowVolume;
+    }
+
+    public void ResetBGMVolume()
+    {
+        mainBGM.volume = 1.0f;
     }
 
     public void StopAllBGM()

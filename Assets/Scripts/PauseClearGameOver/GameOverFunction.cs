@@ -10,6 +10,7 @@ public class GameOverFunction : MonoBehaviour
     private GameObject player;
     private Vector3 initPlayerPos;
     private FadeScreen fadeCurtain;
+    private BGMManager m_BGMManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +32,8 @@ public class GameOverFunction : MonoBehaviour
     {
         SEManager.instance.ClipAtPointSE(SEManager.instance.deathbiribiriSE);
         SEManager.instance.ClipAtPointSE(SEManager.instance.deathyoinSE);
+        if (m_BGMManager == null) m_BGMManager = FindObjectOfType<BGMManager>();
+        m_BGMManager.StopBackgroundMusic();
         canvas.enabled = true;
         PlayerInput.isPausing = true;
         Time.timeScale = 0f;

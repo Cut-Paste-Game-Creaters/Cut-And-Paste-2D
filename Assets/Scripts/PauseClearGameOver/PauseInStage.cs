@@ -10,6 +10,7 @@ public class PauseInStage : MonoBehaviour
 
     private StageManager stageMgr;
     private FadeScreen fadeCurtain;
+    private BGMManager m_BGMManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +26,8 @@ public class PauseInStage : MonoBehaviour
             new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + 1);
         if (PlayerInput.GetKeyDown(KeyCode.Escape) && !stageMgr.isSelectZone)
         {
+            if (m_BGMManager == null) m_BGMManager = FindObjectOfType<BGMManager>();
+            m_BGMManager.DecreaseBGMVolume();
             canvas.enabled = true;
             PlayerInput.isPausing = true;
             Time.timeScale = 0f;
@@ -36,6 +39,7 @@ public class PauseInStage : MonoBehaviour
         canvas.enabled = false;
         PlayerInput.isPausing = false;
         Time.timeScale = 1.0f;
+        m_BGMManager.ResetBGMVolume();
     }
 
     public void LoadStageSelect()
