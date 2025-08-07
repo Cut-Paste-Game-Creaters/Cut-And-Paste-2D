@@ -15,22 +15,19 @@ public class HealItemScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        SEManager.instance.ClipAtPointSE(SEManager.instance.healSE);
+        if (stageManager.player_HP + Healamount <= stageManager.player_MAXHP)
         {
-            SEManager.instance.ClipAtPointSE(SEManager.instance.healSE);
+            stageManager.player_HP += Healamount;
+            Debug.Log(Healamount + "‰ñ•œ");
 
-            if (stageManager.player_HP + Healamount <= stageManager.player_MAXHP)
-            {
-                stageManager.player_HP += Healamount;
-                Debug.Log(Healamount + "‰ñ•œ");
-            }
-            else
-            {
-                stageManager.player_HP = stageManager.player_MAXHP;
-            }
-
-            Destroy(this.gameObject);
         }
-    }
+        else
+        {
+            stageManager.player_HP = stageManager.player_MAXHP;
+        }
 
+
+        Destroy(this.gameObject);
+    }
 }
