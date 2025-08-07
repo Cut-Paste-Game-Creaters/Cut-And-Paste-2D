@@ -1317,6 +1317,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9124060226184224348, guid: 8a1c132a40bef1e43a72eb9570c9cbe1, type: 3}
+      propertyPath: sceneSounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9124060226184224348, guid: 8a1c132a40bef1e43a72eb9570c9cbe1, type: 3}
+      propertyPath: stageSelectSounds.first
+      value: 
+      objectReference: {fileID: 8300000, guid: 4ef2c4618daf21b4ebb43ff820d28e71, type: 3}
+    - target: {fileID: 9124060226184224348, guid: 8a1c132a40bef1e43a72eb9570c9cbe1, type: 3}
+      propertyPath: stageSelectSounds.second
+      value: 
+      objectReference: {fileID: 8300000, guid: eca885660ebe5ce478abc4aead367ee1, type: 3}
+    - target: {fileID: 9124060226184224348, guid: 8a1c132a40bef1e43a72eb9570c9cbe1, type: 3}
+      propertyPath: sceneSounds.Array.data[0].first
+      value: 
+      objectReference: {fileID: 8300000, guid: c056815e1fe745441ad2866be5384eda, type: 3}
+    - target: {fileID: 9124060226184224348, guid: 8a1c132a40bef1e43a72eb9570c9cbe1, type: 3}
+      propertyPath: sceneSounds.Array.data[0].second
+      value: 
+      objectReference: {fileID: 8300000, guid: c9c1ba7772700e0478946a784ec06a05, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

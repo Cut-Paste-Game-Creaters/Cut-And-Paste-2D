@@ -10,6 +10,7 @@ public class SceneManagerEvent : MonoBehaviour
     RankJudgeAndUpdateFunction rankFunc;
     CaptureCopyZone captureFunc;
     FadeScreen fadeScreen;
+    BGMManager m_BGMManager;
 
     // Start is called before the first frame update
     void Start()
@@ -18,10 +19,12 @@ public class SceneManagerEvent : MonoBehaviour
         rankFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
         captureFunc = this.gameObject.GetComponent<CaptureCopyZone>();
         fadeScreen = FindObjectOfType<FadeScreen>();
+        m_BGMManager = FindObjectOfType<BGMManager>();
         // イベントにイベントハンドラーを追加
         SceneManager.sceneLoaded += SceneLoaded;
         SceneManager.sceneLoaded += fadeScreen.SceneStartListener;
         SceneManager.sceneLoaded += captureFunc.LoadSceneObject;
+        SceneManager.sceneLoaded += m_BGMManager.OnSceneLoaded;
 
 
         //WarpDoorのscriptを集める
