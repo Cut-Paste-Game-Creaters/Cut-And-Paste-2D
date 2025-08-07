@@ -11,6 +11,7 @@ public class SceneManagerEvent : MonoBehaviour
     CaptureCopyZone captureFunc;
     FadeScreen fadeScreen;
     BGMManager m_BGMManager;
+    UndoRedoFunction urFunc;
 
     // Start is called before the first frame update
     void Start()
@@ -20,11 +21,13 @@ public class SceneManagerEvent : MonoBehaviour
         captureFunc = this.gameObject.GetComponent<CaptureCopyZone>();
         fadeScreen = FindObjectOfType<FadeScreen>();
         m_BGMManager = FindObjectOfType<BGMManager>();
+        urFunc = FindObjectOfType<UndoRedoFunction>();
         // イベントにイベントハンドラーを追加
         SceneManager.sceneLoaded += SceneLoaded;
         SceneManager.sceneLoaded += fadeScreen.SceneStartListener;
         SceneManager.sceneLoaded += captureFunc.LoadSceneObject;
         SceneManager.sceneLoaded += m_BGMManager.OnSceneLoaded;
+        //SceneManager.sceneLoaded += urFunc.LoadSceneRecord;
 
 
         //WarpDoorのscriptを集める
@@ -49,6 +52,10 @@ public class SceneManagerEvent : MonoBehaviour
         {
             stageMgr = FindObjectOfType<StageManager>();
         }
+        else if(urFunc == null)
+        {
+            urFunc = FindObjectOfType<UndoRedoFunction>();
+        }
     }
 
     // イベントハンドラー（イベント発生時に動かしたい処理）
@@ -71,7 +78,7 @@ public class SceneManagerEvent : MonoBehaviour
                 stageMgr.InitHaveCost(rankFunc.stageNumber[SceneManager.GetActiveScene().name]); //所持コストを初期コストに初期化
                 stageMgr.stageNum = rankFunc.stageNumber[SceneManager.GetActiveScene().name];
                 stageMgr.InitHealTimeOut(rankFunc.stageNumber[SceneManager.GetActiveScene().name]);
-                Debug.Log("現在のシーンは" + input + "です.");
+                //Debug.Log("現在のシーンは" + input + "です.");
             }
             //ステージセレクトならドアにランクを表示する
             else if(input.Equals("StageSelectScene"))
@@ -83,15 +90,15 @@ public class SceneManagerEvent : MonoBehaviour
                     //ステージ名を取得、そのステージのランクを取得、spriteを表示
                     string stageName = door.GetStageName();
                     string stage_rank = rankFunc.GetStageRank(stageName);
-                    Debug.Log(stageName + "のコストは" + stage_rank + "です.");
+                    //Debug.Log(stageName + "のコストは" + stage_rank + "です.");
                     door.SetRankSprite(stage_rank);
                     rankFunc.rankText = stage_rank;
-                    Debug.Log("rankTextは" + rankFunc.rankText);
+                    //Debug.Log("rankTextは" + rankFunc.rankText);
                     //rankFunc.AddInitCost(rankFunc.stageNumber[stageName]); //StageSelect所持コスト計算と代入
                 }
                 stageMgr.stageNum = -1;
                 stageMgr.InitHaveCost(stageMgr.stageNum); //そうじゃないならStage1の初期コストに常に設定
-                Debug.Log("現在のシーンは" + input + "です.");
+                //Debug.Log("現在のシーンは" + input + "です.");
             }
             else
             {
@@ -99,6 +106,7 @@ public class SceneManagerEvent : MonoBehaviour
                 stageMgr.stageNum = -1;
                 //セレクト画面に遷移したときは各ステージのランクに応じて初期コストを設定
             }
+            //urFunc.InfoPushToStack();
         }
 
         /*if(captureFunc != null) //シーン遷移時画像表示

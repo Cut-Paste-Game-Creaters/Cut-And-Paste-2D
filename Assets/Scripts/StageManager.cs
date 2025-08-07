@@ -13,6 +13,7 @@ public class StageManager : MonoBehaviour
 
     public TileData tileData = new TileData(0, 0);
     public List<ObjectData> objectData = new List<ObjectData>();
+    public Sprite copySprite;
 
     /*プレイヤー関連*/
     Player_Function playerFunc;
