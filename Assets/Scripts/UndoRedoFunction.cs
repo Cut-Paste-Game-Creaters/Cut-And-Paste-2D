@@ -14,7 +14,6 @@ public class UndoRedoFunction : MonoBehaviour
     private Player_Copy p_copy;
     private CaptureCopyZone ccz;
     private RankJudgeAndUpdateFunction rankFunc;
-    private FadeScreen fadeCurtain;
     StageManager stageMgr;
     CameraMove camMove;
     Vector3Int stageStartPos;
@@ -38,7 +37,6 @@ public class UndoRedoFunction : MonoBehaviour
         stageMgr = FindObjectOfType<StageManager>();
         ccz = FindObjectOfType<CaptureCopyZone>();
         rankFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
-        fadeCurtain = FindObjectOfType<FadeScreen>();
         playerCam = Camera.main.gameObject;
         camMove = FindObjectOfType<CameraMove>();
         Tilemap[] maps = FindObjectsOfType<Tilemap>();
@@ -677,8 +675,7 @@ public class UndoRedoFunction : MonoBehaviour
         //オブジェクトの状態を初期化(switch&key)
         //stageMgr.ResetObjectState();
 
-        fadeCurtain.StartFadeOut(SceneManager.GetActiveScene().name);
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     //ステージ全体のタイルを格納するクラス

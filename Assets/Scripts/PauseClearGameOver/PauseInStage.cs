@@ -9,12 +9,10 @@ public class PauseInStage : MonoBehaviour
     [SerializeField] Canvas canvas;
 
     private StageManager stageMgr;
-    private FadeScreen fadeCurtain;
     // Start is called before the first frame update
     void Start()
     {
         canvas.enabled = false;
-        fadeCurtain = FindObjectOfType<FadeScreen>();
     }
 
     // Update is called once per frame
@@ -41,7 +39,6 @@ public class PauseInStage : MonoBehaviour
     public void LoadStageSelect()
     {
         PauseOff();
-        fadeCurtain.StartFadeOut("StageSelectScene");
-        //SceneManager.LoadScene("StageSelectScene");
+        SceneManager.LoadScene("StageSelectScene");
     }
 }
