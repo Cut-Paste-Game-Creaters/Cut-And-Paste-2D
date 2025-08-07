@@ -24,7 +24,7 @@ public class CaptureCopyZone : MonoBehaviour
 
     void Update()
     {
-        if(stageMgr != null)
+        if(stageMgr == null)
         {
             stageMgr = FindObjectOfType<StageManager>();
         }
@@ -34,6 +34,8 @@ public class CaptureCopyZone : MonoBehaviour
     public void LoadSceneObject(Scene nextScene, LoadSceneMode mode)
     {
         image = GameObject.Find("captureImage").GetComponent<Image>();
+        image.sprite = stageMgr.copySprite;
+        SetImageScaleToFit(image, stageMgr.copySprite);
         if(stageMgr.tileData.hasData || stageMgr.objectData.Count > 0)
         {
             image.enabled = true;
@@ -129,8 +131,18 @@ public class CaptureCopyZone : MonoBehaviour
 
         // UI Image に反映
         image.sprite = capturedSprite;
+        stageMgr.copySprite = capturedSprite;
         SetImageScaleToFit(image,capturedSprite);
-        image.enabled = true;
+        //stageMgr.copyImage = image;
+        if(stageMgr.tileData.hasData || stageMgr.objectData.Count > 0)
+        {
+            image.enabled = true;
+        }
+        else
+        {
+            image.enabled = false;
+        }
+        //image.enabled = true;
 
         ///////////////////////////////////////////
         /*
@@ -168,6 +180,18 @@ public class CaptureCopyZone : MonoBehaviour
 
         // scaleをImageオブジェクトに適用
         image.transform.localScale = scale;
+    }
+
+    public Image GetImage()
+    {
+        if(image != null)
+        {
+            return image;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public Sprite GetImageSprite()

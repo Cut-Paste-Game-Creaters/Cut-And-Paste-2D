@@ -312,6 +312,7 @@ public class Player_Copy : MonoBehaviour
 
                 Debug.Log("消すコスト(カット時):" + stageMgr.cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene + ", " + "総消費コスト：" + stageMgr.all_sum_cos);
                 CutInCopyObject(cols, false);
+                stageMgr.tileData.hasData = true;
                 //urFunc.InfoPushToStack();
             }
             else
@@ -325,6 +326,7 @@ public class Player_Copy : MonoBehaviour
         {
             CutInCopyObject(cols, false);
             Debug.Log("消すコスト(カット時):" + stageMgr.cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene);
+            stageMgr.tileData.hasData = true;
         }
 
         //urFunc.InfoPushToStack(); /*これだとコピーの回数分のみ保存できるが, カットした時, 正常じゃなくなる*/
@@ -649,7 +651,7 @@ public class Player_Copy : MonoBehaviour
         CutButton.SetActive(false);
 
         //データ保持フラグon!
-        stageMgr.tileData.hasData = true;
+        //stageMgr.tileData.hasData = true;
         makeDecision = false;
         //anounce.SetActive(false);
 
