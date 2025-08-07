@@ -6,6 +6,21 @@ public static class PlayerInput
 {
     public static bool isPausing = false;
 
+    public static float GetAxisRaw(string dir)
+    {
+        if (isPausing) return 0.0f;
+        if(dir == "Horizontal")
+        {
+            return Input.GetAxisRaw("Horizontal");
+        }
+        else if(dir == "Vertical")
+        {
+            return Input.GetAxisRaw("Vertical");
+        }
+
+        return 0.0f;
+    }
+
     public static float GetDeltaTime()
     {
         if (isPausing) return 0.0f;

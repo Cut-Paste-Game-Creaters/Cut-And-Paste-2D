@@ -111,7 +111,7 @@ public class Player_Move : MonoBehaviour
 
     private void HandleInput()
     {
-        float move = Input.GetAxisRaw("Horizontal");
+        float move = PlayerInput.GetAxisRaw("Horizontal");
 
         Vector3 pos = this.transform.position;
 
