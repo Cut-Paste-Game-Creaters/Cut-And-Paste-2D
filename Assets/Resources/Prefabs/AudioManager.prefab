@@ -178,10 +178,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81adfed4e04b74441a70407c1f4b27fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bard: {fileID: 8300000, guid: eca885660ebe5ce478abc4aead367ee1, type: 3}
-  calm: {fileID: 8300000, guid: c9c1ba7772700e0478946a784ec06a05, type: 3}
-  park: {fileID: 8300000, guid: c3b267ebd7706e64695c2d75a7d35bad, type: 3}
-  semi: {fileID: 8300000, guid: 00ebd1990cabd9f438e7fcd57e582bf9, type: 3}
-  groundStage: {fileID: 8300000, guid: 4ef2c4618daf21b4ebb43ff820d28e71, type: 3}
-  catsleStage: {fileID: 8300000, guid: 9c048055a11e3d346bac8d15a007fc9a, type: 3}
-  cosmicStage: {fileID: 8300000, guid: 1d8d7c3bfa2135b43a394e8320dc31c3, type: 3}
+  lowVolume: 0.3
+  stageSelectSounds:
+    first: {fileID: 8300000, guid: 4ef2c4618daf21b4ebb43ff820d28e71, type: 3}
+    second: {fileID: 8300000, guid: 00ebd1990cabd9f438e7fcd57e582bf9, type: 3}
+  sceneSounds:
+  - first: {fileID: 8300000, guid: c056815e1fe745441ad2866be5384eda, type: 3}
+    second: {fileID: 8300000, guid: eca885660ebe5ce478abc4aead367ee1, type: 3}
