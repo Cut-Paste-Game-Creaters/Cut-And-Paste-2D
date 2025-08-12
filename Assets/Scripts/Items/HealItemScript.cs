@@ -4,30 +4,33 @@ using UnityEngine;
 
 public class HealItemScript : MonoBehaviour
 {
-    private StageManager stageManager;
-    private int Healamount = 20;
+    private int Healamount = 30;
 
     void Start()
     {
-        stageManager = FindObjectOfType<StageManager>();
-
+        // もう StageManager の参照取得は不要なので空でOK
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        SEManager.instance.ClipAtPointSE(SEManager.instance.healSE);
-        if (stageManager.player_HP + Healamount <= stageManager.player_MAXHP)
+        // プレイヤーにぶつかったときのみ処理
+        if (StageManager.Instance == null) return;
+
+        if (other.CompareTag("Player")) // ← ここを修正
         {
-            stageManager.player_HP += Healamount;
-            Debug.Log(Healamount + "回復");
+            SEManager.instance.ClipAtPointSE(SEManager.instance.healSE);
 
+            if (StageManager.Instance.player_HP + Healamount <= StageManager.Instance.player_MAXHP)
+            {
+                StageManager.Instance.player_HP += Healamount;
+                Debug.Log(Healamount + " 回復");
+            }
+            else
+            {
+                StageManager.Instance.player_HP = StageManager.Instance.player_MAXHP;
+            }
+
+            Destroy(this.gameObject);
         }
-        else
-        {
-            stageManager.player_HP = stageManager.player_MAXHP;
-        }
-
-
-        Destroy(this.gameObject);
     }
 }

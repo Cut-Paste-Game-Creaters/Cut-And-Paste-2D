@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Needleball-L
       objectReference: {fileID: 0}
+    - target: {fileID: 5471130656243168931, guid: ab0ec7b3ab6cf8743807e667afdb351c, type: 3}
+      propertyPath: m_Mass
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6671293031527874801, guid: ab0ec7b3ab6cf8743807e667afdb351c, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -63,6 +67,14 @@ PrefabInstance:
     - target: {fileID: 6671293031527874801, guid: ab0ec7b3ab6cf8743807e667afdb351c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779016477966280681, guid: ab0ec7b3ab6cf8743807e667afdb351c, type: 3}
+      propertyPath: m_Color.a
+      value: 5355
+      objectReference: {fileID: 0}
+    - target: {fileID: 6779016477966280681, guid: ab0ec7b3ab6cf8743807e667afdb351c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

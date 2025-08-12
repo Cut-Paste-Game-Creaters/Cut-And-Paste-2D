@@ -168,6 +168,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   bounceForce: 10
+  scaleMultiplier: 1.1
+  scaleDuration: 0.1
 --- !u!1 &8169191995628626481
 GameObject:
   m_ObjectHideFlags: 0

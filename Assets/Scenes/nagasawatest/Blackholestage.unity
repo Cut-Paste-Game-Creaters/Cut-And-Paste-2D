@@ -7858,15 +7858,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4462907966080867569, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: m_Color.b
-      value: 0.2682449
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4462907966080867569, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: m_Color.g
-      value: 0.2682449
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4462907966080867569, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: m_Color.r
-      value: 0.5169811
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7208446286499985901, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: jumpForce
@@ -8210,7 +8210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64de2a2b328b87b40af2ff15e519853d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilemap: {fileID: 119543208}
   tileSB: {fileID: 11400000, guid: b58413ee8aa87174e8571d021e40d761, type: 2}
 --- !u!4 &444857392
 Transform:
@@ -8368,6 +8367,19 @@ MonoBehaviour:
   text_nowCost: {fileID: 846301522}
   text_nowRank: {fileID: 0}
   text_nextRank: {fileID: 0}
+  text_duplicateCost: {fileID: 0}
+  text_writeCost: {fileID: 0}
+  text_writeCost2: {fileID: 0}
+  text_overwriteCost: {fileID: 0}
+  text_overwriteCost2: {fileID: 0}
+  icon_copycut: {fileID: 0}
+  s_copy: {fileID: 0}
+  s_cut: {fileID: 0}
+  objSB: {fileID: 0}
+  paddingX: 100
+  paddingY: 80
+  itemPrefab: {fileID: 0}
+  spawnArea: {fileID: 0}
 --- !u!114 &587460882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9312,9 +9324,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5de76dad52edeb148b8812bdf76c719b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  copySprite: {fileID: 0}
   player_HP: 100
+  player_MAXHP: 200
+  isPlayerDamaged: 0
+  isSelectZone: 0
+  isPasting: 0
+  isPlayerDead: 0
   switch_state: 0
   key_lock_state: 0
+  switch_key_states: []
+  objSB: {fileID: 0}
+  tileSB: {fileID: 0}
   costHeal_timeOut: 0
   stageNum: -1
   initAddCost_EachStage: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
