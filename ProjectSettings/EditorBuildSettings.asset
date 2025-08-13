@@ -21,16 +21,16 @@ EditorBuildSettings:
     path: Assets/Scenes/Stagetest2.unity
     guid: ec53b97a9d822f84c934907b1e3c92d5
   - enabled: 1
-    path: Assets/Scenes/nagasawatest/Stage1.unity
+    path: Assets/Scenes/nagasawatest/groundbotu/Stage1.unity
     guid: 29d1d744da8411544912e59f65ed3107
   - enabled: 1
-    path: Assets/Scenes/nagasawatest/Stage2.unity
+    path: Assets/Scenes/nagasawatest/groundbotu/Stage2.unity
     guid: 66b4ba1fc8791da49a7fe7cfadbee2b9
   - enabled: 1
     path: Assets/Scenes/nagasawatest/Stage3.unity
     guid: daf70dcb5a13be442bc873f7380d5b3d
   - enabled: 1
-    path: Assets/Scenes/nagasawatest/Stage4.unity
+    path: Assets/Scenes/nagasawatest/New5.unity
     guid: d598d937d8d31ea4e978215e0a32a7f7
   - enabled: 1
     path: Assets/Scenes/nagasawatest/Stage5.unity
