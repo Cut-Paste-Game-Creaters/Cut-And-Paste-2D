@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7012598240979449042, guid: 25d723b9d7422bb49a7122cfccfe15a6, type: 3}
       propertyPath: m_Color.a
-      value: 64261
+      value: 73441
       objectReference: {fileID: 0}
     - target: {fileID: 8001366817257311338, guid: 25d723b9d7422bb49a7122cfccfe15a6, type: 3}
       propertyPath: m_LocalScale.x
