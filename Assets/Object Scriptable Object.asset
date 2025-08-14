@@ -15,7 +15,7 @@ MonoBehaviour:
   objectList:
   - name: door
     obj: {fileID: 1057402034990213959, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
-    p_ene: 10000
+    p_ene: 3000
     ow_ene: 0
   - name: GoalDoor
     obj: {fileID: 5096264463535201358, guid: 4ae2f67f36f3d7e4f9fea45624748a0f, type: 3}
@@ -23,7 +23,7 @@ MonoBehaviour:
     ow_ene: 0
   - name: key_lock
     obj: {fileID: 452536124641921469, guid: 4a7f36a9583bbc643950bfaedb40bffb, type: 3}
-    p_ene: 1000
+    p_ene: 500
     ow_ene: 0
   - name: switch
     obj: {fileID: 7654152235285816079, guid: 9053663e2ac49a9448a4ab464c0866f0, type: 3}
@@ -32,14 +32,14 @@ MonoBehaviour:
   - name: Switchblock
     obj: {fileID: 3018495810459848656, guid: a32592c65b64240419fbd001667655e8, type: 3}
     p_ene: 10
-    ow_ene: 100
+    ow_ene: 50
   - name: canon
     obj: {fileID: 1250828036113984986, guid: 95338fe7885519849837b88c863d6e3e, type: 3}
     p_ene: 60
     ow_ene: 30
   - name: bullet
     obj: {fileID: 8442285199812646893, guid: 5f7cb3d0780f1cc4cb89ab2bffe946b1, type: 3}
-    p_ene: 10
+    p_ene: 20
     ow_ene: 5
   - name: VanishFloor
     obj: {fileID: 2234991536343953260, guid: 92880a01147ef614ca9fa94687c11418, type: 3}
@@ -87,7 +87,7 @@ MonoBehaviour:
     ow_ene: 20
   - name: Bar-L
     obj: {fileID: 4550408371338664941, guid: abda40439fb799a4f8b7e3dced8ee53c, type: 3}
-    p_ene: 30
+    p_ene: 50
     ow_ene: 20
   - name: Rotate_Center_S
     obj: {fileID: 6910680186113493092, guid: a693fa33da383444daff10fac42a7994, type: 3}
@@ -95,23 +95,23 @@ MonoBehaviour:
     ow_ene: 10
   - name: Rotate_Center_M
     obj: {fileID: 2233755994829837526, guid: 590ede736ec2ae74fa03e39b69db0f6b, type: 3}
-    p_ene: 20
+    p_ene: 30
     ow_ene: 15
   - name: Rotate_Center_L
     obj: {fileID: 4912859793595399357, guid: a28cc55aa194e0843948360b109c705e, type: 3}
-    p_ene: 30
-    ow_ene: 20
+    p_ene: 60
+    ow_ene: 30
   - name: Rotate_Edge_S
     obj: {fileID: 6219950655114163938, guid: cd33c0f0c1e5e6d458e8925e7a9dd151, type: 3}
     p_ene: 15
     ow_ene: 10
   - name: Rotate_Edge_M
     obj: {fileID: 8135703002190637435, guid: 5aad452ed1bbad2468740d18355ccd70, type: 3}
-    p_ene: 20
+    p_ene: 30
     ow_ene: 15
   - name: Rotate_Edge_L
     obj: {fileID: 8154928730361235224, guid: 8f2eb6f250300a849916b7a77a8d9207, type: 3}
-    p_ene: 30
+    p_ene: 60
     ow_ene: 20
   - name: bumper-S
     obj: {fileID: 5627736203465271130, guid: a3b38f5e376620c4495e4b960d9993dc, type: 3}
