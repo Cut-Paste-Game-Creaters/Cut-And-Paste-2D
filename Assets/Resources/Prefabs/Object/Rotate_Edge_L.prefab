@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7307756154272188096}
   - component: {fileID: 6377307459455571342}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: rotateE_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,8 +117,16 @@ PrefabInstance:
       value: Rotate_Edge_L
       objectReference: {fileID: 0}
     - target: {fileID: 6219950655114163938, guid: cd33c0f0c1e5e6d458e8925e7a9dd151, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219950655114163938, guid: cd33c0f0c1e5e6d458e8925e7a9dd151, type: 3}
       propertyPath: m_TagString
       value: Rotate_Edge_L
+      objectReference: {fileID: 0}
+    - target: {fileID: 7405145732190165075, guid: cd33c0f0c1e5e6d458e8925e7a9dd151, type: 3}
+      propertyPath: m_Color.a
+      value: 14281
       objectReference: {fileID: 0}
     - target: {fileID: 7405145732190165075, guid: cd33c0f0c1e5e6d458e8925e7a9dd151, type: 3}
       propertyPath: m_SortingLayerID

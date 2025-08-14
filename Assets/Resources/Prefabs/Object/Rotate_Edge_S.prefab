@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7405145732190165075}
   - component: {fileID: 808403592605968956}
   - component: {fileID: 615785175101146968}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Rotate_Edge_S
   m_TagString: Rotate_Edge_S
   m_Icon: {fileID: 0}
@@ -156,7 +156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 473449499814859824}
   - component: {fileID: 1739336513611190090}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: rotateE_S
   m_TagString: Rotate_Edge_S
   m_Icon: {fileID: 0}
