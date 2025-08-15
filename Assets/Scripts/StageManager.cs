@@ -79,7 +79,7 @@ public class StageManager : MonoBehaviour
             new Pair<bool, bool>(false, false),
             new Pair<bool, bool>(false, false),
             new Pair<bool, bool>(false, false),
-            new Pair<bool, bool>(false, false),
+            new Pair<bool, bool>(true, false),
             new Pair<bool, bool>(false, false),
             new Pair<bool, bool>(false, false),
             new Pair<bool, bool>(false, false),

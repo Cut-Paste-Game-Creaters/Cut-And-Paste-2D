@@ -19,7 +19,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
                                 {50, 200, 500, 1000}, //stage4のランク基準数値
                                 {-50, 100, 300, 700}, //stage5のランク基準数値
                                 {-50, 50, 200, 500}, //stage6のランク基準数値
-                                {0, 100, 300, 500}, //stage7のランク基準数値
+                                {100, 200, 400, 700}, //stage7のランク基準数値
                                 {25, 50, 75, 100}, //stage8のランク基準数値
                                 {25, 50, 75, 100}, //stage9のランク基準数値
                                 {25, 50, 75, 100}, //stage10のランク基準数値
@@ -28,7 +28,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
                                 }; //S~Fの判定基準
 
     //private int allCost = 24; //テスト用変数（総消費コスト
-    private int[] clearAddCost = {20,10,5,3,1}; //S～FでStageSelectの初期コストに追加するコスト
+    private int[] clearAddCost = {100,50,30,20,5}; //S～FでStageSelectの初期コストに追加するコスト
                                                    //各ステージで増えるコストは同じ
 
     private int[] minConsumpCost = {-10000, -10000,-10000, -10000, -10000,-10000, -10000, -10000, -10000, -10000,-10000}; //ステージ最低消費コスト配列
