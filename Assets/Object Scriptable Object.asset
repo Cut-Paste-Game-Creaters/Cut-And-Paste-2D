@@ -63,7 +63,7 @@ MonoBehaviour:
     ow_ene: 30
   - name: ball-XL
     obj: {fileID: 7103272080347404590, guid: d1b4868f766c99c46a61f7085f009a18, type: 3}
-    p_ene: 100
+    p_ene: 50
     ow_ene: 100
   - name: soccerball-S
     obj: {fileID: 7494345291764463393, guid: f4125e0082c73ee46a4d8a2eb06b38e6, type: 3}
@@ -79,7 +79,7 @@ MonoBehaviour:
     ow_ene: 30
   - name: Box-M
     obj: {fileID: 3735023780895848326, guid: a59213a9c14a04b4ea8cab18a1e17e53, type: 3}
-    p_ene: 10
+    p_ene: 20
     ow_ene: 20
   - name: Bar-M
     obj: {fileID: 6585899477325734917, guid: 76a4898235411aa45a7c7268cd42de6b, type: 3}
@@ -87,7 +87,7 @@ MonoBehaviour:
     ow_ene: 20
   - name: Bar-L
     obj: {fileID: 4550408371338664941, guid: abda40439fb799a4f8b7e3dced8ee53c, type: 3}
-    p_ene: 50
+    p_ene: 40
     ow_ene: 20
   - name: Rotate_Center_S
     obj: {fileID: 6910680186113493092, guid: a693fa33da383444daff10fac42a7994, type: 3}
@@ -140,19 +140,19 @@ MonoBehaviour:
   - name: Needle-M
     obj: {fileID: 3881063583115998866, guid: 6ab5071d1282862488435315536a84bc, type: 3}
     p_ene: 2
-    ow_ene: 1000
+    ow_ene: 100
   - name: Needle
     obj: {fileID: 8128896527873485178, guid: 6578e4ee29684fd4abc1ce71a1a2cff3, type: 3}
     p_ene: 2
-    ow_ene: 500
+    ow_ene: 100
   - name: Needleball
     obj: {fileID: 849976956736410216, guid: ab0ec7b3ab6cf8743807e667afdb351c, type: 3}
-    p_ene: 5
+    p_ene: 2
     ow_ene: 100
   - name: Needleball-L
     obj: {fileID: 2505159541229034835, guid: f6ff1a027ac583d49bbb32754b89583b, type: 3}
-    p_ene: 5
-    ow_ene: 300
+    p_ene: 2
+    ow_ene: 100
   - name: HPHeal
     obj: {fileID: 2210278136747466567, guid: 847b5c78846ccb045a30083b60fa1306, type: 3}
     p_ene: 60
