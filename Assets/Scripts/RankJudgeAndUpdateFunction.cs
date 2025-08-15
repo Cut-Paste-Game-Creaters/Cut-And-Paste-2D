@@ -13,13 +13,13 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     bool hasJudged = false;
 
     //private int allCost = 24; //テスト用変数（総消費コスト
-    private int[,] stageRank = {{2500, 5000, 7500, 10000}, //stage1のランク基準数値
-                                {1000, 2000, 3000, 4000}, //stage2のランク基準数値
-                                {1000, 2000, 3000, 4000}, //stage3のランク基準数値
-                                {1000, 2000, 3000, 4000}, //stage4のランク基準数値
-                                {1000, 2000, 3000, 4000}, //stage5のランク基準数値
-                                {200, 500, 1000, 1500}, //stage6のランク基準数値
-                                {25, 50, 75, 100}, //stage7のランク基準数値
+    private int[,] stageRank = {{100, 300, 700, 1500}, //stage1のランク基準数値
+                                {0, 100, 300, 700}, //stage2のランク基準数値
+                                {0, 150, 400, 700}, //stage3のランク基準数値
+                                {50, 200, 500, 1000}, //stage4のランク基準数値
+                                {-50, 100, 300, 700}, //stage5のランク基準数値
+                                {-50, 50, 200, 500}, //stage6のランク基準数値
+                                {0, 100, 300, 500}, //stage7のランク基準数値
                                 {25, 50, 75, 100}, //stage8のランク基準数値
                                 {25, 50, 75, 100}, //stage9のランク基準数値
                                 {25, 50, 75, 100}, //stage10のランク基準数値
@@ -31,7 +31,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     private int[] clearAddCost = {20,10,5,3,1}; //S～FでStageSelectの初期コストに追加するコスト
                                                    //各ステージで増えるコストは同じ
 
-    private int[] minConsumpCost = {-1, -1, -1, -1, -1,-1, -1, -1, -1, -1,-1}; //ステージ最低消費コスト配列
+    private int[] minConsumpCost = {-10000, -10000,-10000, -10000, -10000,-10000, -10000, -10000, -10000, -10000,-10000}; //ステージ最低消費コスト配列
 
     public Dictionary<string, int> stageNumber = new Dictionary<string, int>() // Dictionaryクラスの宣言と初期値の設定
     {
@@ -139,7 +139,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         {
             int minCost = minConsumpCost[stageNum];
             //最小スコアがないならNONE
-            if (minCost == -1)
+            if (minCost == -10000)
             {
                 return "NONE";
             }
@@ -202,7 +202,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
             }
 
             //まだ書き換えされていない(minConsumpCost[stage_num] == -1) または 今までの最低消費コストより小さければ
-            if(isCleared && (minConsumpCost[stage_num] == -1|| num < minConsumpCost[stage_num]))
+            if(isCleared && (minConsumpCost[stage_num] == -10000|| num < minConsumpCost[stage_num]))
             {
                 minConsumpCost[stage_num] = num; //最低消費コストを書き換え
                 //StageSelectの初期コストを更新する
