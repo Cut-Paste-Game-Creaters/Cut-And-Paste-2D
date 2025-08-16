@@ -103,7 +103,7 @@ MonoBehaviour:
     ow_ene: 15
   - head: block_ice
     tile: {fileID: 11400000, guid: e5ee325205466fb46be682731ff7767c, type: 2}
-    p_ene: 30
+    p_ene: 20
     ow_ene: 15
   - head: soil_slo1
     tile: {fileID: 11400000, guid: cfc03de34b8f53844864ea9ed330b53f, type: 2}

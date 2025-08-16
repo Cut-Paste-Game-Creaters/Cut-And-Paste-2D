@@ -27,7 +27,7 @@ MonoBehaviour:
     ow_ene: 0
   - name: switch
     obj: {fileID: 7654152235285816079, guid: 9053663e2ac49a9448a4ab464c0866f0, type: 3}
-    p_ene: 300
+    p_ene: 200
     ow_ene: 30
   - name: Switchblock
     obj: {fileID: 3018495810459848656, guid: a32592c65b64240419fbd001667655e8, type: 3}
@@ -80,15 +80,15 @@ MonoBehaviour:
   - name: Box-M
     obj: {fileID: 3735023780895848326, guid: a59213a9c14a04b4ea8cab18a1e17e53, type: 3}
     p_ene: 20
-    ow_ene: 20
+    ow_ene: 30
   - name: Bar-M
     obj: {fileID: 6585899477325734917, guid: 76a4898235411aa45a7c7268cd42de6b, type: 3}
     p_ene: 20
-    ow_ene: 20
+    ow_ene: 10
   - name: Bar-L
     obj: {fileID: 4550408371338664941, guid: abda40439fb799a4f8b7e3dced8ee53c, type: 3}
-    p_ene: 40
-    ow_ene: 20
+    p_ene: 30
+    ow_ene: 10
   - name: Rotate_Center_S
     obj: {fileID: 6910680186113493092, guid: a693fa33da383444daff10fac42a7994, type: 3}
     p_ene: 15
@@ -99,7 +99,7 @@ MonoBehaviour:
     ow_ene: 15
   - name: Rotate_Center_L
     obj: {fileID: 4912859793595399357, guid: a28cc55aa194e0843948360b109c705e, type: 3}
-    p_ene: 60
+    p_ene: 50
     ow_ene: 30
   - name: Rotate_Edge_S
     obj: {fileID: 6219950655114163938, guid: cd33c0f0c1e5e6d458e8925e7a9dd151, type: 3}
@@ -111,7 +111,7 @@ MonoBehaviour:
     ow_ene: 15
   - name: Rotate_Edge_L
     obj: {fileID: 8154928730361235224, guid: 8f2eb6f250300a849916b7a77a8d9207, type: 3}
-    p_ene: 60
+    p_ene: 50
     ow_ene: 20
   - name: bumper-S
     obj: {fileID: 5627736203465271130, guid: a3b38f5e376620c4495e4b960d9993dc, type: 3}
@@ -140,15 +140,15 @@ MonoBehaviour:
   - name: Needle-M
     obj: {fileID: 3881063583115998866, guid: 6ab5071d1282862488435315536a84bc, type: 3}
     p_ene: 2
-    ow_ene: 100
+    ow_ene: 50
   - name: Needle
     obj: {fileID: 8128896527873485178, guid: 6578e4ee29684fd4abc1ce71a1a2cff3, type: 3}
     p_ene: 2
-    ow_ene: 100
+    ow_ene: 50
   - name: Needleball
     obj: {fileID: 849976956736410216, guid: ab0ec7b3ab6cf8743807e667afdb351c, type: 3}
     p_ene: 2
-    ow_ene: 100
+    ow_ene: 50
   - name: Needleball-L
     obj: {fileID: 2505159541229034835, guid: f6ff1a027ac583d49bbb32754b89583b, type: 3}
     p_ene: 2
