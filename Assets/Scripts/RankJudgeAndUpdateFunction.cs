@@ -13,13 +13,13 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     bool hasJudged = false;
 
     //private int allCost = 24; //テスト用変数（総消費コスト
-    private int[,] stageRank = {{100, 300, 700, 1500}, //stage1のランク基準数値
+    private int[,] stageRank = {{100, 500, 1000, 2000}, //stage1のランク基準数値
                                 {0, 100, 300, 1000}, //stage2のランク基準数値
                                 {0, 150, 400, 1200}, //stage3のランク基準数値
-                                {0, 100, 500, 1200}, //stage4のランク基準数値
+                                {50, 200, 500, 1200}, //stage4のランク基準数値
                                 {-50, 100, 300, 1000}, //stage5のランク基準数値
                                 {-80, 50, 250, 700}, //stage6のランク基準数値
-                                {100, 200, 500, 1000}, //stage7のランク基準数値
+                                {40, 200, 500, 1000}, //stage7のランク基準数値
                                 {0, 100, 300, 700}, //stage8のランク基準数値
                                 {25, 50, 75, 100}, //stage9のランク基準数値
                                 {25, 50, 75, 100}, //stage10のランク基準数値

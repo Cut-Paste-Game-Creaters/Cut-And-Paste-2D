@@ -251,6 +251,7 @@ public class StageManager : MonoBehaviour
             isPlayerDamaged = true;
             nowNoDanageTime = 0.0f;
             SEManager.instance.ClipAtPointSE(SEManager.instance.damageSE);
+            FindObjectOfType<CameraMove>().Shake();                  // デフォルト
         }
     }
 

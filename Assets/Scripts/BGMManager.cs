@@ -21,7 +21,7 @@ public class BGMManager : MonoBehaviour
 
     public static BGMManager instance;
 
-    [SerializeField] private float lowVolume = 0.1f;
+    [SerializeField] private float lowVolume = 0.5f;
     [SerializeField] private Pair<AudioClip, AudioClip> stageSelectSounds;
     [SerializeField] private Pair<AudioClip, AudioClip>[] sceneSounds;
 
@@ -102,6 +102,7 @@ public class BGMManager : MonoBehaviour
         {
             ambientsound.clip = clip2;
             ambientsound.Play();
+            ambientsound.volume = 0.2f;
         }
     }
 

@@ -655,6 +655,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Screen_Left: 9.3
+  shakeDuration: 0.25
+  shakeMagnitude: 0.25
 --- !u!1 &100979428
 GameObject:
   m_ObjectHideFlags: 0
@@ -14957,6 +14959,14 @@ PrefabInstance:
     - target: {fileID: 2160612193806536600, guid: 7bca0eaa0e87c43428073cae2d9b6092, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 67.400024
+      objectReference: {fileID: 0}
+    - target: {fileID: 4969318274077618560, guid: 7bca0eaa0e87c43428073cae2d9b6092, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4969318274077618560, guid: 7bca0eaa0e87c43428073cae2d9b6092, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5273096934791095116, guid: 7bca0eaa0e87c43428073cae2d9b6092, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
