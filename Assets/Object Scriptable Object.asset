@@ -19,11 +19,11 @@ MonoBehaviour:
     ow_ene: 0
   - name: GoalDoor
     obj: {fileID: 5096264463535201358, guid: 4ae2f67f36f3d7e4f9fea45624748a0f, type: 3}
-    p_ene: 10000
+    p_ene: 3000
     ow_ene: 0
   - name: key_lock
     obj: {fileID: 452536124641921469, guid: 4a7f36a9583bbc643950bfaedb40bffb, type: 3}
-    p_ene: 500
+    p_ene: 600
     ow_ene: 0
   - name: switch
     obj: {fileID: 7654152235285816079, guid: 9053663e2ac49a9448a4ab464c0866f0, type: 3}

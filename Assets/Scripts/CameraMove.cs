@@ -9,6 +9,16 @@ public class CameraMove : MonoBehaviour
     private Tilemap tilemap;
     public float Screen_Left = 9.3f;
     // Start is called before the first frame update
+
+    /// <summary>
+    /// 画面揺れ用
+    public float shakeDuration = 0.25f;   // デフォルトの揺れ時間
+    public float shakeMagnitude = 0.25f;  // デフォルトの揺れ強さ
+
+    private float _shakeTimeLeft = 0f;
+    private float _shakeDurationActive = 0f;
+    private float _shakeMagnitudeActive = 0f;
+    /// </summary>
     void Start()
     {
         Tilemap[] maps = FindObjectsOfType<Tilemap>();
@@ -49,5 +59,43 @@ public class CameraMove : MonoBehaviour
         this.transform.position = new Vector3(posx,posy, -10);
         //Debug.Log("t:"+tilemap.cellBounds.min.x);
         //Debug.Log("p:"+player.transform.position.x);
+        //-6.66 -16 16-6.7
+
+
+        ///画面揺れ用
+        ///
+  
+            if (!PlayerInput.isPausing)///コピーかカット選択時にも動かないようにする
+            {
+                if (_shakeTimeLeft > 0f)
+                {
+                    float damper = _shakeTimeLeft / _shakeDurationActive; // 終盤ほど弱く
+                    float offsetX = Random.Range(-1f, 1f) * _shakeMagnitudeActive * damper;
+                    float offsetY = Random.Range(-1f, 1f) * _shakeMagnitudeActive * damper;
+
+                    transform.position += new Vector3(offsetX, offsetY, 0f);
+
+                    _shakeTimeLeft -= Time.deltaTime;
+                }
+            }
+ 
     }
-}//-6.66 -16 16-6.7
+
+
+    public void Shake()
+    {
+        Shake(shakeDuration, shakeMagnitude);
+    }
+
+    public void Shake(float duration, float magnitude)
+    {
+
+            _shakeDurationActive = Mathf.Max(0.0001f, duration);
+            _shakeMagnitudeActive = Mathf.Max(0f, magnitude);
+            _shakeTimeLeft = _shakeDurationActive;
+
+    }
+
+
+
+}

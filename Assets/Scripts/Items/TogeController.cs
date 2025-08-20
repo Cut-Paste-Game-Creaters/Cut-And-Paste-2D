@@ -21,6 +21,7 @@ public class TogeController : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && StageManager.Instance != null && !StageManager.Instance.isPlayerDamaged)
         {
             StageManager.Instance.DamageToPlayer(togeDamage);
+            
         }
     }
 }

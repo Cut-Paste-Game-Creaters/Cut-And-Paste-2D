@@ -43,6 +43,11 @@ public class Player_Copy : MonoBehaviour
     private TextMeshProUGUI cut_cost_write;
     private TextMeshProUGUI cut_cost_erase;
 
+    /// <summary>
+    /// âπê∫ñ¬ÇÁÇ∑óp
+    /// </summary>
+
+
 
     public void OnCopyButtonSelected()
     {
