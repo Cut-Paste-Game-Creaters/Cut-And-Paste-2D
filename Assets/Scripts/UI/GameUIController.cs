@@ -17,6 +17,7 @@ public class GameUIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI text_writeCost2;
     [SerializeField] TextMeshProUGUI text_overwriteCost;
     [SerializeField] TextMeshProUGUI text_overwriteCost2;
+    [SerializeField] private TMP_FontAsset customFont;
     [SerializeField] Image icon_copycut;
     [SerializeField] Sprite s_copy;
     [SerializeField] Sprite s_cut;
@@ -306,6 +307,12 @@ public class GameUIController : MonoBehaviour
                 {
                     plusText.text = obj_s.p_ene.ToString();
                     eraseText.text = obj_s.ow_ene.ToString();
+                    plusText.color = Color.black;
+                    eraseText.color = Color.black;
+                    plusText.font = customFont;
+                    eraseText.font = customFont;
+                    plusText.fontSize = 36;   
+                    eraseText.fontSize = 36;
                     obj_s.obj.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 255);
                     plusIcon_s.sprite = obj_s.obj.GetComponent<SpriteRenderer>().sprite;
                     eraseIcon_s.sprite = obj_s.obj.GetComponent<SpriteRenderer>().sprite;
