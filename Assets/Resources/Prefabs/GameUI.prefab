@@ -434,6 +434,7 @@ MonoBehaviour:
   text_writeCost2: {fileID: 5911036056140101638}
   text_overwriteCost: {fileID: 2099319736605109017}
   text_overwriteCost2: {fileID: 815572202225279015}
+  customFont: {fileID: 11400000, guid: 63f45d918dfdc8f49a6bb6edb643504b, type: 2}
   icon_copycut: {fileID: 4969284694611895487}
   s_copy: {fileID: 21300000, guid: 5ab22758d9516e544b1d00d3430eb892, type: 3}
   s_cut: {fileID: 21300000, guid: 15558cf1f741e61428fbbd796328ca8c, type: 3}
