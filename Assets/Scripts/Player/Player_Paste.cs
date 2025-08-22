@@ -7,6 +7,7 @@ using System.Linq;
 public class Player_Paste : MonoBehaviour
 {
     [SerializeField] GameObject frame1;
+    [SerializeField] GameObject frame2;
     [SerializeField] TileScriptableObject tileSB; //ScriptableObject
     [SerializeField] ObjectScriptableObject objSB; //ScriptableObject
     [SerializeField] bool PreviewCopyData = true;
@@ -17,17 +18,22 @@ public class Player_Paste : MonoBehaviour
     private Tilemap display_Copy_Tilemap;
     private StageManager stageManager;
     private SpriteRenderer sr;
+    private SpriteRenderer sr2;
     private Vector3 frameData = Vector3.zero;
     UndoRedoFunction urFunc;
     private CaptureCopyZone captureCopyZone;
     private BGMManager m_BGMManager;
+    private GameObject frame2_prefab;
     //private GameObject rect;
     // Start is called before the first frame update
     void Start()
     {
         frame1 = Instantiate(frame1);
+        frame2_prefab = Instantiate(frame2);
         sr = frame1.GetComponent<SpriteRenderer>();
         sr.enabled = false;
+        sr2 = frame2_prefab.GetComponent<SpriteRenderer>();
+        sr2.enabled = false;
         //rect = Instantiate(rectPrefab);
         Tilemap[] maps = FindObjectsOfType<Tilemap>();
         foreach (var map in maps)
@@ -36,7 +42,7 @@ public class Player_Paste : MonoBehaviour
             {
                 tilemap = map;
             }
-            if(map.gameObject.tag == "Display_Copy_Tilemap")
+            if (map.gameObject.tag == "Display_Copy_Tilemap")
             {
                 display_Copy_Tilemap = map;
             }
@@ -69,9 +75,11 @@ public class Player_Paste : MonoBehaviour
         {
             stageManager.isPasting = true;
             sr.enabled = true;
+            sr2.enabled = true;
             Time.timeScale = 0f;
             frameData = stageManager.GetInfo();
             sr.size = frameData;
+            sr2.size = frameData;
             Vector3 framePos = mPos;
             if (m_BGMManager == null) m_BGMManager = FindObjectOfType<BGMManager>();
             m_BGMManager.DecreaseBGMVolume();
@@ -103,11 +111,12 @@ public class Player_Paste : MonoBehaviour
             }
 
             //貼り付け時の消すコストを計算する
-            CheckCost(false, mPos,display_Copy_Tilemap); //タイルセットしないで計算
+            CheckCost(false, mPos, display_Copy_Tilemap); //タイルセットしないで計算
             CheckObjectCost(false);      //オブジェクトの消すコストを計算する
             //Debug.Log("erase:"+stageManager.erase_cost);
 
             frame1.transform.position = framePos;
+            frame2_prefab.transform.position = framePos;
 
             if (PreviewCopyData)
             {
@@ -117,36 +126,37 @@ public class Player_Paste : MonoBehaviour
                 CheckCost(true, mPos, display_Copy_Tilemap);    //タイルセットしないで表示
                 DisplayObject();                                //ペーストしないで表示
             }
-            
+
         }
         //右クリックで貼り付け
         if (PlayerInput.GetMouseButtonUp(1))
         {
             stageManager.isPasting = false;
             sr.enabled = false;     //枠を非表示にする
+            sr2.enabled = false;     //枠を非表示にする
             m_BGMManager.ResetBGMVolume();
             Time.timeScale = 1.0f;
             display_Copy_Tilemap.ClearAllTiles();
-            if(PreviewCopyData) UnDisplayObject();          //プレビューで出してたObjectを非表示にする
+            if (PreviewCopyData) UnDisplayObject();          //プレビューで出してたObjectを非表示にする
 
             //貼り付け時の消すコストを計算する
-            CheckCost(false, mPos,tilemap); //タイルセットしないで計算
+            CheckCost(false, mPos, tilemap); //タイルセットしないで計算
             CheckObjectCost(false);      //オブジェクトの消すコストを計算する
             //Debug.Log("erase:" + stageManager.erase_cost);
 
             int divide = 1;
-            if(stageManager.all_isCut)
+            if (stageManager.all_isCut)
             {
                 divide = 2;
             }
 
-            if(stageManager.have_ene >= (stageManager.erase_cost + stageManager.write_cost)) //所持コストから引けるなら
+            if (stageManager.have_ene >= (stageManager.erase_cost + stageManager.write_cost)) //所持コストから引けるなら
             {
                 stageManager.have_ene -= (stageManager.erase_cost + stageManager.write_cost / divide); //コスト引く
                 stageManager.all_sum_cos += (stageManager.erase_cost + stageManager.write_cost / divide); //総消費コストに加算
                 Debug.Log("消えるコスト：" + stageManager.erase_cost + "," + "増やすコスト：" + stageManager.write_cost / divide + ", " + "所持コスト：" + stageManager.have_ene);
                 Debug.Log("総消費コスト：" + stageManager.all_sum_cos);
-                CheckCost(true, mPos,tilemap);
+                CheckCost(true, mPos, tilemap);
                 CheckObjectCost(true);
                 //オブジェクトをペースト
                 PasteObject();
@@ -208,7 +218,7 @@ public class Player_Paste : MonoBehaviour
                 }
                 else
                 {
-                    if(c.obj.transform.parent != null)
+                    if (c.obj.transform.parent != null)
                     {
                         c.obj.transform.parent = null;
                     }
@@ -234,7 +244,7 @@ public class Player_Paste : MonoBehaviour
      * ①現在のコピータイルと下にあるタイルからコストを計算する
      * ②タイルをペーストする
      */
-    public void CheckCost(bool isSetTile, Vector3Int mPos,Tilemap _tilemap)
+    public void CheckCost(bool isSetTile, Vector3Int mPos, Tilemap _tilemap)
     {
         //if(!isSetTile)stageManager.erase_cost = 0;
         //タイルをペースト
@@ -270,7 +280,7 @@ public class Player_Paste : MonoBehaviour
                     if (tilemap.HasTile(_p)) //kyosu もしそのセルがタイルを持っているなら
                     {
                         stageManager.erase_cost += tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(_p)).ow_ene; // 取得したタイルがタイルパレットのどのタイルかを判別してその消費コストを＋
-                        
+
                     }
                 }
             }
@@ -286,11 +296,11 @@ public class Player_Paste : MonoBehaviour
     {
         Vector3Int _p = Vector3Int.zero;
         Vector3Int mPos = ChangeVecToInt(Camera.main.ScreenToWorldPoint(Input.mousePosition)
-            ,stageManager.tileData.direction);
+            , stageManager.tileData.direction);
         int w = stageManager.tileData.width;
         int h = stageManager.tileData.height;
 
-        
+
         //範囲を計算する
         switch (stageManager.tileData.direction)
         {
@@ -315,10 +325,10 @@ public class Player_Paste : MonoBehaviour
 
 
         Collider2D[] cols = Physics2D.OverlapAreaAll(
-            new Vector2(mPos.x,mPos.y), new Vector2(_p.x,_p.y)
+            new Vector2(mPos.x, mPos.y), new Vector2(_p.x, _p.y)
             );
         //上書き範囲内のコライダーの消すコストを計算する
-        foreach(var col in cols)
+        foreach (var col in cols)
         {
             if (col.gameObject.tag == "Untagged") continue;
             if (col.gameObject.tag != "Tilemap"
@@ -329,7 +339,7 @@ public class Player_Paste : MonoBehaviour
                 if (!isErase) stageManager.erase_cost += objSB.objectList.Single(t => t.obj.tag == col.gameObject.tag).ow_ene;
                 else Destroy(col.gameObject);       //上書きするオブジェクトを消す
             }
-                
+
         }
     }
 
@@ -343,16 +353,16 @@ public class Player_Paste : MonoBehaviour
         return pos;
     }
 
-    public Vector3Int ChangeVecToInt(Vector3 v,int dir)
+    public Vector3Int ChangeVecToInt(Vector3 v, int dir)
     {
         Vector3Int pos = Vector3Int.zero;
         switch (dir)
         {
             case 0:     //右上にコピー　つまり左下にキャスト
-                pos = new Vector3Int((int)Mathf.Floor(v.x),(int)Mathf.Floor(v.y),0);
+                pos = new Vector3Int((int)Mathf.Floor(v.x), (int)Mathf.Floor(v.y), 0);
                 break;
             case 1:     //右下にコピー　つまり左上にキャスト
-                pos = new Vector3Int((int)Mathf.Floor(v.x), (int)Mathf.Ceil(v.y),0);
+                pos = new Vector3Int((int)Mathf.Floor(v.x), (int)Mathf.Ceil(v.y), 0);
                 break;
             case 2:     //左下にコピー　つまり右上にキャスト
                 pos = new Vector3Int((int)Mathf.Ceil(v.x), (int)Mathf.Ceil(v.y), 0);
@@ -360,7 +370,7 @@ public class Player_Paste : MonoBehaviour
             case 3:     //左上にコピー　つまり右下にキャスト
                 pos = new Vector3Int((int)Mathf.Ceil(v.x), (int)Mathf.Floor(v.y), 0);
                 break;
-            default:break;
+            default: break;
         }
 
         return pos;
