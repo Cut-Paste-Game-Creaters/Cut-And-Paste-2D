@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frame1: {fileID: 7333870219930048861, guid: d7d2341a525b8754ab5741df97ef5168, type: 3}
+  frame2: {fileID: 4509995314546105274, guid: 3cb560521a9e4504cab303a6c24f6c78, type: 3}
   tileSB: {fileID: 11400000, guid: b58413ee8aa87174e8571d021e40d761, type: 2}
   objSB: {fileID: 11400000, guid: 40ef67a603b5fac418e9ffb6109bef98, type: 2}
   PreviewCopyData: 1
