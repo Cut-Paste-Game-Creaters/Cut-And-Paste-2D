@@ -11,7 +11,7 @@ public class SwitchController : MonoBehaviour
         Toggle,
         Timer,
     }
-    
+
     public Sprite stateOff;
     public Sprite stateOn;
     public SwitchMode mode;
@@ -22,6 +22,8 @@ public class SwitchController : MonoBehaviour
     public bool nowPressState = false;     //今のスイッチの状態
     public int hitState = -1;        //collider enter=0, stay=1, exit=2,押されてないとき-1
     private AnimationManager animManager = null;
+    private float startCount = 0.0f;
+    private float WaitCount = 1.0f;
 
     public class CopySwitchController
     {
@@ -30,6 +32,7 @@ public class SwitchController : MonoBehaviour
         public SwitchMode mode;
         public bool nowPressState;     //今のスイッチの状態
         public int hitState;
+
 
         public CopySwitchController(SwitchController swc)
         {
@@ -50,6 +53,10 @@ public class SwitchController : MonoBehaviour
 
     private void Update()
     {
+        if (startCount < WaitCount)
+        {
+            startCount += Time.deltaTime;
+        }
         if (stageManager == null) stageManager = FindObjectOfType<StageManager>();
     }
 
@@ -81,7 +88,7 @@ public class SwitchController : MonoBehaviour
         //{
         //    sr.sprite = stateOn;
         //}
-        if(nowPressState != stageManager.switch_state)
+        if (nowPressState != stageManager.switch_state)
         {
             if (animManager == null) animManager = FindObjectOfType<AnimationManager>();
             if (stageManager.switch_state)
@@ -101,21 +108,22 @@ public class SwitchController : MonoBehaviour
     //一度おしたらずっとONになる
     private void FixedSwitch()
     {
-        if(hitState == 0&& !stageManager.switch_state) stageManager.switch_state = true;
+        if (hitState == 0 && !stageManager.switch_state) stageManager.switch_state = true;
     }
 
     //押している間だけONになる
     private void PushSwitch()
     {
-        if(hitState == 1) stageManager.switch_state = true;
+        if (hitState == 1) stageManager.switch_state = true;
         else stageManager.switch_state = false;
     }
 
     //押すたびにOnとOffが切り替わる
     private void ToggleSwitch()
     {
-        if (hitState == 0)
+        if (hitState == 0 && startCount >= WaitCount)
         {
+            SEManager.instance.ClipAtPointSE(SEManager.instance.SwitchSE);
             stageManager.switch_state = !stageManager.switch_state;
         }
     }
@@ -123,7 +131,7 @@ public class SwitchController : MonoBehaviour
     //押したら時間差でOffになる
     private void TimerSwitch()
     {
-        if(hitState == 0)
+        if (hitState == 0)
         {
             stageManager.switch_state = true;
             Invoke(nameof(TurnOffSwitch), waitTime);
@@ -144,7 +152,6 @@ public class SwitchController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         hitState = 0;
-        SEManager.instance.ClipAtPointSE(SEManager.instance.SwitchSE);
     }
 
     private void OnTriggerStay2D(Collider2D other)
