@@ -24,7 +24,7 @@ public class PauseInStage : MonoBehaviour
         if (stageMgr == null) stageMgr = FindObjectOfType<StageManager>();
         this.transform.position =
             new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + 1);
-        if (PlayerInput.GetKeyDown(KeyCode.Escape) && !stageMgr.isSelectZone)
+        if (PlayerInput.GetKeyDown(KeyCode.Escape) && (!stageMgr.isSelectZone && !stageMgr.isPasting))
         {
             if (m_BGMManager == null) m_BGMManager = FindObjectOfType<BGMManager>();
             m_BGMManager.DecreaseBGMVolume();
