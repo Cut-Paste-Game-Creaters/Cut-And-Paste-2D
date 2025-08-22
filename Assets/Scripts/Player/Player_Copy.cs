@@ -111,8 +111,8 @@ public class Player_Copy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(stageMgr==null) stageMgr = FindObjectOfType<StageManager>();
-        if(captureCopyZone==null) captureCopyZone = FindObjectOfType<CaptureCopyZone>();
+        if (stageMgr == null) stageMgr = FindObjectOfType<StageManager>();
+        if (captureCopyZone == null) captureCopyZone = FindObjectOfType<CaptureCopyZone>();
         CopyTiles();
 
         stageMgr.isSelectZone = isSelectZone;
@@ -166,7 +166,7 @@ public class Player_Copy : MonoBehaviour
                 //いったんobjectのソートを元に戻す
                 ResetObjectSorting();
                 //選択中のタイルやオブジェクトを明示的に示す
-                DisplaySelectedTilesAndObjects(startPos,currentPos,display_Copy_Tilemap);
+                DisplaySelectedTilesAndObjects(startPos, currentPos, display_Copy_Tilemap);
             }
 
 
@@ -201,7 +201,7 @@ public class Player_Copy : MonoBehaviour
                     CopyContents(startPos, endPos, false, true);
                     copy_cost_write.text = stageMgr.write_cost.ToString();
                     copy_cost_erase.text = "0";
-                    cut_cost_write.text =$"{stageMgr.write_cost * 0.5f}";
+                    cut_cost_write.text = $"{stageMgr.write_cost * 0.5f}";
                     cut_cost_erase.text = stageMgr.cut_erase_cost.ToString();
                     //コピーカットの選択はボタンになりました, blackCurtain（2button以外の場所）おしたら無しになる
                     CopyButton.SetActive(true);
@@ -221,12 +221,14 @@ public class Player_Copy : MonoBehaviour
                     //SetActiveCutIcon();
                     whichMode = 2;
                     break;
+                //コピーorカットをえらんだら、コピー範囲をキャプチャーするためにcase2をはさむ
                 case 2:
                     captureCopyZone.CaptureImage(startPos, endPos);
                     whichMode = 3;
                     break;
+                //実際にコピーorカットを行うフェーズ
                 case 3:
-                    if(stageMgr.all_isCut) CutInCopy(ChangeVecToInt(startPos), ChangeVecToInt(endPos), false);
+                    if (stageMgr.all_isCut) CutInCopy(ChangeVecToInt(startPos), ChangeVecToInt(endPos), false);
                     DisActiveCutObject();
                     InitWhichMode();
                     urFunc.InfoPushToStack();
@@ -240,7 +242,7 @@ public class Player_Copy : MonoBehaviour
     }
 
     //実際にタイルをコピーをする関数
-    void CopyContents(Vector3 sPos, Vector3 ePos, bool isCut = false,bool isPreview=false)
+    void CopyContents(Vector3 sPos, Vector3 ePos, bool isCut = false, bool isPreview = false)
     {
         //増やすコストを初期化 コピーの時はコピーされるたびに初期化　逆にそれ以外は更新されてはいけない
         stageMgr.write_cost = 0;
@@ -293,10 +295,6 @@ public class Player_Copy : MonoBehaviour
         //３つ目の引数がfalseなら下のタイルをnullにして消す。
         CutInCopy(_startPos, _endPos, true);
 
-
-        //選択範囲のオブジェクトのレイヤーをもどす
-        ResetObjectSorting();
-
         //オブジェクトのコスト計算をする
         Collider2D[] cols = Physics2D.OverlapAreaAll(startPos, endPos);
         stageMgr.objectData = new List<StageManager.ObjectData>();
@@ -306,11 +304,15 @@ public class Player_Copy : MonoBehaviour
         //コピーとカットの時のコストを計算するために使用する
         if (isPreview) return;
 
+
+        //選択範囲のオブジェクトのレイヤーをもどす
+        ResetObjectSorting();
+
         //カットであるかそうでないかで分ける
         if (stageMgr.all_isCut)
         {
             //消すコストが所持コストより小さいなら
-            if(stageMgr.cut_erase_cost <= stageMgr.have_ene)
+            if (stageMgr.cut_erase_cost <= stageMgr.have_ene)
             {
                 stageMgr.have_ene -= stageMgr.cut_erase_cost; //コスト引く
                 stageMgr.all_sum_cos += stageMgr.cut_erase_cost; //総消費コストに加算
@@ -335,7 +337,7 @@ public class Player_Copy : MonoBehaviour
         }
 
         //urFunc.InfoPushToStack(); /*これだとコピーの回数分のみ保存できるが, カットした時, 正常じゃなくなる*/
-            }
+    }
 
     private void DisplaySelectedTilesAndObjects(Vector3 startPos, Vector3 endPos, Tilemap _tilemap)
     {
@@ -408,7 +410,7 @@ public class Player_Copy : MonoBehaviour
         Collider2D[] cols = Physics2D.OverlapAreaAll(startPos, endPos);
         foreach (var col in cols)
         {
-            if(col.gameObject.tag != "Tilemap"
+            if (col.gameObject.tag != "Tilemap"
                 && col.gameObject.tag != "Player"
                 && col.gameObject.tag != "Uncuttable")
             {
@@ -430,7 +432,7 @@ public class Player_Copy : MonoBehaviour
         {
             GameObject obj = selectedObjects.Pop();
 
-            if(obj != null)
+            if (obj != null)
             {
                 SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
                 sr.sortingLayerName = "object";
@@ -452,7 +454,7 @@ public class Player_Copy : MonoBehaviour
     private void SetCaptureLayer()
     {
         tilemap.gameObject.layer = LayerMask.NameToLayer("CaptureLayer");
-        Debug.Log("キャプチャしたobjectの数:"+stageMgr.objectData.Count);
+        Debug.Log("キャプチャしたobjectの数:" + stageMgr.objectData.Count);
         //レイヤー保存配列を初期化
         originalLayers = new Dictionary<GameObject, int>();
         foreach (var obj in stageMgr.objectData)
@@ -501,7 +503,7 @@ public class Player_Copy : MonoBehaviour
         }
     }
 
-    public void CutInCopyObject(Collider2D[] cols,bool isFirst)
+    public void CutInCopyObject(Collider2D[] cols, bool isFirst)
     {
         foreach (var col in cols)
         {
@@ -547,7 +549,7 @@ public class Player_Copy : MonoBehaviour
             }
 
         }
-        
+
     }
 
     public void CutInCopy(Vector3Int _startPos, Vector3 _endPos, bool Count)
@@ -589,7 +591,7 @@ public class Player_Copy : MonoBehaviour
                 TileBase t = tilemap.GetTile(p);
                 if (tilemap.HasTile(p)) //kyosu もしそのセルがタイルを持っているなら
                 {
-                    if(Count)
+                    if (Count)
                     {
                         stageMgr.write_cost += tileSB.tileDataList.Single(t => t.tile == tilemap.GetTile(p)).p_ene; // 取得したタイルがタイルパレットのどのタイルかを判別してその消費コストを＋
                         if (stageMgr.all_isCut)
