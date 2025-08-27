@@ -16,6 +16,8 @@ public class Player_Function : MonoBehaviour
     public int fallLine_FromMin = 10;
     //private RigidBody rb;
 
+    private float fadeDuration = 0.6f; // 消えるまでの時間（秒）
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,16 +43,17 @@ public class Player_Function : MonoBehaviour
     void Update()
     {
         if (stageMgr == null) stageMgr = FindObjectOfType<StageManager>();
-
-        //もしダメージをうけて無敵時間なら半透明にする
-        Color currentColor = sr.color;
-        currentColor.a = stageMgr.isPlayerDamaged ? 0.5f : 1.0f;
-        sr.color = currentColor; 
+        if (stageMgr.isPlayerDead == false)
+        {
+            Color currentColor = sr.color;
+            currentColor.a = stageMgr.isPlayerDamaged ? 0.5f : 1.0f;
+            sr.color = currentColor;
+        }
         /*テスト用に4ボタン押すと死んだことになる 本来はhpが0 もしくは　ステージから落ちたら*/
         if(this.gameObject.transform.position.y < fallingLine_y || stageMgr.player_HP <= 0)
         {
             stageMgr.player_HP = 0;
-            if(!stageMgr.isPlayerDead) Die();
+            if(!stageMgr.isPlayerDead) StartCoroutine(Die()); ;
         }
     }
 
@@ -68,19 +71,69 @@ public class Player_Function : MonoBehaviour
     */
 
     //死亡処理
-    void Die()
+    IEnumerator Die()
     {
         //ゲームオーバーファンクション呼び出し
         stageMgr.isPlayerDead = true;
         if(gameOverFunc==null)gameOverFunc = FindObjectOfType<GameOverFunction>();
-        gameOverFunc.GameOver();
+
+        
+
+        StartCoroutine(gameOverFunc.GameOver());
+        yield return new WaitForSecondsRealtime(1f);
+        StartCoroutine(FadeOut());
     }
 
     void OnTriggerStay2D(Collider2D other)
     {
         if(other.gameObject.tag == "Goal")
         {
-            clearFunc.GameClear();
+            StartCoroutine(clearFunc.GameClear());
         }
     }
+
+
+
+    public IEnumerator FadeOut(float duration = -1f)
+    {
+        if (duration <= 0) duration = fadeDuration;
+
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime; // TimeScale=0でも進む
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
+
+            if (sr != null)
+            {
+                Color c = sr.color;
+                c.a = alpha;
+                sr.color = c;
+            }
+
+            yield return null;
+        }
+
+        // 最終的に完全に透明に
+        if (sr != null)
+        {
+            Color c = sr.color;
+            c.a = 0f;
+            sr.color = c;
+        }
+    }
+
+    /// <summary>
+    /// フェードアウト後に見た目をリセット（PauseOffで使う）
+    /// </summary>
+    public void ResetAlpha()
+    {
+        if (sr != null)
+        {
+            Color c = sr.color;
+            c.a = 1f;
+            sr.color = c;
+        }
+    }
+
 }
