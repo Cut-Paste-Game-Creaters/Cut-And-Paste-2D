@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GameUIController : MonoBehaviour
 {
@@ -24,6 +25,9 @@ public class GameUIController : MonoBehaviour
     [SerializeField] ObjectScriptableObject objSB;
     [SerializeField] float paddingX = 100.0f;        //マウスカーソルからimageの近い方の端までの距離
     [SerializeField] float paddingY = 80.0f;         //画面端からどれだけ余分を残して表示するか
+    [SerializeField] GameObject nowCostUI;
+    [SerializeField] GameObject RankUI;
+
 
     private Tilemap tilemap;
     private StageManager stageManager;
@@ -85,6 +89,17 @@ public class GameUIController : MonoBehaviour
             targetUI = allCostDisplay.GetComponent<RectTransform>();
             startPos = targetUI.anchoredPosition;
         }
+
+        if(SceneManager.GetActiveScene().name == "StageSelectScene")
+        {
+            RankUI.SetActive(false);
+            nowCostUI.SetActive(true);
+        }
+        else
+        {
+            RankUI.SetActive(true);
+            nowCostUI.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -118,6 +133,9 @@ public class GameUIController : MonoBehaviour
             text_duplicateCost.gameObject.SetActive(false);
             icon_copycut.enabled = false;
         }
+        
+
+        
 
         //AppearAllCostDisplay(); //コスト一覧表表示
     }

@@ -107,6 +107,7 @@ public class Player_Move : MonoBehaviour
 
         this.transform.position = pos;
         */
+
     }
 
     private void HandleInput()
@@ -137,6 +138,7 @@ public class Player_Move : MonoBehaviour
             SEManager.instance.ClipAtPointSE(SEManager.instance.jumpSE);//Œø‰Ê‰¹
             isJumping = true;
             jumpTimeCounter = maxHoldTime;
+ 
         }
         if (!IsGrounded())
         {

@@ -36,48 +36,49 @@ public class CameraMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float posx = transform.position.x;
-        float posy = transform.position.y;
-        //もし画面端でないなら
-        //プレイヤーのX - (画面幅/2) = 左端のXだったら止める
-        if (player.transform.position.x - Screen_Left > tilemap.cellBounds.min.x+1//←側のブロック分引く
-            &&
-            player.transform.position.x + 16 < tilemap.cellBounds.max.x-1
-            )
+        if (!PlayerInput.isPausing)
         {
-            posx = player.transform.position.x;
-        }
+            float posx = transform.position.x;
+            float posy = transform.position.y;
+            //もし画面端でないなら
+            //プレイヤーのX - (画面幅/2) = 左端のXだったら止める
+            if (player.transform.position.x - Screen_Left > tilemap.cellBounds.min.x + 1//←側のブロック分引く
+                &&
+                player.transform.position.x + 16 < tilemap.cellBounds.max.x - 1
+                )
+            {
+                posx = player.transform.position.x;
+            }
 
-        if(
-            player.transform.position.y - 9 >= tilemap.cellBounds.min.y      //プレイヤーの下端
-            &&
-            player.transform.position.y + 9 < tilemap.cellBounds.max.y      //プレイヤーの上端
-            )
-        {
-            posy = player.transform.position.y;
+            if (
+                player.transform.position.y - 9 >= tilemap.cellBounds.min.y      //プレイヤーの下端
+                &&
+                player.transform.position.y + 9 < tilemap.cellBounds.max.y      //プレイヤーの上端
+                )
+            {
+                posy = player.transform.position.y;
+            }
+            this.transform.position = new Vector3(posx, posy, -10);
+
+            ///画面揺れ用
+            if (_shakeTimeLeft > 0f)
+            {
+                float damper = _shakeTimeLeft / _shakeDurationActive; // 終盤ほど弱く
+                float offsetX = Random.Range(-1f, 1f) * _shakeMagnitudeActive * damper;
+                float offsetY = Random.Range(-1f, 1f) * _shakeMagnitudeActive * damper;
+
+                transform.position += new Vector3(offsetX, offsetY, 0f);
+
+                _shakeTimeLeft -= Time.deltaTime;
+            }
         }
-        this.transform.position = new Vector3(posx,posy, -10);
         //Debug.Log("t:"+tilemap.cellBounds.min.x);
         //Debug.Log("p:"+player.transform.position.x);
         //-6.66 -16 16-6.7
 
 
-        ///画面揺れ用
-        ///
-  
-            if (!PlayerInput.isPausing)///コピーかカット選択時にも動かないようにする
-            {
-                if (_shakeTimeLeft > 0f)
-                {
-                    float damper = _shakeTimeLeft / _shakeDurationActive; // 終盤ほど弱く
-                    float offsetX = Random.Range(-1f, 1f) * _shakeMagnitudeActive * damper;
-                    float offsetY = Random.Range(-1f, 1f) * _shakeMagnitudeActive * damper;
 
-                    transform.position += new Vector3(offsetX, offsetY, 0f);
-
-                    _shakeTimeLeft -= Time.deltaTime;
-                }
-            }
+ 
  
     }
 

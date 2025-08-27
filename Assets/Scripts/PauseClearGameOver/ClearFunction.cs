@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
+using UnityEngine.Video;
 
 public class ClearFunction : MonoBehaviour
 {
+    public VideoClip ClearMovie;
+    public VideoClip ResultMovie;
+    [SerializeField] private UnityEngine.UI.RawImage movieImage;
+    [SerializeField] private GameObject ResultUI;
     private Canvas canvas;
     private bool isClear = false;
     private FadeScreen fadeCurtain;
     // Start is called before the first frame update
     void Start()
     {
+
         canvas = GetComponent<Canvas>();
         canvas.enabled = false;
         isClear = false;
@@ -30,12 +37,21 @@ public class ClearFunction : MonoBehaviour
         return isClear;
     }
 
-    public void GameClear()
+    public IEnumerator GameClear()
     {
-        canvas.enabled = true;
         PlayerInput.isPausing = true;
         isClear = true;
         Time.timeScale = 0f;
+
+        ResultUI.SetActive(false);//演出が終わるまで非表示
+        canvas.enabled = true;
+        StartCoroutine(ShowClearUI());
+
+        yield return new WaitForSecondsRealtime(1f);//演出が終わるまで待つ
+        ResultUI.SetActive(true);
+
+
+
     }
 
     public void PauseOff()
@@ -51,4 +67,19 @@ public class ClearFunction : MonoBehaviour
         fadeCurtain.StartFadeOut("StageSelectScene");
         //SceneManager.LoadScene("StageSelectScene");
     }
+
+    private IEnumerator ShowClearUI()
+    {
+
+        movieImage.enabled = true;
+        yield return VideoManager.Instance.PlayAndWait(ClearMovie);
+        movieImage.enabled = false; // ← 黒画面を隠す
+
+
+    }
+
+
+
+
+
 }
