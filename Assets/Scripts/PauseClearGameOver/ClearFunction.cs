@@ -64,6 +64,7 @@ public class ClearFunction : MonoBehaviour
     public void LoadStageSelect()
     {
         PauseOff();
+        if (fadeCurtain == null) fadeCurtain = FindObjectOfType<FadeScreen>();
         fadeCurtain.StartFadeOut("StageSelectScene");
         //SceneManager.LoadScene("StageSelectScene");
     }
