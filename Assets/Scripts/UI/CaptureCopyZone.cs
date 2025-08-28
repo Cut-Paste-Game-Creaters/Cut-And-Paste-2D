@@ -24,7 +24,7 @@ public class CaptureCopyZone : MonoBehaviour
 
     void Update()
     {
-        if(stageMgr == null)
+        if (stageMgr == null)
         {
             stageMgr = FindObjectOfType<StageManager>();
         }
@@ -36,7 +36,7 @@ public class CaptureCopyZone : MonoBehaviour
         image = GameObject.Find("captureImage").GetComponent<Image>();
         image.sprite = stageMgr.copySprite;
         SetImageScaleToFit(image, stageMgr.copySprite);
-        if(stageMgr.tileData.hasData || stageMgr.objectData.Count > 0)
+        if (stageMgr.tileData.hasData || stageMgr.objectData.Count > 0)
         {
             image.enabled = true;
         }
@@ -49,7 +49,7 @@ public class CaptureCopyZone : MonoBehaviour
 
     public void CaptureImage(Vector3 startPos, Vector3 endPos)
     {
-        int dir = culcDir(startPos,endPos);
+        int dir = culcDir(startPos, endPos);
 
         /*
          ①Startposとendposを引数で取得する
@@ -69,21 +69,21 @@ public class CaptureCopyZone : MonoBehaviour
         {
             case 0:
                 tempVec_start = new Vector3Int(temp_start.x, temp_start.y, temp_start.z);
-                tempVec_end = new Vector3Int(temp_end.x+1, temp_end.y+1, temp_end.z);
+                tempVec_end = new Vector3Int(temp_end.x + 1, temp_end.y + 1, temp_end.z);
                 break;
             case 1:
-                tempVec_start = new Vector3Int(temp_start.x, temp_start.y+1, temp_start.z);
+                tempVec_start = new Vector3Int(temp_start.x, temp_start.y + 1, temp_start.z);
                 tempVec_end = new Vector3Int(temp_end.x + 1, temp_end.y, temp_end.z);
                 break;
             case 2:
-                tempVec_start = new Vector3Int(temp_start.x+1, temp_start.y + 1, temp_start.z);
+                tempVec_start = new Vector3Int(temp_start.x + 1, temp_start.y + 1, temp_start.z);
                 tempVec_end = new Vector3Int(temp_end.x, temp_end.y, temp_end.z);
                 break;
             case 3:
                 tempVec_start = new Vector3Int(temp_start.x + 1, temp_start.y, temp_start.z);
-                tempVec_end = new Vector3Int(temp_end.x, temp_end.y+1, temp_end.z);
+                tempVec_end = new Vector3Int(temp_end.x, temp_end.y + 1, temp_end.z);
                 break;
-            default:break;
+            default: break;
         }
 
         float startX_screen = Camera.main.WorldToScreenPoint(tempVec_start).x;
@@ -133,9 +133,9 @@ public class CaptureCopyZone : MonoBehaviour
         // UI Image に反映
         image.sprite = capturedSprite;
         stageMgr.copySprite = capturedSprite;
-        SetImageScaleToFit(image,capturedSprite);
+        SetImageScaleToFit(image, capturedSprite);
         //stageMgr.copyImage = image;
-        if(stageMgr.tileData.hasData || stageMgr.objectData.Count > 0)
+        if (stageMgr.tileData.hasData || stageMgr.objectData.Count > 0)
         {
             image.enabled = true;
         }
@@ -185,7 +185,7 @@ public class CaptureCopyZone : MonoBehaviour
 
     public Image GetImage()
     {
-        if(image != null)
+        if (image != null)
         {
             return image;
         }
@@ -197,7 +197,7 @@ public class CaptureCopyZone : MonoBehaviour
 
     public Sprite GetImageSprite()
     {
-        if(image != null)
+        if (image != null)
         {
             return image.sprite;
         }
@@ -212,6 +212,11 @@ public class CaptureCopyZone : MonoBehaviour
         image.sprite = copyImageSprite;
     }
 
+    public void ReSetImage()
+    {
+        image.sprite = null;
+        image.transform.localScale = new Vector3(3.6f, 3.6f, 1);
+    }
 
     //マウスの座標をタイルの座標に変換する関数
     private Vector3Int ChangeVecToInt(Vector3 v)
@@ -224,7 +229,7 @@ public class CaptureCopyZone : MonoBehaviour
         return pos;
     }
 
-    private int culcDir(Vector3 _startPos,Vector3 _endPos)
+    private int culcDir(Vector3 _startPos, Vector3 _endPos)
     {
         //コピーの向きを取得する
         int direction = 0;

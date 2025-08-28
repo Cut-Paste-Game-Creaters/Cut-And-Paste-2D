@@ -37,9 +37,9 @@ public class PauseInStage : MonoBehaviour
     public void PauseOff()
     {
         canvas.enabled = false;
-        PlayerInput.isPausing = false;
         Time.timeScale = 1.0f;
         m_BGMManager.ResetBGMVolume();
+        StartCoroutine(DoAfterFrame());
     }
 
     public void LoadStageSelect()
@@ -47,5 +47,15 @@ public class PauseInStage : MonoBehaviour
         PauseOff();
         fadeCurtain.StartFadeOut("StageSelectScene");
         //SceneManager.LoadScene("StageSelectScene");
+    }
+
+    IEnumerator DoAfterFrame()
+    {
+        // そのフレームの Update, LateUpdate, 物理処理 などが終わるのを待つ
+        yield return new WaitForEndOfFrame();
+
+        // ここに処理を書くと、レンダリング直前に実行される
+
+        PlayerInput.isPausing = false;
     }
 }

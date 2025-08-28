@@ -165,7 +165,7 @@ public class Player_Copy : MonoBehaviour
                 DisplaySelectedTilesAndObjects(startPos, currentPos, display_Copy_Tilemap);
             }
 
-
+            //ポーズ等で戻るボタンを押したらButtonUpが起動してしまう
             if (PlayerInput.GetMouseButtonUp(0) && !stageMgr.tileData.hasData)
             {
                 makeDecision = true;
@@ -232,6 +232,10 @@ public class Player_Copy : MonoBehaviour
                 default:
                     InitTileData();
                     InitWhichMode();
+
+                    //やむを得ず、コピーもカットも選択されなかったときは画像を消すことにする
+                    //なぜかキャンセルをするとコピー情報が失われてしまう
+                    captureCopyZone.ReSetImage();
                     break;
             }
         }
@@ -676,6 +680,7 @@ public class Player_Copy : MonoBehaviour
         stageMgr.tileData.hasData = false;
 
         stageMgr.objectData = new List<StageManager.ObjectData>();
+
 
         CopyButton.SetActive(false);
         CutButton.SetActive(false);
