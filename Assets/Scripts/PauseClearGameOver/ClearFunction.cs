@@ -71,7 +71,7 @@ public class ClearFunction : MonoBehaviour
 
     private IEnumerator ShowClearUI()
     {
-
+        SEManager.instance.ClipAtPointSE(SEManager.instance.donpafuSE);
         movieImage.enabled = true;
         yield return VideoManager.Instance.PlayAndWait(ClearMovie);
         movieImage.enabled = false; // © •‰æ–Ê‚ğ‰B‚·

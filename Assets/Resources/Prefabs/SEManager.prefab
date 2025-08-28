@@ -60,9 +60,12 @@ MonoBehaviour:
   katiSE: {fileID: 8300000, guid: 2c0da3248e2d57143894e8057f08b13e, type: 3}
   closeSE: {fileID: 8300000, guid: 4b725c136b4756044bcc5aff0a50773f, type: 3}
   decideSE: {fileID: 0}
+  undoSE: {fileID: 8300000, guid: 1476c9db86d3f3a4293fbed544b5c953, type: 3}
   iitokiSE: {fileID: 8300000, guid: cbfb5bde45521ea4995af5631f8d8265, type: 3}
+  donpafuSE: {fileID: 8300000, guid: e7a437eec84f8964a9e929ee4edd8290, type: 3}
   cheersASE: {fileID: 8300000, guid: 0684e02285c1dff43b4f0255fea017b1, type: 3}
   cheersSSE: {fileID: 8300000, guid: f1f67bca382cc39409c17fed93a0d386, type: 3}
+  levelupSE: {fileID: 8300000, guid: 96d1b05655917624faffc0168d70c22c, type: 3}
   clearSuikomiSE: {fileID: 8300000, guid: c39075ab26de2544a891cc9151a719bf, type: 3}
   blackholeSE: {fileID: 8300000, guid: 59e7407c0e7687645b8473295e17f879, type: 3}
   blackholeyoinSE: {fileID: 8300000, guid: 71ba7d5fe9540c54e87fad3ecc1d4414, type: 3}
