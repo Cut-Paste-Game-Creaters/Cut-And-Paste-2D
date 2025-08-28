@@ -656,8 +656,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Screen_Left: 9.3
-  shakeDuration: 0.25
-  shakeMagnitude: 0.25
 --- !u!114 &45535815
 MonoBehaviour:
   m_ObjectHideFlags: 0
