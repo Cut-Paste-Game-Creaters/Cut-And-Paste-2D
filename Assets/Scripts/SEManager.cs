@@ -27,11 +27,13 @@ public class SEManager : MonoBehaviour
     //UIŒn
     public AudioClip closeSE;//
     public AudioClip decideSE;//
-
+    public AudioClip undoSE;//
 
     public AudioClip iitokiSE;//
+    public AudioClip donpafuSE;//
     public AudioClip cheersASE;//
     public AudioClip cheersSSE;//
+    public AudioClip levelupSE;
     public AudioClip clearSuikomiSE;//
 
 

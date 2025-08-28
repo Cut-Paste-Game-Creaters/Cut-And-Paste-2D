@@ -87,6 +87,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: floor
+    uniqueID: 1315176143
+    locked: 0
   - name: desk
     uniqueID: 2051931927
     locked: 0
