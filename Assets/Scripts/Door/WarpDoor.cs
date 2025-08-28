@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class WarpDoor : MonoBehaviour
 {
     [SerializeField] Image rankDisplayImage;
+    [SerializeField] Image keyAnounceImage;
     [SerializeField] Sprite notclear;
     [SerializeField] Sprite clear;
     [SerializeField] Sprite rankText_S;
@@ -30,8 +31,8 @@ public class WarpDoor : MonoBehaviour
         return stageName;
     }
 
-    
-    
+
+
     public class CopyWarpDoor
     {
         public Dictionary<string, GameObject> rankText;
@@ -46,7 +47,7 @@ public class WarpDoor : MonoBehaviour
             stopLoad = wpDoor.stopLoad;
         }
     }
- 
+
     void Start()
     {
         //rankText = new Dictionary<string, GameObject>() // Dictionaryクラスの宣言と初期値の設定
@@ -63,6 +64,7 @@ public class WarpDoor : MonoBehaviour
         fadeScreen = FindObjectOfType<FadeScreen>();
 
         AllTextDisable();
+        keyAnounceImage.enabled = false;
 
     }
 
@@ -70,7 +72,7 @@ public class WarpDoor : MonoBehaviour
 
     void Update()
     {
-        
+
         /*if(clearFunc != null) //クリアされたら
         {
             if(clearFunc.GetisClear() && !judgeFunc.GetHasJudged())
@@ -86,9 +88,19 @@ public class WarpDoor : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player") keyAnounceImage.enabled = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player") keyAnounceImage.enabled = false;
+    }
+
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player" && Input.GetKeyDown(KeyCode.W))
+        if (other.gameObject.tag == "Player" && Input.GetKey(KeyCode.S))
         {
 
             //シーン遷移したときにもしDontDestroyOnLoadに何か残ってたら削除
