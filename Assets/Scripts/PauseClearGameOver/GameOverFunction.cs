@@ -17,7 +17,7 @@ public class GameOverFunction : MonoBehaviour
     [SerializeField] private float cameraMoveDistance = 3f; // どれだけ寄せるか
     [SerializeField] private float cameraMoveDuration = 0.6f; // 何秒かけて寄せるか（実時間）
     [SerializeField] private bool cameraLookAtTarget = false; // 必要なら注視
- 
+
     private Vector3 _camOriginalPos;
     private Quaternion _camOriginalRot;
 
@@ -51,13 +51,13 @@ public class GameOverFunction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // this.transform.position =
-       //     new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + 1);
+        // this.transform.position =
+        //     new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z + 1);
     }
 
     public IEnumerator GameOver()
     {
-        
+
         PlayerInput.isPausing = true;
         Time.timeScale = 0f;
         if (m_BGMManager == null) m_BGMManager = FindObjectOfType<BGMManager>();
@@ -73,7 +73,7 @@ public class GameOverFunction : MonoBehaviour
         SEManager.instance.ClipAtPointSE(SEManager.instance.deathbiribiriSE);
         SEManager.instance.ClipAtPointSE(SEManager.instance.deathyoinSE);
         yield return new WaitForSecondsRealtime(1.5f);//演出が終わるまで待つ
-                                                      
+
         ///カメラ移動
         yield return StartCoroutine(MoveCameraTowardsTarget());
 
@@ -88,10 +88,9 @@ public class GameOverFunction : MonoBehaviour
             Camera.main.transform.position = _camOriginalPos;
             Camera.main.transform.rotation = _camOriginalRot;
         }
-
-        PlayerInput.isPausing = false;
         Time.timeScale = 1.0f;
         GameoverUI.SetActive(false);
+        StartCoroutine(DoAfterFrame());
     }
 
     public void LoadStageSelect()
@@ -141,5 +140,13 @@ public class GameOverFunction : MonoBehaviour
             yield return null; // フレーム毎（実時間で進む）
         }
     }
+    IEnumerator DoAfterFrame()
+    {
+        // そのフレームの Update, LateUpdate, 物理処理 などが終わるのを待つ
+        yield return new WaitForEndOfFrame();
 
+        // ここに処理を書くと、レンダリング直前に実行される
+
+        PlayerInput.isPausing = false;
+    }
 }

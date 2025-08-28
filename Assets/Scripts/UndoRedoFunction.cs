@@ -61,23 +61,23 @@ public class UndoRedoFunction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(ccz == null)
+        if (ccz == null)
         {
             ccz = FindObjectOfType<CaptureCopyZone>();
         }
-        if(p_copy == null)
+        if (p_copy == null)
         {
             p_copy = FindObjectOfType<Player_Copy>();
         }
-        if(stageMgr == null)
+        if (stageMgr == null)
         {
             stageMgr = FindObjectOfType<StageManager>();
         }
-        if(rankFunc == null)
+        if (rankFunc == null)
         {
             rankFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
         }
-        if(tilemap == null)
+        if (tilemap == null)
         {
             Tilemap[] maps = FindObjectsOfType<Tilemap>();
             foreach (var map in maps)
@@ -92,7 +92,7 @@ public class UndoRedoFunction : MonoBehaviour
         {
             InfoPushToStack();
         }*/
-        if(PlayerInput.GetKey(KeyCode.Z) && PlayerInput.GetKeyDown(KeyCode.LeftShift) ||
+        if (PlayerInput.GetKey(KeyCode.Z) && PlayerInput.GetKeyDown(KeyCode.LeftShift) ||
                 PlayerInput.GetKeyDown(KeyCode.Z) && PlayerInput.GetKey(KeyCode.LeftShift)) //Shift+Zボタンが押されたらUndo
         {
             Undo();
@@ -147,16 +147,16 @@ public class UndoRedoFunction : MonoBehaviour
         var b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
         allTileData.width = b.size.x;
         allTileData.height = b.size.y;
-        Debug.Log(b.size.x +  "," + b.size.y);
+        Debug.Log(b.size.x + "," + b.size.y);
 
-        for(int i = 0; i < b.size.y; i++)
+        for (int i = 0; i < b.size.y; i++)
         {
             List<TileBase> tBases = new List<TileBase>();
-            for(int j = 0; j < b.size.x; j++)
+            for (int j = 0; j < b.size.x; j++)
             {
                 // オフセット付きのローカル座標から絶対タイル座標を計算
                 Vector3Int tilePos = new Vector3Int(b.x + j, b.y + i, 0);
-                if(i == 0 && j == 0)
+                if (i == 0 && j == 0)
                 {
                     stageStartPos = tilePos;
                 }
@@ -179,9 +179,9 @@ public class UndoRedoFunction : MonoBehaviour
         var b = tilemap.cellBounds; //タイルの存在する範囲を取得 左端下基準の座標
 
         Collider2D[] cols = Physics2D.OverlapAreaAll(new Vector2(b.x/*((32 / 2) + 1)*/, b.y/*((18 / 2) + 1)*/), new Vector2(b.size.x, b.size.y));
-        foreach(var col in cols)
+        foreach (var col in cols)
         {
-            if(col.gameObject.tag != "Tilemap"
+            if (col.gameObject.tag != "Tilemap"
                 && col.gameObject.tag != "Player"
                 && col.gameObject.tag != "Uncuttable")
             {
@@ -211,57 +211,57 @@ public class UndoRedoFunction : MonoBehaviour
                 var vfobj = col.gameObject.GetComponent<VanishFloor>();
                 var cdobj = col.gameObject.GetComponent<ClearDoorScript>();
 
-                if(switchobj != null)
+                if (switchobj != null)
                 {
                     stageObjState.swc = new SwitchController.CopySwitchController(switchobj);
                 }
-                if(s_blockobj != null)
+                if (s_blockobj != null)
                 {
                     stageObjState.sbc = new SwitchblockController.CopySwitchblockController(s_blockobj);
                 }
-                else if(canonobj != null)
+                else if (canonobj != null)
                 {
                     stageObjState.cc = new CanonController.CopyCanonController(canonobj);
                 }
-                else if(throwobj != null)
+                else if (throwobj != null)
                 {
                     stageObjState.toC = new ThrowObjectController.CopyThrowObjectController(throwobj);
                 }
-                else if(wpdobj != null)
+                else if (wpdobj != null)
                 {
                     stageObjState.cwpDoor = new WarpDoor.CopyWarpDoor(wpdobj);
                     //WarpDoor wpdoor = wpdobj.GetMyself();
                     //stageObjState.wpDoor = new WarpDoor(wpdobj);
                 }
-                else if(bumobj != null)
+                else if (bumobj != null)
                 {
                     stageObjState.bumper = new BumperForce.CopyBumperForce(bumobj);
                 }
-                else if(togeobj != null)
+                else if (togeobj != null)
                 {
                     stageObjState.toge = new TogeController.CopyTogeController(togeobj);
                 }
-                else if(b_h_obj != null)
+                else if (b_h_obj != null)
                 {
                     stageObjState.b_hole = new Blackhole.CopyBlackhole(b_h_obj);
                 }
-                else if(w_h_obj != null)
+                else if (w_h_obj != null)
                 {
                     stageObjState.w_hole = new WhiteHole2D.CopyWhiteHole2D(w_h_obj);
                 }
-                else if(svmobj != null)
+                else if (svmobj != null)
                 {
                     stageObjState.svm = new SinVerticalMover.CopySinVerticalMover(svmobj);
                 }
-                else if(rcobj != null)
+                else if (rcobj != null)
                 {
                     stageObjState.rc = new RotateController.CopyRotateController(rcobj);
                 }
-                else if(vfobj != null)
+                else if (vfobj != null)
                 {
                     stageObjState.vf = new VanishFloor.CopyVanishFloor(vfobj);
                 }
-                else if(cdobj != null)
+                else if (cdobj != null)
                 {
                     stageObjState.cd = new ClearDoorScript.CopyClearDoor(cdobj);
                 }
@@ -271,9 +271,9 @@ public class UndoRedoFunction : MonoBehaviour
             }
         }
 
-        foreach(SwitchblockController s_block in s_blocks)
+        foreach (SwitchblockController s_block in s_blocks)
         {
-            if(s_blocks != null)
+            if (s_blocks != null)
             {
                 StageObjectState stageObjState_ = new StageObjectState();
 
@@ -297,12 +297,12 @@ public class UndoRedoFunction : MonoBehaviour
 
         playerState.objPosition = player.transform.position;
         //(プレイヤーの座標　+or- カメラの幅/2)が左端か右端に入っていたらカメラの座標も変えてあげる
-        if((playerState.objPosition.x - camMove.Screen_Left) < tilemap.cellBounds.min.x+1)
+        if ((playerState.objPosition.x - camMove.Screen_Left) < tilemap.cellBounds.min.x + 1)
         {
             playerState.area = 1; //左端に固定
             Debug.Log("area=" + playerState.area);
         }
-        else if((playerState.objPosition.x + (32 / 2)) > tilemap.cellBounds.max.x-1)
+        else if ((playerState.objPosition.x + (32 / 2)) > tilemap.cellBounds.max.x - 1)
         {
             playerState.area = 3; //右端に固定
             Debug.Log("area=" + playerState.area);
@@ -323,19 +323,19 @@ public class UndoRedoFunction : MonoBehaviour
         StageManager.TileData copyTileData = new StageManager.TileData(stageMgr.tileData.width, stageMgr.tileData.height);
 
         copyTileData.direction = stageMgr.tileData.direction;
-        for(int y = 0; y < copyTileData.height; y++)
+        for (int y = 0; y < copyTileData.height; y++)
         {
             List<TileBase> tbs = new List<TileBase>();
-            for(int x = 0; x < copyTileData.width; x++)
+            for (int x = 0; x < copyTileData.width; x++)
             {
                 tbs.Add(stageMgr.tileData.tiles[y][x]);
                 //Debug.Log(stageMgr.tileData.tiles[y][x]);
-                
+
             }
             copyTileData.tiles.Add(tbs);
         }
-        copyTileData.hasData= stageMgr.tileData.hasData;
-        copyTileData.isCut= stageMgr.tileData.isCut;
+        copyTileData.hasData = stageMgr.tileData.hasData;
+        copyTileData.isCut = stageMgr.tileData.isCut;
 
         return copyTileData;
     }
@@ -346,7 +346,7 @@ public class UndoRedoFunction : MonoBehaviour
 
         //copyObjectData.obj = stageMgr.objectData.obj;
         //copyObjectData.pos = stageMgr.objectData.pos;
-        foreach(StageManager.ObjectData s_obj in stageMgr.objectData)
+        foreach (StageManager.ObjectData s_obj in stageMgr.objectData)
         {
             StageManager.ObjectData obj_d = new StageManager.ObjectData();
 
@@ -379,7 +379,7 @@ public class UndoRedoFunction : MonoBehaviour
     public Sprite RecordCopyImageSprite()
     {
         //Sprite getImageSprite;
-        Sprite copyImageSprite ;
+        Sprite copyImageSprite;
 
         /*getImageSprite = ccz.GetImageSprite();
 
@@ -399,7 +399,7 @@ public class UndoRedoFunction : MonoBehaviour
 
     public void Undo()
     {
-        if(undoStack.Count > 1)
+        if (undoStack.Count > 1)
         {
             redoStack.Push(undoStack.Pop());
             UndoTileData();
@@ -431,7 +431,7 @@ public class UndoRedoFunction : MonoBehaviour
         foreach (var col in cols)
         {
             //ここでどのオブジェクトに流し込むのか判定が必要
-            if(col.gameObject.tag != "Tilemap"
+            if (col.gameObject.tag != "Tilemap"
                 && col.gameObject.tag != "Player"
                 && col.gameObject.tag != "Uncuttable")
             {
@@ -441,9 +441,9 @@ public class UndoRedoFunction : MonoBehaviour
         }
 
         //switchblock削除
-        foreach(SwitchblockController s_block in s_blocks)
+        foreach (SwitchblockController s_block in s_blocks)
         {
-            if(s_blocks != null)
+            if (s_blocks != null)
             {
                 Destroy(s_block.gameObject);
             }
@@ -458,16 +458,16 @@ public class UndoRedoFunction : MonoBehaviour
             //GameObject prefab = Resources.Load<GameObject>("Prefabs/Object/" + trimName); //Resources/Prefabsフォルダから名前が同じのprefabを探す
             GameObject[] prefabs = Resources.LoadAll<GameObject>("Prefabs/Object"); //objectfile内の全オブジェクトを取得
             GameObject prefab = null;
-            foreach(GameObject pre in prefabs)
+            foreach (GameObject pre in prefabs)
             {
-                if(pre.tag.Equals(obj.objtag))
+                if (pre.tag.Equals(obj.objtag))
                 {
                     prefab = pre;
                 }
             }
             Debug.Log(obj.prefabName);
 
-            if(prefab != null)
+            if (prefab != null)
             {
                 GameObject g_prefab;
                 g_prefab = Instantiate(prefab, obj.objPosition, obj.objRotation);
@@ -487,57 +487,57 @@ public class UndoRedoFunction : MonoBehaviour
                 var vfobj = g_prefab.gameObject.GetComponent<VanishFloor>();
                 var cdobj = g_prefab.gameObject.GetComponent<ClearDoorScript>();
 
-                if(switchobj != null)
+                if (switchobj != null)
                 {
                     obj.CopyData(switchobj);
                 }
-                else if(s_blockobj != null)
+                else if (s_blockobj != null)
                 {
                     obj.CopyData(s_blockobj);
                 }
-                else if(canonobj != null)
+                else if (canonobj != null)
                 {
                     obj.CopyData(canonobj);
                 }
-                else if(throwobj != null)
+                else if (throwobj != null)
                 {
                     obj.CopyData(throwobj);
                 }
-                else if(wpdobj != null)
+                else if (wpdobj != null)
                 {
                     obj.CopyData(wpdobj);
                     wpdobj.SetRankSprite(rankFunc.GetStageRank(obj.cwpDoor.stageName));
                 }
-                else if(bumobj != null)
+                else if (bumobj != null)
                 {
                     obj.CopyData(bumobj);
                     //Debug.Log(prefab.name + "を生成しました." + bumobj.checkDistance);
                 }
-                else if(togeobj != null)
+                else if (togeobj != null)
                 {
                     obj.CopyData(togeobj);
                 }
-                else if(b_h_obj != null)
+                else if (b_h_obj != null)
                 {
                     obj.CopyData(b_h_obj);
                 }
-                else if(w_h_obj != null)
+                else if (w_h_obj != null)
                 {
                     obj.CopyData(w_h_obj);
                 }
-                else if(svmobj != null)
+                else if (svmobj != null)
                 {
                     obj.CopyData(svmobj);
                 }
-                else if(rcobj != null)
+                else if (rcobj != null)
                 {
                     obj.CopyData(rcobj);
                 }
-                else if(vfobj != null)
+                else if (vfobj != null)
                 {
                     obj.CopyData(vfobj);
                 }
-                else if(cdobj != null)
+                else if (cdobj != null)
                 {
                     obj.CopyData(cdobj);
                 }
@@ -582,15 +582,15 @@ public class UndoRedoFunction : MonoBehaviour
 
     public void UndoTileData()
     {
-        
+
         //redoStack.Push(undoStack.Pop());
         tilemap.ClearAllTiles();
 
         AllStageTileData stageTileData = undoStack.Peek().stageTileData;
 
-        for(int i = 0; i < stageTileData.height; i++)
+        for (int i = 0; i < stageTileData.height; i++)
         {
-            for(int j = 0; j < stageTileData.width; j++)
+            for (int j = 0; j < stageTileData.width; j++)
             {
                 tilemap.SetTile(new Vector3Int(j + stageStartPos.x/* - ((32 / 2) + 1)*/, i + stageStartPos.y/* - ((18 / 2) + 2)*/), stageTileData.tiles[i][j]); //カメラの高さor幅 / 2　+ 1
             }
@@ -608,13 +608,13 @@ public class UndoRedoFunction : MonoBehaviour
         //area = 左端なら左端にカメラ移動, 右端なら右端にカメラ移動
         float camPosX = 0;
         //座標指定
-        if(pre_playerState.area == 1)
+        if (pre_playerState.area == 1)
         {
-            camPosX = (tilemap.cellBounds.min.x+1 + camMove.Screen_Left);
+            camPosX = (tilemap.cellBounds.min.x + 1 + camMove.Screen_Left);
         }
-        else if(pre_playerState.area == 3)
+        else if (pre_playerState.area == 3)
         {
-            camPosX = (tilemap.cellBounds.max.x-1 - (32 / 2));
+            camPosX = (tilemap.cellBounds.max.x - 1 - (32 / 2));
         }
         playerCam.transform.position = new Vector3(camPosX, 0, -10); //カメラ移動
         //回転指定
@@ -632,10 +632,10 @@ public class UndoRedoFunction : MonoBehaviour
         //stageMgr.tileData.width = pre_copyTileData.width;
         //stageMgr.tileData.height = pre_copyTileData.height;
         stageMgr.tileData.direction = pre_copyTileData.direction;
-        for(int y = 0; y < pre_copyTileData.height; y++)
+        for (int y = 0; y < pre_copyTileData.height; y++)
         {
             List<TileBase> tbs = new List<TileBase>();
-            for(int x = 0; x < pre_copyTileData.width; x++)
+            for (int x = 0; x < pre_copyTileData.width; x++)
             {
                 tbs.Add(pre_copyTileData.tiles[y][x]);
             }
@@ -654,7 +654,7 @@ public class UndoRedoFunction : MonoBehaviour
         stageMgr.tileData.hasData = pre_copyTileData.hasData;
         stageMgr.tileData.isCut = pre_copyTileData.isCut;
         //stageMgr.tileData.tiles = pre_copyTileData.tiles;
-        
+
     }
 
     void UndoCopyObjectData()
@@ -665,7 +665,7 @@ public class UndoRedoFunction : MonoBehaviour
 
         //stageMgr.objectData = pre_copyObjectData;
 
-        foreach(StageManager.ObjectData p_obj in pre_copyObjectData)
+        foreach (StageManager.ObjectData p_obj in pre_copyObjectData)
         {
             StageManager.ObjectData obj_d = new StageManager.ObjectData();
 
@@ -692,7 +692,7 @@ public class UndoRedoFunction : MonoBehaviour
         Sprite pre_copyImageSprite = undoStack.Peek().copyImageSprite;
 
         ccz.SetImageSprite(pre_copyImageSprite);
-        if(stageMgr.tileData.hasData || stageMgr.objectData.Count > 0)
+        if (stageMgr.tileData.hasData || stageMgr.objectData.Count > 0)
         {
             ccz.ableImage();
         }
@@ -706,7 +706,7 @@ public class UndoRedoFunction : MonoBehaviour
     public void Retry()
     {
         //UndoしてRetryの時はコピー情報元に戻す
-        while(undoStack.Count > 1)
+        while (undoStack.Count > 1)
         {
             undoStack.Pop();
         }
@@ -722,6 +722,7 @@ public class UndoRedoFunction : MonoBehaviour
         //オブジェクトの状態を初期化(switch&key)
         //stageMgr.ResetObjectState();
 
+        if (fadeCurtain == null) fadeCurtain = FindObjectOfType<FadeScreen>();
         fadeCurtain.StartFadeOut(SceneManager.GetActiveScene().name);
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

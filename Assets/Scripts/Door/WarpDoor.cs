@@ -25,6 +25,8 @@ public class WarpDoor : MonoBehaviour
     private GameObject currentRank;
     private SpriteRenderer door;
     private FadeScreen fadeScreen;
+    private bool playerInRange = false;   // プレイヤーがドアの範囲内にいるかどうか
+
 
     public string GetStageName()
     {
@@ -72,37 +74,8 @@ public class WarpDoor : MonoBehaviour
 
     void Update()
     {
-
-        /*if(clearFunc != null) //クリアされたら
+        if (playerInRange && Input.GetKey(KeyCode.S))
         {
-            if(clearFunc.GetisClear() && !judgeFunc.GetHasJudged())
-            {
-                UpdateRankText();
-            }
-        }
-        
-        if(SceneManager.GetActiveScene().name.Equals("StageSelectScene")) //ステージセレクトシーンなら
-        {
-
-        }*/
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Player") keyAnounceImage.enabled = true;
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Player") keyAnounceImage.enabled = false;
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Player" && Input.GetKey(KeyCode.S))
-        {
-
             //シーン遷移したときにもしDontDestroyOnLoadに何か残ってたら削除
             foreach (var obj in stageMgr.EraseObjects)
             {
@@ -113,6 +86,25 @@ public class WarpDoor : MonoBehaviour
             fadeScreen.StartFadeOut(stageName);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+            keyAnounceImage.enabled = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+            keyAnounceImage.enabled = false;
+        }
+    }
+
 
     //SceneManagerEventでStageSelectをロードしたときにセットされる
     public void SetRankSprite(string stage_rank)

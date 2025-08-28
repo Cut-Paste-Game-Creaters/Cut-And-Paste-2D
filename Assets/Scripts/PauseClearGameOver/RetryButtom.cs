@@ -5,18 +5,18 @@ using UnityEngine;
 public class RetryButtom : MonoBehaviour
 {
     private GameOverFunction gameOverFunc;
+    private UndoRedoFunction undoRedoFunc;
     private Vector3 originalScale;
     // Start is called before the first frame update
     void Start()
     {
-        gameOverFunc = FindObjectOfType<GameOverFunction>();
         originalScale = transform.localScale;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnMouseEnter()
@@ -32,9 +32,13 @@ public class RetryButtom : MonoBehaviour
     }
     private void OnMouseDown()
     {
+        if (gameOverFunc == null) gameOverFunc = FindObjectOfType<GameOverFunction>();
+        if (undoRedoFunc == null) undoRedoFunc = FindObjectOfType<UndoRedoFunction>();
+
         if (gameOverFunc != null)
         {
             gameOverFunc.PauseOff();
+            undoRedoFunc.Retry();
         }
         else
         {
