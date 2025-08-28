@@ -281,7 +281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameoverUI: {fileID: 1418450695722532027}
   cameraFocusTarget: {fileID: 3087751930556172376}
-  cameraMoveDistance: 25
+  cameraMoveDistance: 30
   cameraMoveDuration: 2
   cameraLookAtTarget: 0
 --- !u!114 &7770686200241513586

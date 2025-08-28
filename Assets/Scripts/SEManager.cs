@@ -15,6 +15,7 @@ public class SEManager : MonoBehaviour
     public AudioClip landingSE;//
     public AudioClip deathbiribiriSE;
     public AudioClip deathyoinSE;
+    public AudioClip diveSE;
 
     //コピペ系
     public AudioClip copySE;//シャッター音

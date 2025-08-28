@@ -52,8 +52,16 @@ public class Player_Function : MonoBehaviour
         /*テスト用に4ボタン押すと死んだことになる 本来はhpが0 もしくは　ステージから落ちたら*/
         if(this.gameObject.transform.position.y < fallingLine_y || stageMgr.player_HP <= 0)
         {
+
             stageMgr.player_HP = 0;
-            if(!stageMgr.isPlayerDead) StartCoroutine(Die()); ;
+            if (!stageMgr.isPlayerDead)
+            {
+                StartCoroutine(Die()); ;
+                if (this.gameObject.transform.position.y < fallingLine_y)
+                {
+                    SEManager.instance.ClipAtPointSE(SEManager.instance.diveSE);
+                }
+            }
         }
     }
 
