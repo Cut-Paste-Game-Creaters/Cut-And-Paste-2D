@@ -12,8 +12,8 @@ public class CameraMove : MonoBehaviour
 
     /// <summary>
     /// 画面揺れ用
-    public float shakeDuration = 0.25f;   // デフォルトの揺れ時間
-    public float shakeMagnitude = 0.25f;  // デフォルトの揺れ強さ
+    private float shakeDuration = 0.25f;   // デフォルトの揺れ時間
+    private float shakeMagnitude = 0.5f;  // デフォルトの揺れ強さ
 
     private float _shakeTimeLeft = 0f;
     private float _shakeDurationActive = 0f;
@@ -69,7 +69,8 @@ public class CameraMove : MonoBehaviour
 
                 transform.position += new Vector3(offsetX, offsetY, 0f);
 
-                _shakeTimeLeft -= Time.deltaTime;
+                // 時間停止中でも進行するように unscaledDeltaTime を使用
+                _shakeTimeLeft -= Time.unscaledDeltaTime;
             }
         }
         //Debug.Log("t:"+tilemap.cellBounds.min.x);

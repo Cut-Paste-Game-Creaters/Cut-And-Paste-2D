@@ -79,16 +79,16 @@ MonoBehaviour:
     ow_ene: 30
   - name: Box-M
     obj: {fileID: 3735023780895848326, guid: a59213a9c14a04b4ea8cab18a1e17e53, type: 3}
-    p_ene: 20
+    p_ene: 10
     ow_ene: 30
   - name: Bar-M
     obj: {fileID: 6585899477325734917, guid: 76a4898235411aa45a7c7268cd42de6b, type: 3}
-    p_ene: 20
-    ow_ene: 10
+    p_ene: 10
+    ow_ene: 30
   - name: Bar-L
     obj: {fileID: 4550408371338664941, guid: abda40439fb799a4f8b7e3dced8ee53c, type: 3}
     p_ene: 30
-    ow_ene: 10
+    ow_ene: 30
   - name: Rotate_Center_S
     obj: {fileID: 6910680186113493092, guid: a693fa33da383444daff10fac42a7994, type: 3}
     p_ene: 15
@@ -99,19 +99,19 @@ MonoBehaviour:
     ow_ene: 15
   - name: Rotate_Center_L
     obj: {fileID: 4912859793595399357, guid: a28cc55aa194e0843948360b109c705e, type: 3}
-    p_ene: 50
+    p_ene: 40
     ow_ene: 30
   - name: Rotate_Edge_S
     obj: {fileID: 6219950655114163938, guid: cd33c0f0c1e5e6d458e8925e7a9dd151, type: 3}
-    p_ene: 15
+    p_ene: 20
     ow_ene: 10
   - name: Rotate_Edge_M
     obj: {fileID: 8135703002190637435, guid: 5aad452ed1bbad2468740d18355ccd70, type: 3}
-    p_ene: 30
-    ow_ene: 15
+    p_ene: 20
+    ow_ene: 20
   - name: Rotate_Edge_L
     obj: {fileID: 8154928730361235224, guid: 8f2eb6f250300a849916b7a77a8d9207, type: 3}
-    p_ene: 50
+    p_ene: 40
     ow_ene: 20
   - name: bumper-S
     obj: {fileID: 5627736203465271130, guid: a3b38f5e376620c4495e4b960d9993dc, type: 3}

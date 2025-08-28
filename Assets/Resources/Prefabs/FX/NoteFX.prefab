@@ -49,7 +49,7 @@ MonoBehaviour:
   targetSaturation: 20
   targetContrast: 0
   targetVignette: 0.1
-  targetGrain: 0.3
+  targetGrain: 0.5
   targetBloom: 0
   targetDistortion: 5
   targetFocusDist: 4

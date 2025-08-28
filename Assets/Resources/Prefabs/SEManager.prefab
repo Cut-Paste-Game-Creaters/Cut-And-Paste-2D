@@ -52,6 +52,7 @@ MonoBehaviour:
   landingSE: {fileID: 8300000, guid: a79669b635ee5ef4bb808de19dd73fd5, type: 3}
   deathbiribiriSE: {fileID: 8300000, guid: bddb808fbf62d3e478f0dcbfbc062277, type: 3}
   deathyoinSE: {fileID: 8300000, guid: b9094e60c280c9d47bebd2272b4ddff2, type: 3}
+  diveSE: {fileID: 8300000, guid: fe052d58a05eb0a4a9d73cd01faf4201, type: 3}
   copySE: {fileID: 8300000, guid: 21f3a62441a75db47aa9b3ee90c5aa97, type: 3}
   cutshortSE: {fileID: 8300000, guid: e8f8ab8acd945b64585916ce7e5798f1, type: 3}
   flip1SE: {fileID: 8300000, guid: 544d94897a2c7ae468913845072b70d0, type: 3}
