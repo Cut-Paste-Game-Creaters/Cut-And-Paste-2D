@@ -39,15 +39,15 @@ public class StageManager : MonoBehaviour
     public Pair<bool, bool>[] switch_key_states;
 
     /*コスト関連*/
-    [SerializeField] private ObjectScriptableObject objSB;
-    [SerializeField] private TileScriptableObject tileSB;
-    [SerializeField] private float costHeal_timeOut; //costが回復する間隔
-    private float timeElapsed;
+    [SerializeField]private ObjectScriptableObject objSB;
+    [SerializeField]private TileScriptableObject tileSB;
+    [SerializeField]private float costHeal_timeOut; //costが回復する間隔
+	private float timeElapsed;
     public int stageNum = -1;
-    private int[] init_ene_array = { 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000 }; //ステージごとの初期コスト配列
-    private int[] costHeal_timeOut_array = { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 }; //ステージごとのコスト回復間隔
-    private int[] healAmount_array = { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50 }; //ステージごとの回復速度コストの配列
-    public int[] initAddCost_EachStage = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private int[] init_ene_array = {100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000}; //ステージごとの初期コスト配列
+    private int[] costHeal_timeOut_array = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3}; //ステージごとのコスト回復間隔
+    private int[] healAmount_array = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50}; //ステージごとの回復速度コストの配列
+    public int[] initAddCost_EachStage = {0,0,0,0,0,0,0,0,0,0};
     public int have_ene = 10000; //初期コスト
     public int all_sum_cos = 0; //ステージで消費した全てのコスト
     public int erase_cost = 0; //貼り付け箇所の消すコスト
@@ -85,10 +85,10 @@ public class StageManager : MonoBehaviour
             new Pair<bool, bool>(false, false),
         };
     }
-
+    
     void Update()
     {
-        if (stageNum != -1)
+        if(stageNum != -1)
         {
             HealCost(stageNum);
         }
@@ -98,10 +98,10 @@ public class StageManager : MonoBehaviour
             gameUI = FindObjectOfType<GameUIController>();
         }
 
-        if (isPlayerDamaged)
+        if(isPlayerDamaged)
         {
             nowNoDanageTime += PlayerInput.GetDeltaTime();
-            if (nowNoDanageTime > noDamageTime)
+            if(nowNoDanageTime > noDamageTime)
             {
                 isPlayerDamaged = false;
             }
@@ -271,7 +271,7 @@ public class StageManager : MonoBehaviour
         if (stageNum == -1) //Stage●じゃないとき, (StageSelectのとき)
         {
             have_ene = 0; //所持コスト0にして各ステージのランクに応じたコストを足す
-            foreach (var cost in initAddCost_EachStage)
+            foreach(var cost in initAddCost_EachStage)
             {
                 have_ene += cost;
                 Debug.Log("所持コストに" + cost + "が追加されました");
@@ -296,12 +296,12 @@ public class StageManager : MonoBehaviour
 
     public void HealCost(int stageNum)
     {
-        /*一定時間（costHeal_timeOut）ごとに所持コストを回復*/
+          /*一定時間（costHeal_timeOut）ごとに所持コストを回復*/
         timeElapsed += PlayerInput.GetDeltaTime();
-        if (timeElapsed >= costHeal_timeOut)
+        if(timeElapsed >= costHeal_timeOut)
         {
             have_ene += healAmount_array[stageNum];
-            if (have_ene > init_ene_array[stageNum]) //回復コスト上限を超えて回復しようとする場合は回復コスト上限で書き換える
+            if(have_ene > init_ene_array[stageNum]) //回復コスト上限を超えて回復しようとする場合は回復コスト上限で書き換える
             {
                 have_ene = init_ene_array[stageNum];
             }
@@ -334,7 +334,7 @@ public class StageManager : MonoBehaviour
         }
         else
         {
-            switch_state = true;
+            switch_state = false;
             key_lock_state = false;
         }
     }
