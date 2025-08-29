@@ -5,8 +5,8 @@ using UnityEngine;
 public class RankDisplay : MonoBehaviour
 {
     private TMPro.TextMeshProUGUI rankText;
-    [SerializeField] float maxFontSize=200;
-    [SerializeField] float addFontSize=10;
+    [SerializeField] float maxFontSize = 200;
+    [SerializeField] float addFontSize = 10;
     [SerializeField] float accel = 0f;
     // Start is called before the first frame update
     void Start()
@@ -34,17 +34,17 @@ public class RankDisplay : MonoBehaviour
                 rankText.color = Color.blue;
                 break;
             case "C":
-                rankText.color = Color.white;
+                rankText.color = Color.black;
                 break;
             default:
-                rankText.color = Color.white;
+                rankText.color = Color.black;
                 break;
         }
     }
 
     public void AnimateText()
     {
-        if(rankText.fontSize < maxFontSize)
+        if (rankText.fontSize < maxFontSize)
         {
             rankText.fontSize = rankText.fontSize + addFontSize;
             addFontSize += accel;

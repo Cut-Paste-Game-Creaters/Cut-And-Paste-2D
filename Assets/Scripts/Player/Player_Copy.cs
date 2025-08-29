@@ -197,7 +197,7 @@ public class Player_Copy : MonoBehaviour
                     CopyContents(startPos, endPos, false, true);
                     copy_cost_write.text = stageMgr.write_cost.ToString();
                     copy_cost_erase.text = "0";
-                    cut_cost_write.text = $"{stageMgr.write_cost * 0.5f}";
+                    cut_cost_write.text = $"{stageMgr.write_cost}";
                     cut_cost_erase.text = stageMgr.cut_erase_cost.ToString();
                     //コピーカットの選択はボタンになりました, blackCurtain（2button以外の場所）おしたら無しになる
                     CopyButton.SetActive(true);

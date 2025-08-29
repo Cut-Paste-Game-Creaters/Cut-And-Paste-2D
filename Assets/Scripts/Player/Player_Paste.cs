@@ -147,7 +147,8 @@ public class Player_Paste : MonoBehaviour
             int divide = 1;
             if (stageManager.all_isCut)
             {
-                divide = 2;
+                //カット時ペーストをかつては半分にしていた
+                //divide = 2;
             }
 
             if (stageManager.have_ene >= (stageManager.erase_cost + stageManager.write_cost)) //所持コストから引けるなら
