@@ -111,7 +111,7 @@ public class GameUIController : MonoBehaviour
         //ジャッジする関数を持ってきてる。2つ目の変数は絶対にfalse。
         //2つ目の変数をtrueにすると最小消費コストが更新され、既にジャッジが終わったと判定される
         text_nowRank.text = judgeFunc.JudgeAndUpdateRank(stageManager.all_sum_cos - stageManager.player_HP, false);
-        text_nextRank.text = "ランク\nダウン\nまで " + judgeFunc.culcCostToNextRank();
+        text_nextRank.text = judgeFunc.culcCostToNextRank() + " ";
         if (stageManager.tileData.hasData || stageManager.objectData.Count > 0)
         {
             icon_copycut.enabled = true;
