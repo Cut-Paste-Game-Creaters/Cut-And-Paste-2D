@@ -55,6 +55,18 @@ public class GameUIController : MonoBehaviour
     /*[Header("左右マージンと間隔")]
     public float horizontalMargin = 20f;*/
 
+    private bool isHoverCutButton = false;
+
+    public void OnHoverStart()
+    {
+        isHoverCutButton = true;
+    }
+
+    public void OnHoverExit()
+    {
+        isHoverCutButton = false;
+    }
+
     void Start()
     {
         uiCamera = FindObjectOfType<Camera>();
@@ -111,7 +123,17 @@ public class GameUIController : MonoBehaviour
         //ジャッジする関数を持ってきてる。2つ目の変数は絶対にfalse。
         //2つ目の変数をtrueにすると最小消費コストが更新され、既にジャッジが終わったと判定される
         text_nowRank.text = judgeFunc.JudgeAndUpdateRank(stageManager.all_sum_cos - stageManager.player_HP, false);
-        text_nextRank.text = judgeFunc.culcCostToNextRank() + " ";
+
+        //Cutボタンに触れているときだけ残りコストに消すコストが追加表示される
+        if (isHoverCutButton)
+        {
+            text_nextRank.text = judgeFunc.culcCostToNextRank() + " - " + stageManager.cut_erase_cost;
+        }
+        else
+        {
+            text_nextRank.text = judgeFunc.culcCostToNextRank().ToString();
+        }
+
         if (stageManager.tileData.hasData || stageManager.objectData.Count > 0)
         {
             icon_copycut.enabled = true;

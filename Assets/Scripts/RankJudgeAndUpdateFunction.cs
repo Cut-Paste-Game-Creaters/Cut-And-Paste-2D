@@ -12,7 +12,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     public string rankText = "F";
     bool hasJudged = false;
 
-    //private int allCost = 24; //テスト用変数（総消費コスト
+    //private int allCost = 24; //チE��ト用変数�E�総消費コスチE
     private int[,] stageRank = {{100, 500, 1000, 2000}, //stage1のランク基準数値
                                 {0, 100, 300, 1000}, //stage2のランク基準数値
                                 {0, 150, 400, 1200}, //stage3のランク基準数値
@@ -25,15 +25,15 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
                                 {25, 50, 75, 100}, //stage10のランク基準数値
                                 {25, 50, 75, 100}, //stage10のランク基準数値
 
-                                }; //S~Fの判定基準
+                                }; //S~Fの判定基溁E
 
-    //private int allCost = 24; //テスト用変数（総消費コスト
-    private int[] clearAddCost = {100,50,30,20,5}; //S～FでStageSelectの初期コストに追加するコスト
-                                                   //各ステージで増えるコストは同じ
+    //private int allCost = 24; //チE��ト用変数�E�総消費コスチE
+    private int[] clearAddCost = { 100, 50, 30, 20, 5 }; //S�E�FでStageSelectの初期コストに追加するコスチE
+                                                         //吁E��チE�Eジで増えるコスト�E同じ
 
-    private int[] minConsumpCost = {-10000, -10000,-10000, -10000, -10000,-10000, -10000, -10000, -10000, -10000,-10000}; //ステージ最低消費コスト配列
+    private int[] minConsumpCost = { -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000 }; //スチE�Eジ最低消費コスト�E刁E
 
-    public Dictionary<string, int> stageNumber = new Dictionary<string, int>() // Dictionaryクラスの宣言と初期値の設定
+    public Dictionary<string, int> stageNumber = new Dictionary<string, int>() // Dictionaryクラスの宣言と初期値の設宁E
     {
         {"Stage1", 0},
         {"Stage2", 1},
@@ -66,7 +66,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (stageMgr==null)
+        if (stageMgr == null)
         {
             stageMgr = FindObjectOfType<StageManager>();
         }
@@ -74,17 +74,17 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         {
             rankDisplay = FindObjectOfType<RankDisplay>();
         }
-        //ゴールしたら
+        //ゴールしためE
         if (clearFunc != null)
         {
-            if ((clearFunc.GetisClear()  && !hasJudged))
+            if ((clearFunc.GetisClear() && !hasJudged))
             {
-                JudgeAndUpdateRank(stageMgr.all_sum_cos-stageMgr.player_HP, true);
+                JudgeAndUpdateRank(stageMgr.all_sum_cos - stageMgr.player_HP, true);
                 //stageMgr.all_sum_cos = 0;
                 rankDisplay.SetText(rankText);
-                rankDisplay.InitTextSize(); 
+                rankDisplay.InitTextSize();
             }
-            if(clearFunc.GetisClear() && hasJudged)
+            if (clearFunc.GetisClear() && hasJudged)
             {
                 rankDisplay.AnimateText();
             }
@@ -101,7 +101,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         int stage_num = stageNumber[SceneManager.GetActiveScene().name];
         if(num < minConsumpCost[stage_num]) //今までの最低消費コストより小さければ
         {
-            minConsumpCost[stage_num] = num; //最低消費コストを書き換え
+            minConsumpCost[stage_num] = num; //最低消費コストを書き換ぁE
         }
     }*/
 
@@ -111,18 +111,18 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         int nowCost = 0;
         if (stageMgr != null)
         {
-            nowCost = stageMgr.all_sum_cos - stageMgr.player_HP; //総消費コスト
+            nowCost = stageMgr.all_sum_cos - stageMgr.player_HP; //総消費コスチE
         }
-        int stage_num = 0;          //ステージナンバーは0で初期化。もしデバッグ用ステージだったらstage1のコストを流用
-        if (Regex.IsMatch(SceneManager.GetActiveScene().name, @"^Stage\d+$")) //シーン名がStageなんとかなら
+        int stage_num = 0;          //スチE�Eジナンバ�Eは0で初期化。もしデバッグ用スチE�Eジだったらstage1のコストを流用
+        if (Regex.IsMatch(SceneManager.GetActiveScene().name, @"^Stage\d+$")) //シーン名がStageなんとかなめE
         {
             stage_num = stageNumber[SceneManager.GetActiveScene().name];
         }
 
-        //もしF以上消費してたら0を返す、そうでなければ計算
+        //もしF以上消費してたら0を返す、そぁE��なければ計箁E
         if (nowCost < stageRank[stage_num, 3])
         {
-            for(int i = 0; i < stageRank.GetLength(0); i++)
+            for (int i = 0; i < stageRank.GetLength(0); i++)
             {
                 if (nowCost < stageRank[stage_num, i]) return stageRank[stage_num, i] - nowCost;
             }
@@ -131,19 +131,19 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         return 0;
     }
 
-    /*ほかのスクリプトから各ステージのランクを取得する関数*/
+    /*ほか�Eスクリプトから吁E��チE�Eジのランクを取得する関数*/
     public string GetStageRank(string stageName)
     {
-        //ステージ名から数字を取得
+        //スチE�Eジ名から数字を取征E
         if (stageNumber.TryGetValue(stageName, out int stageNum))
         {
             int minCost = minConsumpCost[stageNum];
-            //最小スコアがないならNONE
+            //最小スコアがなぁE��らNONE
             if (minCost == -10000)
             {
                 return "NONE";
             }
-            //各スコアからランクを返す
+            //吁E��コアからランクを返す
             if (minCost < stageRank[stageNum, 0])
             {
                 return "S";
@@ -165,7 +165,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
                 return "F";
             }
         }
-        else     //ステージ名から取得できなかったら
+        else     //スチE�Eジ名から取得できなかったら
         {
             return "NONE";
         }
@@ -173,47 +173,47 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         return "NONE";
     }
 
-    /*総消費コストのランク判定と最低消費コストの書き換えをおこなう関数*/
-    public string JudgeAndUpdateRank(int num, bool isCleared) //num == 総消費コスト
+    /*総消費コスト�Eランク判定と最低消費コスト�E書き換えをおこなぁE��数*/
+    public string JudgeAndUpdateRank(int num, bool isCleared) //num == 総消費コスチE
     {
         string input = SceneManager.GetActiveScene().name;
-        if(Regex.IsMatch(input, @"^Stage\d+$")) //シーン名がStageなんとかなら
+        if (Regex.IsMatch(input, @"^Stage\d+$")) //シーン名がStageなんとかなめE
         {
             int stage_num = stageNumber[SceneManager.GetActiveScene().name];
-            if(num < stageRank[stage_num, 0])
+            if (num < stageRank[stage_num, 0])
             {
                 rankText = "S";
             }
-            else if(num < stageRank[stage_num, 1])
+            else if (num < stageRank[stage_num, 1])
             {
                 rankText = "A";
             }
-            else if(num < stageRank[stage_num, 2])
+            else if (num < stageRank[stage_num, 2])
             {
                 rankText = "B";
             }
-            else if(num < stageRank[stage_num, 3])
+            else if (num < stageRank[stage_num, 3])
             {
                 rankText = "C";
             }
-            else if(num >= stageRank[stage_num, 3])
+            else if (num >= stageRank[stage_num, 3])
             {
                 rankText = "F";
             }
 
-            //まだ書き換えされていない(minConsumpCost[stage_num] == -1) または 今までの最低消費コストより小さければ
-            if(isCleared && (minConsumpCost[stage_num] == -10000|| num < minConsumpCost[stage_num]))
+            //まだ書き換えされてぁE��ぁEminConsumpCost[stage_num] == -1) また�E 今までの最低消費コストより小さければ
+            if (isCleared && (minConsumpCost[stage_num] == -10000 || num < minConsumpCost[stage_num]))
             {
-                minConsumpCost[stage_num] = num; //最低消費コストを書き換え
+                minConsumpCost[stage_num] = num; //最低消費コストを書き換ぁE
                 //StageSelectの初期コストを更新する
                 AddInitCost(stage_num);
-                Debug.Log("ステージ" + (stage_num + 1) + "の最低消費コストが" + num + "に更新されました");
+                Debug.Log("スチE�Eジ" + (stage_num + 1) + "の最低消費コストが" + num + "に更新されました");
             }
         }
         else
         {
-            //デバッグ用ステージの場合、最小消費コストは更新されない
-            //Debug.Log("数字のステージではありません。デバッグ用ステージです。");
+            //チE��チE��用スチE�Eジの場合、最小消費コスト�E更新されなぁE
+            //Debug.Log("数字�EスチE�Eジではありません。デバッグ用スチE�Eジです、E);
             int stage_num = 0;
             if (num < stageRank[stage_num, 0])
             {
@@ -238,7 +238,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
 
         }
 
-        if (isCleared)hasJudged = true;
+        if (isCleared) hasJudged = true;
         return rankText;
     }
 
