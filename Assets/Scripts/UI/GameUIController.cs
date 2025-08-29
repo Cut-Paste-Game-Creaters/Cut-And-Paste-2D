@@ -127,7 +127,11 @@ public class GameUIController : MonoBehaviour
         //Cutボタンに触れているときだけ残りコストに消すコストが追加表示される
         if (isHoverCutButton)
         {
-            text_nextRank.text = judgeFunc.culcCostToNextRank() + " - " + stageManager.cut_erase_cost;
+            text_nextRank.text = judgeFunc.culcCostToNextRank() + "<color=#FF0000>-" + stageManager.cut_erase_cost + "</color>";
+        }
+        else if (stageManager.isPasting)
+        {
+            text_nextRank.text = judgeFunc.culcCostToNextRank() + "<color=#FF0000>-" + (stageManager.erase_cost + stageManager.write_cost) + "</color>";
         }
         else
         {
