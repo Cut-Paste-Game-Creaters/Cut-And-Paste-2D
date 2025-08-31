@@ -28,8 +28,8 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
                                 }; //S~F縺ｮ蛻､螳壼渕貅・
 
     //private int allCost = 24; //繝・せ繝育畑螟画焚・育ｷ乗ｶ郁ｲｻ繧ｳ繧ｹ繝・
-    private int[] clearAddCost = { 100, 50, 30, 20, 5 }; //S・曦縺ｧStageSelect縺ｮ蛻晄悄繧ｳ繧ｹ繝医↓霑ｽ蜉縺吶ｋ繧ｳ繧ｹ繝・
-                                                         //蜷・せ繝・・繧ｸ縺ｧ蠅励∴繧九さ繧ｹ繝医・蜷後§
+    private int[] clearAddCost = { 200, 100, 70, 60, 50 }; //S・曦縺ｧStageSelect縺ｮ蛻晄悄繧ｳ繧ｹ繝医↓霑ｽ蜉縺吶ｋ繧ｳ繧ｹ繝・
+                                                           //蜷・せ繝・・繧ｸ縺ｧ蠅励∴繧九さ繧ｹ繝医・蜷後§
 
     private int[] minConsumpCost = { -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000 }; //繧ｹ繝・・繧ｸ譛菴取ｶ郁ｲｻ繧ｳ繧ｹ繝磯・蛻・
 
