@@ -14434,10 +14434,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 45535812}
-    - target: {fileID: 3799402726941120211, guid: 4811d7671300e7a4193d0defb0e3b18d, type: 3}
-      propertyPath: fadeTime
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5542593937948854081, guid: 4811d7671300e7a4193d0defb0e3b18d, type: 3}
       propertyPath: m_Name
       value: FadeScreen
@@ -14804,7 +14800,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5884838530300249436, guid: 0ca0b42fe343f5243a934a15bc444380, type: 3}
       propertyPath: have_ene
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5884838530300249436, guid: 0ca0b42fe343f5243a934a15bc444380, type: 3}
       propertyPath: player_MAXHP
