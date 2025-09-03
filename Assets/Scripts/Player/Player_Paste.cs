@@ -161,7 +161,7 @@ public class Player_Paste : MonoBehaviour
                 CheckObjectCost(true);
                 //オブジェクトをペースト
                 PasteObject();
-
+                SEManager.instance.ClipAtPointSE(SEManager.instance.flip2SE);
                 if (stageManager.all_isCut) //1回のみペーストにする処理
                 {
                     InitTileData();

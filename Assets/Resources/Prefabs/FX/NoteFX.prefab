@@ -48,14 +48,26 @@ MonoBehaviour:
   targetHueShift: 5
   targetSaturation: 20
   targetContrast: 0
-  targetVignette: 0.1
+  targetPostExposure: 0
+  targetColorFilter: {r: 1, g: 0.97168547, b: 0.9292453, a: 0.09803922}
+  targetVignette: 0
+  targetVignetteSmoothness: 0
   targetGrain: 0.5
+  targetGrainSize: 1
+  targetGrainColored: 0
   targetBloom: 0
-  targetDistortion: 5
-  targetFocusDist: 4
+  targetBloomThreshold: 1.05
+  targetBloomDirtTex: {fileID: 0}
+  targetBloomDirtIntensity: 0.2
+  targetDistortion: 1
+  targetDistortionCenter: {x: 0.5, y: 0.5}
+  targetDistortionScale: 1
+  targetChromAb: 0.1
+  targetFocusDist: 5
   targetAperture: 10
   targetFocalLen: 50
-  tweenSeconds: 0.05
+  targetExposureKeyValue: 1
+  tweenSeconds: 0.1
   postProcessVolume: {fileID: 0}
 --- !u!114 &202325035027215887
 MonoBehaviour:

@@ -27,6 +27,10 @@ public class GameUIController : MonoBehaviour
     [SerializeField] float paddingY = 80.0f;         //画面端からどれだけ余分を残して表示するか
     [SerializeField] GameObject nowCostUI;
     [SerializeField] GameObject RankUI;
+ 
+
+
+
 
 
     private Tilemap tilemap;
@@ -57,6 +61,7 @@ public class GameUIController : MonoBehaviour
 
     private bool isHoverCutButton = false;
 
+
     public void OnHoverStart()
     {
         isHoverCutButton = true;
@@ -83,6 +88,9 @@ public class GameUIController : MonoBehaviour
 
         icon_copycut.enabled = false;
         text_duplicateCost.gameObject.SetActive(false);
+
+
+ 
     }
 
     //なぜかstartでロードされない人たち　Updateでも実行する
@@ -159,7 +167,6 @@ public class GameUIController : MonoBehaviour
             text_duplicateCost.gameObject.SetActive(false);
             icon_copycut.enabled = false;
         }
-
 
 
 
@@ -412,6 +419,7 @@ public class GameUIController : MonoBehaviour
         if (isSelectZone)
         {
             //allCostDisplay.GetComponent<RectTransform>().anchoredPosition = appearPos;
+          
 
             if (!isLeft)
             {
@@ -461,6 +469,17 @@ public class GameUIController : MonoBehaviour
         }
     }
 
+
+    public void DisplayCursor()
+    {
+        if (CostDisplay != null)
+        {
+            CostDisplay.SetActive(false);
+        }
+    }
+
+
+
     public void UnDisplayObjectCost()
     {
         if (CostDisplay != null)
@@ -468,6 +487,13 @@ public class GameUIController : MonoBehaviour
             CostDisplay.SetActive(false);
         }
     }
+
+
+
+
+    
+
+
 }
 
 /* void Start()
