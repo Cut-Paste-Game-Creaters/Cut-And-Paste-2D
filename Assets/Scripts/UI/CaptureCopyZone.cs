@@ -104,7 +104,7 @@ public class CaptureCopyZone : MonoBehaviour
         int capLayer = LayerMask.NameToLayer("CaptureLayer");
         int defLayer = LayerMask.NameToLayer("Default");
         cam.cullingMask = (1 << capLayer) | (1 << defLayer);
-
+        
         StartCoroutine(CaptureAndSave());
     }
 

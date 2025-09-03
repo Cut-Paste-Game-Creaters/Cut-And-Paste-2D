@@ -53,11 +53,13 @@ MonoBehaviour:
   deathbiribiriSE: {fileID: 8300000, guid: bddb808fbf62d3e478f0dcbfbc062277, type: 3}
   deathyoinSE: {fileID: 8300000, guid: b9094e60c280c9d47bebd2272b4ddff2, type: 3}
   diveSE: {fileID: 8300000, guid: fe052d58a05eb0a4a9d73cd01faf4201, type: 3}
+  kachaSE: {fileID: 8300000, guid: 1356aa7241cf8764c8e3dfb1145ef1e6, type: 3}
   copySE: {fileID: 8300000, guid: 21f3a62441a75db47aa9b3ee90c5aa97, type: 3}
   cutshortSE: {fileID: 8300000, guid: e8f8ab8acd945b64585916ce7e5798f1, type: 3}
   flip1SE: {fileID: 8300000, guid: 544d94897a2c7ae468913845072b70d0, type: 3}
   flip2SE: {fileID: 8300000, guid: 15b58a919719bcc449ab171324853d7e, type: 3}
   katiSE: {fileID: 8300000, guid: 2c0da3248e2d57143894e8057f08b13e, type: 3}
+  writeSE: {fileID: 8300000, guid: 05ac871f93c88bd45ba4bf73ab35e55d, type: 3}
   closeSE: {fileID: 8300000, guid: 4b725c136b4756044bcc5aff0a50773f, type: 3}
   decideSE: {fileID: 0}
   undoSE: {fileID: 8300000, guid: 1476c9db86d3f3a4293fbed544b5c953, type: 3}

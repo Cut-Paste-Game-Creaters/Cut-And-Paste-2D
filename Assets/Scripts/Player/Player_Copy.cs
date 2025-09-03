@@ -44,7 +44,6 @@ public class Player_Copy : MonoBehaviour
     private TextMeshProUGUI cut_cost_erase;
 
 
-
     public void OnCopyButtonSelected()
     {
         whichMode = 0;
@@ -123,6 +122,9 @@ public class Player_Copy : MonoBehaviour
             //最初と最後の座標だけとれば範囲が指定できる
             if (PlayerInput.GetMouseButtonDown(0) && !stageMgr.isPasting)
             {
+
+
+
                 //範囲選択時時間を停止する(またはスローモー)
                 Time.timeScale = 0f;
 
@@ -179,6 +181,7 @@ public class Player_Copy : MonoBehaviour
         //どちらかを選ぶフェーズ
         if (makeDecision)
         {
+
             switch (whichMode)
             {
                 case -1:
@@ -221,7 +224,7 @@ public class Player_Copy : MonoBehaviour
                 case 2:
                     captureCopyZone.CaptureImage(startPos, endPos);
                     whichMode = 3;
-                    break;
+                        break;
                 //実際にコピーorカットを行うフェーズ
                 case 3:
                     if (stageMgr.all_isCut) CutInCopy(ChangeVecToInt(startPos), ChangeVecToInt(endPos), false);
@@ -321,6 +324,7 @@ public class Player_Copy : MonoBehaviour
                 CutInCopyObject(cols, false);
                 stageMgr.tileData.hasData = true;
                 //urFunc.InfoPushToStack();
+                Debug.Log("なぜならない！");
             }
             else
             {
@@ -334,6 +338,7 @@ public class Player_Copy : MonoBehaviour
             CutInCopyObject(cols, false);
             Debug.Log("消すコスト(カット時):" + stageMgr.cut_erase_cost + ", " + "所持エナジー:" + stageMgr.have_ene);
             stageMgr.tileData.hasData = true;
+            SEManager.instance.ClipAtPointSE(SEManager.instance.copySE);
         }
 
         //urFunc.InfoPushToStack(); /*これだとコピーの回数分のみ保存できるが, カットした時, 正常じゃなくなる*/

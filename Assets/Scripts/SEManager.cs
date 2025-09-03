@@ -18,11 +18,13 @@ public class SEManager : MonoBehaviour
     public AudioClip diveSE;
 
     //コピペ系
+    public AudioClip kachaSE;//シャッター音
     public AudioClip copySE;//シャッター音
     public AudioClip cutshortSE;//はさみ
     public AudioClip flip1SE;//
     public AudioClip flip2SE;//ペースト時
     public AudioClip katiSE;//範囲選択時、移動するたびになる
+    public AudioClip writeSE;
 
     //UI系
     public AudioClip closeSE;//

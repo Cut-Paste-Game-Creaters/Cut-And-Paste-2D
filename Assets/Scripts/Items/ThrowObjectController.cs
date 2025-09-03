@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ThrowObjectController : MonoBehaviour
 {
-    public float destroyTime = 20.0f;
+    public float destroyTime = 25.0f;
     public float nowTime = 0.0f;
     public float disAppearTime = 0.5f;
 
@@ -51,12 +51,22 @@ public class ThrowObjectController : MonoBehaviour
 
         //時間経過で效滅
         nowTime += PlayerInput.GetDeltaTime();
-        //全体の5分の2になったら
-        if(nowTime > destroyTime / 5 * 3)
+        // SpriteRendererの現在色を取得
+        Color c = sr.color;
+
+        // 全体の5分の3を過ぎたらフェード処理開始
+        if (nowTime > destroyTime / 5 * 3)
         {
-            sr.enabled = Mathf.Floor(nowTime / disAppearTime) % 2 == 0;
+            float t = (nowTime - (destroyTime / 5 * 3)) / (destroyTime - (destroyTime / 5 * 3));
+
+            float fade = Mathf.Lerp(1f, 0.05f, t);
+
+            c.a = fade;
+
+
+            sr.color = c;
         }
-        if(nowTime > destroyTime)
+        if (nowTime > destroyTime)
         {
             Destroy(this.gameObject);
         }
