@@ -795,6 +795,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseFunction
       objectReference: {fileID: 0}
+    - target: {fileID: 766481296046975328, guid: 68cd82f06d6d32c44a6090fc8bcda715, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3609334019958350555, guid: 68cd82f06d6d32c44a6090fc8bcda715, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.099998474
@@ -7962,6 +7966,10 @@ PrefabInstance:
     - target: {fileID: 6979601944176557163, guid: 83b513764a047554ab339c965573a81d, type: 3}
       propertyPath: m_Name
       value: GameOverFunction
+      objectReference: {fileID: 0}
+    - target: {fileID: 6979601944176557163, guid: 83b513764a047554ab339c965573a81d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7770686200241513586, guid: 83b513764a047554ab339c965573a81d, type: 3}
       propertyPath: cam

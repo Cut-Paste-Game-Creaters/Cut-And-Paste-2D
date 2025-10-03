@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,28 +12,36 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     public string rankText = "F";
     bool hasJudged = false;
 
-    //private int allCost = 24; //チE��ト用変数�E�総消費コスチE
-    private int[,] stageRank = {{100, 500, 1000, 2000}, //stage1のランク基準数値
-                                {0, 100, 300, 1000}, //stage2のランク基準数値
-                                {0, 150, 400, 1200}, //stage3のランク基準数値
-                                {50, 200, 500, 1200}, //stage4のランク基準数値
-                                {-50, 100, 300, 1000}, //stage5のランク基準数値
-                                {-80, 50, 250, 700}, //stage6のランク基準数値
-                                {40, 200, 500, 1000}, //stage7のランク基準数値
-                                {0, 100, 300, 700}, //stage8のランク基準数値
-                                {25, 50, 75, 100}, //stage9のランク基準数値
-                                {25, 50, 75, 100}, //stage10のランク基準数値
-                                {25, 50, 75, 100}, //stage10のランク基準数値
+    //private int allCost = 24; //
+    private int[,] stageRank = {{-50, 300, 1000, 2000}, //stage1
+                                {-80, 200, 500, 1500}, //stage2
+                                {-50, 150, 400, 1200}, //stage3
+                                {0, 200, 500, 1500}, //stage4
+                                {-50, 300, 700, 1500}, //stage5
+                                {-50, 50, 300, 700}, //stage6
+                                {-30, 300, 700, 1500}, //stage7
+                                {-50, 50, 200, 500}, //stage8
+                                {100, 300, 500, 1500}, //stage9
+                                {-70, 50, 200, 600}, //stage10
+                                {-30, 0, 100, 200}, //stage11
+                                {0, 200, 500, 1500}, //stage12
+                                {-90, 0, 200, 500}, //stage13
+                                {30, 150, 400, 1000}, //stage14
+                                {-80, 50, 200, 700}, //stage15
+                                {-50, 100, 300, 700}, //stage16
+                                {-70, 50, 200, 500}, //stage17
+                                {0, 100, 300, 700}, //stage18
+                                {25, 50, 75, 100}, //stage19
+                                {25, 50, 75, 100}, //stage20
+                                }; //S~F
 
-                                }; //S~Fの判定基溁E
+    //private int allCost = 24; //
+    private int[] clearAddCost = { 100, 60, 40, 30, 10}; //StageSelect
+                                                           //
 
-    //private int allCost = 24; //チE��ト用変数�E�総消費コスチE
-    private int[] clearAddCost = { 200, 100, 70, 60, 50 }; //S�E�FでStageSelectの初期コストに追加するコスチE
-                                                           //吁E��チE�Eジで増えるコスト�E同じ
+    private int[] minConsumpCost = { -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000}; //
 
-    private int[] minConsumpCost = { -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000 }; //スチE�Eジ最低消費コスト�E刁E
-
-    public Dictionary<string, int> stageNumber = new Dictionary<string, int>() // Dictionaryクラスの宣言と初期値の設宁E
+    public Dictionary<string, int> stageNumber = new Dictionary<string, int>() // Dictionary
     {
         {"Stage1", 0},
         {"Stage2", 1},
@@ -45,7 +53,17 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         {"Stage8", 7},
         {"Stage9", 8},
         {"Stage10", 9},
-        {"StageTemplate",10 }
+        {"Stage11", 10},
+        {"Stage12", 11},
+        {"Stage13", 12},
+        {"Stage14", 13},
+        {"Stage15", 14},
+        {"Stage16", 15},
+        {"Stage17", 16},
+        {"Stage18", 17},
+        {"Stage19", 18},
+        {"Stage20", 19},
+        {"StageTemplate",20 }
     };
 
 
@@ -74,7 +92,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         {
             rankDisplay = FindObjectOfType<RankDisplay>();
         }
-        //ゴールしためE
+        //
         if (clearFunc != null)
         {
             if ((clearFunc.GetisClear() && !hasJudged))
@@ -82,6 +100,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
                 JudgeAndUpdateRank(stageMgr.all_sum_cos - stageMgr.player_HP, true);
                 //stageMgr.all_sum_cos = 0;
                 rankDisplay.SetText(rankText);
+
                 rankDisplay.InitTextSize();
             }
             if (clearFunc.GetisClear() && hasJudged)
@@ -95,31 +114,31 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         }
     }
 
-    /*最低消費コストを更新*/
+    /*ｰ*/
     /*public void UpdateMinConCost(int num)
     {
         int stage_num = stageNumber[SceneManager.GetActiveScene().name];
-        if(num < minConsumpCost[stage_num]) //今までの最低消費コストより小さければ
+        if(num < minConsumpCost[stage_num]) //
         {
-            minConsumpCost[stage_num] = num; //最低消費コストを書き換ぁE
+            minConsumpCost[stage_num] = num; //
         }
     }*/
 
-    /*現在の総消費コストから次のランクに下がるまでのコストを計算する関数*/
+    /**/
     public int culcCostToNextRank()
     {
         int nowCost = 0;
         if (stageMgr != null)
         {
-            nowCost = stageMgr.all_sum_cos - stageMgr.player_HP; //総消費コスチE
+            nowCost = stageMgr.all_sum_cos - stageMgr.player_HP; //
         }
-        int stage_num = 0;          //スチE�Eジナンバ�Eは0で初期化。もしデバッグ用スチE�Eジだったらstage1のコストを流用
-        if (Regex.IsMatch(SceneManager.GetActiveScene().name, @"^Stage\d+$")) //シーン名がStageなんとかなめE
+        int stage_num = 0;          //
+        if (Regex.IsMatch(SceneManager.GetActiveScene().name, @"^Stage\d+$")) //
         {
             stage_num = stageNumber[SceneManager.GetActiveScene().name];
         }
 
-        //もしF以上消費してたら0を返す、そぁE��なければ計箁E
+        //
         if (nowCost < stageRank[stage_num, 3])
         {
             for (int i = 0; i < stageRank.GetLength(0); i++)
@@ -131,19 +150,19 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         return 0;
     }
 
-    /*ほか�Eスクリプトから吁E��チE�Eジのランクを取得する関数*/
+    /**/
     public string GetStageRank(string stageName)
     {
-        //スチE�Eジ名から数字を取征E
+        //
         if (stageNumber.TryGetValue(stageName, out int stageNum))
         {
             int minCost = minConsumpCost[stageNum];
-            //最小スコアがなぁE��らNONE
+            //
             if (minCost == -10000)
             {
                 return "NONE";
             }
-            //吁E��コアからランクを返す
+            //
             if (minCost < stageRank[stageNum, 0])
             {
                 return "S";
@@ -165,7 +184,7 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
                 return "F";
             }
         }
-        else     //スチE�Eジ名から取得できなかったら
+        else     //
         {
             return "NONE";
         }
@@ -173,11 +192,11 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         return "NONE";
     }
 
-    /*総消費コスト�Eランク判定と最低消費コスト�E書き換えをおこなぁE��数*/
-    public string JudgeAndUpdateRank(int num, bool isCleared) //num == 総消費コスチE
+    /**/
+    public string JudgeAndUpdateRank(int num, bool isCleared) //num == 
     {
         string input = SceneManager.GetActiveScene().name;
-        if (Regex.IsMatch(input, @"^Stage\d+$")) //シーン名がStageなんとかなめE
+        if (Regex.IsMatch(input, @"^Stage\d+$")) //
         {
             int stage_num = stageNumber[SceneManager.GetActiveScene().name];
             if (num < stageRank[stage_num, 0])
@@ -201,19 +220,19 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
                 rankText = "F";
             }
 
-            //まだ書き換えされてぁE��ぁEminConsumpCost[stage_num] == -1) また�E 今までの最低消費コストより小さければ
+            //minConsumpCost[stage_num] == -1) ｰ
             if (isCleared && (minConsumpCost[stage_num] == -10000 || num < minConsumpCost[stage_num]))
             {
-                minConsumpCost[stage_num] = num; //最低消費コストを書き換ぁE
-                //StageSelectの初期コストを更新する
+                minConsumpCost[stage_num] = num; //
+                //StageSelect
                 AddInitCost(stage_num);
-                Debug.Log("スチE�Eジ" + (stage_num + 1) + "の最低消費コストが" + num + "に更新されました");
+                Debug.Log("" + (stage_num + 1) + "" + num + "");
             }
         }
         else
         {
-            //チE��チE��用スチE�Eジの場合、最小消費コスト�E更新されなぁE
-            //Debug.Log("数字�EスチE�Eジではありません。デバッグ用スチE�Eジです、E);
+            //
+            //Debug.Log(");
             int stage_num = 0;
             if (num < stageRank[stage_num, 0])
             {

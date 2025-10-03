@@ -7906,11 +7906,11 @@ PrefabInstance:
       objectReference: {fileID: 936129384}
     - target: {fileID: 3588919106790919407, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 41.2
+      value: -11.15
       objectReference: {fileID: 0}
     - target: {fileID: 3588919106790919407, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.6
+      value: 5.88
       objectReference: {fileID: 0}
     - target: {fileID: 3588919106790919407, guid: dcdd389a34128a048b2e112fe01cdd5f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10797,6 +10797,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6578e4ee29684fd4abc1ce71a1a2cff3, type: 3}
+--- !u!1001 &828719920
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 813784408229357954, guid: b8bb446158f238044a714e6193635ce4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 67.05156
+      objectReference: {fileID: 0}
+    - target: {fileID: 813784408229357954, guid: b8bb446158f238044a714e6193635ce4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.006627083
+      objectReference: {fileID: 0}
+    - target: {fileID: 813784408229357954, guid: b8bb446158f238044a714e6193635ce4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.4522725
+      objectReference: {fileID: 0}
+    - target: {fileID: 813784408229357954, guid: b8bb446158f238044a714e6193635ce4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 813784408229357954, guid: b8bb446158f238044a714e6193635ce4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 813784408229357954, guid: b8bb446158f238044a714e6193635ce4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 813784408229357954, guid: b8bb446158f238044a714e6193635ce4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 813784408229357954, guid: b8bb446158f238044a714e6193635ce4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 813784408229357954, guid: b8bb446158f238044a714e6193635ce4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 813784408229357954, guid: b8bb446158f238044a714e6193635ce4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4802952806710836720, guid: b8bb446158f238044a714e6193635ce4, type: 3}
+      propertyPath: m_Name
+      value: BackGroundfloor
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b8bb446158f238044a714e6193635ce4, type: 3}
 --- !u!1001 &833980873
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11103,7 +11160,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1728000120683300713, guid: a08114b86c3282f40aa1abc404761ae2, type: 3}
       propertyPath: isLocked
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3381206614376048269, guid: a08114b86c3282f40aa1abc404761ae2, type: 3}
       propertyPath: m_Name
@@ -11697,7 +11754,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 621141407897820478, guid: 7bca0eaa0e87c43428073cae2d9b6092, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2160612193806536600, guid: 7bca0eaa0e87c43428073cae2d9b6092, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -18394,7 +18451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6979601944176557163, guid: 83b513764a047554ab339c965573a81d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7770686200241513586, guid: 83b513764a047554ab339c965573a81d, type: 3}
       propertyPath: cam
@@ -18756,3 +18813,4 @@ SceneRoots:
   - {fileID: 1623235831}
   - {fileID: 1035597671}
   - {fileID: 1185689900}
+  - {fileID: 828719920}
