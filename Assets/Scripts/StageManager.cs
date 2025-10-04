@@ -220,6 +220,7 @@ public class StageManager : MonoBehaviour
 
     public struct CopyStageManager
     {
+        public int player_HP;
         public int have_ene;
         public int all_sum_cos;
         public int write_cost;
@@ -229,6 +230,7 @@ public class StageManager : MonoBehaviour
 
         public CopyStageManager(StageManager smgr)
         {
+            player_HP = smgr.player_HP;
             have_ene = smgr.have_ene;
             all_sum_cos = smgr.all_sum_cos;
             write_cost = smgr.write_cost;

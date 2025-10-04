@@ -572,6 +572,7 @@ public class UndoRedoFunction : MonoBehaviour
     {
         StageManager.CopyStageManager pre_csm = undoStack.Peek().cStageMgr;
 
+        stageMgr.player_HP = pre_csm.player_HP;
         stageMgr.have_ene = pre_csm.have_ene;
         stageMgr.all_sum_cos = pre_csm.all_sum_cos;
         stageMgr.write_cost = pre_csm.write_cost;
