@@ -73,16 +73,26 @@ public class StageManager : MonoBehaviour
         //Pair.bool1 = switchState, Pair.bool2 = keyState
         switch_key_states = new Pair<bool, bool>[]
         {
+            new Pair<bool, bool>(false, false),///Stage1
             new Pair<bool, bool>(false, false),
             new Pair<bool, bool>(false, false),
             new Pair<bool, bool>(false, false),
-            new Pair<bool, bool>(false, false),
+            new Pair<bool, bool>(false, false),///Stage5
             new Pair<bool, bool>(false, false),
             new Pair<bool, bool>(false, false),
             new Pair<bool, bool>(true, false),
             new Pair<bool, bool>(false, false),
+            new Pair<bool, bool>(false, false),///Stage10
             new Pair<bool, bool>(false, false),
             new Pair<bool, bool>(false, false),
+            new Pair<bool, bool>(false, false),
+            new Pair<bool, bool>(true, false),
+            new Pair<bool, bool>(false, false),///Stage15
+            new Pair<bool, bool>(false, false),
+            new Pair<bool, bool>(true, false),
+            new Pair<bool, bool>(false, false),
+            new Pair<bool, bool>(false, false),
+            new Pair<bool, bool>(false, false),///Stage20
         };
     }
 
@@ -240,7 +250,17 @@ public class StageManager : MonoBehaviour
         {"Stage8", 7},
         {"Stage9", 8},
         {"Stage10", 9},
-        {"StageTemplate",10 }
+        {"Stage11", 10},
+        {"Stage12", 11},
+        {"Stage13", 12},
+        {"Stage14", 13},
+        {"Stage15", 14},
+        {"Stage16", 15},
+        {"Stage17", 16},
+        {"Stage18", 17},
+        {"Stage19", 18},
+        {"Stage20", 19},
+        {"StageTemplate",20 }
     };
 
     public void DamageToPlayer(int damage) //ˆø”•ªHP‚©‚çŒ¸‚ç‚·ˆ—

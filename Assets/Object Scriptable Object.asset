@@ -15,11 +15,11 @@ MonoBehaviour:
   objectList:
   - name: door
     obj: {fileID: 1057402034990213959, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
-    p_ene: 3000
+    p_ene: 1000
     ow_ene: 0
   - name: GoalDoor
     obj: {fileID: 5096264463535201358, guid: 4ae2f67f36f3d7e4f9fea45624748a0f, type: 3}
-    p_ene: 3000
+    p_ene: 1000
     ow_ene: 0
   - name: key_lock
     obj: {fileID: 452536124641921469, guid: 4a7f36a9583bbc643950bfaedb40bffb, type: 3}
@@ -27,7 +27,7 @@ MonoBehaviour:
     ow_ene: 0
   - name: switch
     obj: {fileID: 7654152235285816079, guid: 9053663e2ac49a9448a4ab464c0866f0, type: 3}
-    p_ene: 200
+    p_ene: 150
     ow_ene: 30
   - name: Switchblock
     obj: {fileID: 3018495810459848656, guid: a32592c65b64240419fbd001667655e8, type: 3}
@@ -55,8 +55,8 @@ MonoBehaviour:
     ow_ene: 10
   - name: ball-M
     obj: {fileID: 1193905351830765531, guid: ecb716a9144d17b4885faa6b32c0bcfb, type: 3}
-    p_ene: 30
-    ow_ene: 20
+    p_ene: 20
+    ow_ene: 30
   - name: ball-L
     obj: {fileID: 575467041499296800, guid: 38394f1be96906146a850a7c28c94887, type: 3}
     p_ene: 40
@@ -83,7 +83,7 @@ MonoBehaviour:
     ow_ene: 30
   - name: Bar-M
     obj: {fileID: 6585899477325734917, guid: 76a4898235411aa45a7c7268cd42de6b, type: 3}
-    p_ene: 10
+    p_ene: 15
     ow_ene: 30
   - name: Bar-L
     obj: {fileID: 4550408371338664941, guid: abda40439fb799a4f8b7e3dced8ee53c, type: 3}

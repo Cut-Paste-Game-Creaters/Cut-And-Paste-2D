@@ -20,14 +20,17 @@ public class GameUIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI text_overwriteCost2;
     [SerializeField] private TMP_FontAsset customFont;
     [SerializeField] Image icon_copycut;
+    [SerializeField] Image navi;
     [SerializeField] Sprite s_copy;
     [SerializeField] Sprite s_cut;
+    [SerializeField] Sprite p_can;
+    [SerializeField] Sprite p_canot;
     [SerializeField] ObjectScriptableObject objSB;
     [SerializeField] float paddingX = 100.0f;        //マウスカーソルからimageの近い方の端までの距離
     [SerializeField] float paddingY = 80.0f;         //画面端からどれだけ余分を残して表示するか
     [SerializeField] GameObject nowCostUI;
     [SerializeField] GameObject RankUI;
- 
+      
 
 
 
@@ -90,7 +93,6 @@ public class GameUIController : MonoBehaviour
         text_duplicateCost.gameObject.SetActive(false);
 
 
- 
     }
 
     //なぜかstartでロードされない人たち　Updateでも実行する
@@ -159,13 +161,14 @@ public class GameUIController : MonoBehaviour
                 text_duplicateCost.text = ":" + stageManager.write_cost;
                 icon_copycut.sprite = s_copy;
             }
-
+            navi.sprite = p_can; //カットのスプライトを設定
             text_duplicateCost.gameObject.SetActive(true);
         }
         else
         {
             text_duplicateCost.gameObject.SetActive(false);
             icon_copycut.enabled = false;
+            navi.sprite = p_canot; //カットのスプライトを設定
         }
 
 
