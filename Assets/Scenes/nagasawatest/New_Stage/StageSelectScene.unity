@@ -12359,8 +12359,50 @@ MonoBehaviour:
   rankTextHeight: 28
   fontSize: 22
   rankFontSize: 18
+  gridColumns: 4
+  cellVSpace: 10
+  cellHSpace: 10
   openOnStart: 0
   persistAcrossScenes: 0
+  stagePreviews:
+  - stageName: Stage1
+    preview: {fileID: 21300000, guid: 6890f94db75c8694ba45849636a7d0b4, type: 3}
+  - stageName: Stage2
+    preview: {fileID: 21300000, guid: c7c4e8875d7ac29429ddda8bf309c6eb, type: 3}
+  - stageName: Stage3
+    preview: {fileID: 21300000, guid: 6b2719514bae535439a0562093310d20, type: 3}
+  - stageName: Stage4
+    preview: {fileID: 21300000, guid: 5ad8946e168e0394c9a8cd6d079b7755, type: 3}
+  - stageName: Stage5
+    preview: {fileID: 21300000, guid: 08d389e78f1665340b086f1a7c762e13, type: 3}
+  - stageName: Stage6
+    preview: {fileID: 21300000, guid: dc715127ffaf15848ae1b59a0c481bc0, type: 3}
+  - stageName: Stage7
+    preview: {fileID: 21300000, guid: b9c699be063d303468af58c80cc01605, type: 3}
+  - stageName: Stage8
+    preview: {fileID: 21300000, guid: 41df00e74dd95d54497b654ed54195df, type: 3}
+  - stageName: Stage9
+    preview: {fileID: 21300000, guid: f3965872f177fd1418bf1d08b7530b3d, type: 3}
+  - stageName: Stage10
+    preview: {fileID: 21300000, guid: d48d5d6ec77d0af4e92c52e105502c03, type: 3}
+  - stageName: Stage11
+    preview: {fileID: 21300000, guid: a782dbebbbec92a40b67d8372d0df7da, type: 3}
+  - stageName: Stage12
+    preview: {fileID: 0}
+  - stageName: Stage13
+    preview: {fileID: 21300000, guid: 47604e30db711d944a81ea5eba0c0ed6, type: 3}
+  - stageName: Stage14
+    preview: {fileID: 21300000, guid: efded16de466efd4296f64d72fb4715a, type: 3}
+  - stageName: Stage15
+    preview: {fileID: 21300000, guid: 153478206dd987d409425545a336ca7c, type: 3}
+  - stageName: Stage16
+    preview: {fileID: 21300000, guid: 3338e59fc0c73774891eb31392a56065, type: 3}
+  - stageName: Stage17
+    preview: {fileID: 21300000, guid: 0e06f83dcdcf4a64bacaa546db7c3dbd, type: 3}
+  - stageName: Stage18
+    preview: {fileID: 21300000, guid: bd67b621b3612924bbf79946351515b0, type: 3}
+  previewSize: {x: 240, y: 240}
+  previewAnchorOffset: {x: -12, y: -84}
 --- !u!224 &1531443974
 RectTransform:
   m_ObjectHideFlags: 0

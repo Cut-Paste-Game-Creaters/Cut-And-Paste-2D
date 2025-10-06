@@ -2,6 +2,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems; //ホバー検知用）
 
 public class StageQuickSelectUI : MonoBehaviour
 {
@@ -15,11 +16,26 @@ public class StageQuickSelectUI : MonoBehaviour
     [SerializeField] private int fontSize = 22;
     [SerializeField] private int rankFontSize = 18;
 
+    [SerializeField] private int gridColumns = 4;   // 横に並べる列数
+    [SerializeField] private int cellVSpace = 10;   // セル内の縦スペース
+    [SerializeField] private int cellHSpace = 10;   // セル同士の横/縦スペース
+
     [Header("Advanced")]
     [Tooltip("起動直後から開いた状態にしたい場合のみON（通常はOFF推奨）。")]
     [SerializeField] private bool openOnStart = false;
     [Tooltip("シーンをまたいでこのUIを残したい場合のみON。通常はOFF。")]
     [SerializeField] private bool persistAcrossScenes = false;
+
+    [System.Serializable]
+    private class StagePreview { public string stageName; public Sprite preview; }
+
+    [Header("Preview")]
+    [SerializeField] private StagePreview[] stagePreviews = new StagePreview[0];
+    [SerializeField] private Vector2 previewSize = new Vector2(240, 240);
+    [SerializeField] private Vector2 previewAnchorOffset = new Vector2(-12, -84); // 右上からのオフセット
+
+    private Image _previewImg;                          // 生成したプレビュー表示先
+    private System.Collections.Generic.Dictionary<string, Sprite> _previewMap;
 
     // ランタイム生成物（初期は null。必要時に生成）
     private GameObject _canvasGO;
@@ -155,21 +171,56 @@ public class StageQuickSelectUI : MonoBehaviour
         scrollGO.GetComponent<Image>().color = new Color(0, 0, 0, 0.05f);
         scrollGO.GetComponent<Mask>().showMaskGraphic = false;
 
-        var content = new GameObject("Content", typeof(RectTransform), typeof(VerticalLayoutGroup), typeof(ContentSizeFitter));
+        var content = new GameObject("Content", typeof(RectTransform), typeof(GridLayoutGroup));
         content.transform.SetParent(scrollGO.transform, false);
         _content = content.GetComponent<RectTransform>();
+
+        // （アンカーはそのままでOK）
         _content.anchorMin = new Vector2(0, 1);
         _content.anchorMax = new Vector2(1, 1);
         _content.pivot = new Vector2(0.5f, 1f);
-        var vlg = content.GetComponent<VerticalLayoutGroup>();
-        vlg.childForceExpandHeight = false;
-        vlg.childControlHeight = true;
-        vlg.childControlWidth = true;
-        vlg.spacing = 8;
-        vlg.padding = new RectOffset(10, 10, 10, 10);
-        content.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+        // ★ セルサイズ＝「正方形ボタン」＋「ランク行」
+        var grid = content.GetComponent<GridLayoutGroup>();
+        grid.cellSize = new Vector2(
+            buttonHeight,                          // 幅＝正方形ボタンの一辺
+            buttonHeight + rankTextHeight + 16     // 高さ＝ボタン＋ランク＋余白
+        );
+        grid.spacing = new Vector2(cellHSpace, cellHSpace);
+        grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+        grid.constraintCount = gridColumns;
+        grid.childAlignment = TextAnchor.UpperCenter;
+        grid.startCorner = GridLayoutGroup.Corner.UpperLeft;
+        grid.startAxis = GridLayoutGroup.Axis.Horizontal;
 
         scrollGO.GetComponent<ScrollRect>().content = _content;
+
+        // ★追加：プレビュー用 Image
+        _previewImg = new GameObject("Preview", typeof(Image)).GetComponent<Image>();
+        _previewImg.transform.SetParent(panel.transform, false);
+        var prt = _previewImg.GetComponent<RectTransform>();
+        prt.anchorMin = new Vector2(1, 1);
+        prt.anchorMax = new Vector2(1, 1);
+        prt.pivot = new Vector2(1, 0);                  // 右上基準
+        prt.sizeDelta = previewSize;
+        prt.anchoredPosition = previewAnchorOffset;         // 右上からの相対位置
+        _previewImg.color = Color.white;
+        _previewImg.preserveAspect = true;
+        _previewImg.enabled = false;                        // 初期は非表示
+
+        // ★追加：プレビューマップを構築
+        _previewMap = new System.Collections.Generic.Dictionary<string, Sprite>();
+        if (stagePreviews != null)
+        {
+            foreach (var sp in stagePreviews)
+            {
+                if (sp != null && !string.IsNullOrEmpty(sp.stageName) && sp.preview != null)
+                {
+                    _previewMap[sp.stageName] = sp.preview;
+                }
+            }
+        }
+
 
         // Close (×)
         var close = CreateButton(panel.transform, "×", () => SetVisible(false));
@@ -259,20 +310,8 @@ public class StageQuickSelectUI : MonoBehaviour
 
             if (string.IsNullOrEmpty(rank) || rank == "NONE") continue;
 
-            var btn = CreateButton(_content, $"{stageName} に行く", () => LoadStage(stageName));
-            var rankTextGO = CreateText(_content, $"ランク: {rank}", rankFontSize, TextAnchor.MiddleCenter);
-            var rt = rankTextGO.GetComponent<RectTransform>();
-            rt.sizeDelta = new Vector2(0, rankTextHeight);
 
-            switch (rank)
-            {
-                case "S": rankTextGO.color = Color.yellow; break;
-                case "A": rankTextGO.color = Color.red; break;
-                case "B": rankTextGO.color = Color.blue; break;
-                case "C": rankTextGO.color = Color.black; break;
-                default: rankTextGO.color = Color.black; break;
-            }
-
+            CreateStageCell(_content, stageName, rank, () => LoadStage(stageName));
             added++;
         }
 
@@ -322,9 +361,13 @@ public class StageQuickSelectUI : MonoBehaviour
         le.preferredHeight = buttonHeight;
         le.flexibleHeight = 0;
 
-        // 横幅は VerticalLayoutGroup が親幅いっぱいに広げるので sizeDelta.X は 0 のままでOK
+        // ★ 追加：正方形にするため幅も固定
+        le.minWidth = buttonHeight;
+        le.preferredWidth = buttonHeight;
+
+        // （任意）RectTransform の sizeDelta も正方形に
         var rt = go.GetComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(0, buttonHeight);
+        rt.sizeDelta = new Vector2(buttonHeight, buttonHeight);
 
         var text = CreateText(go.transform, label, fontSize, TextAnchor.MiddleCenter, FontStyle.Bold);
         var tRT = text.GetComponent<RectTransform>();
@@ -441,4 +484,124 @@ public class StageQuickSelectUI : MonoBehaviour
             default: return "NONE";
         }
     }
+
+    // 1セル＝「正方形ボタン」＋「ランク」
+    private void CreateStageCell(Transform parent, string stageName, string rank, System.Action onClick)
+    {
+        // セルのルート
+        var cell = new GameObject("Cell", typeof(RectTransform), typeof(VerticalLayoutGroup));
+        cell.transform.SetParent(parent, false);
+
+        // セル内レイアウト（縦）
+        var v = cell.GetComponent<VerticalLayoutGroup>();
+        v.childAlignment = TextAnchor.UpperCenter;
+        v.childControlWidth = true;
+        v.childControlHeight = true;
+        v.childForceExpandWidth = true;   // 幅はセルいっぱい
+        v.childForceExpandHeight = false; // 高さは子の推奨に従う
+        v.spacing = 4;
+        v.padding = new RectOffset(0, 0, 0, 0);
+
+        // 正方形ボタン（セル幅に合わせる → 実サイズは squareSize）
+        int squareSize = buttonHeight;
+        var button = CreateSquareButton(cell.transform, stageName, squareSize, onClick);
+
+        // ランク表示（ボタン下）
+        var rankGO = CreateText(cell.transform, $"{rank}", rankFontSize, TextAnchor.MiddleCenter);
+        var rRT = rankGO.GetComponent<RectTransform>();
+        rRT.sizeDelta = new Vector2(0, rankTextHeight);
+
+        // ランク色
+        rank = (rank ?? "NONE").ToUpper().Trim();
+        switch (rank)
+        {
+            case "S": rankGO.color = Color.yellow; break;
+            case "A": rankGO.color = Color.red; break;
+            case "B": rankGO.color = Color.blue; break;
+            case "C": rankGO.color = Color.black; break;
+            default: rankGO.color = Color.black; break;
+        }
+    }
+
+
+    // 正方形ボタン（セル用）
+    private Button CreateSquareButton(Transform parent, string label, int size, System.Action onClick)
+    {
+        var go = new GameObject("SquareButton", typeof(Image), typeof(Button));
+        go.transform.SetParent(parent, false);
+
+        // 背景
+        var img = go.GetComponent<Image>();
+        img.color = new Color(0.95f, 0.95f, 1f, 1f);
+
+        // サイズ指定（正方形）
+        var le = go.AddComponent<LayoutElement>();
+        le.minHeight = size;
+        le.preferredHeight = size;
+        le.minWidth = size;
+        le.preferredWidth = size;
+
+        var rt = go.GetComponent<RectTransform>();
+        rt.sizeDelta = new Vector2(size, size);
+
+        // ボタン内テキスト（中央）
+        var text = CreateText(go.transform, label, fontSize, TextAnchor.MiddleCenter, FontStyle.Bold);
+        var tRT = text.GetComponent<RectTransform>();
+        tRT.anchorMin = Vector2.zero;
+        tRT.anchorMax = Vector2.one;
+        tRT.offsetMin = Vector2.zero;
+        tRT.offsetMax = Vector2.zero;
+
+        var btn = go.GetComponent<Button>();
+        btn.onClick.AddListener(() =>
+        {
+            if (_se != null && _se.decideSE != null) _se.OneShotSE(_se.decideSE);
+            onClick?.Invoke();
+        });
+        // ホバーでプレビュー表示
+        AddEventTrigger(go, EventTriggerType.PointerEnter, () => ShowPreview(label)); // label は stageName を渡している
+        AddEventTrigger(go, EventTriggerType.PointerExit, HidePreview);
+
+        return btn;
+    }
+
+    private void AddEventTrigger(GameObject go, EventTriggerType type, System.Action cb)
+    {
+        var et = go.GetComponent<EventTrigger>();
+        if (et == null) et = go.AddComponent<EventTrigger>();
+
+        var entry = new EventTrigger.Entry { eventID = type };
+        entry.callback.AddListener(_ => cb?.Invoke());
+        et.triggers.Add(entry);
+    }
+
+
+    private void ShowPreview(string stageName)
+    {
+        if (_previewImg == null) return;
+
+        // 受け取った文字列が "Stage1 に行く" のような場合に備え、先頭の単語 Stage\d+ を拾う
+        var m = System.Text.RegularExpressions.Regex.Match(stageName, @"^Stage\d+");
+        string key = m.Success ? m.Value : stageName;
+
+        if (_previewMap != null && _previewMap.TryGetValue(key, out var sp) && sp != null)
+        {
+            _previewImg.sprite = sp;
+            _previewImg.enabled = true;
+        }
+        else
+        {
+            _previewImg.enabled = false; // 登録がなければ出さない
+        }
+    }
+
+    private void HidePreview()
+    {
+        if (_previewImg != null)
+        {
+            _previewImg.enabled = false;
+            _previewImg.sprite = null;
+        }
+    }
+
 }
