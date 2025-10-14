@@ -337,6 +337,18 @@ public class Player_Paste : MonoBehaviour
                 && col.gameObject.tag != "Uncuttable")
             {
                 Debug.Log("erase:" + col.gameObject.name);
+
+                // ペースト範囲が判定しているオブジェクトがコピーオブジェクトでないかを判定
+                foreach(var obj in stageManager.objectData)
+                {
+                    if (col.gameObject == obj.obj)
+                    {
+                        //Debug.Log("コピーオブジェクトを計算しています");
+                        stageManager.erase_cost -= objSB.objectList.Single(t => t.obj.tag == col.gameObject.tag).ow_ene;    // 多く計算してしまってる部分を引く
+                        break;     // もしコピーオブジェクトを判定しているなら消すコストに反映しない
+                    }
+                }
+
                 if (!isErase) stageManager.erase_cost += objSB.objectList.Single(t => t.obj.tag == col.gameObject.tag).ow_ene;
                 else Destroy(col.gameObject);       //上書きするオブジェクトを消す
             }
