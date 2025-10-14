@@ -45,11 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5dea62f65769904982d0b3ca56696ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetHueShift: 5
-  targetSaturation: 20
+  targetHueShift: 0
+  targetSaturation: 0
   targetContrast: 0
   targetPostExposure: 0
-  targetColorFilter: {r: 1, g: 0.97168547, b: 0.9292453, a: 0.09803922}
+  targetColorFilter: {r: 0.9529412, g: 0.9529412, b: 0.9529412, a: 0.007843138}
   targetVignette: 0
   targetVignetteSmoothness: 0
   targetGrain: 0.5

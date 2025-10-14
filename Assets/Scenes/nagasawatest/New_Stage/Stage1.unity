@@ -7150,7 +7150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6611736722575799478, guid: 83595405bd01f3942b50e10280f45fa7, type: 3}
       propertyPath: targetContrast
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6611736722575799478, guid: 83595405bd01f3942b50e10280f45fa7, type: 3}
       propertyPath: targetHueShift
@@ -7170,7 +7170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6611736722575799478, guid: 83595405bd01f3942b50e10280f45fa7, type: 3}
       propertyPath: targetSaturation
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6611736722575799478, guid: 83595405bd01f3942b50e10280f45fa7, type: 3}
       propertyPath: postProcessVolume
@@ -7182,27 +7182,27 @@ PrefabInstance:
       objectReference: {fileID: 2800000, guid: 6cc636e84949744498f0c3f62084e4e0, type: 3}
     - target: {fileID: 6611736722575799478, guid: 83595405bd01f3942b50e10280f45fa7, type: 3}
       propertyPath: targetPostExposure
-      value: 0.05
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6611736722575799478, guid: 83595405bd01f3942b50e10280f45fa7, type: 3}
       propertyPath: targetColorFilter.a
-      value: 0.019607844
+      value: 0.007843138
       objectReference: {fileID: 0}
     - target: {fileID: 6611736722575799478, guid: 83595405bd01f3942b50e10280f45fa7, type: 3}
       propertyPath: targetColorFilter.b
-      value: 0.9481132
+      value: 0.95
       objectReference: {fileID: 0}
     - target: {fileID: 6611736722575799478, guid: 83595405bd01f3942b50e10280f45fa7, type: 3}
       propertyPath: targetColorFilter.g
-      value: 0.9874355
+      value: 0.95
       objectReference: {fileID: 0}
     - target: {fileID: 6611736722575799478, guid: 83595405bd01f3942b50e10280f45fa7, type: 3}
       propertyPath: targetColorFilter.r
-      value: 1
+      value: 0.95
       objectReference: {fileID: 0}
     - target: {fileID: 6611736722575799478, guid: 83595405bd01f3942b50e10280f45fa7, type: 3}
       propertyPath: targetExposureKeyValue
-      value: 1.1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6611736722575799478, guid: 83595405bd01f3942b50e10280f45fa7, type: 3}
       propertyPath: targetBloomDirtIntensity
