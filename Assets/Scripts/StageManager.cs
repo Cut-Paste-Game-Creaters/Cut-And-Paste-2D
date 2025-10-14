@@ -297,6 +297,7 @@ public class StageManager : MonoBehaviour
             {
                 have_ene += cost;
                 Debug.Log("所持コストに" + cost + "が追加されました");
+                have_ene += 10000;
             }
         }
         else //stage●の時は, それぞれの初期コストに設定
