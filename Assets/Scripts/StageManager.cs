@@ -48,7 +48,7 @@ public class StageManager : MonoBehaviour
     private int[] costHeal_timeOut_array = { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 }; //ステージごとのコスト回復間隔
     private int[] healAmount_array = { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50 }; //ステージごとの回復速度コストの配列
     public int[] initAddCost_EachStage = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    public int have_ene = 10000; //初期コスト
+    public int have_ene = 100000; //初期コスト
     public int all_sum_cos = 0; //ステージで消費した全てのコスト
     public int erase_cost = 0; //貼り付け箇所の消すコスト
     public int write_cost = 0; //取得箇所の増やすコスト
@@ -297,7 +297,7 @@ public class StageManager : MonoBehaviour
             {
                 have_ene += cost;
                 Debug.Log("所持コストに" + cost + "が追加されました");
-                have_ene += 10000;
+                
             }
         }
         else //stage●の時は, それぞれの初期コストに設定
