@@ -2,7 +2,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems; //ホバー検知用）
+using UnityEngine.EventSystems; //ホバー検知用
+using System.Collections;
 
 public class StageQuickSelectUI : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class StageQuickSelectUI : MonoBehaviour
     [SerializeField] private KeyCode toggleKey = KeyCode.O;
 
     [Header("UI Settings")]
-    [SerializeField] private Vector2 windowSize = new Vector2(520, 600);
+    [SerializeField] private Vector2 windowSize = new Vector2(520, 800);
     [SerializeField] private int buttonHeight = 60;
     [SerializeField] private int rankTextHeight = 28;
     [SerializeField] private int fontSize = 22;
@@ -32,7 +33,6 @@ public class StageQuickSelectUI : MonoBehaviour
     [Header("Preview")]
     [SerializeField] private StagePreview[] stagePreviews = new StagePreview[0];
     [SerializeField] private Vector2 previewSize = new Vector2(240, 240);
-    [SerializeField] private Vector2 previewAnchorOffset = new Vector2(-12, -84); // 右上からのオフセット
 
     private Image _previewImg;                          // 生成したプレビュー表示先
     private System.Collections.Generic.Dictionary<string, Sprite> _previewMap;
@@ -199,11 +199,11 @@ public class StageQuickSelectUI : MonoBehaviour
         _previewImg = new GameObject("Preview", typeof(Image)).GetComponent<Image>();
         _previewImg.transform.SetParent(panel.transform, false);
         var prt = _previewImg.GetComponent<RectTransform>();
-        prt.anchorMin = new Vector2(1, 1);
-        prt.anchorMax = new Vector2(1, 1);
-        prt.pivot = new Vector2(1, 0);                  // 右上基準
+        prt.anchorMin = new Vector2(0.5f, 0f);   // 中央下基準
+        prt.anchorMax = new Vector2(0.5f, 0f);
+        prt.pivot = new Vector2(0.5f, 0f);       // 中央下をピボットに
         prt.sizeDelta = previewSize;
-        prt.anchoredPosition = previewAnchorOffset;         // 右上からの相対位置
+        prt.anchoredPosition = new Vector2(0f, 30f); // 下から60pxほど上に表示（調整可）        // 右上からの相対位置
         _previewImg.color = Color.white;
         _previewImg.preserveAspect = true;
         _previewImg.enabled = false;                        // 初期は非表示
@@ -262,9 +262,7 @@ public class StageQuickSelectUI : MonoBehaviour
             // ---- ここから：コピペ許可（ロック解放） ----
             if (_lockAcquired)
             {
-                s_UIPauseLocks = Mathf.Max(0, s_UIPauseLocks - 1);
-                _lockAcquired = false;
-                PlayerInput.isPausing = (s_UIPauseLocks > 0);
+                StartCoroutine(DelayedUnlock());
             }
             // ---- ここまで ----
 
@@ -280,7 +278,15 @@ public class StageQuickSelectUI : MonoBehaviour
         }
     }
 
+    private IEnumerator DelayedUnlock()
+    {
+        // 少し待つ（例：0.1秒＝1?2フレーム程度）
+        yield return new WaitForSeconds(0.3f);
 
+        s_UIPauseLocks = Mathf.Max(0, s_UIPauseLocks - 1);
+        _lockAcquired = false;
+        PlayerInput.isPausing = (s_UIPauseLocks > 0);
+    }
 
     // -------- list --------
     // ===== リスト生成/更新（差し替え） =====
