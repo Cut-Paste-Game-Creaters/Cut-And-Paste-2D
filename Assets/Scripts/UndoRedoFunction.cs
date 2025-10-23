@@ -209,6 +209,7 @@ public class UndoRedoFunction : MonoBehaviour
                 var rcobj = col.gameObject.GetComponent<RotateController>();
                 var vfobj = col.gameObject.GetComponent<VanishFloor>();
                 var cdobj = col.gameObject.GetComponent<ClearDoorScript>();
+                var hpobj = col.gameObject.GetComponent<HealItemScript>();
 
                 if (switchobj != null)
                 {
@@ -263,6 +264,10 @@ public class UndoRedoFunction : MonoBehaviour
                 else if (cdobj != null)
                 {
                     stageObjState.cd = new ClearDoorScript.CopyClearDoor(cdobj);
+                }
+                else if (hpobj != null)
+                {
+                    stageObjState.hi = new HealItemScript.CopyHealItem(hpobj);
                 }
 
                 //全部情報入れたら最後にAdd
@@ -485,6 +490,7 @@ public class UndoRedoFunction : MonoBehaviour
                 var rcobj = g_prefab.gameObject.GetComponent<RotateController>();
                 var vfobj = g_prefab.gameObject.GetComponent<VanishFloor>();
                 var cdobj = g_prefab.gameObject.GetComponent<ClearDoorScript>();
+                var hpobj = g_prefab.gameObject.GetComponent<HealItemScript>();
 
                 if (switchobj != null)
                 {
@@ -539,6 +545,10 @@ public class UndoRedoFunction : MonoBehaviour
                 else if (cdobj != null)
                 {
                     obj.CopyData(cdobj);
+                }
+                else if (hpobj != null)
+                {
+                    obj.CopyData(hpobj);
                 }
                 //Debug.Log(prefab.name + "を生成しました.");
                 //g_prefab.hp = 100;
@@ -782,6 +792,9 @@ public class UndoRedoFunction : MonoBehaviour
         //ClearDoor
         public ClearDoorScript.CopyClearDoor cd;
 
+        // HealItem
+        public HealItemScript.CopyHealItem hi;
+
         //データコピー関数
         //SwitchControllerのコピー処理
         public void CopyData(SwitchController copySwc)
@@ -875,6 +888,11 @@ public class UndoRedoFunction : MonoBehaviour
         public void CopyData(ClearDoorScript copy_cd)
         {
             copy_cd.SetIsLocked(cd.isLocked);
+        }
+        //HealItemのコピー処理
+        public void CopyData(HealItemScript copy_hp)
+        {
+            copy_hp.SetHealAmount(hi.healAmount);
         }
 
         //これ以降必要な情報追加する

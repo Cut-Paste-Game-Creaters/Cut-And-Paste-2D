@@ -6,9 +6,24 @@ public class HealItemScript : MonoBehaviour
 {
     private int Healamount = 30;
 
+    public struct CopyHealItem
+    {
+        public int healAmount;
+
+        public CopyHealItem(HealItemScript chp)
+        {
+            healAmount = chp.Healamount;
+        }
+    }
+
     void Start()
     {
         // ‚à‚¤ StageManager ‚ÌQÆæ“¾‚Í•s—v‚È‚Ì‚Å‹ó‚ÅOK
+    }
+
+    public void SetHealAmount(int healAmount)
+    {
+        Healamount = healAmount;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
