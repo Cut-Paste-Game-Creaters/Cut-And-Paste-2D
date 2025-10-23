@@ -171,7 +171,7 @@ public class Player_Copy : MonoBehaviour
             if (PlayerInput.GetMouseButtonUp(0) && !stageMgr.tileData.hasData)
             {
                 makeDecision = true;
-                whichMode = -1;
+                whichMode = 0;
                 endPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 //anounce.SetActive(true);
                 return;

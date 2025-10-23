@@ -66,7 +66,7 @@ EditorBuildSettings:
     path: Assets/Scenes/nagasawatest/New_Stage/Stage4.unity
     guid: c0e7f11fee6305042a9471f8d33ae682
   - enabled: 1
-    path: Assets/Scenes/nagasawatest/New_Stage/Stage5.unity
+    path: Assets/Scenes/nagasawatest/New_Stage/Stage3.unity
     guid: 4bc4d9c9ec346814d8149894d15da8ad
   - enabled: 1
     path: Assets/Scenes/nagasawatest/New_Stage/Stage6.unity
@@ -78,7 +78,7 @@ EditorBuildSettings:
     path: Assets/Scenes/nagasawatest/New_Stage/Stage8.unity
     guid: 712c9775d49974743a3d37529700ae8c
   - enabled: 1
-    path: Assets/Scenes/nagasawatest/New_Stage/Stage9.unity
+    path: Assets/Scenes/nagasawatest/New_Stage/Stage18.unity
     guid: 2699ab079946cd84aa6a57d2450aebd0
   - enabled: 1
     path: Assets/Scenes/nagasawatest/New_Stage/Stage10.unity
@@ -87,10 +87,10 @@ EditorBuildSettings:
     path: Assets/Scenes/nagasawatest/New_Stage/Stage11.unity
     guid: ae2bab26c0364e64098b8c7d3f84fe79
   - enabled: 1
-    path: Assets/Scenes/nagasawatest/New_Stage/Stage12.unity
+    path: Assets/Scenes/nagasawatest/New_Stage/Stage13.unity
     guid: e2f8abc95013a4a4ab9ce8cee0125d6d
   - enabled: 1
-    path: Assets/Scenes/nagasawatest/New_Stage/Stage12.unity
+    path: Assets/Scenes/nagasawatest/New_Stage/Stage13.unity
     guid: e2f8abc95013a4a4ab9ce8cee0125d6d
   - enabled: 1
     path: Assets/Scenes/nagasawatest/New_Stage/Stage13.unity
