@@ -14,6 +14,9 @@ public class Player_Paste : MonoBehaviour
     //[SerializeField] GameObject cuticon;
     //[SerializeField] GameObject rectPrefab;
 
+    private bool isPasting = false;
+    private bool isPasting_old = false;
+
     private Tilemap tilemap;
     private Tilemap display_Copy_Tilemap;
     private StageManager stageManager;
@@ -60,6 +63,8 @@ public class Player_Paste : MonoBehaviour
         if (stageManager.tileData.hasData)
         {
             PasteTiles(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            //過去のペースト状態を保存
+            isPasting_old = isPasting;
         }
     }
 
@@ -70,8 +75,13 @@ public class Player_Paste : MonoBehaviour
         //現在のマウス位置をもらい、原点とする
         Vector3Int mPos = ChangeVecToInt(mousePos);
 
+        if (PlayerInput.GetMouseButtonDown(1))
+        {
+            isPasting = !isPasting;
+        }
+
         //右クリックを押してる間枠表示
-        if (PlayerInput.GetMouseButton(1))
+        if (isPasting)
         {
             stageManager.isPasting = true;
             sr.enabled = true;
@@ -129,7 +139,7 @@ public class Player_Paste : MonoBehaviour
 
         }
         //右クリックで貼り付け
-        if (PlayerInput.GetMouseButtonUp(1))
+        if (!isPasting && isPasting_old)
         {
             stageManager.isPasting = false;
             sr.enabled = false;     //枠を非表示にする
@@ -339,7 +349,7 @@ public class Player_Paste : MonoBehaviour
                 Debug.Log("erase:" + col.gameObject.name);
 
                 // ペースト範囲が判定しているオブジェクトがコピーオブジェクトでないかを判定
-                foreach(var obj in stageManager.objectData)
+                foreach (var obj in stageManager.objectData)
                 {
                     if (col.gameObject == obj.obj)
                     {
