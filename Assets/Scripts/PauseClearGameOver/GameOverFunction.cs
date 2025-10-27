@@ -107,39 +107,36 @@ public class GameOverFunction : MonoBehaviour
 
         Transform cam = Camera.main.transform;
 
-        // 方向（2DならZは固定したいのでZだけ元の値を維持）
+        // 開始位置（カメラの現在位置）
         Vector3 from = cam.position;
-        Vector3 to;
-        {
-            Vector3 dir = (cameraFocusTarget.position - cam.position).normalized;
-            // 2D想定：Zは現在のZを維持したまま、XYだけ方向へ
-            Vector3 flatTarget = new Vector3(
-                cam.position.x + dir.x * cameraMoveDistance,
-                cam.position.y + dir.y * cameraMoveDistance,
-                cam.position.z
-            );
-            to = flatTarget;
-        }
+        // 目標位置（XY をターゲットに一致、Z はカメラのまま）
+        Vector3 to = new Vector3(cameraFocusTarget.position.x,
+                                 cameraFocusTarget.position.y,
+                                 cam.position.z);
 
         float t = 0f;
         while (t < cameraMoveDuration)
         {
-            t += Time.unscaledDeltaTime;
+            t += Time.unscaledDeltaTime;               // Time.timeScale=0 でも進む
             float u = Mathf.Clamp01(t / cameraMoveDuration);
-            // 少しだけ滑らかに
-            u = Mathf.SmoothStep(0f, 1f, u);
+            u = Mathf.SmoothStep(0f, 1f, u);          // 少しマイルドに
 
             cam.position = Vector3.Lerp(from, to, u);
+
             if (cameraLookAtTarget)
             {
                 Vector3 lookPos = cameraFocusTarget.position;
-                lookPos.z = cam.position.z; // 2DならZを合わせる
+                lookPos.z = cam.position.z;           // 2D想定：Z は合わせる
                 cam.LookAt(lookPos);
             }
 
-            yield return null; // フレーム毎（実時間で進む）
+            yield return null;
         }
+
+        // 誤差なくピタッと合わせる（スナップ）
+        cam.position = to;
     }
+
     IEnumerator DoAfterFrame()
     {
         // そのフレームの Update, LateUpdate, 物理処理 などが終わるのを待つ
