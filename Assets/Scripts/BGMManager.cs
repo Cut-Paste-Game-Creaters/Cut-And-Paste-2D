@@ -134,4 +134,21 @@ public class BGMManager : MonoBehaviour
         ambientsound.volume = vol1;
         mainBGM.volume = vol2;
     }
+
+    public void PauseMainBGM()
+    {
+        if (mainBGM != null && mainBGM.isPlaying)
+        {
+            mainBGM.Pause();
+        }
+    }
+
+    // 再開（メインBGMのみ）
+    public void ResumeMainBGM()
+    {
+        if (mainBGM != null)
+        {
+            mainBGM.UnPause();
+        }
+    }
 }

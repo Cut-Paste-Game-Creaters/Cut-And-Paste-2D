@@ -872,6 +872,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Screen_Left: 9.3
+  sceneStartDuration: 1
 --- !u!114 &45535815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5996,6 +5997,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SEManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7844606397630600954, guid: 8a1c132a40bef1e43a72eb9570c9cbe1, type: 3}
+      propertyPath: ChangeSE
+      value: 
+      objectReference: {fileID: 8300000, guid: 64c80263f8ca7af4981e86ceabf395d1, type: 3}
     - target: {fileID: 7844606397630600954, guid: 8a1c132a40bef1e43a72eb9570c9cbe1, type: 3}
       propertyPath: SwitchSE
       value: 
@@ -30298,6 +30303,22 @@ PrefabInstance:
       objectReference: {fileID: 45535812}
     - target: {fileID: 3799402726941120211, guid: 4811d7671300e7a4193d0defb0e3b18d, type: 3}
       propertyPath: fadeTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799402726941120211, guid: 4811d7671300e7a4193d0defb0e3b18d, type: 3}
+      propertyPath: paperSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0987cc61ad982cb479eecc8bb3863717, type: 3}
+    - target: {fileID: 3799402726941120211, guid: 4811d7671300e7a4193d0defb0e3b18d, type: 3}
+      propertyPath: coverDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799402726941120211, guid: 4811d7671300e7a4193d0defb0e3b18d, type: 3}
+      propertyPath: uncoverDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799402726941120211, guid: 4811d7671300e7a4193d0defb0e3b18d, type: 3}
+      propertyPath: waitAfterSceneLoaded
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5542593937948854081, guid: 4811d7671300e7a4193d0defb0e3b18d, type: 3}

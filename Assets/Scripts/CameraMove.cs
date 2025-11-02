@@ -19,6 +19,10 @@ public class CameraMove : MonoBehaviour
     private float _shakeDurationActive = 0f;
     private float _shakeMagnitudeActive = 0f;
     /// </summary>
+    /// 
+    private bool isSceneStart = true;
+    private float sceneStartTimer = 0f;
+    [SerializeField] private float sceneStartDuration = 1.0f;
     void Start()
     {
         Tilemap[] maps = FindObjectsOfType<Tilemap>();
@@ -36,7 +40,17 @@ public class CameraMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!PlayerInput.isPausing)
+        if (isSceneStart)
+        {
+            sceneStartTimer += Time.unscaledDeltaTime;
+            if (sceneStartTimer >= sceneStartDuration)
+            {
+                isSceneStart = false;
+            }
+        }
+
+
+        if (!PlayerInput.isPausing || isSceneStart)
         {
             float posx = transform.position.x;
             float posy = transform.position.y;

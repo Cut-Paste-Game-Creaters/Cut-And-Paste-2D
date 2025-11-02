@@ -69,6 +69,7 @@ MonoBehaviour:
   cheersSSE: {fileID: 8300000, guid: f1f67bca382cc39409c17fed93a0d386, type: 3}
   levelupSE: {fileID: 8300000, guid: 96d1b05655917624faffc0168d70c22c, type: 3}
   clearSuikomiSE: {fileID: 8300000, guid: c39075ab26de2544a891cc9151a719bf, type: 3}
+  ChangeSE: {fileID: 8300000, guid: 64c80263f8ca7af4981e86ceabf395d1, type: 3}
   blackholeSE: {fileID: 8300000, guid: 59e7407c0e7687645b8473295e17f879, type: 3}
   blackholeyoinSE: {fileID: 8300000, guid: 71ba7d5fe9540c54e87fad3ecc1d4414, type: 3}
   bumperSE: {fileID: 8300000, guid: 536b7ec5fb638be40a7ba918e8eb0241, type: 3}
