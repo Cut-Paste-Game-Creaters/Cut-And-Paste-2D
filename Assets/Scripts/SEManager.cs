@@ -37,7 +37,7 @@ public class SEManager : MonoBehaviour
     public AudioClip cheersSSE;//
     public AudioClip levelupSE;
     public AudioClip clearSuikomiSE;//
-
+    public AudioClip ChangeSE;
 
     //オブジェクト
     public AudioClip blackholeSE;
@@ -82,6 +82,21 @@ private void Awake()
     ///使用例:SEManager.instance.ClipAtPointSE(SEManager.instance.jumpSE);
     /// </summary>
     /// <param name="clip"></param>
+    /// 
+    public void ClipAtPointSE(AudioClip clip)
+    {
+        if (clip == null) return;
+
+        // 一時オブジェクトを生成して2D再生
+        var go = new GameObject("OneShotSE");
+        var src = go.AddComponent<AudioSource>();
+        src.clip = clip;
+        src.spatialBlend = 0f;    // ← ここが重要（2D再生）
+        src.Play();
+
+        Destroy(go, clip.length);
+    }
+    /*
     public void ClipAtPointSE(AudioClip clip)
     {
         if (clip != null)
@@ -89,7 +104,7 @@ private void Awake()
             AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
         }
     }
-
+    */
     public void OneShotSE(AudioClip clip)
     {
         audioSource.PlayOneShot(clip); // 正しい使い方
