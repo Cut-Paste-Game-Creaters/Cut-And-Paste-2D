@@ -92,7 +92,7 @@ public class UndoRedoFunction : MonoBehaviour
         {
             InfoPushToStack();
         }*/
-        if (PlayerInput.GetKey(KeyCode.Z)) // Zボタンが押されたらUndo
+        if (PlayerInput.GetKeyDown(KeyCode.Z)) // Zボタンが押されたらUndo
         {
             Undo();
         }
