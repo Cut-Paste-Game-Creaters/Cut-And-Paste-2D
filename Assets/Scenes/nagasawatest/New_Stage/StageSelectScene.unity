@@ -12310,6 +12310,10 @@ MonoBehaviour:
   - stageName: Stage16
     preview: {fileID: 21300000, guid: 0e06f83dcdcf4a64bacaa546db7c3dbd, type: 3}
   previewSize: {x: 240, y: 240}
+  previewAnchorOffset: {x: -12, y: -84}
+  windowBackgroundSprite: {fileID: 21300000, guid: aec36cc8056e6bd49ad5ebc1ede59fec, type: 3}
+  windowBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  showWindowBackground: 1
 --- !u!224 &1531443974
 RectTransform:
   m_ObjectHideFlags: 0
@@ -30308,7 +30312,7 @@ PrefabInstance:
     - target: {fileID: 3799402726941120211, guid: 4811d7671300e7a4193d0defb0e3b18d, type: 3}
       propertyPath: paperSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 0987cc61ad982cb479eecc8bb3863717, type: 3}
+      objectReference: {fileID: 21300000, guid: 1d2d2b52ddf9c19489f9b53c14b3fd92, type: 3}
     - target: {fileID: 3799402726941120211, guid: 4811d7671300e7a4193d0defb0e3b18d, type: 3}
       propertyPath: coverDuration
       value: 0.5
@@ -30316,6 +30320,14 @@ PrefabInstance:
     - target: {fileID: 3799402726941120211, guid: 4811d7671300e7a4193d0defb0e3b18d, type: 3}
       propertyPath: uncoverDuration
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799402726941120211, guid: 4811d7671300e7a4193d0defb0e3b18d, type: 3}
+      propertyPath: slideDirection.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799402726941120211, guid: 4811d7671300e7a4193d0defb0e3b18d, type: 3}
+      propertyPath: slideDirection.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3799402726941120211, guid: 4811d7671300e7a4193d0defb0e3b18d, type: 3}
       propertyPath: waitAfterSceneLoaded
