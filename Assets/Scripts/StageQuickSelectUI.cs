@@ -1,9 +1,10 @@
+
+using System.Collections;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems; //ホバー検知用
-using System.Collections;
+using UnityEngine.EventSystems; // ホバー検知用
 
 public class StageQuickSelectUI : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class StageQuickSelectUI : MonoBehaviour
     [SerializeField] private KeyCode toggleKey = KeyCode.O;
 
     [Header("UI Settings")]
-    [SerializeField] private Vector2 windowSize = new Vector2(520, 800);
+    [SerializeField] private Vector2 windowSize = new Vector2(520, 600);
     [SerializeField] private int buttonHeight = 60;
     [SerializeField] private int rankTextHeight = 28;
     [SerializeField] private int fontSize = 22;
@@ -33,11 +34,19 @@ public class StageQuickSelectUI : MonoBehaviour
     [Header("Preview")]
     [SerializeField] private StagePreview[] stagePreviews = new StagePreview[0];
     [SerializeField] private Vector2 previewSize = new Vector2(240, 240);
+    [SerializeField] private Vector2 previewAnchorOffset = new Vector2(-12, -84); // 右上からのオフセット
 
-    private Image _previewImg;                          // 生成したプレビュー表示先
+    // ★ 追加：Window 背景画像設定
+    [Header("Window Background")]
+    [Tooltip("Window 内に敷く背景画像（windowSizeにピッタリ合わせます）")]
+    [SerializeField] private Sprite windowBackgroundSprite;
+    [SerializeField] private Color windowBackgroundColor = Color.white;
+    [SerializeField] private bool showWindowBackground = true;
+
+    private Image _previewImg; // 生成したプレビュー表示先
     private System.Collections.Generic.Dictionary<string, Sprite> _previewMap;
 
-    // ランタイム生成物（初期は null。必要時に生成）
+    // ランタイム生成物
     private GameObject _canvasGO;
     private Canvas _canvas;
     private GameObject _root;         // Blocker + Window 親
@@ -48,18 +57,16 @@ public class StageQuickSelectUI : MonoBehaviour
     private RankJudgeAndUpdateFunction _rank;
     private FadeScreen _fade;
     private SEManager _se;
-    private static int s_UIPauseLocks = 0; // UIによる一時停止のロック数（全体で共有）
-    private bool _lockAcquired = false;    // このUIがロックを持っているか
+    private static int s_UIPauseLocks = 0;
+    private bool _lockAcquired = false;
 
-    private readonly Regex _stageNameRx = new Regex(@"^Stage\\d+$");
+    private readonly Regex _stageNameRx = new Regex(@"^Stage\d+$");
 
     private bool IsBuilt => _canvasGO != null;
     private bool IsVisible => IsBuilt && _canvas.enabled && _group != null && _group.interactable;
 
-    // -------- lifecycle --------
     private void Awake()
     {
-        // 既存の取り残しを一掃（同名Canvasを全部消す）
         foreach (var c in GameObject.FindObjectsOfType<Canvas>(true))
             if (c.gameObject.name == "StageQuickSelectCanvas") Destroy(c.gameObject);
 
@@ -73,7 +80,6 @@ public class StageQuickSelectUI : MonoBehaviour
             RefreshList();
             SetVisible(true);
         }
-        // openOnStart=false の場合はここで何も作らない＝画面に何も出ない
     }
 
     private void OnDestroy()
@@ -81,7 +87,6 @@ public class StageQuickSelectUI : MonoBehaviour
         if (!persistAcrossScenes && _canvasGO != null)
             Destroy(_canvasGO);
 
-        // 保険：可視/不可視に関係なく、このUIがロックを持っていたら解放
         if (_lockAcquired)
         {
             s_UIPauseLocks = Mathf.Max(0, s_UIPauseLocks - 1);
@@ -89,7 +94,6 @@ public class StageQuickSelectUI : MonoBehaviour
             PlayerInput.isPausing = (s_UIPauseLocks > 0);
         }
     }
-
 
     private void Update()
     {
@@ -103,7 +107,6 @@ public class StageQuickSelectUI : MonoBehaviour
         }
     }
 
-    // -------- build / destroy --------
     private void EnsureBuilt()
     {
         if (IsBuilt) return;
@@ -141,7 +144,7 @@ public class StageQuickSelectUI : MonoBehaviour
         blkRT.offsetMax = Vector2.zero;
         blocker.GetComponent<Button>().onClick.AddListener(() => SetVisible(false));
 
-        // Window
+        // Window（外枠）
         var panel = new GameObject("Window", typeof(Image));
         panel.transform.SetParent(_root.transform, false);
         var pImg = panel.GetComponent<Image>();
@@ -151,8 +154,31 @@ public class StageQuickSelectUI : MonoBehaviour
         pRT.anchorMin = pRT.anchorMax = new Vector2(0.5f, 0.5f);
         pRT.anchoredPosition = Vector2.zero;
 
+        // ★ 背景画像（WindowSizeにピッタリ＆最背面）
+        if (showWindowBackground && (windowBackgroundSprite != null))
+        {
+            var bg = new GameObject("WindowBackground", typeof(Image));
+            bg.transform.SetParent(panel.transform, false);
+            var bgImg = bg.GetComponent<Image>();
+            bgImg.sprite = windowBackgroundSprite;
+            bgImg.color = windowBackgroundColor;
+            bgImg.type = Image.Type.Simple;
+            bgImg.preserveAspect = false;     // ちょうどはめ込む
+            bgImg.raycastTarget = false;      // ボタン操作を邪魔しない
+
+            var bgRT = bg.GetComponent<RectTransform>();
+            bgRT.anchorMin = new Vector2(0.5f, 0.5f);
+            bgRT.anchorMax = new Vector2(0.5f, 0.5f);
+            bgRT.pivot = new Vector2(0.5f, 0.5f);
+            bgRT.sizeDelta = windowSize;      // ← windowSizeにぴったり
+            bgRT.anchoredPosition = Vector2.zero;
+
+            // いちばん下に敷く
+            bg.transform.SetSiblingIndex(0);
+        }
+
         // Title
-        var title = CreateText(panel.transform, "クリア済みステージにジャンプ", fontSize + 6, TextAnchor.MiddleCenter, FontStyle.Bold);
+        var title = CreateText(panel.transform, "ステージのきろく", fontSize + 6, TextAnchor.MiddleCenter, FontStyle.Bold);
         var tRT = title.GetComponent<RectTransform>();
         tRT.anchorMin = new Vector2(0, 1);
         tRT.anchorMax = new Vector2(1, 1);
@@ -160,7 +186,7 @@ public class StageQuickSelectUI : MonoBehaviour
         tRT.sizeDelta = new Vector2(0, 64);
         tRT.anchoredPosition = new Vector2(0, -8);
 
-        // ScrollView
+        // ScrollView（ボタン群はこの上に乗る）
         var scrollGO = new GameObject("ScrollView", typeof(Image), typeof(ScrollRect), typeof(Mask));
         scrollGO.transform.SetParent(panel.transform, false);
         var svRT = scrollGO.GetComponent<RectTransform>();
@@ -168,23 +194,23 @@ public class StageQuickSelectUI : MonoBehaviour
         svRT.anchorMax = new Vector2(1, 1);
         svRT.offsetMin = new Vector2(16, 16);
         svRT.offsetMax = new Vector2(-16, -80);
-        scrollGO.GetComponent<Image>().color = new Color(0, 0, 0, 0.05f);
+        // 背景画像を見せたいので薄く（または完全透明でもOK）
+        var svBg = scrollGO.GetComponent<Image>();
+        svBg.color = new Color(0, 0, 0, 0.05f);
         scrollGO.GetComponent<Mask>().showMaskGraphic = false;
 
         var content = new GameObject("Content", typeof(RectTransform), typeof(GridLayoutGroup));
         content.transform.SetParent(scrollGO.transform, false);
         _content = content.GetComponent<RectTransform>();
 
-        // （アンカーはそのままでOK）
         _content.anchorMin = new Vector2(0, 1);
         _content.anchorMax = new Vector2(1, 1);
         _content.pivot = new Vector2(0.5f, 1f);
 
-        // ★ セルサイズ＝「正方形ボタン」＋「ランク行」
         var grid = content.GetComponent<GridLayoutGroup>();
         grid.cellSize = new Vector2(
-            buttonHeight,                          // 幅＝正方形ボタンの一辺
-            buttonHeight + rankTextHeight + 16     // 高さ＝ボタン＋ランク＋余白
+            buttonHeight,
+            buttonHeight + rankTextHeight + 16
         );
         grid.spacing = new Vector2(cellHSpace, cellHSpace);
         grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
@@ -195,32 +221,28 @@ public class StageQuickSelectUI : MonoBehaviour
 
         scrollGO.GetComponent<ScrollRect>().content = _content;
 
-        // ★追加：プレビュー用 Image
+        // プレビュー表示（右上）
         _previewImg = new GameObject("Preview", typeof(Image)).GetComponent<Image>();
         _previewImg.transform.SetParent(panel.transform, false);
         var prt = _previewImg.GetComponent<RectTransform>();
-        prt.anchorMin = new Vector2(0.5f, 0f);   // 中央下基準
-        prt.anchorMax = new Vector2(0.5f, 0f);
-        prt.pivot = new Vector2(0.5f, 0f);       // 中央下をピボットに
+        prt.anchorMin = new Vector2(1, 1);
+        prt.anchorMax = new Vector2(1, 1);
+        prt.pivot = new Vector2(1, 0);
         prt.sizeDelta = previewSize;
-        prt.anchoredPosition = new Vector2(0f, 30f); // 下から60pxほど上に表示（調整可）        // 右上からの相対位置
+        prt.anchoredPosition = previewAnchorOffset;
         _previewImg.color = Color.white;
         _previewImg.preserveAspect = true;
-        _previewImg.enabled = false;                        // 初期は非表示
+        _previewImg.enabled = false;
 
-        // ★追加：プレビューマップを構築
         _previewMap = new System.Collections.Generic.Dictionary<string, Sprite>();
         if (stagePreviews != null)
         {
             foreach (var sp in stagePreviews)
             {
                 if (sp != null && !string.IsNullOrEmpty(sp.stageName) && sp.preview != null)
-                {
                     _previewMap[sp.stageName] = sp.preview;
-                }
             }
         }
-
 
         // Close (×)
         var close = CreateButton(panel.transform, "×", () => SetVisible(false));
@@ -243,14 +265,12 @@ public class StageQuickSelectUI : MonoBehaviour
             _group.interactable = true;
             _group.blocksRaycasts = true;
 
-            // ---- ここから：コピペ禁止（ロック方式） ----
             if (!_lockAcquired)
             {
                 s_UIPauseLocks++;
                 _lockAcquired = true;
                 PlayerInput.isPausing = (s_UIPauseLocks > 0);
             }
-            // ---- ここまで ----
         }
         else
         {
@@ -259,12 +279,12 @@ public class StageQuickSelectUI : MonoBehaviour
             _group.blocksRaycasts = false;
             _canvas.enabled = false;
 
-            // ---- ここから：コピペ許可（ロック解放） ----
             if (_lockAcquired)
             {
-                StartCoroutine(DelayedUnlock());
+                s_UIPauseLocks = Mathf.Max(0, s_UIPauseLocks - 1);
+                _lockAcquired = false;
+                PlayerInput.isPausing = (s_UIPauseLocks > 0);
             }
-            // ---- ここまで ----
 
             if (!persistAcrossScenes)
             {
@@ -278,23 +298,10 @@ public class StageQuickSelectUI : MonoBehaviour
         }
     }
 
-    private IEnumerator DelayedUnlock()
-    {
-        // 少し待つ（例：0.1秒＝1?2フレーム程度）
-        yield return new WaitForSeconds(0.3f);
-
-        s_UIPauseLocks = Mathf.Max(0, s_UIPauseLocks - 1);
-        _lockAcquired = false;
-        PlayerInput.isPausing = (s_UIPauseLocks > 0);
-    }
-
-    // -------- list --------
-    // ===== リスト生成/更新（差し替え） =====
     private void RefreshList()
     {
         if (_content == null) return;
 
-        // できる限り毎回探す
         if (_rank == null) _rank = FindObjectOfType<RankJudgeAndUpdateFunction>();
         if (_rank == null)
         {
@@ -302,7 +309,6 @@ public class StageQuickSelectUI : MonoBehaviour
             return;
         }
 
-        // 表示クリア
         for (int i = _content.childCount - 1; i >= 0; i--)
             Destroy(_content.GetChild(i).gameObject);
 
@@ -316,15 +322,13 @@ public class StageQuickSelectUI : MonoBehaviour
 
             if (string.IsNullOrEmpty(rank) || rank == "NONE") continue;
 
-
             CreateStageCell(_content, stageName, rank, () => LoadStage(stageName));
             added++;
         }
 
         if (added == 0)
-            CreateText(_content, "まだクリア済みのステージはありません。", fontSize, TextAnchor.MiddleCenter);
+            CreateText(_content, "", fontSize, TextAnchor.MiddleCenter);
     }
-
 
     private void LoadStage(string stageName)
     {
@@ -341,7 +345,7 @@ public class StageQuickSelectUI : MonoBehaviour
         go.transform.SetParent(parent, false);
         var txt = go.GetComponent<Text>();
         txt.text = msg;
-        txt.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");///フォント後で変えるか
+        txt.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         txt.fontSize = size;
         txt.alignment = align;
         txt.fontStyle = style;
@@ -361,17 +365,13 @@ public class StageQuickSelectUI : MonoBehaviour
         var img = go.GetComponent<Image>();
         img.color = new Color(0.95f, 0.95f, 1f, 1f);
 
-        // ★ これが肝：レイアウトに高さを伝える
         var le = go.AddComponent<LayoutElement>();
-        le.minHeight = buttonHeight;          // Inspectorの Button Height を反映
+        le.minHeight = buttonHeight;
         le.preferredHeight = buttonHeight;
         le.flexibleHeight = 0;
-
-        // ★ 追加：正方形にするため幅も固定
         le.minWidth = buttonHeight;
         le.preferredWidth = buttonHeight;
 
-        // （任意）RectTransform の sizeDelta も正方形に
         var rt = go.GetComponent<RectTransform>();
         rt.sizeDelta = new Vector2(buttonHeight, buttonHeight);
 
@@ -391,17 +391,12 @@ public class StageQuickSelectUI : MonoBehaviour
         return btn;
     }
 
-
-    // ===== ここからヘルパーを追加 =====
-
-    // RankJudgeAndUpdateFunction があればそれを優先し、なければ BuildSettings から Stage名(Stage\\d+)を列挙
+    // RankJudgeAndUpdateFunction があればそれを優先し、なければ BuildSettings から Stage名(Stage\d+)を列挙
     private System.Collections.Generic.IEnumerable<string> GetAllStageNames()
     {
-        // まず RankJudge… を探す
         if (_rank == null) _rank = FindObjectOfType<RankJudgeAndUpdateFunction>();
         if (_rank != null && _rank.stageNumber != null && _rank.stageNumber.Count > 0)
         {
-            // value（番号）順
             return _rank.stageNumber
                 .Where(kv => _stageNameRx.IsMatch(kv.Key))
                 .OrderBy(kv => kv.Value)
@@ -409,7 +404,6 @@ public class StageQuickSelectUI : MonoBehaviour
                 .ToList();
         }
 
-        // 無い/空 → Build Settings から拾う
         var list = new System.Collections.Generic.List<string>();
         int count = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
         for (int i = 0; i < count; i++)
@@ -418,7 +412,6 @@ public class StageQuickSelectUI : MonoBehaviour
             var name = System.IO.Path.GetFileNameWithoutExtension(path);
             if (_stageNameRx.IsMatch(name)) list.Add(name);
         }
-        // 名前の末尾数字で昇順ソート（Stage1, Stage2, …）
         list.Sort((a, b) =>
         {
             int ai = int.Parse(System.Text.RegularExpressions.Regex.Match(a, @"\d+").Value);
@@ -428,10 +421,8 @@ public class StageQuickSelectUI : MonoBehaviour
         return list;
     }
 
-    // Rank を取得：RankJudge… → 代表的な PlayerPrefs キー群 → クリアフラグ
     private string GetRankForStage(string stageName)
     {
-        // RankJudge… があればそれを使う
         if (_rank != null)
         {
             try
@@ -439,14 +430,12 @@ public class StageQuickSelectUI : MonoBehaviour
                 string r = _rank.GetStageRank(stageName);
                 if (!string.IsNullOrEmpty(r) && r != "NONE") return r;
             }
-            catch { /* 念のため例外無視でフォールバック */ }
+            catch { }
         }
 
-        // よくあるキーの総当り（文字列/数値）
-        // 例）"Stage1_Rank", "Rank_Stage1", "BestRank_Stage1", "StageRank_Stage1"
         string[] strKeys = {
-        $"{stageName}_Rank", $"Rank_{stageName}", $"BestRank_{stageName}", $"StageRank_{stageName}"
-    };
+            $"{stageName}_Rank", $"Rank_{stageName}", $"BestRank_{stageName}", $"StageRank_{stageName}"
+        };
         foreach (var k in strKeys)
         {
             if (PlayerPrefs.HasKey(k))
@@ -454,33 +443,28 @@ public class StageQuickSelectUI : MonoBehaviour
                 var r = PlayerPrefs.GetString(k, "");
                 if (string.IsNullOrEmpty(r))
                 {
-                    // 数値で保存してるケース（0=NONE,1=C…等）を想定して読む
                     int v = PlayerPrefs.GetInt(k, 0);
-                    r = IntRankToLetter(v); // 下のヘルパー
+                    r = IntRankToLetter(v);
                 }
                 r = r?.Trim().ToUpper();
                 if (!string.IsNullOrEmpty(r) && r != "NONE") return r;
             }
         }
 
-        // クリアフラグだけ保存しているケース
-        // 例）"Clear_Stage1"=1 や $"{stageName}_Cleared"=true
         string[] clearKeys = { $"Clear_{stageName}", $"{stageName}_Cleared" };
         foreach (var k in clearKeys)
         {
             if (PlayerPrefs.HasKey(k))
             {
                 int v = PlayerPrefs.GetInt(k, 0);
-                if (v != 0) return "C"; // ランク不明なら暫定でCにして表示（必要ならここ変更可）
+                if (v != 0) return "C";
             }
         }
-
         return "NONE";
     }
 
     private string IntRankToLetter(int v)
     {
-        // よくある割当：0=NONE,1=C,2=B,3=A,4=S
         switch (v)
         {
             case 4: return "S";
@@ -491,33 +475,27 @@ public class StageQuickSelectUI : MonoBehaviour
         }
     }
 
-    // 1セル＝「正方形ボタン」＋「ランク」
     private void CreateStageCell(Transform parent, string stageName, string rank, System.Action onClick)
     {
-        // セルのルート
         var cell = new GameObject("Cell", typeof(RectTransform), typeof(VerticalLayoutGroup));
         cell.transform.SetParent(parent, false);
 
-        // セル内レイアウト（縦）
         var v = cell.GetComponent<VerticalLayoutGroup>();
         v.childAlignment = TextAnchor.UpperCenter;
         v.childControlWidth = true;
         v.childControlHeight = true;
-        v.childForceExpandWidth = true;   // 幅はセルいっぱい
-        v.childForceExpandHeight = false; // 高さは子の推奨に従う
+        v.childForceExpandWidth = true;
+        v.childForceExpandHeight = false;
         v.spacing = 4;
         v.padding = new RectOffset(0, 0, 0, 0);
 
-        // 正方形ボタン（セル幅に合わせる → 実サイズは squareSize）
         int squareSize = buttonHeight;
         var button = CreateSquareButton(cell.transform, stageName, squareSize, onClick);
 
-        // ランク表示（ボタン下）
         var rankGO = CreateText(cell.transform, $"{rank}", rankFontSize, TextAnchor.MiddleCenter);
         var rRT = rankGO.GetComponent<RectTransform>();
         rRT.sizeDelta = new Vector2(0, rankTextHeight);
 
-        // ランク色
         rank = (rank ?? "NONE").ToUpper().Trim();
         switch (rank)
         {
@@ -529,18 +507,14 @@ public class StageQuickSelectUI : MonoBehaviour
         }
     }
 
-
-    // 正方形ボタン（セル用）
     private Button CreateSquareButton(Transform parent, string label, int size, System.Action onClick)
     {
         var go = new GameObject("SquareButton", typeof(Image), typeof(Button));
         go.transform.SetParent(parent, false);
 
-        // 背景
         var img = go.GetComponent<Image>();
         img.color = new Color(0.95f, 0.95f, 1f, 1f);
 
-        // サイズ指定（正方形）
         var le = go.AddComponent<LayoutElement>();
         le.minHeight = size;
         le.preferredHeight = size;
@@ -550,7 +524,6 @@ public class StageQuickSelectUI : MonoBehaviour
         var rt = go.GetComponent<RectTransform>();
         rt.sizeDelta = new Vector2(size, size);
 
-        // ボタン内テキスト（中央）
         var text = CreateText(go.transform, label, fontSize, TextAnchor.MiddleCenter, FontStyle.Bold);
         var tRT = text.GetComponent<RectTransform>();
         tRT.anchorMin = Vector2.zero;
@@ -564,8 +537,8 @@ public class StageQuickSelectUI : MonoBehaviour
             if (_se != null && _se.decideSE != null) _se.OneShotSE(_se.decideSE);
             onClick?.Invoke();
         });
-        // ホバーでプレビュー表示
-        AddEventTrigger(go, EventTriggerType.PointerEnter, () => ShowPreview(label)); // label は stageName を渡している
+
+        AddEventTrigger(go, EventTriggerType.PointerEnter, () => ShowPreview(label));
         AddEventTrigger(go, EventTriggerType.PointerExit, HidePreview);
 
         return btn;
@@ -581,12 +554,10 @@ public class StageQuickSelectUI : MonoBehaviour
         et.triggers.Add(entry);
     }
 
-
     private void ShowPreview(string stageName)
     {
         if (_previewImg == null) return;
 
-        // 受け取った文字列が "Stage1 に行く" のような場合に備え、先頭の単語 Stage\d+ を拾う
         var m = System.Text.RegularExpressions.Regex.Match(stageName, @"^Stage\d+");
         string key = m.Success ? m.Value : stageName;
 
@@ -597,7 +568,7 @@ public class StageQuickSelectUI : MonoBehaviour
         }
         else
         {
-            _previewImg.enabled = false; // 登録がなければ出さない
+            _previewImg.enabled = false;
         }
     }
 
@@ -609,5 +580,5 @@ public class StageQuickSelectUI : MonoBehaviour
             _previewImg.sprite = null;
         }
     }
-
 }
+

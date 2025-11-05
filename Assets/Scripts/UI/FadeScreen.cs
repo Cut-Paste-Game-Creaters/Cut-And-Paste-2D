@@ -55,7 +55,7 @@ public class FadeScreen : MonoBehaviour
 
     [Header("Direction")]
     [Tooltip("紙が入ってくる方向（例：右→左なら (-1,0)、下→上なら (0,1)）")]
-    [SerializeField] private Vector2 slideDirection = new Vector2(1, 0);
+    [SerializeField] private Vector2 slideDirection = new Vector2(0, -1);
 
     [Header("Advanced")]
     [Tooltip("フェード用CanvasのSortingOrder（最前面にしたいので大きめ推奨）")]
