@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.Video;
+using TMPro;
 
 public class ClearFunction : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class ClearFunction : MonoBehaviour
     public VideoClip ResultMovie;
     [SerializeField] private UnityEngine.UI.RawImage movieImage;
     [SerializeField] private GameObject ResultUI;
+    [SerializeField] private TextMeshProUGUI rankUpText;
     private Canvas canvas;
     private bool isClear = false;
     private FadeScreen fadeCurtain;
@@ -23,6 +25,7 @@ public class ClearFunction : MonoBehaviour
         canvas.enabled = false;
         isClear = false;
         fadeCurtain = FindObjectOfType<FadeScreen>();
+        rankUpText.SetText("");
     }
 
     // Update is called once per frame
@@ -79,8 +82,14 @@ public class ClearFunction : MonoBehaviour
 
     }
 
+    public void DisplayRankUpCost(int val)
+    {
+        rankUpText.SetText("ランクアップ！\nコストが" + val + "ふえたよ\n");
+    }
 
-
-
+    public void UpDisplayRankUpCost()
+    {
+        rankUpText.SetText("");
+    }
 
 }

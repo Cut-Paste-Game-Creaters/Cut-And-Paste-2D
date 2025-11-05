@@ -36,10 +36,10 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
                                 }; //S~F
 
     //private int allCost = 24; //
-    private int[] clearAddCost = { 100, 60, 40, 30, 10}; //StageSelect
-                                                           //
+    private int[] clearAddCost = { 100, 60, 40, 30, 10 }; //StageSelect
+                                                          //
 
-    private int[] minConsumpCost = { -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000}; //
+    private int[] minConsumpCost = { -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000, -10000 }; //
 
     public Dictionary<string, int> stageNumber = new Dictionary<string, int>() // Dictionary
     {
@@ -196,64 +196,49 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     public string JudgeAndUpdateRank(int num, bool isCleared) //num == 
     {
         string input = SceneManager.GetActiveScene().name;
-        if (Regex.IsMatch(input, @"^Stage\d+$")) //
+        if (Regex.IsMatch(input, @"^Stage\d+$")) //なんだかstage+(数字)なら
         {
             int stage_num = stageNumber[SceneManager.GetActiveScene().name];
-            if (num < stageRank[stage_num, 0])
-            {
-                rankText = "S";
-            }
-            else if (num < stageRank[stage_num, 1])
-            {
-                rankText = "A";
-            }
-            else if (num < stageRank[stage_num, 2])
-            {
-                rankText = "B";
-            }
-            else if (num < stageRank[stage_num, 3])
-            {
-                rankText = "C";
-            }
-            else if (num >= stageRank[stage_num, 3])
-            {
-                rankText = "F";
-            }
+
+            //前回の最小コストから前回のrankTextを計算
+            string old_text = GetRankText(minConsumpCost[stage_num], stage_num);
+            if (minConsumpCost[stage_num] == -10000) old_text = "F";
+
+            //今回のrankTextを計算
+            rankText = GetRankText(num, stage_num);
 
             //minConsumpCost[stage_num] == -1) ｰ
-            if (isCleared && (minConsumpCost[stage_num] == -10000 || num < minConsumpCost[stage_num]))
+            //もし前回のランクがないか、前回よりも消費コストが少なかったら
+            if (isCleared)
             {
-                minConsumpCost[stage_num] = num; //
-                //StageSelect
-                AddInitCost(stage_num);
-                Debug.Log("" + (stage_num + 1) + "" + num + "");
+                if ((minConsumpCost[stage_num] == -10000 || num < minConsumpCost[stage_num]))
+                {
+                    minConsumpCost[stage_num] = num; //最小コストを上書き
+                                                     //StageSelect
+                    AddInitCost(stage_num);
+                    Debug.Log("" + (stage_num + 1) + "" + num + "");
+                }
+
+                //Debug.Log("old:" + old_text + " new:" + rankText);
+
+                //ランクがアップしたかどうかを確認する
+                if (IsRankImproved(rankText, old_text))
+                {
+                    int cost_now = stageMgr.have_ene;
+                    clearFunc.DisplayRankUpCost(GetInitCost(rankText) - GetInitCost(old_text));
+                }
+                else
+                {
+                    clearFunc.UpDisplayRankUpCost();
+                }
             }
+
+
+
         }
         else
         {
-            //
-            //Debug.Log(");
-            int stage_num = 0;
-            if (num < stageRank[stage_num, 0])
-            {
-                rankText = "S";
-            }
-            else if (num < stageRank[stage_num, 1])
-            {
-                rankText = "A";
-            }
-            else if (num < stageRank[stage_num, 2])
-            {
-                rankText = "B";
-            }
-            else if (num < stageRank[stage_num, 3])
-            {
-                rankText = "C";
-            }
-            else if (num >= stageRank[stage_num, 3])
-            {
-                rankText = "F";
-            }
+            rankText = GetRankText(num, 0);
 
         }
 
@@ -279,6 +264,74 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    private int GetInitCost(string text)
+    {
+        switch (text)
+        {
+            case "S":
+                return clearAddCost[0];
+            case "A":
+                return clearAddCost[1];
+            case "B":
+                return clearAddCost[2];
+            case "C":
+                return clearAddCost[2];
+            default:
+                return 0;
+        }
+    }
+
+    private bool IsRankImproved(string rank_after, string rank_before)
+    {
+        // ランクの優劣を定義（小さいほど良い）
+        Dictionary<string, int> rankOrder = new Dictionary<string, int>()
+        {
+        { "S", 0 },
+        { "A", 1 },
+        { "B", 2 },
+        { "C", 3 },
+        { "F", 4 }
+        };
+
+        // 入力の正当性チェック
+        if (!rankOrder.ContainsKey(rank_after) || !rankOrder.ContainsKey(rank_before))
+        {
+            Debug.LogWarning("無効なランクが指定されました。");
+            return false;
+        }
+
+        // 数値が小さいほどランクが良いので、beforeよりafterが小さければ改善している
+        return rankOrder[rank_after] < rankOrder[rank_before];
+    }
+
+    private string GetRankText(int num, int stage_num)
+    {
+        //minConsumpCostの初期値は-1000なので、Fを返す
+        //と思ったが、前回データがないときに最初がFから始まってしまうのでナシ
+        //if (num < 0) return "F";
+
+        if (num < stageRank[stage_num, 0])
+        {
+            return "S";
+        }
+        else if (num < stageRank[stage_num, 1])
+        {
+            return "A";
+        }
+        else if (num < stageRank[stage_num, 2])
+        {
+            return "B";
+        }
+        else if (num < stageRank[stage_num, 3])
+        {
+            return "C";
+        }
+        else
+        {
+            return "F";
         }
     }
 }
