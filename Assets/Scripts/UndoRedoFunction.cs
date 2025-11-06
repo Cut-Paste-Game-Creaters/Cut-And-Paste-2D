@@ -469,6 +469,19 @@ public class UndoRedoFunction : MonoBehaviour
                     prefab = pre;
                 }
             }
+
+            // もしtagがuntaggedならgoaldoornewを生成する
+            if (obj.objtag.Equals("Untagged"))
+            {
+                foreach (GameObject pre in prefabs)
+                {
+                    if (pre.tag.Equals("Goal"))
+                    {
+                        prefab = pre;
+                    }
+                }
+            }
+                
             Debug.Log(obj.prefabName);
 
             if (prefab != null)
@@ -545,6 +558,7 @@ public class UndoRedoFunction : MonoBehaviour
                 else if (cdobj != null)
                 {
                     obj.CopyData(cdobj);
+                    Debug.Log(prefab.name + "を生成しました.");
                 }
                 else if (hpobj != null)
                 {
@@ -732,6 +746,9 @@ public class UndoRedoFunction : MonoBehaviour
         //オブジェクトの状態を初期化(switch&key)
         //stageMgr.ResetObjectState();
 
+        // 所持コストリセット
+        stageMgr.have_ene = 1000000;
+
         if (fadeCurtain == null) fadeCurtain = FindObjectOfType<FadeScreen>();
         fadeCurtain.StartFadeOut(SceneManager.GetActiveScene().name);
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -887,6 +904,8 @@ public class UndoRedoFunction : MonoBehaviour
         //Cleardoorのコピー処理
         public void CopyData(ClearDoorScript copy_cd)
         {
+            copy_cd.SetUnOpenSprite(cd.unOpenSprite);
+            copy_cd.SetOpenSprite(cd.openSprite);
             copy_cd.SetIsLocked(cd.isLocked);
         }
         //HealItemのコピー処理

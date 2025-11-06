@@ -13,10 +13,14 @@ public class ClearDoorScript : MonoBehaviour
 
     public class CopyClearDoor
     {
+        public Sprite unOpenSprite;
+        public Sprite openSprite;
         public bool isLocked;
 
         public CopyClearDoor(ClearDoorScript cDoor)
         {
+            unOpenSprite = cDoor.GetUnOpenSprite();
+            openSprite = cDoor.GetOpenSprite();
             isLocked = cDoor.GetIsLocked();
         }
     }
@@ -29,6 +33,25 @@ public class ClearDoorScript : MonoBehaviour
     public void SetIsLocked(bool isLocked_)
     {
         isLocked = isLocked_;
+    }
+
+    public Sprite GetUnOpenSprite()
+    {
+        return unOpenSprite;
+    }
+    public void SetUnOpenSprite(Sprite uos)
+    {
+        unOpenSprite = uos;
+    }
+
+    public Sprite GetOpenSprite()
+    {
+        return openSprite;
+    }
+
+    public void SetOpenSprite(Sprite os)
+    {
+        openSprite = os;
     }
 
     // Start is called before the first frame update
