@@ -12270,10 +12270,11 @@ MonoBehaviour:
   buttonHeight: 60
   rankTextHeight: 28
   fontSize: 22
-  rankFontSize: 18
+  rankFontSize: 30
   gridColumns: 4
-  cellVSpace: 10
-  cellHSpace: 10
+  cellVSpace: 1
+  cellHSpace: 25
+  customFont: {fileID: 12800000, guid: 875edf7228f842245bb9528e0dd5dd1c, type: 3}
   openOnStart: 0
   persistAcrossScenes: 1
   stagePreviews:
@@ -12310,7 +12311,7 @@ MonoBehaviour:
   - stageName: Stage16
     preview: {fileID: 21300000, guid: 0e06f83dcdcf4a64bacaa546db7c3dbd, type: 3}
   previewSize: {x: 240, y: 240}
-  previewAnchorOffset: {x: -12, y: -84}
+  previewAnchorOffset: {x: -140, y: -260}
   windowBackgroundSprite: {fileID: 21300000, guid: aec36cc8056e6bd49ad5ebc1ede59fec, type: 3}
   windowBackgroundColor: {r: 1, g: 1, b: 1, a: 1}
   showWindowBackground: 1
@@ -14586,7 +14587,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9016092672927213838, guid: af808ebcdfb0e9c4888b5d669aa2de86, type: 3}
       propertyPath: stageName
-      value: Stage10
+      value: Stage9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

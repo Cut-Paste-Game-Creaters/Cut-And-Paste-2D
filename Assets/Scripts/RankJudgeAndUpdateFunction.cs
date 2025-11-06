@@ -13,18 +13,18 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
     bool hasJudged = false;
 
     //private int allCost = 24; //
-    private int[,] stageRank = {{-50, 300, 1000, 2000}, //stage1
-                                {-80, 200, 500, 1500}, //stage2
+    private int[,] stageRank = {{-50, 150, 600, 2000}, //stage1
+                                {-80, 100, 500, 1500}, //stage2
                                 {-50, 150, 400, 1200}, //stage3
-                                {0, 200, 500, 1500}, //stage4
-                                {-50, 300, 700, 1500}, //stage5
+                                {0, 150, 500, 1500}, //stage4
+                                {-50, 150, 700, 1500}, //stage5
                                 {-50, 50, 300, 700}, //stage6
-                                {-30, 300, 700, 1500}, //stage7
+                                {-30, 200, 500, 1500}, //stage7
                                 {-50, 50, 200, 500}, //stage8
                                 {100, 300, 500, 1500}, //stage9
                                 {-70, 50, 200, 600}, //stage10
                                 {-30, 0, 100, 200}, //stage11
-                                {0, 200, 500, 1500}, //stage12
+                                {-50, 200, 500, 1500}, //stage12
                                 {-90, 0, 200, 500}, //stage13
                                 {30, 150, 400, 1000}, //stage14
                                 {-80, 50, 200, 700}, //stage15
