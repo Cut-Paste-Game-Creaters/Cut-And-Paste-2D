@@ -69,6 +69,14 @@ public class StageManager : MonoBehaviour
         rankFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
         gameUI = FindObjectOfType<GameUIController>();
 
+
+        //ゲームのセーブデータをロードする
+        //PlayerPrefsからデータを戻す
+        rankFunc.LoadData();
+
+        //各WarpDoorのランクセットをおこなう
+        SetWarpDoorRank();
+
         //各ステージでのスイッチと鍵の初期状態
         //Pair.bool1 = switchState, Pair.bool2 = keyState
         switch_key_states = new Pair<bool, bool>[]
@@ -273,7 +281,7 @@ public class StageManager : MonoBehaviour
             isPlayerDamaged = true;
             nowNoDanageTime = 0.0f;
             SEManager.instance.ClipAtPointSE(SEManager.instance.damageSE);
-            if(player_HP > 0)   // playerが生きているときだけダメージエフェクトを入れる
+            if (player_HP > 0)   // playerが生きているときだけダメージエフェクトを入れる
                 FindObjectOfType<CameraMove>().Shake();                  // デフォルト
         }
     }
@@ -377,10 +385,32 @@ public class StageManager : MonoBehaviour
         // このインスタンスを保持してシーン遷移でも破棄されないようにする
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+    }
+
+    private void OnApplicationQuit()
+    {
+        rankFunc.SaveData();
     }
 
     public void SaveObjects()
     {
 
+    }
+
+    public void SetWarpDoorRank()
+    {
+        //WarpDoorのscriptを集める
+        WarpDoor[] doorList = GameObject.FindObjectsOfType<WarpDoor>();
+        if (rankFunc == null) rankFunc = FindObjectOfType<RankJudgeAndUpdateFunction>();
+        foreach (WarpDoor door in doorList)
+        {
+            //ステージ名を取得、そのステージのランクを取得、spriteを表示
+            string stageName = door.GetStageName();
+            string stage_rank = rankFunc.GetStageRank(stageName);
+            door.SetRankSprite(stage_rank);
+            rankFunc.rankText = stage_rank;
+            //rankFunc.AddInitCost(rankFunc.stageNumber[stageName]); //StageSelect所持コスト計算と代入
+        }
     }
 }
