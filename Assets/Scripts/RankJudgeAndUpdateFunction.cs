@@ -81,6 +81,89 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
         hasJudged = false;
     }
 
+    public void LoadData()
+    {
+        //各ステージの最小消費コストを読み込み
+        string minConsumpValue = PlayerPrefs.GetString("MinConsunpValue");
+        //データがあるなら
+        if (minConsumpValue != "")
+        {
+            minConsumpValue = minConsumpValue.TrimEnd(',');
+            string[] values = minConsumpValue.Split(',');
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                minConsumpCost[i] = int.Parse(values[i]);
+            }
+        }
+
+        //SelectSceneの使用可能コストを読み込み
+        string initAddCostValue = PlayerPrefs.GetString("InitAddCostValue");
+        //データがあるなら
+        if (initAddCostValue != "")
+        {
+            initAddCostValue = initAddCostValue.TrimEnd(',');
+            string[] values = initAddCostValue.Split(',');
+
+            if (stageMgr == null)
+            {
+                stageMgr = FindObjectOfType<StageManager>();
+            }
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                stageMgr.initAddCost_EachStage[i] = int.Parse(values[i]);
+            }
+
+            stageMgr.InitHaveCost(-1);
+        }
+    }
+
+    public void SaveData()
+    {
+        //以下をコメントアウトするとゲーム終了時に全てのデータをリセットして再開できる。
+        //ResetData();
+
+        //各ステージの最小消費コストを保存
+        string minConsumpValue = "";
+        //minConsumpCost[0] = -10000;
+        for (int i = 0; i < minConsumpCost.Length; i++)
+        {
+            minConsumpValue += minConsumpCost[i];
+            minConsumpValue += ",";
+
+            //Debug.Log(i + ":" + minConsumpCost[i]);
+        }
+        PlayerPrefs.SetString("MinConsunpValue", minConsumpValue);
+
+        //SelectSceneの使用可能コストを保存
+        string initAddCostValue = "";
+        for (int i = 0; i < stageMgr.initAddCost_EachStage.Length; i++)
+        {
+            initAddCostValue += stageMgr.initAddCost_EachStage[i];
+            initAddCostValue += ",";
+            Debug.Log(i + ":" + stageMgr.initAddCost_EachStage[i]);
+        }
+        PlayerPrefs.SetString("InitAddCostValue", initAddCostValue);
+
+
+        PlayerPrefs.Save();
+    }
+
+    public void ResetData()
+    {
+        for (int i = 0; i < minConsumpCost.Length; i++)
+        {
+            minConsumpCost[i] = -10000;
+        }
+
+        for (int i = 0; i < stageMgr.initAddCost_EachStage.Length; i++)
+        {
+            stageMgr.initAddCost_EachStage[i] = 0;
+        }
+    }
+
+
     // Update is called once per frame
     void Update()
     {
@@ -216,7 +299,9 @@ public class RankJudgeAndUpdateFunction : MonoBehaviour
                     minConsumpCost[stage_num] = num; //最小コストを上書き
                                                      //StageSelect
                     AddInitCost(stage_num);
-                    Debug.Log("" + (stage_num + 1) + "" + num + "");
+                    Debug.Log("stage_num:" + stageMgr.initAddCost_EachStage[stage_num]);
+                    //Debug.Log("stage" + (stage_num + 1) + ":" + num + "");
+                    //Debug.Log("stage" + (stage_num + 1) + ":" + minConsumpCost[stage_num] + "");
                 }
 
                 //Debug.Log("old:" + old_text + " new:" + rankText);
