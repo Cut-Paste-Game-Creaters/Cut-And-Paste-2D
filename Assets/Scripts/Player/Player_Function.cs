@@ -92,7 +92,7 @@ public class Player_Function : MonoBehaviour
         StartCoroutine(FadeOut());
     }
 
-    void OnTriggerStay2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.tag == "Goal")
         {
