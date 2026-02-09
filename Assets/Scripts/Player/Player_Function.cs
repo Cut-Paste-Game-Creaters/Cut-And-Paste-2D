@@ -50,7 +50,7 @@ public class Player_Function : MonoBehaviour
             sr.color = currentColor;
         }
         /*テスト用に4ボタン押すと死んだことになる 本来はhpが0 もしくは　ステージから落ちたら*/
-        if(this.gameObject.transform.position.y < fallingLine_y || stageMgr.player_HP <= 0)
+        if (this.gameObject.transform.position.y < fallingLine_y || stageMgr.player_HP <= 0)
         {
 
             stageMgr.player_HP = 0;
@@ -83,9 +83,9 @@ public class Player_Function : MonoBehaviour
     {
         //ゲームオーバーファンクション呼び出し
         stageMgr.isPlayerDead = true;
-        if(gameOverFunc==null)gameOverFunc = FindObjectOfType<GameOverFunction>();
+        if (gameOverFunc == null) gameOverFunc = FindObjectOfType<GameOverFunction>();
 
-        
+
 
         StartCoroutine(gameOverFunc.GameOver());
         yield return new WaitForSecondsRealtime(1f);
@@ -94,9 +94,10 @@ public class Player_Function : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Goal")
+        if (other.gameObject.tag == "Goal")
         {
-            StartCoroutine(clearFunc.GameClear());
+            stageMgr.gameClearTime = Time.time - stageMgr.gameStartTime;
+            StartCoroutine(clearFunc.GameClear(stageMgr.gameClearTime));
         }
     }
 
