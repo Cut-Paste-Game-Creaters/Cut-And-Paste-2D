@@ -345,7 +345,7 @@ public class StageQuickSelectUI : MonoBehaviour
         {
             string stageName = kv.Key;
             string rank = _rank.GetStageRank(stageName);
-            if (string.IsNullOrEmpty(rank) || rank == "NONE") continue;
+            //if (string.IsNullOrEmpty(rank) || rank == "NONE") continue;
             CreateStageCell(_content, stageName, rank, () => LoadStage(stageName));
         }
     }
