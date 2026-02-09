@@ -14,6 +14,7 @@ public class ClearFunction : MonoBehaviour
     [SerializeField] private UnityEngine.UI.RawImage movieImage;
     [SerializeField] private GameObject ResultUI;
     [SerializeField] private TextMeshProUGUI rankUpText;
+    [SerializeField] private TextMeshProUGUI gameClearText;
     private Canvas canvas;
     private bool isClear = false;
     private FadeScreen fadeCurtain;
@@ -26,6 +27,7 @@ public class ClearFunction : MonoBehaviour
         isClear = false;
         fadeCurtain = FindObjectOfType<FadeScreen>();
         rankUpText.SetText("");
+        gameClearText.text = "クリアタイム：";
     }
 
     // Update is called once per frame
@@ -40,8 +42,9 @@ public class ClearFunction : MonoBehaviour
         return isClear;
     }
 
-    public IEnumerator GameClear()
+    public IEnumerator GameClear(float clearTime)
     {
+
         PlayerInput.isPausing = true;
         isClear = true;
         Time.timeScale = 0f;
@@ -50,10 +53,11 @@ public class ClearFunction : MonoBehaviour
         canvas.enabled = true;
         StartCoroutine(ShowClearUI());
 
+
         yield return new WaitForSecondsRealtime(1f);//演出が終わるまで待つ
         ResultUI.SetActive(true);
-
-
+        //クリアタイムを設定
+        gameClearText.text = "クリアタイム：" + clearTime.ToString("F1") + "s";
 
     }
 
