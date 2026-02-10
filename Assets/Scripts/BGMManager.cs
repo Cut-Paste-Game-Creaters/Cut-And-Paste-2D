@@ -40,7 +40,17 @@ public class BGMManager : MonoBehaviour
         {"Stage8", 7},
         {"Stage9", 8},
         {"Stage10", 9},
-        {"StageTemplate",10 }
+        {"Stage11", 10},
+        {"Stage12", 11},
+        {"Stage13", 12},
+        {"Stage14", 13},
+        {"Stage15", 14},
+        {"Stage16", 15},
+        {"Stage17", 16},
+        {"Stage18", 17},
+        {"Stage19", 18},
+        {"Stage20", 19},
+        {"StageTemplate",20 }
     };
 
     /// <summary>
@@ -79,9 +89,9 @@ public class BGMManager : MonoBehaviour
     public void OnSceneLoaded(Scene nextScene, LoadSceneMode mode)
     {
         StopAllBGM();
-        if(SceneManager.GetActiveScene().name == "StageSelectScene")
+        if (SceneManager.GetActiveScene().name == "StageSelectScene")
         {
-            PlayDualBGM(stageSelectSounds.first,stageSelectSounds.second);
+            PlayDualBGM(stageSelectSounds.first, stageSelectSounds.second);
         }
         else if (Regex.IsMatch(SceneManager.GetActiveScene().name, @"^Stage\d+$")) //ÉVÅ[ÉìñºÇ™StageÇ»ÇÒÇ∆Ç©Ç»ÇÁ
         {
