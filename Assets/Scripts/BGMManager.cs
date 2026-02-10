@@ -96,6 +96,10 @@ public class BGMManager : MonoBehaviour
         else if (Regex.IsMatch(SceneManager.GetActiveScene().name, @"^Stage\d+$")) //ƒV[ƒ“–¼‚ªStage‚È‚ñ‚Æ‚©‚È‚ç
         {
             int stage_num = stageNumber[SceneManager.GetActiveScene().name];
+            if (stage_num > sceneSounds.Length - 1)
+            {
+                stage_num = sceneSounds.Length - 1;
+            }
             PlayDualBGM(sceneSounds[stage_num].first, sceneSounds[stage_num].second);
         }
     }

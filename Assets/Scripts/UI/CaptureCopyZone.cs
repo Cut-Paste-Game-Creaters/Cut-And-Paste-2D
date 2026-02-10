@@ -161,6 +161,8 @@ public class CaptureCopyZone : MonoBehaviour
 
     void SetImageScaleToFit(Image image, Sprite sprite)
     {
+        if (sprite == null) return;
+
         // 画像の元のサイズ（ピクセル単位）
         float imgWidth = sprite.rect.width;
         float imgHeight = sprite.rect.height;
