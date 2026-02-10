@@ -47,11 +47,11 @@ public class StageManager : MonoBehaviour
     [SerializeField] private float costHeal_timeOut; //costが回復する間隔
     private float timeElapsed;
     public int stageNum = -1;
-    private int[] init_ene_array = { 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000 }; //ステージごとの初期コスト配列
+    private int[] init_ene_array = { 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000, 100000 }; //ステージごとの初期コスト配列
     private int[] costHeal_timeOut_array = { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 }; //ステージごとのコスト回復間隔
     private int[] healAmount_array = { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50 }; //ステージごとの回復速度コストの配列
     public int[] initAddCost_EachStage = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };      //各ステージで前回クリアのランクによって特定量のコストが上乗せされる
-    public int have_ene = 100000; //初期コスト
+    public int have_ene = 0; //初期コスト
     public int all_sum_cos = 0; //ステージで消費した全てのコスト
     public int erase_cost = 0; //貼り付け箇所の消すコスト
     public int write_cost = 0; //取得箇所の増やすコスト
@@ -112,11 +112,12 @@ public class StageManager : MonoBehaviour
 
     void Update()
     {
+        /*
         if (stageNum != -1)
         {
             HealCost(stageNum);
         }
-
+        */
         if (gameUI == null)
         {
             gameUI = FindObjectOfType<GameUIController>();
