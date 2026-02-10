@@ -27,6 +27,9 @@ public class StageManager : MonoBehaviour
     public bool isPasting = false;           //プレイヤーが今ペーストしようとしているか
     public bool isPlayerDead = false;
 
+    /*時間計測*/
+    public float gameStartTime;
+    public float gameClearTime;
 
     /*スイッチ関連*/
     public bool switch_state = false;
@@ -102,6 +105,9 @@ public class StageManager : MonoBehaviour
             new Pair<bool, bool>(false, false),
             new Pair<bool, bool>(false, false),///Stage20
         };
+
+        gameStartTime = 0.0f;
+        gameClearTime = 0.0f;
     }
 
     void Update()
@@ -369,6 +375,7 @@ public class StageManager : MonoBehaviour
             switch_state = true;
             key_lock_state = false;
         }
+        gameStartTime = Time.time;
     }
 
     //////////////////////////////////////////////////////////
