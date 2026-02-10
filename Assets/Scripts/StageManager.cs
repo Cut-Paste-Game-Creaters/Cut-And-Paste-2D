@@ -330,7 +330,7 @@ public class StageManager : MonoBehaviour
 
     public void InitHealTimeOut(int num)
     {
-        costHeal_timeOut = costHeal_timeOut_array[num];
+        //costHeal_timeOut = costHeal_timeOut_array[num];
     }
 
     public void HealCost(int stageNum)

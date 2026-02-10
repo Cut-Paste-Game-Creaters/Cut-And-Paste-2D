@@ -104,7 +104,7 @@ public class CaptureCopyZone : MonoBehaviour
         int capLayer = LayerMask.NameToLayer("CaptureLayer");
         int defLayer = LayerMask.NameToLayer("Default");
         cam.cullingMask = (1 << capLayer) | (1 << defLayer);
-        
+
         StartCoroutine(CaptureAndSave());
     }
 
@@ -131,6 +131,7 @@ public class CaptureCopyZone : MonoBehaviour
         cam.cullingMask = originalMask;
 
         // UI Image ‚É”½‰f
+        if (!image) image = GameObject.Find("captureImage").GetComponent<Image>();
         image.sprite = capturedSprite;
         stageMgr.copySprite = capturedSprite;
         SetImageScaleToFit(image, capturedSprite);
