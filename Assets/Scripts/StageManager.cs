@@ -19,7 +19,7 @@ public class StageManager : MonoBehaviour
     Player_Function playerFunc;
     RankJudgeAndUpdateFunction rankFunc;
     public int player_HP = 100;
-    public int player_MAXHP = 300;
+    public int player_MAXHP = 1000000;
     public bool isPlayerDamaged = false;
     private float noDamageTime = 1.0f;
     private float nowNoDanageTime = 0.0f;
