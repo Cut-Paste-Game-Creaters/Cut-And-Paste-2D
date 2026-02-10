@@ -4879,6 +4879,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Screen_Left: 9.3
+  sceneStartDuration: 1
 --- !u!114 &1199248980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5511,7 +5512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5884838530300249436, guid: 0ca0b42fe343f5243a934a15bc444380, type: 3}
       propertyPath: player_MAXHP
-      value: 300
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 5884838530300249436, guid: 0ca0b42fe343f5243a934a15bc444380, type: 3}
       propertyPath: switch_state
